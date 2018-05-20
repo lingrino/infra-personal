@@ -8,4 +8,9 @@ resource "aws_budgets_budget" "total" {
   time_unit         = "MONTHLY"
   time_period_start = "2018-01-01_00:00"
   time_period_end   = "2087-01-01_00:00"
+
+  cost_types {
+    use_amortized        = true
+    include_subscription = false
+  }
 }

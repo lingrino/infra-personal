@@ -1,10 +1,9 @@
 resource "aws_cloudfront_distribution" "churner_io" {
-  enabled             = true
-  comment             = "Distribution fronting churner.io"
-  price_class         = "PriceClass_100"                   # US, Canada, Europe
-  default_root_object = "index.html"
-  is_ipv6_enabled     = true
-  http_version        = "http2"
+  enabled         = true
+  comment         = "Distribution fronting churner.io"
+  price_class     = "PriceClass_100"                   # US, Canada, Europe
+  is_ipv6_enabled = true
+  http_version    = "http2"
 
   aliases = [
     "churner.io",

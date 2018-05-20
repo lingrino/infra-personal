@@ -4,6 +4,11 @@ bucket and users/roles to administrate itself. To bootstrap this was done manual
 into state. The amount of complexity in this setup is overkill for my actual personal use of AWS, but
 it will allow for scale in the future and is a good way to test best practices.
 
+## Security
+I take security very seriously. When done properly, this project should not present a secutiy risk
+to my infrastructure. However, no one is perfect. If you notice a vulnerability please email me at
+security@srlingren.com
+
 ## Organization
 ```
 # Templates

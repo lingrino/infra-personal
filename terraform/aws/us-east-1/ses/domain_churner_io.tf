@@ -12,31 +12,14 @@ resource "aws_ses_domain_mail_from" "churner_io" {
   behavior_on_mx_failure = "RejectMessage"
 }
 
-resource "aws_ses_receipt_rule_set" "churner_io" {
-  rule_set_name = "rules_churner_io"
+resource "aws_ses_identity_notification_topic" "churner_io_bounces" {
+  identity          = "${ aws_ses_domain_identity.churner_io.domain }"
+  notification_type = "Bounce"
+  topic_arn         = "${ data.terraform_remote_state.sns_us_east_1.topic_all_email_bounces_complaints_arn }"
 }
 
-resource "aws_ses_receipt_rule" "churner_io" {
-  name          = "rules_churner_io_all"
-  rule_set_name = "${ aws_ses_receipt_rule_set.churner_io.rule_set_name }"
-  enabled       = true
-  scan_enabled  = true
-  tls_policy    = "Require"
-
-  recipients = [
-    "churner.io",
-    ".churner.io",
-  ]
-
-  s3_action {
-    position          = 1
-    bucket_name       = "${ data.terraform_remote_state.s3.bucket_emails_name }"
-    kms_key_arn       = "${ data.terraform_remote_state.kms_us_east_1.key_main_arn }"
-    object_key_prefix = "churner_io/all/"
-  }
-
-  sns_action {
-    position  = 2
-    topic_arn = "${ data.terraform_remote_state.sns_us_east_1.topic_email_received_at_churner_io_arn }"
-  }
+resource "aws_ses_identity_notification_topic" "churner_io_complaints" {
+  identity          = "${ aws_ses_domain_identity.churner_io.domain }"
+  notification_type = "Complaint"
+  topic_arn         = "${ data.terraform_remote_state.sns_us_east_1.topic_all_email_bounces_complaints_arn }"
 }
