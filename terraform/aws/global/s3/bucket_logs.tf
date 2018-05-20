@@ -50,10 +50,7 @@ data "aws_iam_policy_document" "bucket_logs_policy_data" {
       identifiers = ["cloudtrail.amazonaws.com"]
     }
 
-    actions = [
-      "s3:GetBucketAcl",
-    ]
-
+    actions   = ["s3:GetBucketAcl"]
     resources = ["${ aws_s3_bucket.bucket_logs.arn }"]
   }
 
@@ -66,10 +63,7 @@ data "aws_iam_policy_document" "bucket_logs_policy_data" {
       identifiers = ["cloudtrail.amazonaws.com"]
     }
 
-    actions = [
-      "s3:PutObject",
-    ]
-
+    actions   = ["s3:PutObject"]
     resources = ["${ aws_s3_bucket.bucket_logs.arn }/cloudtrail/*"]
 
     condition {
