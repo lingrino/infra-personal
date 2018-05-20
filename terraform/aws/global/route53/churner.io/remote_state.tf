@@ -40,3 +40,23 @@ data "terraform_remote_state" "acm_us_east_1" {
     key    = "aws/us-east-1/acm/terraform.tfstate"
   }
 }
+
+data "terraform_remote_state" "cloudwatch_logs_us_east_1" {
+  backend = "s3"
+
+  config {
+    region = "us-east-2"
+    bucket = "terraform-remote-state-20180519193152524300000001"
+    key    = "aws/us-east-1/cloudwatch/logs/terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "cloudwatch_alarms_us_east_2" {
+  backend = "s3"
+
+  config {
+    region = "us-east-2"
+    bucket = "terraform-remote-state-20180519193152524300000001"
+    key    = "aws/us-east-2/cloudwatch/alarms/terraform.tfstate"
+  }
+}

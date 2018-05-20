@@ -145,4 +145,24 @@ data "aws_iam_policy_document" "main_policy" {
       values   = ["${ module.constants.aws_account_id }"]
     }
   }
+
+  statement {
+    sid    = "AllowCloudWatchEncryption"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["logs.${ var.region }.amazonaws.com"]
+    }
+
+    actions = [
+      "kms:Encrypt*",
+      "kms:Decrypt*",
+      "kms:ReEncrypt*",
+      "kms:GenerateDataKey*",
+      "kms:Describe*",
+    ]
+
+    resources = ["*"]
+  }
 }
