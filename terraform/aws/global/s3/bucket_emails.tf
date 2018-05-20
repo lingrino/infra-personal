@@ -3,9 +3,11 @@ locals {
 }
 
 resource "aws_s3_bucket" "bucket_emails" {
+  provider = "aws.us-east-1"
+
   bucket_prefix = "${ local.emails_bucket_name }-"
 
-  region        = "${ module.constants.aws_default_region }"
+  region        = "us-east-1"
   acl           = "private"
   force_destroy = true
 
@@ -32,6 +34,8 @@ resource "aws_s3_bucket" "bucket_emails" {
 }
 
 resource "aws_s3_bucket_policy" "bucket_emails_policy" {
+  provider = "aws.us-east-1"
+
   bucket = "${ aws_s3_bucket.bucket_emails.id }"
   policy = "${ data.aws_iam_policy_document.bucket_emails_policy_data.json }"
 }
