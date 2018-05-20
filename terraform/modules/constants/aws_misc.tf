@@ -5,3 +5,7 @@ output "aws_account_id" {
 output "aws_default_region" {
   value = "us-east-2"
 }
+
+output "aws_ses_region" {
+  value = "us-east-1"
+}

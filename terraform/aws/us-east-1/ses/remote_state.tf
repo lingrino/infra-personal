@@ -2,7 +2,7 @@ terraform {
   backend "s3" {
     region         = "us-east-2"
     bucket         = "terraform-remote-state-20180519193152524300000001"
-    key            = "aws/global/route53/churner.io/terraform.tfstate"
+    key            = "aws/us-east-1/ses/terraform.tfstate"
     dynamodb_table = "TerraformRemoteStateLock"
 
     acl        = "bucket-owner-full-control"
@@ -11,32 +11,32 @@ terraform {
   }
 }
 
-data "terraform_remote_state" "cloudfront" {
+data "terraform_remote_state" "s3" {
   backend = "s3"
 
   config {
     region = "us-east-2"
     bucket = "terraform-remote-state-20180519193152524300000001"
-    key    = "aws/global/cloudfront/terraform.tfstate"
+    key    = "aws/global/s3/terraform.tfstate"
   }
 }
 
-data "terraform_remote_state" "ses_us_east_1" {
+data "terraform_remote_state" "sns_us_east_1" {
   backend = "s3"
 
   config {
     region = "us-east-2"
     bucket = "terraform-remote-state-20180519193152524300000001"
-    key    = "aws/us-east-1/ses/terraform.tfstate"
+    key    = "aws/us-east-1/sns/terraform.tfstate"
   }
 }
 
-data "terraform_remote_state" "acm_us_east_1" {
+data "terraform_remote_state" "kms_us_east_1" {
   backend = "s3"
 
   config {
     region = "us-east-2"
     bucket = "terraform-remote-state-20180519193152524300000001"
-    key    = "aws/us-east-1/acm/terraform.tfstate"
+    key    = "aws/us-east-1/kms/terraform.tfstate"
   }
 }
