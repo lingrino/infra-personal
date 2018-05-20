@@ -1,5 +1,5 @@
-# Personal AWS Account
-Terraform for setting up my personal AWS account. Notice that the terraform is creating it's own state
+# Personal Infrastructure
+Terraform for setting up all my personal infrastructure. Notice that the terraform is creating its own state
 bucket and users/roles to administrate itself. To bootstrap this was done manually and then imported
 into state. The amount of complexity in this setup is overkill for my actual personal use of AWS, but
 it will allow for scale in the future and is a good way to test best practices.

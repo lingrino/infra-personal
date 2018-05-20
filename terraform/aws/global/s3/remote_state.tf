@@ -11,6 +11,16 @@ terraform {
   }
 }
 
+data "terraform_remote_state" "cloudfront" {
+  backend = "s3"
+
+  config {
+    region = "us-east-2"
+    bucket = "terraform-remote-state-20180519193152524300000001"
+    key    = "aws/global/cloudfront/terraform.tfstate"
+  }
+}
+
 data "terraform_remote_state" "kms_us_east_2" {
   backend = "s3"
 
