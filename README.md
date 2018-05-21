@@ -23,6 +23,9 @@ terraform/modules/aws/s3/generic_bucket
 terraform/aws/global/iam
 terraform/aws/us-east-2/kms
 terraform/aws/us-east-2/ec2/main
+
+# Github Provider
+terraform/github/repos/repo_name
 ```
 
 ## Constants Module
