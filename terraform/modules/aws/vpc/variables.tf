@@ -22,20 +22,3 @@ variable "azs" {
   type        = "list"
   description = "A list of azs to launch subnets in"
 }
-
-# variable "subnets_public_azs_to_cidrs" {
-#   type        = "map"
-#   description = "A map of azs to cidrs to place public subnets in"
-# }
-
-
-# variable "subnets_private_general_azs_to_cidrs" {
-#   type        = "map"
-#   description = "A map of azs to cidrs to place private general subnets in"
-# }
-
-
-# variable "subnets_private_data_azs_to_cidrs" {
-#   type        = "map"
-#   description = "A map of azs to cidrs to place private data subnets in"
-# }

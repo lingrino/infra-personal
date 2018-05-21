@@ -14,14 +14,14 @@ resource "aws_vpc_endpoint_route_table_association" "dynamodb_public" {
 }
 
 resource "aws_vpc_endpoint_route_table_association" "dynamodb_private_general" {
-  count = "${ length( var.subnets_private_general_azs_to_cidrs ) }"
+  count = "${ length( var.azs ) }"
 
   vpc_endpoint_id = "${ aws_vpc_endpoint.dynamodb.id }"
   route_table_id  = "${ element( aws_route_table.private_general.*.id, count.index ) }"
 }
 
 resource "aws_vpc_endpoint_route_table_association" "dynamodb_private_data" {
-  count = "${ length( var.subnets_private_data_azs_to_cidrs ) }"
+  count = "${ length( var.azs ) }"
 
   vpc_endpoint_id = "${ aws_vpc_endpoint.dynamodb.id }"
   route_table_id  = "${ element( aws_route_table.private_data.*.id, count.index ) }"
