@@ -1,6 +1,6 @@
 resource "github_repository" "repo" {
   name        = "vaku"
-  description = "Useful vault functions that extend the Hashicorp Vault Golang Client"
+  description = "A CLI and Go API to extend the official Vault client"
 
   default_branch = "master"
   private        = false
