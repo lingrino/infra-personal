@@ -30,3 +30,13 @@ data "terraform_remote_state" "ses_us_east_1" {
     key    = "aws/us-east-1/ses/terraform.tfstate"
   }
 }
+
+data "terraform_remote_state" "cloudfront" {
+  backend = "s3"
+
+  config {
+    region = "us-east-2"
+    bucket = "terraform-remote-state-20180519193152524300000001"
+    key    = "aws/global/cloudfront/terraform.tfstate"
+  }
+}

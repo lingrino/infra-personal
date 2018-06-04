@@ -17,3 +17,11 @@ output "bucket_srlingren_com_arn" {
 output "bucket_srlingren_com_domain" {
   value = "${ aws_s3_bucket.bucket_srlingren_com.bucket_domain_name }"
 }
+
+output "bucket_vaku_io_arn" {
+  value = "${ aws_s3_bucket.bucket_vaku_io.arn }"
+}
+
+output "bucket_vaku_io_domain" {
+  value = "${ aws_s3_bucket.bucket_vaku_io.bucket_domain_name }"
+}
