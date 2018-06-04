@@ -40,3 +40,13 @@ data "terraform_remote_state" "route53_srlingren_com" {
     key    = "aws/global/route53/srlingren.com/terraform.tfstate"
   }
 }
+
+data "terraform_remote_state" "route53_vaku_io" {
+  backend = "s3"
+
+  config {
+    region = "us-east-2"
+    bucket = "terraform-remote-state-20180519193152524300000001"
+    key    = "aws/global/route53/vaku.io/terraform.tfstate"
+  }
+}

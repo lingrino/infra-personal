@@ -40,3 +40,13 @@ data "terraform_remote_state" "cloudfront" {
     key    = "aws/global/cloudfront/terraform.tfstate"
   }
 }
+
+data "terraform_remote_state" "cloudwatch_logs_us_east_1" {
+  backend = "s3"
+
+  config {
+    region = "us-east-2"
+    bucket = "terraform-remote-state-20180519193152524300000001"
+    key    = "aws/us-east-1/cloudwatch/logs/terraform.tfstate"
+  }
+}
