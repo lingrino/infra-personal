@@ -41,7 +41,3 @@ output "subnets_private_data_ids" {
 output "subnets_private_data_cidrs" {
   value = "${ aws_subnet.private_data.*.cidr_block }"
 }
-
-# output "subnets_private_data_cidrs_ipv6" {
-#   value = "${ aws_subnet.private_data.*.ipv6_cidr_block }"
-# }

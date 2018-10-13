@@ -9,11 +9,7 @@ resource "aws_vpc" "vpc" {
   assign_generated_ipv6_cidr_block = true
 
   tags = "${ merge(
-    map(
-      "Name",
-      "${ var.name_prefix }_vpc"
-    ),
-    var.tags,
-    module.constants.tags_default )
+    map( "Name", "${ var.name_prefix }_vpc" ),
+    var.tags, module.constants.tags_default )
   }"
 }

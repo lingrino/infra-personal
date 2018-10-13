@@ -11,12 +11,8 @@ resource "aws_subnet" "private_general" {
   assign_ipv6_address_on_creation = false
 
   tags = "${ merge(
-    map(
-      "Name",
-      "${ var.name_prefix }_subnet_private_general_${ replace( var.azs[count.index], "-", "_" ) }"
-    ),
-    var.tags,
-    module.constants.tags_default )
+    map( "Name", "${ var.name_prefix }_subnet_private_general_${ replace( var.azs[count.index], "-", "_" ) }" ),
+    var.tags, module.constants.tags_default )
   }"
 }
 

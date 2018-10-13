@@ -1,5 +1,5 @@
 resource "aws_vpc_dhcp_options" "dhcp" {
-  domain_name = "${ var.region == "us-east-1" ? "ec2.internal" : "${ var.region }.compute.internal" }"
+  domain_name = "${ data.aws_region.current.name == "us-east-1" ? "ec2.internal" : "${ data.aws_region.current.name }.compute.internal" }"
 
   domain_name_servers = [
     "AmazonProvidedDNS",
@@ -7,12 +7,8 @@ resource "aws_vpc_dhcp_options" "dhcp" {
   ]
 
   tags = "${ merge(
-    map(
-      "Name",
-      "${ var.name_prefix }_dhcp_options"
-    ),
-    var.tags,
-    module.constants.tags_default )
+    map( "Name", "${ var.name_prefix }_dhcp_options" ),
+    var.tags, module.constants.tags_default )
   }"
 }
 
