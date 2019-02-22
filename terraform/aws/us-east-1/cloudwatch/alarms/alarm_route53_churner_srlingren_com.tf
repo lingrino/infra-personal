@@ -1,6 +1,6 @@
-resource "aws_cloudwatch_metric_alarm" "route53_churner_io_www" {
-  alarm_name        = "route53_churner_io_www"
-  alarm_description = "Alarms when www.churner.io is down"
+resource "aws_cloudwatch_metric_alarm" "route53_churner_srlingren_com" {
+  alarm_name        = "route53_churner_srlingren_com"
+  alarm_description = "Alarms when churner.srlingren.com is down"
 
   namespace           = "AWS/Route53"
   metric_name         = "HealthCheckStatus"
@@ -12,7 +12,7 @@ resource "aws_cloudwatch_metric_alarm" "route53_churner_io_www" {
   evaluation_periods = "2"
 
   dimensions {
-    HealthCheckId = "${ data.terraform_remote_state.route53_churner_io.healthcheck_www_id }"
+    HealthCheckId = "${ data.terraform_remote_state.route53_srlingren_com.healthcheck_churner_id }"
   }
 
   actions_enabled           = true

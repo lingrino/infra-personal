@@ -11,16 +11,6 @@ terraform {
   }
 }
 
-data "terraform_remote_state" "route53_churner_io" {
-  backend = "s3"
-
-  config {
-    region = "us-east-2"
-    bucket = "terraform-remote-state-20180519193152524300000001"
-    key    = "aws/global/route53/churner.io/terraform.tfstate"
-  }
-}
-
 data "terraform_remote_state" "route53_srlingren_com" {
   backend = "s3"
 
