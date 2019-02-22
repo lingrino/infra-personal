@@ -1,19 +1,18 @@
-resource "aws_cloudfront_distribution" "churner_io" {
+resource "aws_cloudfront_distribution" "churner" {
   enabled         = true
-  comment         = "Distribution fronting churner.io"
-  price_class     = "PriceClass_100"                   # US, Canada, Europe
+  comment         = "Distribution fronting churner.srlingren.com"
+  price_class     = "PriceClass_100"                              # US, Canada, Europe
   is_ipv6_enabled = true
   http_version    = "http2"
 
   aliases = [
-    "churner.io",
-    "www.churner.io",
+    "churner.srlingren.com",
   ]
 
   viewer_certificate {
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2018"
-    acm_certificate_arn      = "${ data.terraform_remote_state.acm_us_east_1.cert_churner_io_arn }"
+    acm_certificate_arn      = "${ data.terraform_remote_state.acm_us_east_1.cert_srlingren_com_arn }"
   }
 
   logging_config {
@@ -29,7 +28,7 @@ resource "aws_cloudfront_distribution" "churner_io" {
   }
 
   default_cache_behavior {
-    target_origin_id = "churner_io"
+    target_origin_id = "churner"
 
     compress               = true
     allowed_methods        = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
@@ -51,13 +50,13 @@ resource "aws_cloudfront_distribution" "churner_io" {
   }
 
   origin {
-    origin_id   = "churner_io"
-    domain_name = "churner-io.herokuapp.com"
+    origin_id   = "churner"
+    domain_name = "larval-indominus-z59eqpzcqglespihluv0g9b9.herokudns.com" # From Heroku
 
     custom_origin_config {
       http_port              = 80
       https_port             = 443
-      origin_protocol_policy = "https-only"
+      origin_protocol_policy = "http-only"
       origin_ssl_protocols   = ["TLSv1.2"]
     }
   }
@@ -65,7 +64,7 @@ resource "aws_cloudfront_distribution" "churner_io" {
   tags = "${ merge(
     map(
       "Name",
-      "churner_io"
+      "churner"
     ),
     module.constants.tags_default )
   }"

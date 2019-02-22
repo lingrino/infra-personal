@@ -1,7 +1,6 @@
 resource "aws_ses_receipt_rule" "rule_srlingren_com" {
   name          = "rule_srlingren_com"
   rule_set_name = "${ aws_ses_receipt_rule_set.ruleset_main.rule_set_name }"
-  after         = "${ aws_ses_receipt_rule.rule_churner_io.name }"           # Churner is #1
   enabled       = true
   scan_enabled  = true
   tls_policy    = "Require"
