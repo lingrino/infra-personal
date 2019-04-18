@@ -1,6 +1,6 @@
 resource "github_repository" "repo" {
   name        = "glen"
-  description = "A CLI to gather GitHub project and group variables"
+  description = "A CLI to gather GitLab project and group variables"
 
   default_branch = "master"
   private        = false
