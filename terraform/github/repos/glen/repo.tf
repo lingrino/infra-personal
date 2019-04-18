@@ -2,8 +2,8 @@ resource "github_repository" "repo" {
   name        = "glen"
   description = "A CLI to gather GitHub project and group variables"
 
-  # default_branch = "master"
-  private = false
+  default_branch = "master"
+  private        = false
 
   has_wiki   = false
   has_issues = true
