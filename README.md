@@ -32,3 +32,8 @@ terraform/github/repos/repo_name
 Holds static information that cannot be pulled from terraform.
 Account ID is hardcoded here, depite being available in [terraform](https://www.terraform.io/docs/providers/aws/d/caller_identity.html)
 because it safeguards applying against the wrong account.
+
+
+## TODO
+- trusted advisor emails
+- aws config
