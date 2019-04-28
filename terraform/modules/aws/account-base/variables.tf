@@ -13,7 +13,7 @@ variable "account_name" {
   description = "The name of the account to configure"
 }
 
-variable "account_alias" {
+variable "auth_account_id" {
   type        = "string"
-  description = "The desired alias for the account"
+  description = "The account ID of the auth account. Where assume role should be allowed from."
 }

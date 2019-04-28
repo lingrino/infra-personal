@@ -1,11 +1,10 @@
 data "aws_iam_policy_document" "arp_users" {
   statement {
-    sid = "MainAccountAssumeRoleRequireMFA"
+    sid = "AuthAccountAssumeRoleRequireMFA"
 
-    # TODO - restrict this to a group or other identifier
     principals {
       type        = "AWS"
-      identifiers = ["${ var.main_account_id }"]
+      identifiers = ["${ var.auth_account_id }"]
     }
 
     actions = ["sts:AssumeRole"]

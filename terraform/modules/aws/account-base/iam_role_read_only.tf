@@ -1,14 +1,13 @@
 resource "aws_iam_role" "read_only" {
-  name                 = "ReadOnly"
-  description          = "ReadOnly users can read all AWS resources. This includes reading data in S3/Dynamo/etc..., see policy for full permissions"
-  assume_role_policy   = "${ data.aws_iam_policy_document.arp_users.json }"
-  permissions_boundary = "${ aws_iam_policy.deny_core_resources.arn }"
+  name               = "ReadOnly"
+  description        = "ReadOnly users can read all AWS resources including reading data in S3/Dynamo/etc... - see policy for full permissions"
+  assume_role_policy = "${ data.aws_iam_policy_document.arp_users.json }"
 
   max_session_duration = 43200
 
   tags = "${ merge(
     map( "Name", "ReadOnly" ),
-    map( "description", "ReadOnly users can read all AWS resources. This includes reading data in S3/Dynamo/etc..., see policy for full permissions" ),
+    map( "description", "ReadOnly users can read all AWS resources. including reading data in S3/Dynamo/etc... - see policy for full permissions" ),
     var.tags ) }"
 }
 
