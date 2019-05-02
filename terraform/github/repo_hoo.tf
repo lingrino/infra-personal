@@ -1,3 +1,13 @@
+# resource "github_branch_protection" "hoo" {
+#   repository     = "${ github_repository.hoo.name }"
+#   branch         = "master"
+#   enforce_admins = true
+#
+#   required_status_checks {
+#     strict   = true
+#     contexts = ["ci/gitlab/gitlab.com"]
+#   }
+# }
 resource "github_repository" "hoo" {
   name         = "hoo"
   description  = "A CLI for determining who you are"
@@ -22,14 +32,3 @@ resource "github_repository" "hoo" {
     "whoami",
   ]
 }
-
-# resource "github_branch_protection" "hoo" {
-#   repository     = "${ github_repository.hoo.name }"
-#   branch         = "master"
-#   enforce_admins = true
-#
-#   required_status_checks {
-#     strict   = true
-#     contexts = ["ci/gitlab/gitlab.com"]
-#   }
-# }
