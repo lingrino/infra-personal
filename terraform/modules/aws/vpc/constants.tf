@@ -1,3 +1,0 @@
-module "constants" {
-  source = "../../constants"
-}
