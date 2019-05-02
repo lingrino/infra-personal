@@ -3,7 +3,7 @@ resource "aws_route53_record" "mx_google_email" {
   count = "${ var.configure_google_domains_email_forwarding ? 1 : 0 }"
 
   zone_id = "${ aws_route53_zone.zone.zone_id }"
-  name    = "@"
+  name    = "${ var.domain }"
   type    = "MX"
   ttl     = 3600
 
