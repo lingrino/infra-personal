@@ -1,7 +1,9 @@
-output "healthcheck_root_id" {
-  value = "${ aws_route53_health_check.root.id }"
+output "zone_id" {
+  description = "The ID of the created zone"
+  value       = "${ aws_route53_zone.zone.id }"
 }
 
-output "healthcheck_churner_id" {
-  value = "${ aws_route53_health_check.churner.id }"
+output "nameservers" {
+  description = "A list of the nameservers for the created zone"
+  value       = "${ aws_route53_zone.zone.name_servers }"
 }

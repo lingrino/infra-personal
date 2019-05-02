@@ -20,7 +20,8 @@ module "account_audit_base" {
   account_id   = "${ module.account_audit.id }"
   account_name = "${ module.account_audit.name }"
 
-  auth_account_id = "${ module.account_auth.id }"
+  account_id_auth   = "${ module.account_auth.id }"
+  bucket_config_arn = "${ data.terraform_remote_state.account_audit.bucket_config_arn }"
 
   tags = "${ var.tags }"
 
