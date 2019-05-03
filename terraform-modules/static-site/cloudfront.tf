@@ -16,7 +16,7 @@ resource "aws_cloudfront_distribution" "cf" {
   viewer_certificate {
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2018"
-    acm_certificate_arn      = "${ aws_acm_certificate.cert.arn }"
+    acm_certificate_arn      = "${ module.cert.certificate_arn }"
   }
 
   restrictions {
@@ -60,6 +60,4 @@ resource "aws_cloudfront_distribution" "cf" {
     map( "Name", "${ var.name_prefix }" ),
     var.tags )
   }"
-
-  depends_on = ["aws_acm_certificate_validation.cert"]
 }

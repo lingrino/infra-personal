@@ -3,8 +3,8 @@ resource "aws_internet_gateway" "igw" {
 
   tags = "${ merge(
     map( "Name", "${ var.name_prefix }_internet_gateway" ),
-    var.tags, module.constants.tags_default )
-  }"
+    var.tags
+  )}"
 }
 
 resource "aws_egress_only_internet_gateway" "igw" {
