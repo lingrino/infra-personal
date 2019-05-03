@@ -3,8 +3,8 @@ resource "aws_route_table" "public" {
 
   tags = "${ merge(
     map( "Name", "${ var.name_prefix }_route_table_public" ),
-    var.tags, module.constants.tags_default )
-  }"
+    var.tags
+  )}"
 }
 
 resource "aws_route" "public_igw" {

@@ -27,7 +27,7 @@ resource "aws_s3_bucket" "s3" {
     }
 
     noncurrent_version_expiration {
-      days = "300"
+      days = "365"
     }
   }
 

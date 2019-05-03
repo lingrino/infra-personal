@@ -12,8 +12,8 @@ resource "aws_subnet" "public" {
 
   tags = "${ merge(
     map( "Name", "${ var.name_prefix }_subnet_public_${ replace( var.azs[count.index], "-", "_" ) }" ),
-    var.tags, module.constants.tags_default )
-  }"
+    var.tags
+  )}"
 }
 
 resource "aws_route_table_association" "public" {

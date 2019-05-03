@@ -70,17 +70,14 @@ modules that are expensive (`vpc`, `config`) will work but may not be in use bec
 
 - [ ] Automated plan/apply CI/CD using Atlantis
 - [ ] Automated linting of terraform and README
-- [ ] Well documented modules
 - [ ] Updates to work with terraform 0.12
 - [ ] Account base module should remove default vpcs
 - [ ] VPC module should tag the default security groups
 - [ ] Module for cross account domain delegation
 - [ ] Add dev.domain.com for all domains to dev account
-- [ ] Add module to create a static landing page (or redirect) for all unused domains
 - [ ] Static site module should create cloudwatch alarms
 - [ ] SNS topic that notifies my email in every account
 - [ ] Module that adds rouet53 healthchecks and alarms
 - [ ] DNS query logging to cloudwatch
 - [ ] Cloudtrail logs to cloudwatch
 - [ ] Budgets for AWS bill
-- [ ] ACM module for same account and cross account usage

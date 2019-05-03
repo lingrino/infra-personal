@@ -22,22 +22,22 @@ output "subnets_public_cidrs_ipv6" {
   value = "${ aws_subnet.public.*.ipv6_cidr_block }"
 }
 
-output "subnets_private_general_ids" {
-  value = "${ aws_subnet.private_general.*.id }"
+output "subnets_private_ids" {
+  value = "${ aws_subnet.private.*.id }"
 }
 
-output "subnets_private_general_cidrs" {
-  value = "${ aws_subnet.private_general.*.cidr_block }"
+output "subnets_private_cidrs" {
+  value = "${ aws_subnet.private.*.cidr_block }"
 }
 
-output "subnets_private_general_cidrs_ipv6" {
-  value = "${ aws_subnet.private_general.*.ipv6_cidr_block }"
+output "subnets_private_cidrs_ipv6" {
+  value = "${ aws_subnet.private.*.ipv6_cidr_block }"
 }
 
-output "subnets_private_data_ids" {
-  value = "${ aws_subnet.private_data.*.id }"
+output "subnets_intra_ids" {
+  value = "${ aws_subnet.intra.*.id }"
 }
 
-output "subnets_private_data_cidrs" {
-  value = "${ aws_subnet.private_data.*.cidr_block }"
+output "subnets_intra_cidrs" {
+  value = "${ aws_subnet.intra.*.cidr_block }"
 }

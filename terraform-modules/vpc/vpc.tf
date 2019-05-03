@@ -10,6 +10,6 @@ resource "aws_vpc" "vpc" {
 
   tags = "${ merge(
     map( "Name", "${ var.name_prefix }_vpc" ),
-    var.tags, module.constants.tags_default )
-  }"
+    var.tags
+  )}"
 }

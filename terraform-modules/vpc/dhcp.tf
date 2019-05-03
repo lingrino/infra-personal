@@ -8,8 +8,8 @@ resource "aws_vpc_dhcp_options" "dhcp" {
 
   tags = "${ merge(
     map( "Name", "${ var.name_prefix }_dhcp_options" ),
-    var.tags, module.constants.tags_default )
-  }"
+    var.tags
+  )}"
 }
 
 resource "aws_vpc_dhcp_options_association" "dhcp" {
