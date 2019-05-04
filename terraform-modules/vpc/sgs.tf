@@ -1,3 +1,12 @@
+resource "aws_default_security_group" "default" {
+  vpc_id = "${ aws_vpc.vpc.id }"
+
+  tags = "${ merge(
+    map( "Name", "DO_NOT_USE" ),
+    map( "description", "do not use. default security group created by AWS in this VPC" ),
+    var.tags ) }"
+}
+
 resource "aws_security_group" "endpoints" {
   vpc_id = "${ aws_vpc.vpc.id }"
 

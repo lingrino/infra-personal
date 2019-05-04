@@ -56,6 +56,12 @@ resource "aws_cloudfront_distribution" "cf" {
     }
   }
 
+  logging_config {
+    include_cookies = false
+    bucket          = "${ var.bucket_logs_domain }"
+    prefix          = "${ data.aws_caller_identity.current.account_id }/${ var.name_prefix }/"
+  }
+
   tags = "${ merge(
     map( "Name", "${ var.name_prefix }" ),
     var.tags )
