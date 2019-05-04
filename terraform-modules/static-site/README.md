@@ -43,6 +43,12 @@ Alternatively after your first upload the `index.html` uploaded by this module w
 Note that this module requires that you upload content to the s3 bucket that is encrypted with AWS's
 `AES256` algorithm.
 
+## Access Logs
+
+This module requires that you already have an S3 bucket set up that cloudfront can write access logs
+to and that you are ok with a log prefix of `ACCOUNT_ID/NAME_PREFIX/`. You cannot disable logging
+and you must pass `${ var.bucket_logs_domain }` to the module.
+
 ## Applying with CI/CD
 
 This module is intended to be used for deploying to your site with CI/CD. The `deployer` user

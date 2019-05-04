@@ -8,3 +8,15 @@ terraform {
     }
   }
 }
+
+data "terraform_remote_state" "organization" {
+  backend = "remote"
+
+  config {
+    organization = "lingrino"
+
+    workspaces {
+      name = "aws-common-organization"
+    }
+  }
+}

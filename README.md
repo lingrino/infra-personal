@@ -72,12 +72,6 @@ modules that are expensive (`vpc`, `config`) will work but may not be in use bec
 - [ ] Automated linting of terraform and README
 - [ ] Updates to work with terraform 0.12
 - [ ] Account base module should remove default vpcs
-- [ ] VPC module should tag the default security groups
-- [ ] Module for cross account domain delegation
-- [ ] Add dev.domain.com for all domains to dev account
-- [ ] Static site module should create cloudwatch alarms
-- [ ] SNS topic that notifies my email in every account
-- [ ] Module that adds rouet53 healthchecks and alarms
+- [ ] SNS topic that notifies a lambda that notifies me (and static site alarms go here)
 - [ ] DNS query logging to cloudwatch
 - [ ] Cloudtrail logs to cloudwatch
-- [ ] Budgets for AWS bill

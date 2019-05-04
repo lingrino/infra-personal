@@ -74,6 +74,12 @@ resource "aws_cloudfront_distribution" "churner" {
     }
   }
 
+  logging_config {
+    include_cookies = false
+    bucket          = "${ data.terraform_remote_state.account_audit.bucket_logs_cloudfront_domain }"
+    prefix          = "840856573771/churner/"
+  }
+
   tags = "${ merge(
     map("Name", "churner"),
     var.tags )
