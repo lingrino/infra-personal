@@ -6,9 +6,9 @@ roles that can be assumed, password policies, and the account alias.
 
 ## Usage
 
-The below code is a simple way of calling the module, along with my [account module][]. Note that
-in order for the below code to work you first have to apply **only** the `account` module and then
-add in the aws provider and the `account-base` module.
+The below code is a simple way of calling the module, along with my [account module][]. Note that in
+order for the below code to work you first have to apply **only** the `account` module and then add
+in the aws provider and the `account-base` module.
 
 ```terraform
 provider "aws" {
@@ -56,5 +56,11 @@ This would be a great module to set up AWS config rules. However, rules in many 
 expensive. Check out my [config-rules module][] for examples of implementing a huge number of
 best-practices rules.
 
-[account module]: ../account/README.md
-[config-rules module]: ../config-rules/README.md
+## Default VPCs
+
+This module also runs a script that removes all default VPCs in all regions from the account. This
+requires that you have `bash`, `aws-cli`, and `jq` installed. You should not use default vpcs, my
+[vpc module][] will set things up in a nicer and more maintainable way.
+
+[account module]: ../account/README.md [config-rules module]: ../config-rules/README.md [vpc
+module]: ../vpc/README.md
