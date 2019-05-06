@@ -18,6 +18,12 @@ resource "aws_ses_domain_dkim" "ses" {
   domain = "${ aws_ses_domain_identity.ses.domain }"
 }
 
+resource "aws_ses_domain_identity_verification" "ses" {
+  domain = "${ aws_ses_domain_identity.ses.id }"
+
+  depends_on = ["aws_route53_record.ses_txt_verification"]
+}
+
 resource "aws_route53_record" "ses_txt_verification" {
   count = "${ var.verify_ses ? 1 : 0 }"
 

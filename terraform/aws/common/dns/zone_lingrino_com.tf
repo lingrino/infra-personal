@@ -39,3 +39,15 @@ module "zone_dev_lingrino_com" {
     aws = "aws.dev"
   }
 }
+
+module "ses_audit_lingrino_com" {
+  source = "../../../../terraform-modules/ses-domain//"
+
+  zone_name   = "lingrino.com"
+  domain_name = "audit.lingrino.com"
+
+  providers {
+    aws.dns = "aws.prod"
+    aws.ses = "aws.audit"
+  }
+}

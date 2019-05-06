@@ -4,3 +4,7 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
+
+# Serverless files
+**/.serverless/*
+**/bin/*

@@ -4,7 +4,7 @@ This module creates an ACM certificate and validates it with route53 DNS. The mo
 when the account that owns the DNS zones and the account that needs the certificate are different
 because the module takes explicitly passed providers.
 
-Another benefit of this module is that it can create certificates for multiple route53 zone. For
+Another benefit of this module is that it can create certificates for multiple route53 zones. For
 example, you can use this module to make a certificate that is valid for `foo.example.com` and
 `foo.example.net`.
 

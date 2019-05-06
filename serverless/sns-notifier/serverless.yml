@@ -1,0 +1,44 @@
+service: sns-notifier
+
+provider:
+  name: aws
+  runtime: go1.x
+  versionFunctions: true
+
+  stage: ${opt:stage, "prod"}
+  region: ${opt:region, "us-east-1"}
+
+  timeout: 5
+  memorySize: 128
+  logRetentionInDays: 90
+
+  deploymentBucket:
+    name: serverless-deployment-20190506190222053800000001
+    serverSideEncryption: AES256
+
+  tags:
+    service: serverless
+    serverless: true
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ses:SendEmail
+      Resource: "*"
+      Condition:
+        StringEquals:
+          ses:FromAddress:
+            - sns-notifier@audit.lingrino.com
+
+package:
+  exclude:
+    - ./**
+  include:
+    - ./bin/**
+
+functions:
+  notify:
+    description: Notifies me of received cloudwatch events
+    handler: bin/notify
+    events:
+      - sns: arn:aws:sns:us-east-1:418875065733:alarm_high_priority
