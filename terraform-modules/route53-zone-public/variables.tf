@@ -27,6 +27,12 @@ variable "ses_region" {
   default     = "us-east-1"
 }
 
+variable "ses_sns_arn" {
+  type        = "string"
+  description = "An SNS ARN to send SNS bounce, complaint, and delivery events to"
+  default     = ""
+}
+
 variable "keybase_record_value" {
   type        = "string"
   description = "An optional keybase verification string, starts with keybase-site-verification="

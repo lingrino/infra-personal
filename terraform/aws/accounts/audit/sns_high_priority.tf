@@ -50,6 +50,28 @@ data "aws_iam_policy_document" "alarm_high_priority" {
       values   = ["${ formatlist("arn:aws:cloudwatch:*:%s:alarm:*", data.terraform_remote_state.organization.account_ids ) }"]
     }
   }
+
+  statement {
+    sid    = "AllowAllAccountsSESPublish"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["ses.amazonaws.com"]
+    }
+
+    actions = [
+      "SNS:Publish",
+    ]
+
+    resources = ["${ aws_sns_topic.alarm_high_priority.arn }"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:Referer"
+      values   = ["${ formatlist("arn:aws:ses:*:%s:*", data.terraform_remote_state.organization.account_ids ) }"]
+    }
+  }
 }
 
 output "sns_alarm_high_priority_arn" {

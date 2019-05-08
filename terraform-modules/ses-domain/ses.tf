@@ -1,3 +1,7 @@
+locals {
+  ses_notification_types = ["Bounce", "Complaint", "Delivery"]
+}
+
 resource "aws_ses_domain_identity" "ses" {
   provider = "aws.ses"
 
@@ -16,6 +20,16 @@ resource "aws_ses_domain_dkim" "ses" {
   provider = "aws.ses"
 
   domain = "${ aws_ses_domain_identity.ses.domain }"
+}
+
+resource "aws_ses_identity_notification_topic" "topics" {
+  count = "${ length(local.ses_notification_types) }"
+
+  topic_arn         = "${ var.ses_sns_arn }"
+  notification_type = "${ local.ses_notification_types[count.index] }"
+  identity          = "${ aws_ses_domain_identity.ses.domain }"
+
+  depends_on = ["aws_ses_domain_identity_verification.ses"]
 }
 
 resource "aws_ses_domain_identity_verification" "ses" {

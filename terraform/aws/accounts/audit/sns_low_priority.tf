@@ -26,7 +26,7 @@ data "aws_iam_policy_document" "alarm_low_priority" {
       "SNS:Publish",
     ]
 
-    resources = ["${ aws_sns_topic.alarm_high_priority.arn }"]
+    resources = ["${ aws_sns_topic.alarm_low_priority.arn }"]
   }
 
   statement {
@@ -42,12 +42,34 @@ data "aws_iam_policy_document" "alarm_low_priority" {
       "SNS:Publish",
     ]
 
-    resources = ["${ aws_sns_topic.alarm_high_priority.arn }"]
+    resources = ["${ aws_sns_topic.alarm_low_priority.arn }"]
 
     condition {
       test     = "ArnLike"
       variable = "AWS:SourceArn"
-      values   = ["${ formatlist("arn:aws:cloudwatch:*:%s:alarm:${ aws_sns_topic.alarm_high_priority.name }", data.terraform_remote_state.organization.account_ids ) }"]
+      values   = ["${ formatlist("arn:aws:cloudwatch:*:%s:alarm:*", data.terraform_remote_state.organization.account_ids ) }"]
+    }
+  }
+
+  statement {
+    sid    = "AllowAllAccountsSESPublish"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["ses.amazonaws.com"]
+    }
+
+    actions = [
+      "SNS:Publish",
+    ]
+
+    resources = ["${ aws_sns_topic.alarm_low_priority.arn }"]
+
+    condition {
+      test     = "ArnLike"
+      variable = "AWS:SourceArn"
+      values   = ["${ formatlist("arn:aws:ses:*:%s:*", data.terraform_remote_state.organization.account_ids ) }"]
     }
   }
 }

@@ -10,6 +10,7 @@ resource "aws_route53_record" "ses_txt_verification" {
 
 resource "aws_route53_record" "ses_dkim_verification" {
   provider = "aws.dns"
+  count    = 3
 
   zone_id = "${ data.aws_route53_zone.zone.zone_id }"
   name    = "${ element( aws_ses_domain_dkim.ses.dkim_tokens, count.index ) }._domainkey.${ aws_ses_domain_identity.ses.domain }"
