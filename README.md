@@ -70,4 +70,3 @@ modules that are expensive (`vpc`, `config`) will work but may not be in use bec
 
 - [ ] Automated plan/apply CI/CD using Atlantis
 - [ ] Automated linting of terraform and README
-- [ ] Updates to work with terraform 0.12
