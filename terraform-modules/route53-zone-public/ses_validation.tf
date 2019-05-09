@@ -3,74 +3,74 @@ locals {
 }
 
 resource "aws_ses_domain_identity" "ses" {
-  count = "${ var.verify_ses ? 1 : 0 }"
+  count = var.verify_ses ? 1 : 0
 
-  domain = "${ var.domain }"
+  domain = var.domain
 }
 
 resource "aws_ses_domain_mail_from" "ses" {
-  count = "${ var.verify_ses ? 1 : 0 }"
+  count = var.verify_ses ? 1 : 0
 
-  domain                 = "${ aws_ses_domain_identity.ses.domain }"
-  mail_from_domain       = "bounce.${ aws_ses_domain_identity.ses.domain }"
+  domain                 = aws_ses_domain_identity.ses[0].domain
+  mail_from_domain       = "bounce.${aws_ses_domain_identity.ses[0].domain}"
   behavior_on_mx_failure = "RejectMessage"
 }
 
 resource "aws_ses_domain_dkim" "ses" {
-  count = "${ var.verify_ses ? 1 : 0 }"
+  count = var.verify_ses ? 1 : 0
 
-  domain = "${ aws_ses_domain_identity.ses.domain }"
+  domain = aws_ses_domain_identity.ses[0].domain
 }
 
 resource "aws_ses_identity_notification_topic" "topics" {
-  count = "${ var.verify_ses ? length(local.ses_notification_types) : 0 }"
+  count = var.verify_ses ? length(local.ses_notification_types) : 0
 
-  topic_arn         = "${ var.ses_sns_arn }"
-  notification_type = "${ local.ses_notification_types[count.index] }"
-  identity          = "${ aws_ses_domain_identity.ses.domain }"
+  topic_arn         = var.ses_sns_arn
+  notification_type = local.ses_notification_types[count.index]
+  identity          = aws_ses_domain_identity.ses[0].domain
 }
 
 resource "aws_ses_domain_identity_verification" "ses" {
-  domain = "${ aws_ses_domain_identity.ses.id }"
+  domain = aws_ses_domain_identity.ses[0].id
 
-  depends_on = ["aws_route53_record.ses_txt_verification"]
+  depends_on = [aws_route53_record.ses_txt_verification]
 }
 
 resource "aws_route53_record" "ses_txt_verification" {
-  count = "${ var.verify_ses ? 1 : 0 }"
+  count = var.verify_ses ? 1 : 0
 
-  zone_id = "${ aws_route53_zone.zone.id }"
-  name    = "_amazonses.${ aws_ses_domain_identity.ses.domain }"
+  zone_id = aws_route53_zone.zone.id
+  name    = "_amazonses.${aws_ses_domain_identity.ses[0].domain}"
   type    = "TXT"
   ttl     = 3600
-  records = ["${ aws_ses_domain_identity.ses.verification_token }"]
+  records = [aws_ses_domain_identity.ses[0].verification_token]
 }
 
 resource "aws_route53_record" "ses_dkim_verification" {
-  count = "${ var.verify_ses ? 3 : 0 }"
+  count = var.verify_ses ? 3 : 0
 
-  zone_id = "${ aws_route53_zone.zone.id }"
-  name    = "${ element( aws_ses_domain_dkim.ses.dkim_tokens, count.index ) }._domainkey.${ aws_ses_domain_identity.ses.domain }"
+  zone_id = aws_route53_zone.zone.id
+  name    = "${element(aws_ses_domain_dkim.ses[0].dkim_tokens, count.index)}._domainkey.${aws_ses_domain_identity.ses[0].domain}"
   type    = "CNAME"
   ttl     = 3600
-  records = ["${ element( aws_ses_domain_dkim.ses.dkim_tokens, count.index ) }.dkim.amazonses.com"]
+  records = ["${element(aws_ses_domain_dkim.ses[0].dkim_tokens, count.index)}.dkim.amazonses.com"]
 }
 
 resource "aws_route53_record" "ses_mailfrom_mx_verification" {
-  count = "${ var.verify_ses ? 1 : 0 }"
+  count = var.verify_ses ? 1 : 0
 
-  zone_id = "${ aws_route53_zone.zone.id }"
-  name    = "${ aws_ses_domain_mail_from.ses.mail_from_domain }"
+  zone_id = aws_route53_zone.zone.id
+  name    = aws_ses_domain_mail_from.ses[0].mail_from_domain
   type    = "MX"
   ttl     = 3600
-  records = ["10 feedback-smtp.${ var.ses_region }.amazonses.com"]
+  records = ["10 feedback-smtp.${var.ses_region}.amazonses.com"]
 }
 
 resource "aws_route53_record" "ses_mailfrom_spf_verification" {
-  count = "${ var.verify_ses ? 1 : 0 }"
+  count = var.verify_ses ? 1 : 0
 
-  zone_id = "${ aws_route53_zone.zone.id }"
-  name    = "${ aws_ses_domain_mail_from.ses.mail_from_domain }"
+  zone_id = aws_route53_zone.zone.id
+  name    = aws_ses_domain_mail_from.ses[0].mail_from_domain
   type    = "TXT"
   ttl     = 3600
   records = ["v=spf1 include:amazonses.com -all"]
