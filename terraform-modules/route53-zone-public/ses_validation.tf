@@ -1,5 +1,5 @@
 locals {
-  ses_notification_types = ["Bounce", "Complaint", "Delivery"]
+  ses_notification_types = ["Bounce", "Complaint"]
 }
 
 resource "aws_ses_domain_identity" "ses" {

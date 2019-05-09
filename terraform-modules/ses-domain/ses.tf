@@ -1,5 +1,5 @@
 locals {
-  ses_notification_types = ["Bounce", "Complaint", "Delivery"]
+  ses_notification_types = ["Bounce", "Complaint"]
 }
 
 resource "aws_ses_domain_identity" "ses" {
@@ -23,7 +23,8 @@ resource "aws_ses_domain_dkim" "ses" {
 }
 
 resource "aws_ses_identity_notification_topic" "topics" {
-  count = "${ length(local.ses_notification_types) }"
+  provider = "aws.ses"
+  count    = "${ length(local.ses_notification_types) }"
 
   topic_arn         = "${ var.ses_sns_arn }"
   notification_type = "${ local.ses_notification_types[count.index] }"
