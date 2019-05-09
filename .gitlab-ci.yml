@@ -6,4 +6,5 @@ stages:
 validate:
   stage: validate
   script:
+    - markdownlint README.md
     - terraform fmt -check -diff
