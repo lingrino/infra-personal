@@ -4,5 +4,6 @@ resource "aws_key_pair" "main" {
 }
 
 output "keypair_main_name" {
-  value = "${ aws_key_pair.main.key_name }"
+  description = "The name of the main ssh keypair"
+  value       = "${ aws_key_pair.main.key_name }"
 }
