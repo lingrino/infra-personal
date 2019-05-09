@@ -43,10 +43,7 @@ data "aws_iam_policy_document" "alarm_high_priority" {
     condition {
       test     = "ArnLike"
       variable = "AWS:SourceArn"
-      values = formatlist(
-        "arn:aws:cloudwatch:*:%s:alarm:*",
-        data.terraform_remote_state.organization.outputs.account_ids,
-      )
+      values = formatlist("arn:aws:cloudwatch:*:%s:alarm:*", data.terraform_remote_state.organization.outputs.account_ids)
     }
   }
 
