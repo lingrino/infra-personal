@@ -1,5 +1,5 @@
 resource "aws_s3_bucket_public_access_block" "billing" {
-  bucket = "${ aws_s3_bucket.billing.id }"
+  bucket = aws_s3_bucket.billing.id
 
   ignore_public_acls      = true
   block_public_acls       = true
@@ -11,7 +11,7 @@ resource "aws_cur_report_definition" "lingrino" {
   report_name = "lingrino"
 
   s3_region = "us-east-1"
-  s3_bucket = "${ aws_s3_bucket.billing.id }"
+  s3_bucket = aws_s3_bucket.billing.id
 
   time_unit                  = "HOURLY"
   format                     = "textORcsv"
@@ -63,17 +63,17 @@ resource "aws_s3_bucket" "billing" {
     }
   }
 
-  tags = "${ merge(
-    map("Name", "billing"),
-    map("description", "Stores all of our AWS billing reports"),
-    map("service", "billing"),
-    var.tags )
-  }"
+  tags = merge(
+    {"Name" = "billing"},
+    {"description" = "Stores all of our AWS billing reports"},
+    {"service" = "billing"},
+    var.tags,
+  )
 }
 
 resource "aws_s3_bucket_policy" "billing" {
-  bucket = "${ aws_s3_bucket.billing.id }"
-  policy = "${ data.aws_iam_policy_document.bucket_policy_billing.json }"
+  bucket = aws_s3_bucket.billing.id
+  policy = data.aws_iam_policy_document.bucket_policy_billing.json
 }
 
 # https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-getting-started.html#step-2
@@ -92,7 +92,7 @@ data "aws_iam_policy_document" "bucket_policy_billing" {
       "s3:GetBucketPolicy",
     ]
 
-    resources = ["${ aws_s3_bucket.billing.arn }"]
+    resources = [aws_s3_bucket.billing.arn]
   }
 
   statement {
@@ -106,6 +106,6 @@ data "aws_iam_policy_document" "bucket_policy_billing" {
 
     actions = ["s3:PutObject"]
 
-    resources = ["${ aws_s3_bucket.billing.arn }/*"]
+    resources = ["${aws_s3_bucket.billing.arn}/*"]
   }
 }
