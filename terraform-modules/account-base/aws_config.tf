@@ -1,17 +1,17 @@
 data "aws_arn" "config_bucket" {
-  arn = "${ var.bucket_config_arn }"
+  arn = var.bucket_config_arn
 }
 
 resource "aws_config_configuration_recorder_status" "config" {
-  name       = "${ aws_config_configuration_recorder.config.name }"
+  name       = aws_config_configuration_recorder.config.name
   is_enabled = true
 
-  depends_on = ["aws_config_delivery_channel.config"]
+  depends_on = [aws_config_delivery_channel.config]
 }
 
 resource "aws_config_configuration_recorder" "config" {
-  name     = "recorder-${ var.account_name }"
-  role_arn = "${ aws_iam_role.config_recorder.arn }"
+  name     = "recorder-${var.account_name}"
+  role_arn = aws_iam_role.config_recorder.arn
 
   recording_group {
     all_supported                 = true
@@ -23,26 +23,26 @@ resource "aws_iam_role" "config_recorder" {
   name_prefix = "config-recorder-"
   description = "Allows AWS Config to record resource changes and write them to to S3"
 
-  assume_role_policy = "${ data.aws_iam_policy_document.arp_config_recorder.json }"
+  assume_role_policy = data.aws_iam_policy_document.arp_config_recorder.json
 
-  tags = "${ merge(
-    map("Name", "config-recorder"),
-    map("description", "Allows AWS Config to record resource changes and write them to to S3"),
-    map("service", "config"),
-    var.tags
-  )}"
+  tags = merge(
+    {"Name" = "config-recorder"},
+    {"description" = "Allows AWS Config to record resource changes and write them to to S3"},
+    {"service" = "config"},
+    var.tags,
+  )
 }
 
 resource "aws_iam_role_policy_attachment" "config_recorder_service" {
-  role       = "${ aws_iam_role.config_recorder.name }"
+  role       = aws_iam_role.config_recorder.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSConfigRole"
 }
 
 resource "aws_iam_role_policy" "config_recorder_delivery" {
   name_prefix = "config-recorder-delivery-"
 
-  role   = "${ aws_iam_role.config_recorder.id }"
-  policy = "${ data.aws_iam_policy_document.config_recorder_delivery.json }"
+  role   = aws_iam_role.config_recorder.id
+  policy = data.aws_iam_policy_document.config_recorder_delivery.json
 }
 
 data "aws_iam_policy_document" "arp_config_recorder" {
@@ -50,7 +50,7 @@ data "aws_iam_policy_document" "arp_config_recorder" {
     sid    = "AllowConfigAssume"
     effect = "Allow"
 
-    principals = {
+    principals {
       type        = "Service"
       identifiers = ["config.amazonaws.com"]
     }
@@ -69,7 +69,7 @@ data "aws_iam_policy_document" "config_recorder_delivery" {
 
     actions = ["s3:GetBucketAcl"]
 
-    resources = ["${ var.bucket_config_arn }"]
+    resources = [var.bucket_config_arn]
   }
 
   statement {
@@ -78,7 +78,7 @@ data "aws_iam_policy_document" "config_recorder_delivery" {
 
     actions = ["s3:PutObject"]
 
-    resources = ["${ var.bucket_config_arn }/*"]
+    resources = ["${var.bucket_config_arn}/*"]
 
     condition {
       test     = "StringLike"
@@ -89,8 +89,9 @@ data "aws_iam_policy_document" "config_recorder_delivery" {
 }
 
 resource "aws_config_delivery_channel" "config" {
-  name           = "delivery-channel-${ var.account_name }"
-  s3_bucket_name = "${ data.aws_arn.config_bucket.resource }"
+  name           = "delivery-channel-${var.account_name}"
+  s3_bucket_name = data.aws_arn.config_bucket.resource
 
-  depends_on = ["aws_config_configuration_recorder.config"]
+  depends_on = [aws_config_configuration_recorder.config]
 }
+s

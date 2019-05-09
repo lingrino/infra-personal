@@ -4,7 +4,7 @@ data "aws_iam_policy_document" "arp_users" {
 
     principals {
       type        = "AWS"
-      identifiers = ["${ var.account_id_auth }"]
+      identifiers = [var.account_id_auth]
     }
 
     actions = ["sts:AssumeRole"]
