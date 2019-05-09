@@ -1,37 +1,37 @@
 variable "name_prefix" {
-  type        = "string"
+  type        = string
   description = "A prefix to apply to prepend to the name of all resources"
 }
 
 variable "vpc_cidr_block" {
-  type        = "string"
+  type        = string
   description = "The cidr block to use for the VPC"
 }
 
 variable "azs" {
-  type        = "list"
+  type        = list(string)
   description = "A list of azs to launch subnets in"
 }
 
 variable "tags" {
-  type        = "map"
+  type        = map(string)
   description = "A map of tags to add to all resources"
 }
 
 variable "create_vpn_gateway" {
-  type        = "string"
+  type        = string
   description = "Whether or not to create a VPN gateway. True or False."
   default     = true
 }
 
 variable "create_nat_gateways" {
-  type        = "string"
+  type        = string
   description = "Whether or not to create NAT gateways. These can be expensive. True or False."
   default     = true
 }
 
 variable "enabled_endpoint_gateways" {
-  type        = "list"
+  type        = list(string)
   description = "A list of vpc endpoint gateways to enable (do not include com.amazonaws.region)"
 
   default = [
@@ -41,7 +41,7 @@ variable "enabled_endpoint_gateways" {
 }
 
 variable "enabled_endpoint_interfaces" {
-  type        = "list"
+  type        = list(string)
   description = "A list of vpc endpoint interfaces to enable (do not include com.amazonaws.region)"
 
   default = [
