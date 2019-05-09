@@ -23,7 +23,7 @@ resource "github_repository" "infra-personal" {
 }
 
 resource "github_branch_protection" "infra-personal" {
-  repository     = "${ github_repository.infra-personal.name }"
+  repository     = github_repository.infra-personal.name
   branch         = "master"
   enforce_admins = true
 

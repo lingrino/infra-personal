@@ -24,7 +24,7 @@ resource "github_repository" "vaku" {
 }
 
 resource "github_branch_protection" "vaku" {
-  repository     = "${ github_repository.vaku.name }"
+  repository     = github_repository.vaku.name
   branch         = "master"
   enforce_admins = true
 

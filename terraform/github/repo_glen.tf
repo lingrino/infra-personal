@@ -22,7 +22,7 @@ resource "github_repository" "glen" {
 }
 
 resource "github_branch_protection" "glen" {
-  repository     = "${ github_repository.glen.name }"
+  repository     = github_repository.glen.name
   branch         = "master"
   enforce_admins = true
 
