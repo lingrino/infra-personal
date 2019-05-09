@@ -65,10 +65,7 @@ data "aws_iam_policy_document" "alarm_high_priority" {
     condition {
       test     = "StringEquals"
       variable = "AWS:Referer"
-      values = formatlist(
-        "arn:aws:ses:*:%s:*",
-        data.terraform_remote_state.organization.outputs.account_ids,
-      )
+      values = formatlist("arn:aws:ses:*:%s:*", data.terraform_remote_state.organization.outputs.account_ids)
     }
   }
 }
