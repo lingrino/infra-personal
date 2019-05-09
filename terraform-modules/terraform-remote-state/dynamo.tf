@@ -1,5 +1,5 @@
 resource "aws_dynamodb_table" "state" {
-  count = "${ var.create_lock_table ? 1 : 0 }"
+  count = var.create_lock_table ? 1 : 0
 
   name         = "TerraformRemoteStateLock"
   billing_mode = "PAY_PER_REQUEST"
@@ -15,8 +15,8 @@ resource "aws_dynamodb_table" "state" {
     enabled = true
   }
 
-  tags = "${ merge(
-    map("Name", "TerraformRemoteStateLock"),
-    var.tags )
-  }"
+  tags = merge(
+    {"Name" = "TerraformRemoteStateLock"},
+    var.tags,
+  )
 }
