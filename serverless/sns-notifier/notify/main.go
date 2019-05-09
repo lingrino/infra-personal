@@ -13,93 +13,91 @@ import (
 )
 
 const (
-	Sender    = "sns-notifier@audit.lingrino.com"
-	Recipient = "srlingren@gmail.com"
+	from = "sns-notifier@audit.lingrino.com"
+	to   = "srlingren@gmail.com"
 
-	// The subject line for the email.
-	Subject = "Amazon SES Test (AWS SDK for Go)"
+	subject = "SNS Notifier: Alert On %s"
 
-	// The HTML body for the email.
-	HtmlBody = "<h1>Amazon SES Test Email (AWS SDK for Go)</h1><p>This email was sent with " +
-		"<a href='https://aws.amazon.com/ses/'>Amazon SES</a> using the " +
-		"<a href='https://aws.amazon.com/sdk-for-go/'>AWS SDK for Go</a>.</p>"
+	// This could be way better if the JSON was formatted and highlighted
+	htmlBody = "<h2>SNS Notifier</h2>" +
+		"Source: %s" +
+		"<pre><code>" +
+		"%s" +
+		"</code></pre>"
 
-	//The email body for recipients with non-HTML email clients.
-	TextBody = "This email was sent with Amazon SES using the AWS SDK for Go."
-
-	// The character encoding for the email.
-	CharSet = "UTF-8"
+	textBody = "SNS Notifier\nSource: %s\n%s"
 )
 
 func main() {
 	lambda.Start(Handler)
 }
 
-// Handler handles
+// Handler handles our SNS events
 func Handler(ctx context.Context, snsEvent events.SNSEvent) {
-
 	// Create an SES session
-	session, err := session.NewSession(&aws.Config{
+	awsC, err := session.NewSession(&aws.Config{
 		Region: aws.String("us-east-1")},
 	)
-	svc := ses.New(session)
-
-	// Build an Email Struct
-	emailInput := &ses.SendEmailInput{
-		Destination: &ses.Destination{
-			CcAddresses: []*string{},
-			ToAddresses: []*string{
-				aws.String(Recipient),
-			},
-		},
-		Source: aws.String(Sender),
-		Message: &ses.Message{
-			Body: &ses.Body{
-				Html: &ses.Content{
-					Charset: aws.String(CharSet),
-					Data:    aws.String(HtmlBody),
-				},
-				Text: &ses.Content{
-					Charset: aws.String(CharSet),
-					Data:    aws.String(TextBody),
-				},
-			},
-			Subject: &ses.Content{
-				Charset: aws.String(CharSet),
-				Data:    aws.String(Subject),
-			},
-		},
-	}
-
-	// Attempt to send the email.
-	result, err := svc.SendEmail(emailInput)
-
-	// Display error messages if they occur.
 	if err != nil {
-		if aerr, ok := err.(awserr.Error); ok {
-			switch aerr.Code() {
-			case ses.ErrCodeMessageRejected:
-				fmt.Println(ses.ErrCodeMessageRejected, aerr.Error())
-			case ses.ErrCodeMailFromDomainNotVerifiedException:
-				fmt.Println(ses.ErrCodeMailFromDomainNotVerifiedException, aerr.Error())
-			case ses.ErrCodeConfigurationSetDoesNotExistException:
-				fmt.Println(ses.ErrCodeConfigurationSetDoesNotExistException, aerr.Error())
-			default:
-				fmt.Println(aerr.Error())
-			}
-		} else {
-			fmt.Println(err.Error())
-		}
-
-		return
+		fmt.Println(err)
 	}
+	sesC := ses.New(awsC)
 
-	fmt.Println("Email Sent to address: " + Recipient)
-	fmt.Println(result)
-
+	// Send an email for each SNS event
 	for _, record := range snsEvent.Records {
 		snsRecord := record.SNS
+		snsARN := snsRecord.TopicArn
+		snsMSG := snsRecord.Message
 
-		fmt.Printf("[%s %s] Message = %s \n", record.EventSource, snsRecord.Timestamp, snsRecord.Message)
+		// Build an Email Struct
+		emailInput := &ses.SendEmailInput{
+			Source: aws.String(from),
+			Destination: &ses.Destination{
+				CcAddresses: []*string{},
+				ToAddresses: []*string{
+					aws.String(to),
+				},
+			},
+			Message: &ses.Message{
+				Subject: &ses.Content{
+					Charset: aws.String("UTF-8"),
+					Data:    aws.String(fmt.Sprintf(subject, snsARN)),
+				},
+				Body: &ses.Body{
+					Html: &ses.Content{
+						Charset: aws.String("UTF-8"),
+						Data:    aws.String(fmt.Sprintf(htmlBody, snsARN, snsMSG)),
+					},
+					Text: &ses.Content{
+						Charset: aws.String("UTF-8"),
+						Data:    aws.String(fmt.Sprintf(textBody, snsARN, snsMSG)),
+					},
+				},
+			},
+		}
+
+		// Send the Email
+		result, err := sesC.SendEmail(emailInput)
+		if err != nil {
+			if aerr, ok := err.(awserr.Error); ok {
+				switch aerr.Code() {
+				case ses.ErrCodeMessageRejected:
+					fmt.Println(ses.ErrCodeMessageRejected, aerr.Error())
+				case ses.ErrCodeMailFromDomainNotVerifiedException:
+					fmt.Println(ses.ErrCodeMailFromDomainNotVerifiedException, aerr.Error())
+				case ses.ErrCodeConfigurationSetDoesNotExistException:
+					fmt.Println(ses.ErrCodeConfigurationSetDoesNotExistException, aerr.Error())
+				default:
+					fmt.Println(aerr.Error())
+				}
+			} else {
+				fmt.Println(err.Error())
+			}
+			return
+		}
+
+		// Log Result
+		fmt.Println("Email Sent to address: " + to)
+		fmt.Println(result.MessageId)
 	}
 }

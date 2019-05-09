@@ -1,15 +1,15 @@
-.PHONY: build clean deploy gomodgen
+.PHONY: build clean deploy gomod
 
-build: gomodgen
+build: gomod
 	export GO111MODULE=on
 	env GOOS=linux go build -ldflags="-s -w" -o bin/notify notify/main.go
 
 clean:
-	rm -rf ./bin ./vendor Gopkg.lock
+	rm -rf ./bin
 
 deploy: clean build
 	sls deploy --verbose
 
-gomodgen:
-	chmod u+x gomod.sh
-	./gomod.sh
+gomod:
+	go get -u
+	go mod tidy

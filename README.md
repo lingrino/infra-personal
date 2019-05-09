@@ -71,5 +71,3 @@ modules that are expensive (`vpc`, `config`) will work but may not be in use bec
 - [ ] Automated plan/apply CI/CD using Atlantis
 - [ ] Automated linting of terraform and README
 - [ ] Updates to work with terraform 0.12
-- [ ] SNS topic that notifies a lambda that notifies me (and static site alarms go here)
-- [ ] Add SES to SNS for bounces, complaints for all doamins in all accounts

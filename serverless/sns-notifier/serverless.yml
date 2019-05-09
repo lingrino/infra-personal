@@ -42,3 +42,4 @@ functions:
     handler: bin/notify
     events:
       - sns: arn:aws:sns:us-east-1:418875065733:alarm_high_priority
+      - sns: arn:aws:sns:us-east-1:418875065733:alarm_low_priority

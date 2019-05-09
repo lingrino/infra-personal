@@ -1,10 +1,45 @@
-#  Local .terraform directories
+###################################################################################
+# Go                                                                            ###
+# https://github.com/github/gitignore/blob/master/Go.gitignore                  ###
+###################################################################################
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, build with `go test -c`
+*.test
+
+###################################################################################
+# Terraform                                                                     ###
+# https://github.com/github/gitignore/blob/master/Terraform.gitignore           ###
+###################################################################################
+# Local .terraform directories
 **/.terraform/*
 
 # .tfstate files
 *.tfstate
 *.tfstate.*
 
-# Serverless files
-**/.serverless/*
-**/bin/*
+# Crash log files
+crash.log
+
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+###################################################################################
+# Serverless                                                                    ###
+###################################################################################
+serverless/**/.serverless/*
+serverless/**/bin/*
+
+###################################################################################
+# VSCode                                                                        ###
+###################################################################################
+*.vscode
