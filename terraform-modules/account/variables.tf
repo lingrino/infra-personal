@@ -1,9 +1,9 @@
 variable "name" {
-  type        = "string"
+  type        = string
   description = "The name of the account to create"
 }
 
 variable "email" {
-  type        = "string"
+  type        = string
   description = "The email address to create the account with"
 }
