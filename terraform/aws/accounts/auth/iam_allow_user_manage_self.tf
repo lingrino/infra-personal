@@ -1,9 +1,9 @@
 resource "aws_iam_group_membership" "allow_user_manage_self" {
   name  = "allow-user-manage-self-members"
-  group = "${ aws_iam_group.allow_user_manage_self.name }"
+  group = aws_iam_group.allow_user_manage_self.name
 
   users = [
-    "${ aws_iam_user.srlingren_gmail_com.name }",
+    aws_iam_user.srlingren_gmail_com.name,
   ]
 }
 
@@ -13,15 +13,15 @@ resource "aws_iam_group" "allow_user_manage_self" {
 
 resource "aws_iam_policy_attachment" "allow_user_manage_self" {
   name       = "allow-user-manage-self-policy-attachments"
-  policy_arn = "${ aws_iam_policy.allow_user_manage_self.arn }"
-  groups     = ["${ aws_iam_group.allow_user_manage_self.name }"]
+  policy_arn = aws_iam_policy.allow_user_manage_self.arn
+  groups     = [aws_iam_group.allow_user_manage_self.name]
 }
 
 # From https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_aws_my-sec-creds-self-manage.html
 resource "aws_iam_policy" "allow_user_manage_self" {
   name        = "allow-user-manage-self"
   description = "This policy allows users to manage their own passwords and MFA devices but nothing else unless they authenticate with MFA"
-  policy      = "${ data.aws_iam_policy_document.allow_user_manage_self.json }"
+  policy      = data.aws_iam_policy_document.allow_user_manage_self.json
 }
 
 data "aws_iam_policy_document" "allow_user_manage_self" {
@@ -52,7 +52,7 @@ data "aws_iam_policy_document" "allow_user_manage_self" {
       "iam:UpdateLoginProfile",
     ]
 
-    resources = ["arn:aws:iam::${ var.account_id }:user/$${ aws:username }"]
+    resources = ["arn:aws:iam::${var.account_id}:user/$${ aws:username }"]
   }
 
   statement {
@@ -66,7 +66,7 @@ data "aws_iam_policy_document" "allow_user_manage_self" {
       "iam:UpdateAccessKey",
     ]
 
-    resources = ["arn:aws:iam::${ var.account_id }:user/$${ aws:username }"]
+    resources = ["arn:aws:iam::${var.account_id}:user/$${ aws:username }"]
   }
 
   statement {
@@ -80,7 +80,7 @@ data "aws_iam_policy_document" "allow_user_manage_self" {
       "iam:UploadSigningCertificate",
     ]
 
-    resources = ["arn:aws:iam::${ var.account_id }:user/$${ aws:username }"]
+    resources = ["arn:aws:iam::${var.account_id}:user/$${ aws:username }"]
   }
 
   statement {
@@ -95,7 +95,7 @@ data "aws_iam_policy_document" "allow_user_manage_self" {
       "iam:UploadSSHPublicKey",
     ]
 
-    resources = ["arn:aws:iam::${ var.account_id }:user/$${ aws:username }"]
+    resources = ["arn:aws:iam::${var.account_id}:user/$${ aws:username }"]
   }
 
   statement {
@@ -110,7 +110,7 @@ data "aws_iam_policy_document" "allow_user_manage_self" {
       "iam:UpdateServiceSpecificCredential",
     ]
 
-    resources = ["arn:aws:iam::${ var.account_id }:user/$${ aws:username }"]
+    resources = ["arn:aws:iam::${var.account_id}:user/$${ aws:username }"]
   }
 
   statement {
@@ -122,7 +122,7 @@ data "aws_iam_policy_document" "allow_user_manage_self" {
       "iam:DeleteVirtualMFADevice",
     ]
 
-    resources = ["arn:aws:iam::${ var.account_id }:mfa/$${ aws:username }"]
+    resources = ["arn:aws:iam::${var.account_id}:mfa/$${ aws:username }"]
   }
 
   statement {
@@ -136,7 +136,7 @@ data "aws_iam_policy_document" "allow_user_manage_self" {
       "iam:ResyncMFADevice",
     ]
 
-    resources = ["arn:aws:iam::${ var.account_id }:user/$${ aws:username }"]
+    resources = ["arn:aws:iam::${var.account_id}:user/$${ aws:username }"]
   }
 
   statement {

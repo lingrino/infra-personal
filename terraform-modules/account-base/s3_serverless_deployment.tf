@@ -4,26 +4,26 @@ resource "aws_ssm_parameter" "s3_serverless_deployment_arn" {
   name        = "/s3/serverless-deployment/arn"
   description = "The ARN of the S3 serverless deployment bucket"
   type        = "String"
-  value       = "${ aws_s3_bucket.serverless_deployment.arn }"
+  value       = aws_s3_bucket.serverless_deployment.arn
 
-  tags = "${ merge(
-    map("Name", "/s3/serverless-deployment/arn"),
-    map("description", "The ARN of the S3 serverless deployment bucket"),
+  tags = merge(
+    {"Name" = "/s3/serverless-deployment/arn"},
+    {"description" = "The ARN of the S3 serverless deployment bucket"},
     var.tags
-  )}"
+  )
 }
 
 resource "aws_ssm_parameter" "s3_serverless_deployment_name" {
   name        = "/s3/serverless-deployment/name"
   description = "The name of the S3 serverless deployment bucket"
   type        = "String"
-  value       = "${ aws_s3_bucket.serverless_deployment.id }"
+  value       = aws_s3_bucket.serverless_deployment.id
 
-  tags = "${ merge(
-    map("Name", "/s3/serverless-deployment/name"),
-    map("description", "The name of the S3 serverless deployment bucket"),
+  tags = merge(
+    {"Name" = "/s3/serverless-deployment/name"},
+    {"description" = "The name of the S3 serverless deployment bucket"},
     var.tags
-  )}"
+  )
 }
 
 resource "aws_s3_bucket" "serverless_deployment" {
@@ -43,17 +43,17 @@ resource "aws_s3_bucket" "serverless_deployment" {
     }
   }
 
-  tags = "${ merge(
-    map("Name", "serverless-deployment"),
-    map("description", "A bucket to store all serverless deployments in our account"),
-    map("service", "serverless"),
+  tags = merge(
+    {"Name" = "serverless-deployment"},
+    {"description" = "A bucket to store all serverless deployments in our account"},
+    {"service" = "serverless"},
     var.tags
-  )}"
+  )
 }
 
 resource "aws_s3_bucket_policy" "serverless_deployment" {
-  bucket = "${ aws_s3_bucket.serverless_deployment.id }"
-  policy = "${ data.aws_iam_policy_document.bucket_policy_serverless_deployment.json }"
+  bucket = aws_s3_bucket.serverless_deployment.id
+  policy = data.aws_iam_policy_document.bucket_policy_serverless_deployment.json
 }
 
 data "aws_iam_policy_document" "bucket_policy_serverless_deployment" {
@@ -70,7 +70,7 @@ data "aws_iam_policy_document" "bucket_policy_serverless_deployment" {
       "s3:PutObject",
     ]
 
-    resources = ["${ aws_s3_bucket.serverless_deployment.arn }/*"]
+    resources = ["${aws_s3_bucket.serverless_deployment.arn}/*"]
 
     condition {
       test     = "StringNotEquals"
@@ -92,7 +92,7 @@ data "aws_iam_policy_document" "bucket_policy_serverless_deployment" {
       "s3:PutObject",
     ]
 
-    resources = ["${ aws_s3_bucket.serverless_deployment.arn }/*"]
+    resources = ["${aws_s3_bucket.serverless_deployment.arn}/*"]
 
     condition {
       test     = "Null"
@@ -104,10 +104,10 @@ data "aws_iam_policy_document" "bucket_policy_serverless_deployment" {
 
 output "bucket_serverless_deployment_arn" {
   description = "The ARN of the serverless-deployment bucket"
-  value       = "${ aws_s3_bucket.serverless_deployment.arn }"
+  value       = aws_s3_bucket.serverless_deployment.arn
 }
 
 output "bucket_serverless_deployment_name" {
   description = "The name of the serverless-deployment bucket"
-  value       = "${ aws_s3_bucket.serverless_deployment.id }"
+  value       = aws_s3_bucket.serverless_deployment.id
 }

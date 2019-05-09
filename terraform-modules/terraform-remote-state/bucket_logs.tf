@@ -1,5 +1,5 @@
 resource "aws_s3_bucket_public_access_block" "logs" {
-  bucket = "${ aws_s3_bucket.logs.id }"
+  bucket = aws_s3_bucket.logs.id
 
   ignore_public_acls      = true
   block_public_acls       = true
@@ -8,7 +8,7 @@ resource "aws_s3_bucket_public_access_block" "logs" {
 }
 
 resource "aws_s3_bucket" "logs" {
-  bucket_prefix = "${ var.name_prefix }-logs-"
+  bucket_prefix = "${var.name_prefix}-logs-"
   acl           = "log-delivery-write"
   force_destroy = false
 
@@ -48,8 +48,8 @@ resource "aws_s3_bucket" "logs" {
     }
   }
 
-  tags = "${ merge(
-    map("Name", "${ var.name_prefix }-logs"),
-    var.tags )
-  }"
+  tags = merge(
+    {"Name" = "${var.name_prefix}-logs"},
+    var.tags
+  )
 }

@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "s3" {
-  bucket_prefix = "${ var.name_prefix }-"
+  bucket_prefix = "${var.name_prefix}-"
   region        = "us-east-1"
   acl           = "private"
   force_destroy = true
@@ -17,7 +17,7 @@ resource "aws_s3_bucket" "s3" {
   }
 
   lifecycle_rule {
-    id                                     = "${ var.name_prefix }-state-lifecycle"
+    id                                     = "${var.name_prefix}-state-lifecycle"
     enabled                                = true
     abort_incomplete_multipart_upload_days = 1
 
@@ -31,15 +31,15 @@ resource "aws_s3_bucket" "s3" {
     }
   }
 
-  tags = "${ merge(
-    map("Name", "${ var.name_prefix }" ),
-    var.tags )
-  }"
+  tags = merge(
+    {"Name" = var.name_prefix},
+    var.tags
+  )
 }
 
 resource "aws_s3_bucket_policy" "s3" {
-  bucket = "${ aws_s3_bucket.s3.id }"
-  policy = "${ data.aws_iam_policy_document.s3.json }"
+  bucket = aws_s3_bucket.s3.id
+  policy = data.aws_iam_policy_document.s3.json
 }
 
 data "aws_iam_policy_document" "s3" {
@@ -63,7 +63,7 @@ data "aws_iam_policy_document" "s3" {
     }
 
     resources = [
-      "${ aws_s3_bucket.s3.arn }/*",
+      "${aws_s3_bucket.s3.arn}/*",
     ]
   }
 
@@ -73,11 +73,11 @@ data "aws_iam_policy_document" "s3" {
 
     principals {
       type        = "AWS"
-      identifiers = ["${ aws_cloudfront_origin_access_identity.ai.iam_arn }"]
+      identifiers = [aws_cloudfront_origin_access_identity.ai.iam_arn]
     }
 
     actions   = ["s3:ListBucket"]
-    resources = ["${ aws_s3_bucket.s3.arn }"]
+    resources = [aws_s3_bucket.s3.arn]
   }
 
   statement {
@@ -86,10 +86,10 @@ data "aws_iam_policy_document" "s3" {
 
     principals {
       type        = "AWS"
-      identifiers = ["${ aws_cloudfront_origin_access_identity.ai.iam_arn }"]
+      identifiers = [aws_cloudfront_origin_access_identity.ai.iam_arn]
     }
 
     actions   = ["s3:GetObject"]
-    resources = ["${ aws_s3_bucket.s3.arn }/*"]
+    resources = ["${aws_s3_bucket.s3.arn}/*"]
   }
 }

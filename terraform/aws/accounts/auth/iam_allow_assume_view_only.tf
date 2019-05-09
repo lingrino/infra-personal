@@ -1,9 +1,9 @@
 resource "aws_iam_group_membership" "allow_assume_view_only" {
   name  = "allow-assume-view-only-members"
-  group = "${ aws_iam_group.allow_assume_view_only.name }"
+  group = aws_iam_group.allow_assume_view_only.name
 
   users = [
-    "${ aws_iam_user.srlingren_gmail_com.name }",
+    aws_iam_user.srlingren_gmail_com.name,
   ]
 }
 
@@ -13,14 +13,14 @@ resource "aws_iam_group" "allow_assume_view_only" {
 
 resource "aws_iam_policy_attachment" "allow_assume_view_only" {
   name       = "allow-assume-view-only-policy-attachments"
-  policy_arn = "${ aws_iam_policy.allow_assume_view_only.arn }"
-  groups     = ["${ aws_iam_group.allow_assume_view_only.name }"]
+  policy_arn = aws_iam_policy.allow_assume_view_only.arn
+  groups     = [aws_iam_group.allow_assume_view_only.name]
 }
 
 resource "aws_iam_policy" "allow_assume_view_only" {
   name        = "allow-assume-view-only"
   description = "Allow the entity to assume the ViewOnly role"
-  policy      = "${ data.aws_iam_policy_document.allow_assume_view_only.json }"
+  policy      = data.aws_iam_policy_document.allow_assume_view_only.json
 }
 
 data "aws_iam_policy_document" "allow_assume_view_only" {

@@ -39,17 +39,17 @@ resource "aws_s3_bucket" "config" {
     }
   }
 
-  tags = "${ merge(
-    map("Name", "config"),
-    map("description", "Stores all AWS Config history and snapshots"),
-    map("service", "config"),
+  tags = merge(
+    {"Name" = "config"},
+    {"description" = "Stores all AWS Config history and snapshots"},
+    {"service" = "config"},
     var.tags
-  )}"
+  )
 }
 
 resource "aws_s3_bucket_policy" "config" {
-  bucket = "${ aws_s3_bucket.config.id }"
-  policy = "${ data.aws_iam_policy_document.bucket_policy_config.json }"
+  bucket = aws_s3_bucket.config.id
+  policy = data.aws_iam_policy_document.bucket_policy_config.json
 }
 
 data "aws_iam_policy_document" "bucket_policy_config" {
@@ -64,7 +64,7 @@ data "aws_iam_policy_document" "bucket_policy_config" {
 
     actions = ["s3:GetBucketAcl"]
 
-    resources = ["${ aws_s3_bucket.config.arn }"]
+    resources = [aws_s3_bucket.config.arn]
   }
 
   statement {
@@ -78,7 +78,7 @@ data "aws_iam_policy_document" "bucket_policy_config" {
 
     actions = ["s3:PutObject"]
 
-    resources = ["${ aws_s3_bucket.config.arn }/*"]
+    resources = ["${aws_s3_bucket.config.arn}/*"]
 
     condition {
       test     = "StringLike"
@@ -90,10 +90,10 @@ data "aws_iam_policy_document" "bucket_policy_config" {
 
 output "bucket_config_arn" {
   description = "The ARN of the config bucket"
-  value       = "${ aws_s3_bucket.config.arn }"
+  value       = aws_s3_bucket.config.arn
 }
 
 output "bucket_config_name" {
   description = "The name of the config bucket"
-  value       = "${ aws_s3_bucket.config.id }"
+  value       = aws_s3_bucket.config.id
 }

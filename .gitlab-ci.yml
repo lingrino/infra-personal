@@ -1,8 +1,4 @@
-image:
-  name: hashicorp/terraform:light
-  entrypoint:
-    - '/usr/bin/env'
-    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+image: registry.gitlab.com/lingrino/docker/ci:latest
 
 stages:
   - validate
@@ -10,4 +6,5 @@ stages:
 validate:
   stage: validate
   script:
+    - markdownlint README.md
     - terraform fmt -check -diff

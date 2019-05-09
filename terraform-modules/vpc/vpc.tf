@@ -1,5 +1,5 @@
 resource "aws_vpc" "vpc" {
-  cidr_block = "${ var.vpc_cidr_block }"
+  cidr_block = var.vpc_cidr_block
 
   enable_dns_support             = true
   enable_dns_hostnames           = true
@@ -8,8 +8,8 @@ resource "aws_vpc" "vpc" {
 
   assign_generated_ipv6_cidr_block = true
 
-  tags = "${ merge(
-    map( "Name", "${ var.name_prefix }_vpc" ),
+  tags = merge(
+    {"Name" = "${var.name_prefix}_vpc"},
     var.tags
-  )}"
+  )
 }

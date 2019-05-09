@@ -12,10 +12,10 @@ terraform {
 data "terraform_remote_state" "account_audit" {
   backend = "remote"
 
-  config {
+  config = {
     organization = "lingrino"
 
-    workspaces {
+    workspaces = {
       name = "aws-accounts-audit"
     }
   }

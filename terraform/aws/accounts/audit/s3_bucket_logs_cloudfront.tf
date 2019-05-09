@@ -39,17 +39,17 @@ resource "aws_s3_bucket" "logs_cloudfront" {
     }
   }
 
-  tags = "${ merge(
-    map("Name", "logs-cloudfront"),
-    map("description", "Stores all of our cloudfront access logs"),
-    map("service", "logs-cloudfront"),
-    var.tags )
-  }"
+  tags = merge(
+    {"Name" = "logs-cloudfront"},
+    {"description" = "Stores all of our cloudfront access logs"},
+    {"service" = "logs-cloudfront"},
+    var.tags
+  )
 }
 
 resource "aws_s3_bucket_policy" "logs_cloudfront" {
-  bucket = "${ aws_s3_bucket.logs_cloudfront.id }"
-  policy = "${ data.aws_iam_policy_document.bucket_policy_logs_cloudfront.json }"
+  bucket = aws_s3_bucket.logs_cloudfront.id
+  policy = data.aws_iam_policy_document.bucket_policy_logs_cloudfront.json
 }
 
 # https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-access-logs.html
@@ -59,8 +59,8 @@ data "aws_iam_policy_document" "bucket_policy_logs_cloudfront" {
     effect = "Allow"
 
     principals {
-      type        = "AWS"
-      identifiers = ["${ formatlist("arn:aws:iam::%s:root", data.terraform_remote_state.organization.account_ids ) }"]
+      type = "AWS"
+      identifiers = formatlist("arn:aws:iam::%s:root",data.terraform_remote_state.organization.outputs.account_ids)
     }
 
     actions = [
@@ -68,21 +68,21 @@ data "aws_iam_policy_document" "bucket_policy_logs_cloudfront" {
       "s3:PutBucketAcl",
     ]
 
-    resources = ["${ aws_s3_bucket.logs_cloudfront.arn }"]
+    resources = [aws_s3_bucket.logs_cloudfront.arn]
   }
 }
 
 output "bucket_logs_cloudfront_arn" {
   description = "The ARN of the logs cloudfront bucket"
-  value       = "${ aws_s3_bucket.logs_cloudfront.arn }"
+  value       = aws_s3_bucket.logs_cloudfront.arn
 }
 
 output "bucket_logs_cloudfront_name" {
   description = "The name of the logs cloudfront bucket"
-  value       = "${ aws_s3_bucket.logs_cloudfront.id }"
+  value       = aws_s3_bucket.logs_cloudfront.id
 }
 
 output "bucket_logs_cloudfront_domain" {
   description = "The domain of the logs cloudfront bucket"
-  value       = "${ aws_s3_bucket.logs_cloudfront.bucket_domain_name }"
+  value       = aws_s3_bucket.logs_cloudfront.bucket_domain_name
 }

@@ -14,7 +14,7 @@ data "aws_iam_policy_document" "state" {
       "s3:PutObject",
     ]
 
-    resources = ["${ aws_s3_bucket.state.arn }/*"]
+    resources = ["${aws_s3_bucket.state.arn}/*"]
 
     condition {
       test     = "StringNotEquals"
@@ -36,7 +36,7 @@ data "aws_iam_policy_document" "state" {
       "s3:PutObject",
     ]
 
-    resources = ["${ aws_s3_bucket.state.arn }/*"]
+    resources = ["${aws_s3_bucket.state.arn}/*"]
 
     condition {
       test     = "StringNotEquals"
@@ -58,7 +58,7 @@ data "aws_iam_policy_document" "state" {
       "s3:PutObject",
     ]
 
-    resources = ["${ aws_s3_bucket.state.arn }/*"]
+    resources = ["${aws_s3_bucket.state.arn}/*"]
 
     condition {
       test     = "Null"
@@ -80,7 +80,7 @@ data "aws_iam_policy_document" "state" {
       "s3:*",
     ]
 
-    resources = ["${ aws_s3_bucket.state.arn }"]
+    resources = [aws_s3_bucket.state.arn]
 
     condition {
       test     = "Bool"

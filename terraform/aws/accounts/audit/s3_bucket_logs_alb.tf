@@ -39,17 +39,17 @@ resource "aws_s3_bucket" "logs_alb" {
     }
   }
 
-  tags = "${ merge(
-    map("Name", "logs-alb"),
-    map("description", "Stores all of our application load balancer access logs"),
-    map("service", "logs-alb"),
-    var.tags )
-  }"
+  tags = merge(
+    {"Name" = "logs-alb"},
+    {"description" = "Stores all of our application load balancer access logs"},
+    {"service" = "logs-alb"},
+    var.tags
+  )
 }
 
 resource "aws_s3_bucket_policy" "logs_alb" {
-  bucket = "${ aws_s3_bucket.logs_alb.id }"
-  policy = "${ data.aws_iam_policy_document.bucket_policy_logs_alb.json }"
+  bucket = aws_s3_bucket.logs_alb.id
+  policy = data.aws_iam_policy_document.bucket_policy_logs_alb.json
 }
 
 # https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
@@ -85,7 +85,7 @@ data "aws_iam_policy_document" "bucket_policy_logs_alb" {
 
     actions = ["s3:PutObject"]
 
-    resources = ["${ aws_s3_bucket.logs_alb.arn }/*"]
+    resources = ["${aws_s3_bucket.logs_alb.arn}/*"]
 
     condition {
       test     = "StringEquals"
@@ -97,10 +97,10 @@ data "aws_iam_policy_document" "bucket_policy_logs_alb" {
 
 output "bucket_logs_alb_arn" {
   description = "The ARN of the logs alb bucket"
-  value       = "${ aws_s3_bucket.logs_alb.arn }"
+  value       = aws_s3_bucket.logs_alb.arn
 }
 
 output "bucket_logs_alb_name" {
   description = "The name of the logs alb bucket"
-  value       = "${ aws_s3_bucket.logs_alb.id }"
+  value       = aws_s3_bucket.logs_alb.id
 }

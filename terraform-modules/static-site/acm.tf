@@ -8,12 +8,12 @@ provider "aws" {
 module "cert" {
   source = "../acm-certificate//"
 
-  dns_names_to_zone_names = "${ var.dns_names_to_zone_names }"
+  dns_names_to_zone_names = var.dns_names_to_zone_names
 
-  tags = "${ var.tags }"
+  tags = var.tags
 
-  providers {
-    aws.dns  = "aws.cert"
-    aws.cert = "aws.cert"
+  providers = {
+    aws.dns  = aws.cert
+    aws.cert = aws.cert
   }
 }
