@@ -39,17 +39,17 @@ resource "aws_s3_bucket" "cloudtrail" {
     }
   }
 
-  tags = "${ merge(
-    map("Name", "cloudtrail"),
-    map("description", "Stores all AWS cloudtrail logs"),
-    map("service", "cloudtrail"),
-    var.tags )
-  }"
+  tags = merge(
+    {"Name" = "cloudtrail"},
+    {"description" = "Stores all AWS cloudtrail logs"},
+    {"service" = "cloudtrail"},
+    var.tags,
+  )
 }
 
 resource "aws_s3_bucket_policy" "cloudtrail" {
-  bucket = "${ aws_s3_bucket.cloudtrail.id }"
-  policy = "${ data.aws_iam_policy_document.bucket_policy_cloudtrail.json }"
+  bucket = aws_s3_bucket.cloudtrail.id
+  policy = data.aws_iam_policy_document.bucket_policy_cloudtrail.json
 }
 
 data "aws_iam_policy_document" "bucket_policy_cloudtrail" {
@@ -63,7 +63,7 @@ data "aws_iam_policy_document" "bucket_policy_cloudtrail" {
     }
 
     actions   = ["s3:GetBucketAcl"]
-    resources = ["${ aws_s3_bucket.cloudtrail.arn }"]
+    resources = [aws_s3_bucket.cloudtrail.arn]
   }
 
   statement {
@@ -77,7 +77,7 @@ data "aws_iam_policy_document" "bucket_policy_cloudtrail" {
 
     actions = ["s3:PutObject"]
 
-    resources = ["${ aws_s3_bucket.cloudtrail.arn }/*"]
+    resources = ["${aws_s3_bucket.cloudtrail.arn}/*"]
 
     condition {
       test     = "StringEquals"
@@ -89,10 +89,10 @@ data "aws_iam_policy_document" "bucket_policy_cloudtrail" {
 
 output "bucket_cloudtrail_arn" {
   description = "The ARN of the cloudtrail bucket"
-  value       = "${ aws_s3_bucket.cloudtrail.arn }"
+  value       = aws_s3_bucket.cloudtrail.arn
 }
 
 output "bucket_cloudtrail_name" {
   description = "The name of the cloudtrail bucket"
-  value       = "${ aws_s3_bucket.cloudtrail.id }"
+  value       = aws_s3_bucket.cloudtrail.id
 }

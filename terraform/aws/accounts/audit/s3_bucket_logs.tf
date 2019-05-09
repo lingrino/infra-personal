@@ -39,20 +39,20 @@ resource "aws_s3_bucket" "logs" {
     }
   }
 
-  tags = "${ merge(
-    map("Name", "logs"),
-    map("description", "Stores all of our generic AWS logs that do not fit anywhere else"),
-    map("service", "logs"),
-    var.tags )
-  }"
+  tags = merge(
+    {"Name" = "logs"},
+    {"description" = "Stores all of our generic AWS logs that do not fit anywhere else"},
+    {"service" = "logs"},
+    var.tags,
+  )
 }
 
 output "bucket_logs_arn" {
   description = "The ARN of the logs bucket"
-  value       = "${ aws_s3_bucket.logs.arn }"
+  value       = aws_s3_bucket.logs.arn
 }
 
 output "bucket_logs_name" {
   description = "The name of the logs bucket"
-  value       = "${ aws_s3_bucket.logs.id }"
+  value       = aws_s3_bucket.logs.id
 }

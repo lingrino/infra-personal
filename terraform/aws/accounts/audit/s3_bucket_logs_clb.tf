@@ -39,17 +39,17 @@ resource "aws_s3_bucket" "logs_clb" {
     }
   }
 
-  tags = "${ merge(
-    map("Name", "logs-clb"),
-    map("description", "Stores all of our classic load balancer access logs"),
-    map("service", "logs-clb"),
-    var.tags )
-  }"
+  tags = merge(
+    {"Name" = "logs-clb"},
+    {"description" = "Stores all of our classic load balancer access logs"},
+    {"service" = "logs-clb"},
+    var.tags,
+  )
 }
 
 resource "aws_s3_bucket_policy" "logs_clb" {
-  bucket = "${ aws_s3_bucket.logs_clb.id }"
-  policy = "${ data.aws_iam_policy_document.bucket_policy_logs_clb.json }"
+  bucket = aws_s3_bucket.logs_clb.id
+  policy = data.aws_iam_policy_document.bucket_policy_logs_clb.json
 }
 
 # https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/enable-access-logs.html
@@ -85,7 +85,7 @@ data "aws_iam_policy_document" "bucket_policy_logs_clb" {
 
     actions = ["s3:PutObject"]
 
-    resources = ["${ aws_s3_bucket.logs_clb.arn }/*"]
+    resources = ["${aws_s3_bucket.logs_clb.arn}/*"]
 
     condition {
       test     = "StringEquals"
@@ -97,10 +97,10 @@ data "aws_iam_policy_document" "bucket_policy_logs_clb" {
 
 output "bucket_logs_clb_arn" {
   description = "The ARN of the logs clb bucket"
-  value       = "${ aws_s3_bucket.logs_clb.arn }"
+  value       = aws_s3_bucket.logs_clb.arn
 }
 
 output "bucket_logs_clb_name" {
   description = "The name of the logs clb bucket"
-  value       = "${ aws_s3_bucket.logs_clb.id }"
+  value       = aws_s3_bucket.logs_clb.id
 }

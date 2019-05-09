@@ -1,15 +1,11 @@
 resource "aws_sns_topic" "alarm_high_priority" {
   name         = "alarm_high_priority"
   display_name = "alarm_high_priority"
-
-  # NOTE - CloudWatch does not support encrypted SNS topics
-  # https://docs.aws.amazon.com/sns/latest/dg/sns-server-side-encryption.html#sns-what-permissions-for-sse
-  # kms_master_key_id = "alias/aws/sns"
 }
 
 resource "aws_sns_topic_policy" "alarm_high_priority" {
-  arn    = "${ aws_sns_topic.alarm_high_priority.arn }"
-  policy = "${ data.aws_iam_policy_document.alarm_high_priority.json }"
+  arn    = aws_sns_topic.alarm_high_priority.arn
+  policy = data.aws_iam_policy_document.alarm_high_priority.json
 }
 
 data "aws_iam_policy_document" "alarm_high_priority" {
@@ -18,15 +14,15 @@ data "aws_iam_policy_document" "alarm_high_priority" {
     effect = "Allow"
 
     principals {
-      type        = "AWS"
-      identifiers = ["${ data.terraform_remote_state.organization.account_ids }"]
+      type = "AWS"
+      identifiers = data.terraform_remote_state.organization.outputs.account_ids
     }
 
     actions = [
       "SNS:Publish",
     ]
 
-    resources = ["${ aws_sns_topic.alarm_high_priority.arn }"]
+    resources = [aws_sns_topic.alarm_high_priority.arn]
   }
 
   statement {
@@ -42,12 +38,15 @@ data "aws_iam_policy_document" "alarm_high_priority" {
       "SNS:Publish",
     ]
 
-    resources = ["${ aws_sns_topic.alarm_high_priority.arn }"]
+    resources = [aws_sns_topic.alarm_high_priority.arn]
 
     condition {
       test     = "ArnLike"
       variable = "AWS:SourceArn"
-      values   = ["${ formatlist("arn:aws:cloudwatch:*:%s:alarm:*", data.terraform_remote_state.organization.account_ids ) }"]
+      values = formatlist(
+        "arn:aws:cloudwatch:*:%s:alarm:*",
+        data.terraform_remote_state.organization.outputs.account_ids,
+      )
     }
   }
 
@@ -64,17 +63,20 @@ data "aws_iam_policy_document" "alarm_high_priority" {
       "SNS:Publish",
     ]
 
-    resources = ["${ aws_sns_topic.alarm_high_priority.arn }"]
+    resources = [aws_sns_topic.alarm_high_priority.arn]
 
     condition {
       test     = "StringEquals"
       variable = "AWS:Referer"
-      values   = ["${ formatlist("arn:aws:ses:*:%s:*", data.terraform_remote_state.organization.account_ids ) }"]
+      values = formatlist(
+        "arn:aws:ses:*:%s:*",
+        data.terraform_remote_state.organization.outputs.account_ids,
+      )
     }
   }
 }
 
 output "sns_alarm_high_priority_arn" {
   description = "The ARN of the alarm_high_priority SNS topic in the Audit account"
-  value       = "${ aws_sns_topic.alarm_high_priority.arn }"
+  value       = aws_sns_topic.alarm_high_priority.arn
 }

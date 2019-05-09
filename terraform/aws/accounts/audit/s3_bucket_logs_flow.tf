@@ -39,17 +39,17 @@ resource "aws_s3_bucket" "logs_flow" {
     }
   }
 
-  tags = "${ merge(
-    map("Name", "logs-flow"),
-    map("description", "Stores all of our VPC and other flow logs"),
-    map("service", "logs-flow"),
-    var.tags )
-  }"
+  tags = merge(
+    {"Name" = "logs-flow"},
+    {"description" = "Stores all of our VPC and other flow logs"},
+    {"service" = "logs-flow"},
+    var.tags,
+  )
 }
 
 resource "aws_s3_bucket_policy" "logs_flow" {
-  bucket = "${ aws_s3_bucket.logs_flow.id }"
-  policy = "${ data.aws_iam_policy_document.bucket_policy_logs_flow.json }"
+  bucket = aws_s3_bucket.logs_flow.id
+  policy = data.aws_iam_policy_document.bucket_policy_logs_flow.json
 }
 
 # https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-access-logs.html
@@ -65,7 +65,7 @@ data "aws_iam_policy_document" "bucket_policy_logs_flow" {
 
     actions = ["s3:GetBucketAcl"]
 
-    resources = ["${ aws_s3_bucket.logs_flow.arn }"]
+    resources = [aws_s3_bucket.logs_flow.arn]
   }
 
   statement {
@@ -79,7 +79,7 @@ data "aws_iam_policy_document" "bucket_policy_logs_flow" {
 
     actions = ["s3:PutObject"]
 
-    resources = ["${ aws_s3_bucket.logs_flow.arn }/*"]
+    resources = ["${aws_s3_bucket.logs_flow.arn}/*"]
 
     condition {
       test     = "StringEquals"
@@ -91,10 +91,10 @@ data "aws_iam_policy_document" "bucket_policy_logs_flow" {
 
 output "bucket_logs_flow_arn" {
   description = "The ARN of the logs flow bucket"
-  value       = "${ aws_s3_bucket.logs_flow.arn }"
+  value       = aws_s3_bucket.logs_flow.arn
 }
 
 output "bucket_logs_flow_name" {
   description = "The name of the logs flow bucket"
-  value       = "${ aws_s3_bucket.logs_flow.id }"
+  value       = aws_s3_bucket.logs_flow.id
 }

@@ -39,17 +39,17 @@ resource "aws_s3_bucket" "logs_nlb" {
     }
   }
 
-  tags = "${ merge(
-    map("Name", "logs-nlb"),
-    map("description", "Stores all of our network load balancer access logs"),
-    map("service", "logs-nlb"),
-    var.tags )
-  }"
+  tags = merge(
+    {"Name" = "logs-nlb"},
+    {"description" = "Stores all of our network load balancer access logs"},
+    {"service" = "logs-nlb"},
+    var.tags,
+  )
 }
 
 resource "aws_s3_bucket_policy" "logs_nlb" {
-  bucket = "${ aws_s3_bucket.logs_nlb.id }"
-  policy = "${ data.aws_iam_policy_document.bucket_policy_logs_nlb.json }"
+  bucket = aws_s3_bucket.logs_nlb.id
+  policy = data.aws_iam_policy_document.bucket_policy_logs_nlb.json
 }
 
 # https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-access-logs.html
@@ -65,7 +65,7 @@ data "aws_iam_policy_document" "bucket_policy_logs_nlb" {
 
     actions = ["s3:GetBucketAcl"]
 
-    resources = ["${ aws_s3_bucket.logs_nlb.arn }"]
+    resources = [aws_s3_bucket.logs_nlb.arn]
   }
 
   statement {
@@ -79,7 +79,7 @@ data "aws_iam_policy_document" "bucket_policy_logs_nlb" {
 
     actions = ["s3:PutObject"]
 
-    resources = ["${ aws_s3_bucket.logs_nlb.arn }/*"]
+    resources = ["${aws_s3_bucket.logs_nlb.arn}/*"]
 
     condition {
       test     = "StringEquals"
@@ -91,10 +91,10 @@ data "aws_iam_policy_document" "bucket_policy_logs_nlb" {
 
 output "bucket_logs_nlb_arn" {
   description = "The ARN of the logs nlb bucket"
-  value       = "${ aws_s3_bucket.logs_nlb.arn }"
+  value       = aws_s3_bucket.logs_nlb.arn
 }
 
 output "bucket_logs_nlb_name" {
   description = "The name of the logs nlb bucket"
-  value       = "${ aws_s3_bucket.logs_nlb.id }"
+  value       = aws_s3_bucket.logs_nlb.id
 }
