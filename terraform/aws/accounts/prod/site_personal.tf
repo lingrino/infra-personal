@@ -12,24 +12,24 @@ module "site_personal" {
     "*.srlingren.com" = "srlingren.com"
   }
 
-  healthcheck_sns_arn = "${ data.terraform_remote_state.account_audit.sns_alarm_high_priority_arn }"
-  bucket_logs_domain  = "${ data.terraform_remote_state.account_audit.bucket_logs_cloudfront_domain }"
+  healthcheck_sns_arn = data.terraform_remote_state.account_audit.outputs.sns_alarm_high_priority_arn
+  bucket_logs_domain  = data.terraform_remote_state.account_audit.outputs.bucket_logs_cloudfront_domain
 
-  tags = "${ var.tags }"
+  tags = var.tags
 }
 
 output "site_personal_bucket_name" {
-  value = "${ module.site_personal.bucket_name }"
+  value = module.site_personal.bucket_name
 }
 
 output "site_personal_distribution_id" {
-  value = "${ module.site_personal.distribution_id }"
+  value = module.site_personal.distribution_id
 }
 
 output "site_personal_deployer_access_key_id" {
-  value = "${ module.site_personal.deployer_access_key_id }"
+  value = module.site_personal.deployer_access_key_id
 }
 
 output "site_personal_deployer_secret_access_key" {
-  value = "${ module.site_personal.deployer_secret_access_key }"
+  value = module.site_personal.deployer_secret_access_key
 }

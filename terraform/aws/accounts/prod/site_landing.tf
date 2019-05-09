@@ -14,8 +14,8 @@ module "site_landing" {
     "*.releases.dev" = "releases.dev"
   }
 
-  healthcheck_sns_arn = "${ data.terraform_remote_state.account_audit.sns_alarm_high_priority_arn }"
-  bucket_logs_domain  = "${ data.terraform_remote_state.account_audit.bucket_logs_cloudfront_domain }"
+  healthcheck_sns_arn = data.terraform_remote_state.account_audit.outputs.sns_alarm_high_priority_arn
+  bucket_logs_domain  = data.terraform_remote_state.account_audit.outputs.bucket_logs_cloudfront_domain
 
-  tags = "${ var.tags }"
+  tags = var.tags
 }

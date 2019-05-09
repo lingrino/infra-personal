@@ -3,16 +3,16 @@
 module "cert_churner" {
   source = "../../../../terraform-modules/acm-certificate//"
 
-  dns_names_to_zone_names {
+  dns_names_to_zone_names = {
     "churner.io"   = "churner.io"
     "*.churner.io" = "churner.io"
   }
 
-  tags = "${ var.tags }"
+  tags = var.tags
 
-  providers {
-    aws.dns  = "aws"
-    aws.cert = "aws"
+  providers = {
+    aws.dns  = aws
+    aws.cert = aws
   }
 }
 
@@ -31,7 +31,7 @@ resource "aws_cloudfront_distribution" "churner" {
   viewer_certificate {
     ssl_support_method       = "sni-only"
     minimum_protocol_version = "TLSv1.2_2018"
-    acm_certificate_arn      = "${ module.cert_churner.certificate_arn }"
+    acm_certificate_arn      = module.cert_churner.certificate_arn
   }
 
   restrictions {
@@ -76,14 +76,14 @@ resource "aws_cloudfront_distribution" "churner" {
 
   logging_config {
     include_cookies = false
-    bucket          = "${ data.terraform_remote_state.account_audit.bucket_logs_cloudfront_domain }"
+    bucket          = data.terraform_remote_state.account_audit.outputs.bucket_logs_cloudfront_domain
     prefix          = "840856573771/churner/"
   }
 
-  tags = "${ merge(
-    map("Name", "churner"),
-    var.tags )
-  }"
+  tags = merge(
+    {"Name" = "churner"},
+    var.tags,
+  )
 }
 
 resource "aws_route53_record" "churner_io" {
@@ -92,8 +92,8 @@ resource "aws_route53_record" "churner_io" {
   type    = "A"
 
   alias {
-    name                   = "${ aws_cloudfront_distribution.churner.domain_name }"
-    zone_id                = "${ aws_cloudfront_distribution.churner.hosted_zone_id }"
+    name                   = aws_cloudfront_distribution.churner.domain_name
+    zone_id                = aws_cloudfront_distribution.churner.hosted_zone_id
     evaluate_target_health = true
   }
 }
@@ -104,8 +104,8 @@ resource "aws_route53_record" "churner_io_ipv6" {
   type    = "AAAA"
 
   alias {
-    name                   = "${ aws_cloudfront_distribution.churner.domain_name }"
-    zone_id                = "${ aws_cloudfront_distribution.churner.hosted_zone_id }"
+    name                   = aws_cloudfront_distribution.churner.domain_name
+    zone_id                = aws_cloudfront_distribution.churner.hosted_zone_id
     evaluate_target_health = true
   }
 }
