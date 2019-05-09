@@ -1,3 +1,31 @@
+# We write the name and ARN of the S3 serverless-deployment bucket to SSM
+# so that it can easily be read by a serverless.yml
+resource "aws_ssm_parameter" "s3_serverless_deployment_arn" {
+  name        = "/s3/serverless-deployment/arn"
+  description = "The ARN of the S3 serverless deployment bucket"
+  type        = "String"
+  value       = "${ aws_s3_bucket.serverless_deployment.arn }"
+
+  tags = "${ merge(
+    map("Name", "/s3/serverless-deployment/arn"),
+    map("description", "The ARN of the S3 serverless deployment bucket"),
+    var.tags
+  )}"
+}
+
+resource "aws_ssm_parameter" "s3_serverless_deployment_name" {
+  name        = "/s3/serverless-deployment/name"
+  description = "The name of the S3 serverless deployment bucket"
+  type        = "String"
+  value       = "${ aws_s3_bucket.serverless_deployment.id }"
+
+  tags = "${ merge(
+    map("Name", "/s3/serverless-deployment/name"),
+    map("description", "The name of the S3 serverless deployment bucket"),
+    var.tags
+  )}"
+}
+
 resource "aws_s3_bucket" "serverless_deployment" {
   bucket_prefix = "serverless-deployment-"
   acl           = "private"

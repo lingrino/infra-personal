@@ -13,7 +13,7 @@ provider:
   logRetentionInDays: 90
 
   deploymentBucket:
-    name: serverless-deployment-20190506190222053800000001
+    name: ${ssm:/s3/serverless-deployment/name}
     serverSideEncryption: AES256
 
   tags:
