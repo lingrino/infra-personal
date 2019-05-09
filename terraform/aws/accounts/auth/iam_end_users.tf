@@ -4,7 +4,7 @@ resource "aws_iam_user" "srlingren_gmail_com" {
 
   tags = merge(
     {"Name" = "srlingren@gmail.com"},
-    var.tags,
+    var.tags
   )
 }
 

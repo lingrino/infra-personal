@@ -14,7 +14,7 @@ resource "aws_route53_health_check" "check" {
 
   tags = merge(
     {"Name" = var.domains[count.index]},
-    var.tags,
+    var.tags
   )
 }
 

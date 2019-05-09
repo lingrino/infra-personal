@@ -12,6 +12,6 @@ resource "aws_cloudtrail" "organization" {
   tags = merge(
     {"Name" = "lingrino"},
     {"description" = "The cloudtrail for the entire lingrino organization"},
-    var.tags,
+    var.tags
   )
 }

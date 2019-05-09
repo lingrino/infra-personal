@@ -41,7 +41,7 @@ resource "aws_s3_bucket" "state" {
 
   tags = merge(
     {"Name" = var.name_prefix},
-    var.tags,
+    var.tags
   )
 }
 

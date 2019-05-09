@@ -17,6 +17,6 @@ resource "aws_dynamodb_table" "state" {
 
   tags = merge(
     {"Name" = "TerraformRemoteStateLock"},
-    var.tags,
+    var.tags
   )
 }

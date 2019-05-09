@@ -5,7 +5,7 @@ resource "aws_vpn_gateway" "vpn" {
 
   tags = merge(
     {"Name" = "${var.name_prefix}_vpn_gateway"},
-    var.tags,
+    var.tags
   )
 }
 

@@ -29,7 +29,7 @@ resource "aws_iam_role" "config_recorder" {
     {"Name" = "config-recorder"},
     {"description" = "Allows AWS Config to record resource changes and write them to to S3"},
     {"service" = "config"},
-    var.tags,
+    var.tags
   )
 }
 

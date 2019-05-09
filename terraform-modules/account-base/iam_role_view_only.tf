@@ -8,7 +8,7 @@ resource "aws_iam_role" "view_only" {
   tags = merge(
     {"Name" = "ViewOnly"},
     {"description" = "ViewOnly users can view all AWS resources but not read their content - See policy for full permissions"},
-    var.tags,
+    var.tags
   )
 }
 

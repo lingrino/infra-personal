@@ -8,7 +8,7 @@ resource "aws_iam_role" "admin" {
   tags = merge(
     {"Name" = "Admin"},
     {"description" = "A role for full admin access to the account"},
-    var.tags,
+    var.tags
   )
 }
 

@@ -3,7 +3,7 @@ resource "aws_internet_gateway" "igw" {
 
   tags = merge(
     {"Name" = "${var.name_prefix}_internet_gateway"},
-    var.tags,
+    var.tags
   )
 }
 

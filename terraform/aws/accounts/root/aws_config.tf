@@ -18,7 +18,7 @@ resource "aws_iam_role" "config_lingrino_aggregator" {
   tags = merge(
     {"Name" = "config-lingrino-aggregator"},
     {"description" = "Allow AWS Config to get information about the AWS Organization"},
-    var.tags,
+    var.tags
   )
 }
 

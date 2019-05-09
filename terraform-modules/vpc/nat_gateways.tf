@@ -4,7 +4,7 @@ resource "aws_eip" "eip" {
 
   tags = merge(
     {"Name" = "${var.name_prefix}_eip_for_nat_${replace(var.azs[count.index], "-", "_")}"},
-    var.tags,
+    var.tags
   )
 }
 
@@ -15,6 +15,6 @@ resource "aws_nat_gateway" "nat" {
 
   tags = merge(
     {"Name" = "${var.name_prefix}_nat_${replace(var.azs[count.index], "-", "_")}"},
-    var.tags,
+    var.tags
   )
 }

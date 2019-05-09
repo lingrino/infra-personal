@@ -43,7 +43,7 @@ resource "aws_s3_bucket" "logs_clb" {
     {"Name" = "logs-clb"},
     {"description" = "Stores all of our classic load balancer access logs"},
     {"service" = "logs-clb"},
-    var.tags,
+    var.tags
   )
 }
 

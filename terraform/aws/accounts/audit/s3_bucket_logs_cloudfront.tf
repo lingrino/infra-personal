@@ -43,7 +43,7 @@ resource "aws_s3_bucket" "logs_cloudfront" {
     {"Name" = "logs-cloudfront"},
     {"description" = "Stores all of our cloudfront access logs"},
     {"service" = "logs-cloudfront"},
-    var.tags,
+    var.tags
   )
 }
 

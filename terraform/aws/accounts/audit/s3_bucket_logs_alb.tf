@@ -43,7 +43,7 @@ resource "aws_s3_bucket" "logs_alb" {
     {"Name" = "logs-alb"},
     {"description" = "Stores all of our application load balancer access logs"},
     {"service" = "logs-alb"},
-    var.tags,
+    var.tags
   )
 }
 

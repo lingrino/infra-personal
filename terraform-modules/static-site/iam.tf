@@ -5,7 +5,7 @@ resource "aws_iam_user" "deployer" {
 
   tags = merge(
     {"Name" = "${var.name_prefix}-deployer"},
-    var.tags,
+    var.tags
   )
 }
 

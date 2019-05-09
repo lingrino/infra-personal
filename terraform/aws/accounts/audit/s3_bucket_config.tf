@@ -43,7 +43,7 @@ resource "aws_s3_bucket" "config" {
     {"Name" = "config"},
     {"description" = "Stores all AWS Config history and snapshots"},
     {"service" = "config"},
-    var.tags,
+    var.tags
   )
 }
 

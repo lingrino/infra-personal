@@ -43,7 +43,7 @@ resource "aws_s3_bucket" "logs_nlb" {
     {"Name" = "logs-nlb"},
     {"description" = "Stores all of our network load balancer access logs"},
     {"service" = "logs-nlb"},
-    var.tags,
+    var.tags
   )
 }
 

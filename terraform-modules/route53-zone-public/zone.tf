@@ -6,6 +6,6 @@ resource "aws_route53_zone" "zone" {
 
   tags = merge(
     {"Name" = var.domain},
-    var.tags,
+    var.tags
   )
 }

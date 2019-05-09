@@ -64,6 +64,6 @@ resource "aws_cloudfront_distribution" "cf" {
 
   tags = merge(
     {"Name" = var.name_prefix},
-    var.tags,
+    var.tags
   )
 }

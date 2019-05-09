@@ -67,7 +67,7 @@ resource "aws_s3_bucket" "billing" {
     {"Name" = "billing"},
     {"description" = "Stores all of our AWS billing reports"},
     {"service" = "billing"},
-    var.tags,
+    var.tags
   )
 }
 

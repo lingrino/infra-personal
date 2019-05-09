@@ -43,7 +43,7 @@ resource "aws_s3_bucket" "cloudtrail" {
     {"Name" = "cloudtrail"},
     {"description" = "Stores all AWS cloudtrail logs"},
     {"service" = "cloudtrail"},
-    var.tags,
+    var.tags
   )
 }
 
