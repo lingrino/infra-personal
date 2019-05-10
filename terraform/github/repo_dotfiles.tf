@@ -1,6 +1,6 @@
 resource "github_repository" "dotfiles" {
   name         = "dotfiles"
-  description  = "My Dotfiles"
+  description  = "Maintain your local environment wth Ansible"
   homepage_url = "https://lingrino.com"
 
   default_branch = "master"
