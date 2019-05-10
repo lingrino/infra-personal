@@ -1,6 +1,6 @@
-resource "github_repository" "infra-personal" {
-  name         = "infra-personal"
-  description  = "Terraform for setting up my personal infrastructure"
+resource "github_repository" "docker" {
+  name         = "docker"
+  description  = "My docker images"
   homepage_url = "https://lingrino.com"
 
   default_branch = "master"
@@ -14,16 +14,13 @@ resource "github_repository" "infra-personal" {
   allow_rebase_merge = true
 
   topics = [
-    "automation",
-    "aws",
-    "cloud",
-    "infrastructure",
-    "terraform",
+    "ci",
+    "docker",
   ]
 }
 
-resource "github_branch_protection" "infra-personal" {
-  repository     = github_repository.infra-personal.name
+resource "github_branch_protection" "docker" {
+  repository     = github_repository.docker.name
   branch         = "master"
   enforce_admins = true
 

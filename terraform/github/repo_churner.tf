@@ -1,7 +1,7 @@
 resource "github_repository" "churner" {
   name         = "churner"
-  description  = "A Credit Card Manager"
-  homepage_url = "https://churner.srlingren.com/"
+  description  = "DEPRECATED: A Credit Card Manager"
+  homepage_url = "https://churner.io/"
   archived     = true
 
   default_branch = "master"

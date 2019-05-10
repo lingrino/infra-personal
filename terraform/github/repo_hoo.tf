@@ -11,7 +11,7 @@
 resource "github_repository" "hoo" {
   name         = "hoo"
   description  = "A CLI for determining who you are"
-  homepage_url = "https://srlingren.com"
+  homepage_url = "https://lingrino.com"
 
   default_branch = "master"
   private        = true
