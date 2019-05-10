@@ -18,7 +18,7 @@ module "cert_churner" {
 
 resource "aws_cloudfront_distribution" "churner" {
   enabled = true
-  comment = "Distribution fronting churner.srlingren.com and churner.io"
+  comment = "Distribution fronting churner.io and churner.io"
 
   http_version    = "http2"
   is_ipv6_enabled = true

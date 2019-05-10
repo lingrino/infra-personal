@@ -1,7 +1,7 @@
 resource "github_repository" "dotfiles" {
   name         = "dotfiles"
   description  = "My Dotfiles"
-  homepage_url = "https://srlingren.com"
+  homepage_url = "https://lingrino.com"
 
   default_branch = "master"
   private        = false
