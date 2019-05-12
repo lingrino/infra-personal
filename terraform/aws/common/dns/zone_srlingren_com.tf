@@ -4,8 +4,9 @@ module "zone_srlingren_com" {
   domain            = "srlingren.com"
   delegation_set_id = aws_route53_delegation_set.lingrino_prod.id
 
-  keybase_record_value = "keybase-site-verification=bGi1F-LK1JuddMPjZlB84NL6kvSmQ1uK2Us0r1SMt1c"
-  ses_sns_arn          = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
+  keybase_record_value           = "keybase-site-verification=bGi1F-LK1JuddMPjZlB84NL6kvSmQ1uK2Us0r1SMt1c"
+  google_site_verification_value = ""
+  ses_sns_arn                    = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
 
   tags = var.tags
 

@@ -4,8 +4,9 @@ module "zone_lingrino_com" {
   domain            = "lingrino.com"
   delegation_set_id = aws_route53_delegation_set.lingrino_prod.id
 
-  keybase_record_value = "keybase-site-verification=OSEFJcKRkkit1mlWF_9zDpsE0q3ocWV8AfDWtbDU6lo"
-  ses_sns_arn          = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
+  keybase_record_value           = "keybase-site-verification=OSEFJcKRkkit1mlWF_9zDpsE0q3ocWV8AfDWtbDU6lo"
+  google_site_verification_value = "google-site-verification=x960BR9hmXBErt3Hu1OzopZuf-CCkeOHCphwD4ZZHIY"
+  ses_sns_arn                    = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
 
   tags = var.tags
 

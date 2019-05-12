@@ -19,13 +19,13 @@ resource "aws_vpn_gateway_route_propagation" "public" {
 resource "aws_vpn_gateway_route_propagation" "private" {
   count = var.create_vpn_gateway ? length(var.azs) : 0
 
-  route_table_id = element(aws_route_table.private.*.id, count.index)
+  route_table_id = aws_route_table.private.*.id[count.index]
   vpn_gateway_id = aws_vpn_gateway.vpn[0].id
 }
 
 resource "aws_vpn_gateway_route_propagation" "intra" {
   count = var.create_vpn_gateway ? length(var.azs) : 0
 
-  route_table_id = element(aws_route_table.intra.*.id, count.index)
+  route_table_id = aws_route_table.intra.*.id[count.index]
   vpn_gateway_id = aws_vpn_gateway.vpn[0].id
 }

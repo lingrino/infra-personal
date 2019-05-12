@@ -10,10 +10,13 @@ locals {
   # hosted for *.example.com we will create a health check for wildcard-7475048120.example.com. This
   # will work as intended except when the is a more specific wildcard-7475048120.example.com record,
   # which we just assume is rare enough that it's not worth worrying about.
-  healthcheck_domains = split(",", replace(join(",", local.dns_names), "*", "wildcard-7475048120"))
+  healthcheck_domains = [
+    for domain in local.dns_names:
+    replace(domain, "*", "wildcard-7475048120")
+  ]
 }
 
 data "aws_route53_zone" "zone" {
   count = length(local.dns_names)
-  name  = element(values(var.dns_names_to_zone_names), count.index)
+  name  = values(var.dns_names_to_zone_names)[count.index]
 }

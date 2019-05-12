@@ -81,7 +81,7 @@ resource "aws_cloudfront_distribution" "churner" {
   }
 
   tags = merge(
-    {"Name" = "churner"},
+    { "Name" = "churner" },
     var.tags
   )
 }

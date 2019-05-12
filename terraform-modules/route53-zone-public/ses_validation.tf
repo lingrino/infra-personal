@@ -50,10 +50,10 @@ resource "aws_route53_record" "ses_dkim_verification" {
   count = var.verify_ses ? 3 : 0
 
   zone_id = aws_route53_zone.zone.id
-  name    = "${element(aws_ses_domain_dkim.ses[0].dkim_tokens, count.index)}._domainkey.${aws_ses_domain_identity.ses[0].domain}"
+  name    = "${aws_ses_domain_dkim.ses[0].dkim_tokens[count.index]}._domainkey.${aws_ses_domain_identity.ses[0].domain}"
   type    = "CNAME"
   ttl     = 3600
-  records = ["${element(aws_ses_domain_dkim.ses[0].dkim_tokens, count.index)}.dkim.amazonses.com"]
+  records = ["${aws_ses_domain_dkim.ses[0].dkim_tokens[count.index]}.dkim.amazonses.com"]
 }
 
 resource "aws_route53_record" "ses_mailfrom_mx_verification" {
