@@ -69,4 +69,3 @@ mind that this infrastructure is funded by an individual, so cost is a major con
 modules that are expensive (`vpc`, `config`) will work but may not be in use because of their cost.
 
 - [ ] Automated plan/apply CI/CD using Atlantis
-- [ ] Automated linting of terraform and README

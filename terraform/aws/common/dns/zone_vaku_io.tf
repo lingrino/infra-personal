@@ -4,8 +4,9 @@ module "zone_vaku_io" {
   domain            = "vaku.io"
   delegation_set_id = aws_route53_delegation_set.lingrino_prod.id
 
-  keybase_record_value = "keybase-site-verification=MCj8gnnw6xQz-RfOHNZuDY-oXMqOFTKcnjuOZFmSnQA"
-  ses_sns_arn          = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
+  keybase_record_value           = "keybase-site-verification=MCj8gnnw6xQz-RfOHNZuDY-oXMqOFTKcnjuOZFmSnQA"
+  google_site_verification_value = ""
+  ses_sns_arn                    = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
 
   tags = var.tags
 

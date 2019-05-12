@@ -39,6 +39,12 @@ variable "keybase_record_value" {
   default     = ""
 }
 
+variable "google_site_verification_value" {
+  type        = string
+  description = "An optional google site verification string"
+  default     = ""
+}
+
 variable "tags" {
   type        = map(string)
   description = "A map of tags to apply to all resources"

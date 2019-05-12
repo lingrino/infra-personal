@@ -33,7 +33,7 @@ resource "aws_cloudwatch_metric_alarm" "check" {
   evaluation_periods = "2"
 
   dimensions = {
-    HealthCheckId = element(aws_route53_health_check.check.*.id, count.index)
+    HealthCheckId = aws_route53_health_check.check.*.id[count.index]
   }
 
   actions_enabled    = true
