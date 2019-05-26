@@ -1,5 +1,4 @@
-data "aws_caller_identity" "current" {
-}
+data "aws_caller_identity" "current" {}
 
 locals {
   dns_names = keys(var.dns_names_to_zone_names)
@@ -11,7 +10,7 @@ locals {
   # will work as intended except when the is a more specific wildcard-7475048120.example.com record,
   # which we just assume is rare enough that it's not worth worrying about.
   healthcheck_domains = [
-    for domain in local.dns_names:
+    for domain in local.dns_names :
     replace(domain, "*", "wildcard-7475048120")
   ]
 }

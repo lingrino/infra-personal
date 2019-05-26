@@ -48,13 +48,14 @@ resource "aws_cloudfront_distribution" "cf" {
   }
 
   origin {
-    origin_id   = var.name_prefix
-    domain_name = TODO
+    origin_id = var.name_prefix
+    # domain_name = heroku_app.app.heroku_hostname
+    domain_name = var.heroku_app_domain # TODO switch to above when heroku provider supported
 
     custom_origin_config {
       http_port              = 80
       https_port             = 443
-      origin_protocol_policy = "http-only"
+      origin_protocol_policy = "https-only"
       origin_ssl_protocols   = ["TLSv1.2"]
     }
   }
@@ -66,7 +67,7 @@ resource "aws_cloudfront_distribution" "cf" {
   }
 
   tags = merge(
-    {"Name" = var.name_prefix},
+    { "Name" = var.name_prefix },
     var.tags
   )
 }

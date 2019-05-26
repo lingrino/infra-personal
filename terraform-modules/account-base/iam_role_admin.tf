@@ -6,8 +6,8 @@ resource "aws_iam_role" "admin" {
   max_session_duration = 43200
 
   tags = merge(
-    {"Name" = "Admin"},
-    {"description" = "A role for full admin access to the account"},
+    { "Name" = "Admin" },
+    { "description" = "A role for full admin access to the account" },
     var.tags
   )
 }
