@@ -1,3 +1,4 @@
+version: 3
 projects:
   - name: aws-accounts-audit
     dir: terraform/aws/accounts/audit
