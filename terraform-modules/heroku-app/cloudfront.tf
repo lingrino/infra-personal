@@ -6,10 +6,9 @@ resource "aws_cloudfront_distribution" "cf" {
   enabled = true
   comment = "Distribution for ${var.name_prefix}: ${join(",", local.dns_names)}"
 
-  http_version        = "http2"
-  is_ipv6_enabled     = true
-  default_root_object = "index.html"
-  price_class         = "PriceClass_100" # USA, Canada, & Europe (Cheapest)
+  http_version    = "http2"
+  is_ipv6_enabled = true
+  price_class     = "PriceClass_100" # USA, Canada, & Europe (Cheapest)
 
   aliases = local.dns_names
 
@@ -55,7 +54,7 @@ resource "aws_cloudfront_distribution" "cf" {
     custom_origin_config {
       http_port              = 80
       https_port             = 443
-      origin_protocol_policy = "https-only"
+      origin_protocol_policy = "http-only"
       origin_ssl_protocols   = ["TLSv1.2"]
     }
   }

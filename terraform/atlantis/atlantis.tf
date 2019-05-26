@@ -9,7 +9,7 @@ module "atlantis" {
 
   heroku_app_name   = "lingrino-atlantis"
   heroku_buildpacks = ["heroku/go"]
-  heroku_app_domain = "https://lingrino-atlantis.herokuapp.com/"
+  heroku_app_domain = "fitted-hare-y9wfk6md4q7fd890y4r4g9q7.herokudns.com"
 
   heroku_env_vars = {
     "foo" = "bar"
