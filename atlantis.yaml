@@ -2,7 +2,7 @@ version: 3
 projects:
   - name: aws-accounts-audit
     dir: terraform/aws/accounts/audit
-    workflow: aws2
+    workflow: aws
   - name: aws-accounts-auth
     dir: terraform/aws/accounts/auth
     workflow: aws
