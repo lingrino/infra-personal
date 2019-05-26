@@ -1,7 +1,7 @@
 resource "aws_iam_role" "atlantis" {
   name               = "atlantis"
   description        = "The role assumed by the atlantis user to plan and apply"
-  assume_role_policy = data.aws_iam_policy_document.arp_users.json
+  assume_role_policy = data.aws_iam_policy_document.arp_atlantis.json
 
   max_session_duration = 7200
 
