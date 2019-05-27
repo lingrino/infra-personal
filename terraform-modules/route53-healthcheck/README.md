@@ -16,6 +16,6 @@ module "check" {
   domains = ["example.com", "example.org", "prod.example.com"]
   sns_arn = "arn:aws:sns:us-east-1:000000000000:sns-name"
 
-  tags = "${ var.tags }"
+  tags = var.tags
 }
 ```

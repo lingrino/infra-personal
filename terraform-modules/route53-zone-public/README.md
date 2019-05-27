@@ -21,11 +21,11 @@ module "zone_example_com" {
   source = "../path/to/module/route53-zone-public//"
 
   domain            = "example.com"
-  delegation_set_id = "${ aws_route53_delegation_set.example.id }"
+  delegation_set_id = aws_route53_delegation_set.example.id
 
   keybase_record_value = "keybase-site-verification=kjfsdlkfjsdfjsd_mcweoiiier1qpcdnij"
 
-  tags = "${ var.tags }"
+  tags = var.tags
 }
 ```
 

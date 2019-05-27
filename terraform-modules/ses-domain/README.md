@@ -17,8 +17,8 @@ module "ses" {
   domain_name = "example.com"
 
   providers {
-    aws.dns  = "aws"
-    aws.ses = "aws"
+    aws.dns = aws
+    aws.ses = aws
   }
 }
 ```
@@ -52,8 +52,8 @@ module "ses" {
   domain_name = "dev.example.com"
 
   providers {
-    aws.dns  = "aws.prod"
-    aws.ses  = "aws.dev"
+    aws.dns = aws.prod
+    aws.ses = aws.dev
   }
 }
 ```

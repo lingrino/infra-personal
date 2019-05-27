@@ -12,8 +12,6 @@ module "site_landing" {
     "*.policies.dev" = "policies.dev"
     "releases.dev"   = "releases.dev"
     "*.releases.dev" = "releases.dev"
-    "churner.io"     = "churner.io"
-    "*.churner.io"   = "churner.io"
   }
 
   healthcheck_sns_arn = data.terraform_remote_state.account_audit.outputs.sns_alarm_high_priority_arn

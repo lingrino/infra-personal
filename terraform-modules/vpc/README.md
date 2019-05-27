@@ -23,7 +23,7 @@ module "vpc" {
     "us-east-1d",
   ]
 
-  tags = "${ var.tags }"
+  tags = var.tags
 }
 ```
 

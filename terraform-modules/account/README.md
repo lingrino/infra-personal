@@ -15,8 +15,8 @@ The below code is a simple way of calling the module.
 module "account" {
   source = "../path/to/module/account//"
 
-  name = "root"
-  email = example+root@gmail.com
+  name  = "root"
+  email = "example+root@gmail.com"
 }
 ```
 

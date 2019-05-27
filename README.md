@@ -62,10 +62,9 @@ to branches in the module source. However, in a serious production infrastructur
 consider referencing modules back to a git/package repo and make sure that you reference specific
 versions of modules.
 
-## Things to Add
+## Atlantis CI/CD
 
-There's a lot more that can be added to this repo, here's a list of what I have planned. Keep in
-mind that this infrastructure is funded by an individual, so cost is a major concern. This means
-modules that are expensive (`vpc`, `config`) will work but may not be in use because of their cost.
-
-- [ ] Automated plan/apply CI/CD using Atlantis
+There was a branch in this repo called `atlantis` that fully implemented the tool. However, there
+are a number of remote code execution concerns and UI access concerns that make me uncomfortable
+hosting Atlantis publicly. Maybe when those are resolved this will be revisted. For now I apply
+locally.

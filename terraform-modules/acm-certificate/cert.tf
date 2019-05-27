@@ -30,7 +30,7 @@ resource "aws_acm_certificate" "cert" {
 locals {
   domain_validation_options_dedup = {
     for option in aws_acm_certificate.cert.domain_validation_options :
-    option.resource_record_name => option ...
+    option.resource_record_name => option...
   }
   domain_validation_options = [
     for rrn, list_of_options in local.domain_validation_options_dedup :

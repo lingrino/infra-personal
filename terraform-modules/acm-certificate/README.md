@@ -23,11 +23,11 @@ module "cert" {
     "foo.example.org" = "example.org"
   }
 
-  tags = "${ var.tags }"
+  tags = var.tags
 
   providers {
-    aws.dns  = "aws"
-    aws.cert = "aws"
+    aws.dns  = aws
+    aws.cert = aws
   }
 }
 ```
@@ -63,11 +63,11 @@ module "cert" {
     "foo.example.org" = "example.org"
   }
 
-  tags = "${ var.tags }"
+  tags = var.tags
 
   providers {
-    aws.dns  = "aws.prod"
-    aws.cert = "aws.dev"
+    aws.dns  = aws.prod
+    aws.cert = aws.dev
   }
 }
 ```

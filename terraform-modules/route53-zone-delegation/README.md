@@ -12,8 +12,8 @@ The below code is a simple way of calling the module.
 module "delegate_dev_example_com" {
   source = "../path/to/module/route53-zone-delegation//"
 
-  zone_id = "${ module.zone_example_com.zone_id }"
+  zone_id = module.zone_example_com.zone_id
   domain = "dev.example.com"
-  nameservers = ["${ module.zone_dev_example_com.nameservers }]
+  nameservers = module.zone_dev_example_com.nameservers
 }
 ```
