@@ -24,7 +24,7 @@ module "site" {
     "foo.example.org" = "example.org"
   }
 
-  tags = "${ var.tags }"
+  tags = var.tags
 }
 ```
 

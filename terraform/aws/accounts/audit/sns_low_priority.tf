@@ -1,6 +1,13 @@
 resource "aws_sns_topic" "alarm_low_priority" {
   name         = "alarm_low_priority"
   display_name = "alarm_low_priority"
+
+  tags = merge(
+    {"Name" = "alarm_low_priority"},
+    {"description" = "Messages to this topic will send the appropriate people a low priority alert"},
+    {"service" = "sns"},
+    var.tags
+  )
 }
 
 resource "aws_sns_topic_policy" "alarm_low_priority" {

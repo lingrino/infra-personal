@@ -17,7 +17,7 @@ module "remote_state" {
 
   name_prefix = "terraform-remote-state"
 
-  tags = "${ var.tags }"
+  tags = var.tags
 }
 ```
 

@@ -30,16 +30,16 @@ module "account_prod" {
 module "account_prod_base" {
   source = "../../../../terraform-modules/account-base//"
 
-  account_id   = "${ module.account_prod.id }"
-  account_name = "${ module.account_prod.name }"
+  account_id   = module.account_prod.id
+  account_name = module.account_prod.name
 
-  account_id_auth   = "${ module.account_auth.id }"
-  bucket_config_arn = "${ data.terraform_remote_state.account_prod.bucket_config_arn }"
+  account_id_auth   = module.account_auth.id
+  bucket_config_arn = data.terraform_remote_state.account_prod.bucket_config_arn
 
-  tags = "${ var.tags }"
+  tags = var.tags
 
   providers {
-    aws = "aws.prod"
+    aws = aws.prod
   }
 }
 ```

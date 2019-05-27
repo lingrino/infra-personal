@@ -1,6 +1,6 @@
 variable "name_prefix" {
   type        = string
-  description = "A prefix to apply to prepend to the name of all resources"
+  description = "A prefix to prepend to the name of all resources"
 }
 
 variable "vpc_cidr_block" {
