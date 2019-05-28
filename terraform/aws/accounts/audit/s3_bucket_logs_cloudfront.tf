@@ -40,9 +40,9 @@ resource "aws_s3_bucket" "logs_cloudfront" {
   }
 
   tags = merge(
-    {"Name" = "logs-cloudfront"},
-    {"description" = "Stores all of our cloudfront access logs"},
-    {"service" = "logs-cloudfront"},
+    { "Name" = "logs-cloudfront" },
+    { "description" = "Stores all of our cloudfront access logs" },
+    { "service" = "logs-cloudfront" },
     var.tags
   )
 }
@@ -59,8 +59,8 @@ data "aws_iam_policy_document" "bucket_policy_logs_cloudfront" {
     effect = "Allow"
 
     principals {
-      type = "AWS"
-      identifiers = formatlist("arn:aws:iam::%s:root",data.terraform_remote_state.organization.outputs.account_ids)
+      type        = "AWS"
+      identifiers = formatlist("arn:aws:iam::%s:root", data.terraform_remote_state.organization.outputs.account_ids)
     }
 
     actions = [

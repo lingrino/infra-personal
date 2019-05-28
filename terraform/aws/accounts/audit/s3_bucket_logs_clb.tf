@@ -40,9 +40,9 @@ resource "aws_s3_bucket" "logs_clb" {
   }
 
   tags = merge(
-    {"Name" = "logs-clb"},
-    {"description" = "Stores all of our classic load balancer access logs"},
-    {"service" = "logs-clb"},
+    { "Name" = "logs-clb" },
+    { "description" = "Stores all of our classic load balancer access logs" },
+    { "service" = "logs-clb" },
     var.tags
   )
 }

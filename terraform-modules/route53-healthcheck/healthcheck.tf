@@ -13,7 +13,7 @@ resource "aws_route53_health_check" "check" {
   failure_threshold = var.healthcheck_failure_threshold
 
   tags = merge(
-    {"Name" = var.domains[count.index]},
+    { "Name" = var.domains[count.index] },
     var.tags
   )
 }

@@ -40,9 +40,9 @@ resource "aws_s3_bucket" "config" {
   }
 
   tags = merge(
-    {"Name" = "config"},
-    {"description" = "Stores all AWS Config history and snapshots"},
-    {"service" = "config"},
+    { "Name" = "config" },
+    { "description" = "Stores all AWS Config history and snapshots" },
+    { "service" = "config" },
     var.tags
   )
 }

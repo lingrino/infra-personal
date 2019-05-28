@@ -3,9 +3,9 @@ resource "aws_sns_topic" "alarm_low_priority" {
   display_name = "alarm_low_priority"
 
   tags = merge(
-    {"Name" = "alarm_low_priority"},
-    {"description" = "Messages to this topic will send the appropriate people a low priority alert"},
-    {"service" = "sns"},
+    { "Name" = "alarm_low_priority" },
+    { "description" = "Messages to this topic will send the appropriate people a low priority alert" },
+    { "service" = "sns" },
     var.tags
   )
 }
@@ -21,7 +21,7 @@ data "aws_iam_policy_document" "alarm_low_priority" {
     effect = "Allow"
 
     principals {
-      type = "AWS"
+      type        = "AWS"
       identifiers = data.terraform_remote_state.organization.outputs.account_ids
     }
 
@@ -50,7 +50,7 @@ data "aws_iam_policy_document" "alarm_low_priority" {
     condition {
       test     = "ArnLike"
       variable = "AWS:SourceArn"
-      values = formatlist("arn:aws:cloudwatch:*:%s:alarm:*", data.terraform_remote_state.organization.outputs.account_ids)
+      values   = formatlist("arn:aws:cloudwatch:*:%s:alarm:*", data.terraform_remote_state.organization.outputs.account_ids)
     }
   }
 
@@ -72,7 +72,7 @@ data "aws_iam_policy_document" "alarm_low_priority" {
     condition {
       test     = "ArnLike"
       variable = "AWS:SourceArn"
-      values = formatlist("arn:aws:ses:*:%s:*", data.terraform_remote_state.organization.outputs.account_ids)
+      values   = formatlist("arn:aws:ses:*:%s:*", data.terraform_remote_state.organization.outputs.account_ids)
     }
   }
 }

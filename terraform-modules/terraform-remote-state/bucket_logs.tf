@@ -49,7 +49,7 @@ resource "aws_s3_bucket" "logs" {
   }
 
   tags = merge(
-    {"Name" = "${var.name_prefix}-logs"},
+    { "Name" = "${var.name_prefix}-logs" },
     var.tags
   )
 }

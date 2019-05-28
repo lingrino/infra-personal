@@ -3,7 +3,7 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.vpc.id
 
   tags = merge(
-    {"Name" = "${var.name_prefix}_route_table_private_${replace(var.azs[count.index], "-", "_")}"},
+    { "Name" = "${var.name_prefix}_route_table_private_${replace(var.azs[count.index], "-", "_")}" },
     var.tags
   )
 }

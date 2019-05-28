@@ -4,7 +4,7 @@ resource "aws_vpn_gateway" "vpn" {
   vpc_id = aws_vpc.vpc.id
 
   tags = merge(
-    {"Name" = "${var.name_prefix}_vpn_gateway"},
+    { "Name" = "${var.name_prefix}_vpn_gateway" },
     var.tags
   )
 }
