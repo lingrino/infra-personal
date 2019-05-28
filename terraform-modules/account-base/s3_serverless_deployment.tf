@@ -7,8 +7,8 @@ resource "aws_ssm_parameter" "s3_serverless_deployment_arn" {
   value       = aws_s3_bucket.serverless_deployment.arn
 
   tags = merge(
-    {"Name" = "/s3/serverless-deployment/arn"},
-    {"description" = "The ARN of the S3 serverless deployment bucket"},
+    { "Name" = "/s3/serverless-deployment/arn" },
+    { "description" = "The ARN of the S3 serverless deployment bucket" },
     var.tags
   )
 }
@@ -20,10 +20,19 @@ resource "aws_ssm_parameter" "s3_serverless_deployment_name" {
   value       = aws_s3_bucket.serverless_deployment.id
 
   tags = merge(
-    {"Name" = "/s3/serverless-deployment/name"},
-    {"description" = "The name of the S3 serverless deployment bucket"},
+    { "Name" = "/s3/serverless-deployment/name" },
+    { "description" = "The name of the S3 serverless deployment bucket" },
     var.tags
   )
+}
+
+resource "aws_s3_bucket_public_access_block" "serverless_deployment" {
+  bucket = aws_s3_bucket.serverless_deployment.id
+
+  ignore_public_acls      = true
+  block_public_acls       = true
+  block_public_policy     = true
+  restrict_public_buckets = true
 }
 
 resource "aws_s3_bucket" "serverless_deployment" {
@@ -44,9 +53,9 @@ resource "aws_s3_bucket" "serverless_deployment" {
   }
 
   tags = merge(
-    {"Name" = "serverless-deployment"},
-    {"description" = "A bucket to store all serverless deployments in our account"},
-    {"service" = "serverless"},
+    { "Name" = "serverless-deployment" },
+    { "description" = "A bucket to store all serverless deployments in our account" },
+    { "service" = "serverless" },
     var.tags
   )
 }
