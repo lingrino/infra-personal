@@ -4,7 +4,7 @@ resource "aws_iam_user" "deployer" {
   force_destroy = true
 
   tags = merge(
-    {"Name" = "${var.name_prefix}-deployer"},
+    { "Name" = "${var.name_prefix}-deployer" },
     var.tags
   )
 }

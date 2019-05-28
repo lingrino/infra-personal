@@ -12,7 +12,7 @@ resource "aws_vpc_endpoint" "interfaces" {
 
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.vpc.id
-  service_name = data.aws_vpc_endpoint_service.interfaces.*.service_name[count.index]
+  service_name      = data.aws_vpc_endpoint_service.interfaces.*.service_name[count.index]
 
   private_dns_enabled = true
   subnet_ids          = aws_subnet.private.*.id
@@ -31,8 +31,8 @@ data "aws_vpc_endpoint_service" "gateways" {
 resource "aws_vpc_endpoint" "gateways" {
   count = length(data.aws_vpc_endpoint_service.gateways.*.id)
 
-  vpc_id      = aws_vpc.vpc.id
-  auto_accept = true
+  vpc_id       = aws_vpc.vpc.id
+  auto_accept  = true
   service_name = data.aws_vpc_endpoint_service.gateways.*.service_name[count.index]
 }
 

@@ -2,7 +2,7 @@ resource "aws_route_table" "public" {
   vpc_id = aws_vpc.vpc.id
 
   tags = merge(
-    {"Name" = "${var.name_prefix}_route_table_public"},
+    { "Name" = "${var.name_prefix}_route_table_public" },
     var.tags
   )
 }

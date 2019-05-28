@@ -5,7 +5,7 @@ resource "aws_route53_zone" "zone" {
   delegation_set_id = var.delegation_set_id
 
   tags = merge(
-    {"Name" = var.domain},
+    { "Name" = var.domain },
     var.tags
   )
 }

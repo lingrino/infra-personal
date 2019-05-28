@@ -64,9 +64,9 @@ resource "aws_s3_bucket" "billing" {
   }
 
   tags = merge(
-    {"Name" = "billing"},
-    {"description" = "Stores all of our AWS billing reports"},
-    {"service" = "billing"},
+    { "Name" = "billing" },
+    { "description" = "Stores all of our AWS billing reports" },
+    { "service" = "billing" },
     var.tags
   )
 }

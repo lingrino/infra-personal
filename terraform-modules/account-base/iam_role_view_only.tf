@@ -6,8 +6,8 @@ resource "aws_iam_role" "view_only" {
   max_session_duration = 43200
 
   tags = merge(
-    {"Name" = "ViewOnly"},
-    {"description" = "ViewOnly users can view all AWS resources but not read their content - See policy for full permissions"},
+    { "Name" = "ViewOnly" },
+    { "description" = "ViewOnly users can view all AWS resources but not read their content - See policy for full permissions" },
     var.tags
   )
 }

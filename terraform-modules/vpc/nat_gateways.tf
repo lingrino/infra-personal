@@ -3,7 +3,7 @@ resource "aws_eip" "eip" {
   vpc   = true
 
   tags = merge(
-    {"Name" = "${var.name_prefix}_eip_for_nat_${replace(var.azs[count.index], "-", "_")}"},
+    { "Name" = "${var.name_prefix}_eip_for_nat_${replace(var.azs[count.index], "-", "_")}" },
     var.tags
   )
 }
@@ -14,7 +14,7 @@ resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.eip.*.id[count.index]
 
   tags = merge(
-    {"Name" = "${var.name_prefix}_nat_${replace(var.azs[count.index], "-", "_")}"},
+    { "Name" = "${var.name_prefix}_nat_${replace(var.azs[count.index], "-", "_")}" },
     var.tags
   )
 }

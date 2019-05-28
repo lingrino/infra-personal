@@ -11,7 +11,7 @@ locals {
   # will work as intended except when the is a more specific wildcard-7475048120.example.com record,
   # which we just assume is rare enough that it's not worth worrying about.
   healthcheck_domains = [
-    for domain in local.dns_names:
+    for domain in local.dns_names :
     replace(domain, "*", "wildcard-7475048120")
   ]
 }

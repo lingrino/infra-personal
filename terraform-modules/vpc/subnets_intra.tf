@@ -10,7 +10,7 @@ resource "aws_subnet" "intra" {
   assign_ipv6_address_on_creation = false
 
   tags = merge(
-    {"Name" = "${var.name_prefix}_subnet_intra_${replace(var.azs[count.index], "-", "_")}"},
+    { "Name" = "${var.name_prefix}_subnet_intra_${replace(var.azs[count.index], "-", "_")}" },
     var.tags
   )
 }
@@ -18,6 +18,6 @@ resource "aws_subnet" "intra" {
 resource "aws_route_table_association" "intra" {
   count = length(var.azs)
 
-  subnet_id      = [aws_subnet.intra.*.id[count.index]
-  route_table_id = [aws_route_table.intra.*.id[count.index]
+  subnet_id      = aws_subnet.intra.*.id[count.index]
+  route_table_id = aws_route_table.intra.*.id[count.index]
 }

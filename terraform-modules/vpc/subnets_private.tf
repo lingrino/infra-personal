@@ -11,7 +11,7 @@ resource "aws_subnet" "private" {
   assign_ipv6_address_on_creation = false
 
   tags = merge(
-    {"Name" = "${var.name_prefix}_subnet_private_${replace(var.azs[count.index], "-", "_")}"},
+    { "Name" = "${var.name_prefix}_subnet_private_${replace(var.azs[count.index], "-", "_")}" },
     var.tags
   )
 }

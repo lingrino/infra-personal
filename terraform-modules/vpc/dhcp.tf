@@ -7,7 +7,7 @@ resource "aws_vpc_dhcp_options" "dhcp" {
   ]
 
   tags = merge(
-    {"Name" = "${var.name_prefix}_dhcp_options"},
+    { "Name" = "${var.name_prefix}_dhcp_options" },
     var.tags
   )
 }

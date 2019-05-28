@@ -26,9 +26,9 @@ resource "aws_iam_role" "config_recorder" {
   assume_role_policy = data.aws_iam_policy_document.arp_config_recorder.json
 
   tags = merge(
-    {"Name" = "config-recorder"},
-    {"description" = "Allows AWS Config to record resource changes and write them to to S3"},
-    {"service" = "config"},
+    { "Name" = "config-recorder" },
+    { "description" = "Allows AWS Config to record resource changes and write them to to S3" },
+    { "service" = "config" },
     var.tags
   )
 }

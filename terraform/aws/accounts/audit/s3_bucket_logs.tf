@@ -40,9 +40,9 @@ resource "aws_s3_bucket" "logs" {
   }
 
   tags = merge(
-    {"Name" = "logs"},
-    {"description" = "Stores all of our generic AWS logs that do not fit anywhere else"},
-    {"service" = "logs"},
+    { "Name" = "logs" },
+    { "description" = "Stores all of our generic AWS logs that do not fit anywhere else" },
+    { "service" = "logs" },
     var.tags
   )
 }

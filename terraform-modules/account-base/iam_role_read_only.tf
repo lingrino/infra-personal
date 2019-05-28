@@ -6,8 +6,8 @@ resource "aws_iam_role" "read_only" {
   max_session_duration = 43200
 
   tags = merge(
-    {"Name" = "ReadOnly"},
-    {"description" = "ReadOnly users can read all AWS resources. including reading data in S3/Dynamo/etc... - see policy for full permissions"},
+    { "Name" = "ReadOnly" },
+    { "description" = "ReadOnly users can read all AWS resources. including reading data in S3/Dynamo/etc... - see policy for full permissions" },
     var.tags
   )
 }

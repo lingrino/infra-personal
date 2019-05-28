@@ -10,8 +10,8 @@ resource "aws_cloudtrail" "organization" {
   include_global_service_events = true
 
   tags = merge(
-    {"Name" = "lingrino"},
-    {"description" = "The cloudtrail for the entire lingrino organization"},
+    { "Name" = "lingrino" },
+    { "description" = "The cloudtrail for the entire lingrino organization" },
     var.tags
   )
 }

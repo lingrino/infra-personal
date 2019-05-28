@@ -3,7 +3,7 @@ resource "aws_iam_user" "srlingren_gmail_com" {
   force_destroy = true
 
   tags = merge(
-    {"Name" = "srlingren@gmail.com"},
+    { "Name" = "srlingren@gmail.com" },
     var.tags
   )
 }

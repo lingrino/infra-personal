@@ -16,8 +16,8 @@ resource "aws_iam_role" "config_lingrino_aggregator" {
   assume_role_policy = data.aws_iam_policy_document.arp_config_lingrino_aggregator.json
 
   tags = merge(
-    {"Name" = "config-lingrino-aggregator"},
-    {"description" = "Allow AWS Config to get information about the AWS Organization"},
+    { "Name" = "config-lingrino-aggregator" },
+    { "description" = "Allow AWS Config to get information about the AWS Organization" },
     var.tags
   )
 }
