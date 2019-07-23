@@ -11,7 +11,7 @@ out in such a way that you can adapt it to your needs easily.
 
 I take security very seriously. When done properly, this project should not present a secutiy risk
 to my infrastructure. However, if you notice a vulnerability please email me at
-security@lingrino.com
+<security@lingrino.com>
 
 ## Organization
 
