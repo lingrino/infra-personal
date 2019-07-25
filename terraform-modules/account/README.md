@@ -17,6 +17,11 @@ module "account" {
 
   name  = "root"
   email = "example+root@gmail.com"
+
+  tags = merge(
+    { "Name" = var.name },
+    var.tags
+  )
 }
 ```
 
