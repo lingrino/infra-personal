@@ -1,9 +1,10 @@
 resource "aws_iam_role" "view_only" {
-  name               = "ViewOnly"
-  description        = "ViewOnly users can view all AWS resources but not read their content - See policy for full permissions"
-  assume_role_policy = data.aws_iam_policy_document.arp_users.json
+  name        = "ViewOnly"
+  description = "ViewOnly users can view all AWS resources but not read their content - See policy for full permissions"
+  path        = "/user/"
 
   max_session_duration = 43200
+  assume_role_policy   = data.aws_iam_policy_document.arp_user.json
 
   tags = merge(
     { "Name" = "ViewOnly" },

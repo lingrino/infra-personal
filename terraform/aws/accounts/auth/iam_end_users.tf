@@ -1,5 +1,7 @@
 resource "aws_iam_user" "srlingren_gmail_com" {
-  name          = "srlingren@gmail.com"
+  name = "srlingren@gmail.com"
+  path = "/user/"
+
   force_destroy = true
 
   tags = merge(

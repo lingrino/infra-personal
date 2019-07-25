@@ -1,10 +1,10 @@
-data "aws_iam_policy_document" "arp_terraform_cloud" {
+data "aws_iam_policy_document" "arp_user" {
   statement {
-    sid = "TerraformCloudAssumeRole"
+    sid = "AuthAccountAssumeRoleRequireMFA"
 
     principals {
       type        = "AWS"
-      identifiers = [aws_iam_user.terraform_cloud.arn]
+      identifiers = [var.account_id_auth]
     }
 
     actions = ["sts:AssumeRole"]

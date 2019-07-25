@@ -1,15 +1,10 @@
-data "aws_iam_policy_document" "arp_admin" {
-  source_json = data.aws_iam_policy_document.arp_users.json
-
-  override_json = data.aws_iam_policy_document.arp_terraform_cloud.json
-}
-
 resource "aws_iam_role" "admin" {
-  name               = "Admin"
-  description        = "A role for full admin access to the account"
-  assume_role_policy = data.aws_iam_policy_document.arp_admin.json
+  name        = "Admin"
+  description = "A role for full admin access to the account"
+  path        = "/user/"
 
   max_session_duration = 43200
+  assume_role_policy   = data.aws_iam_policy_document.arp_user.json
 
   tags = merge(
     { "Name" = "Admin" },
