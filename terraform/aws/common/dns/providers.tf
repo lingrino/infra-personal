@@ -1,14 +1,10 @@
 provider "aws" {
-  region              = "us-east-1"
-  allowed_account_ids = ["230833635140"]
-}
-
-provider "aws" {
   alias  = "audit"
   region = "us-east-1"
 
   assume_role {
-    role_arn = "arn:aws:iam::418875065733:role/Admin"
+    role_arn     = "arn:aws:iam::418875065733:role/ServiceAdmin"
+    session_name = "TerraformCloud"
   }
 }
 
@@ -17,7 +13,8 @@ provider "aws" {
   region = "us-east-1"
 
   assume_role {
-    role_arn = "arn:aws:iam::230833635140:role/Admin"
+    role_arn     = "arn:aws:iam::230833635140:role/ServiceAdmin"
+    session_name = "TerraformCloud"
   }
 }
 
@@ -26,7 +23,8 @@ provider "aws" {
   region = "us-east-1"
 
   assume_role {
-    role_arn = "arn:aws:iam::038361916180:role/Admin"
+    role_arn     = "arn:aws:iam::038361916180:role/ServiceAdmin"
+    session_name = "TerraformCloud"
   }
 }
 
@@ -35,7 +33,8 @@ provider "aws" {
   region = "us-east-1"
 
   assume_role {
-    role_arn = "arn:aws:iam::840856573771:role/Admin"
+    role_arn     = "arn:aws:iam::840856573771:role/ServiceAdmin"
+    session_name = "TerraformCloud"
   }
 }
 
@@ -44,6 +43,7 @@ provider "aws" {
   region = "us-east-1"
 
   assume_role {
-    role_arn = "arn:aws:iam::241223443698:role/Admin"
+    role_arn     = "arn:aws:iam::241223443698:role/ServiceAdmin"
+    session_name = "TerraformCloud"
   }
 }
