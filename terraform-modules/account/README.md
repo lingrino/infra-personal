@@ -25,6 +25,13 @@ module "account" {
 }
 ```
 
+## Creating an Account
+
+When you create a new organization account in AWS a new role is also created, which by default
+is called `OrganizationAccountAccessRole`. Initially this is the only way to access the new
+account, however the role has no access restrictions and should be removed after the first
+terraform run that provisions more secure roles.
+
 ## Updating an Account
 
 You cannot update the `name` or `email` of the account with the API. If you need to update those
