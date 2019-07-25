@@ -1,10 +1,10 @@
 resource "aws_iam_role" "admin" {
   name        = "Admin"
   description = "A role for full admin access to the account"
-  path        = "/user/"
 
-  max_session_duration = 43200
-  assume_role_policy   = data.aws_iam_policy_document.arp_user.json
+  max_session_duration  = 43200
+  assume_role_policy    = data.aws_iam_policy_document.arp_user.json
+  force_detach_policies = true
 
   tags = merge(
     { "Name" = "Admin" },

@@ -3,7 +3,7 @@ provider "aws" {
   region = "us-east-1"
 
   assume_role {
-    role_arn = "arn:aws:iam::${module.account_audit.id}:role/OrganizationAccountAccessRole"
+    role_arn = "arn:aws:iam::${module.account_audit.id}:role/${var.assume_role_name}"
   }
 }
 
@@ -12,6 +12,7 @@ module "account_audit" {
 
   name  = "audit"
   email = "srlingren+aws-audit@gmail.com"
+  tags  = var.tags
 }
 
 module "account_audit_base" {
