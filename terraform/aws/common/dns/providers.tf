@@ -1,14 +1,10 @@
 provider "aws" {
-  region              = "us-east-1"
-  allowed_account_ids = ["230833635140"]
-}
-
-provider "aws" {
   alias  = "audit"
   region = "us-east-1"
 
   assume_role {
-    role_arn = "arn:aws:iam::418875065733:role/Admin"
+    role_arn     = "arn:aws:iam::418875065733:role/${var.assume_role_name}"
+    session_name = var.assume_role_session_name
   }
 }
 
@@ -17,7 +13,8 @@ provider "aws" {
   region = "us-east-1"
 
   assume_role {
-    role_arn = "arn:aws:iam::230833635140:role/Admin"
+    role_arn     = "arn:aws:iam::230833635140:role/${var.assume_role_name}"
+    session_name = var.assume_role_session_name
   }
 }
 
@@ -26,7 +23,8 @@ provider "aws" {
   region = "us-east-1"
 
   assume_role {
-    role_arn = "arn:aws:iam::038361916180:role/Admin"
+    role_arn     = "arn:aws:iam::038361916180:role/${var.assume_role_name}"
+    session_name = var.assume_role_session_name
   }
 }
 
@@ -35,7 +33,8 @@ provider "aws" {
   region = "us-east-1"
 
   assume_role {
-    role_arn = "arn:aws:iam::840856573771:role/Admin"
+    role_arn     = "arn:aws:iam::840856573771:role/${var.assume_role_name}"
+    session_name = var.assume_role_session_name
   }
 }
 
@@ -44,6 +43,7 @@ provider "aws" {
   region = "us-east-1"
 
   assume_role {
-    role_arn = "arn:aws:iam::241223443698:role/Admin"
+    role_arn     = "arn:aws:iam::241223443698:role/${var.assume_role_name}"
+    session_name = var.assume_role_session_name
   }
 }

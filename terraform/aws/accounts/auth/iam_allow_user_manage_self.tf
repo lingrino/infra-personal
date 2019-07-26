@@ -52,7 +52,7 @@ data "aws_iam_policy_document" "allow_user_manage_self" {
       "iam:UpdateLoginProfile",
     ]
 
-    resources = ["arn:aws:iam::${var.account_id}:user/$${ aws:username }"]
+    resources = ["arn:aws:iam::${var.account_id_auth}:user/$${ aws:username }"]
   }
 
   statement {
@@ -66,7 +66,7 @@ data "aws_iam_policy_document" "allow_user_manage_self" {
       "iam:UpdateAccessKey",
     ]
 
-    resources = ["arn:aws:iam::${var.account_id}:user/$${ aws:username }"]
+    resources = ["arn:aws:iam::${var.account_id_auth}:user/$${ aws:username }"]
   }
 
   statement {
@@ -80,7 +80,7 @@ data "aws_iam_policy_document" "allow_user_manage_self" {
       "iam:UploadSigningCertificate",
     ]
 
-    resources = ["arn:aws:iam::${var.account_id}:user/$${ aws:username }"]
+    resources = ["arn:aws:iam::${var.account_id_auth}:user/$${ aws:username }"]
   }
 
   statement {
@@ -95,7 +95,7 @@ data "aws_iam_policy_document" "allow_user_manage_self" {
       "iam:UploadSSHPublicKey",
     ]
 
-    resources = ["arn:aws:iam::${var.account_id}:user/$${ aws:username }"]
+    resources = ["arn:aws:iam::${var.account_id_auth}:user/$${ aws:username }"]
   }
 
   statement {
@@ -110,7 +110,7 @@ data "aws_iam_policy_document" "allow_user_manage_self" {
       "iam:UpdateServiceSpecificCredential",
     ]
 
-    resources = ["arn:aws:iam::${var.account_id}:user/$${ aws:username }"]
+    resources = ["arn:aws:iam::${var.account_id_auth}:user/$${ aws:username }"]
   }
 
   statement {
@@ -122,7 +122,7 @@ data "aws_iam_policy_document" "allow_user_manage_self" {
       "iam:DeleteVirtualMFADevice",
     ]
 
-    resources = ["arn:aws:iam::${var.account_id}:mfa/$${ aws:username }"]
+    resources = ["arn:aws:iam::${var.account_id_auth}:mfa/$${ aws:username }"]
   }
 
   statement {
@@ -136,7 +136,7 @@ data "aws_iam_policy_document" "allow_user_manage_self" {
       "iam:ResyncMFADevice",
     ]
 
-    resources = ["arn:aws:iam::${var.account_id}:user/$${ aws:username }"]
+    resources = ["arn:aws:iam::${var.account_id_auth}:user/$${ aws:username }"]
   }
 
   statement {

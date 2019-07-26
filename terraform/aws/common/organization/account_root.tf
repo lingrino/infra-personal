@@ -3,7 +3,7 @@ provider "aws" {
   region = "us-east-1"
 
   assume_role {
-    role_arn = "arn:aws:iam::${module.account_root.id}:role/OrganizationAccountAccessRole"
+    role_arn = "arn:aws:iam::${module.account_root.id}:role/${var.assume_role_name}"
   }
 }
 
@@ -12,6 +12,7 @@ module "account_root" {
 
   name  = "root"
   email = "srlingren+aws-root@gmail.com"
+  tags  = var.tags
 }
 
 module "account_root_base" {

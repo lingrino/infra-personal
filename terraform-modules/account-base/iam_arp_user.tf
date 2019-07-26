@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "arp_users" {
+data "aws_iam_policy_document" "arp_user" {
   statement {
     sid = "AuthAccountAssumeRoleRequireMFA"
 
