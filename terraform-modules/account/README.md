@@ -61,7 +61,7 @@ provider "aws" {
   }
 }
 
-...
+[...]
 
 module "account_ACCOUNTNAME_base" {
   source = "../../../../terraform-modules/account-base//"
