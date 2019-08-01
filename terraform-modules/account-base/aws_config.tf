@@ -1,3 +1,8 @@
+resource "aws_config_aggregate_authorization" "example" {
+  account_id = var.account_id_audit
+  region     = var.config_authorization_region
+}
+
 data "aws_arn" "config_bucket" {
   arn = var.bucket_config_arn
 }
