@@ -9,6 +9,11 @@ resource "aws_config_config_rule" "ec2_detailed_monitoring" {
     owner             = "AWS"
     source_identifier = "EC2_INSTANCE_DETAILED_MONITORING_ENABLED"
   }
+
+  tags = merge(
+    { "Name" = "ec2_detailed_monitoring" },
+    var.tags
+  )
 }
 
 ####################################
@@ -22,6 +27,11 @@ resource "aws_config_config_rule" "ec2_in_vpc" {
     owner             = "AWS"
     source_identifier = "INSTANCES_IN_VPC"
   }
+
+  tags = merge(
+    { "Name" = "ec2_in_vpc" },
+    var.tags
+  )
 }
 
 ####################################
@@ -35,4 +45,9 @@ resource "aws_config_config_rule" "elb_logging" {
     owner             = "AWS"
     source_identifier = "ELB_LOGGING_ENABLED"
   }
+
+  tags = merge(
+    { "Name" = "elb_logging" },
+    var.tags
+  )
 }

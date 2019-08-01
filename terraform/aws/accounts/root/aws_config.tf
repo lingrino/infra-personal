@@ -6,6 +6,12 @@ resource "aws_config_configuration_aggregator" "lingrino" {
     role_arn    = aws_iam_role.config_lingrino_aggregator.arn
   }
 
+  tags = merge(
+    { "Name" = "lingrino" },
+    { "service" = "config" },
+    var.tags
+  )
+
   depends_on = [aws_iam_role_policy_attachment.config_lingrino_aggregator_service]
 }
 

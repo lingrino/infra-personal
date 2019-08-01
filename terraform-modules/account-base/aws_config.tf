@@ -1,3 +1,15 @@
+resource "aws_config_aggregate_authorization" "config" {
+  account_id = var.account_id_audit
+  region     = var.config_authorization_region
+
+  tags = merge(
+    { "Name" = "authorize-account-audit" },
+    { "description" = "Allows the Audit account to create a config aggregation with data from this account" },
+    { "service" = "config" },
+    var.tags
+  )
+}
+
 data "aws_arn" "config_bucket" {
   arn = var.bucket_config_arn
 }

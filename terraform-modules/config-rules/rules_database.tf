@@ -9,6 +9,11 @@ resource "aws_config_config_rule" "dynamo_encrypted" {
     owner             = "AWS"
     source_identifier = "DYNAMODB_TABLE_ENCRYPTION_ENABLED"
   }
+
+  tags = merge(
+    { "Name" = "dynamo_encrypted" },
+    var.tags
+  )
 }
 
 ####################################
@@ -22,6 +27,11 @@ resource "aws_config_config_rule" "rds_encrypted" {
     owner             = "AWS"
     source_identifier = "RDS_STORAGE_ENCRYPTED"
   }
+
+  tags = merge(
+    { "Name" = "rds_encrypted" },
+    var.tags
+  )
 }
 
 ####################################
@@ -35,6 +45,11 @@ resource "aws_config_config_rule" "rds_multi_az" {
     owner             = "AWS"
     source_identifier = "RDS_MULTI_AZ_SUPPORT"
   }
+
+  tags = merge(
+    { "Name" = "rds_multi_az" },
+    var.tags
+  )
 }
 
 ####################################
@@ -48,6 +63,11 @@ resource "aws_config_config_rule" "rds_public_access" {
     owner             = "AWS"
     source_identifier = "RDS_INSTANCE_PUBLIC_ACCESS_CHECK"
   }
+
+  tags = merge(
+    { "Name" = "rds_public_access" },
+    var.tags
+  )
 }
 
 ####################################
@@ -61,6 +81,11 @@ resource "aws_config_config_rule" "rds_backup" {
     owner             = "AWS"
     source_identifier = "DB_INSTANCE_BACKUP_ENABLED"
   }
+
+  tags = merge(
+    { "Name" = "rds_backup" },
+    var.tags
+  )
 }
 
 ####################################
@@ -74,4 +99,9 @@ resource "aws_config_config_rule" "rds_public_snapshots" {
     owner             = "AWS"
     source_identifier = "RDS_INSTANCE_PUBLIC_ACCESS_CHECK"
   }
+
+  tags = merge(
+    { "Name" = "rds_public_snapshots" },
+    var.tags
+  )
 }

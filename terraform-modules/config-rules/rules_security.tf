@@ -9,6 +9,11 @@ resource "aws_config_config_rule" "acm_expiration" {
     owner             = "AWS"
     source_identifier = "ACM_CERTIFICATE_EXPIRATION_CHECK"
   }
+
+  tags = merge(
+    { "Name" = "acm_expiration" },
+    var.tags
+  )
 }
 
 ####################################
@@ -22,6 +27,11 @@ resource "aws_config_config_rule" "cloudtrail_enabled" {
     owner             = "AWS"
     source_identifier = "CLOUD_TRAIL_ENABLED"
   }
+
+  tags = merge(
+    { "Name" = "cloudtrail_enabled" },
+    var.tags
+  )
 }
 
 ####################################
@@ -35,6 +45,11 @@ resource "aws_config_config_rule" "cloudtrail_global_nabled" {
     owner             = "AWS"
     source_identifier = "MULTI_REGION_CLOUD_TRAIL_ENABLED"
   }
+
+  tags = merge(
+    { "Name" = "cloudtrail_global_enabled" },
+    var.tags
+  )
 }
 
 ####################################
@@ -48,6 +63,11 @@ resource "aws_config_config_rule" "cloudtrail_encrypted" {
     owner             = "AWS"
     source_identifier = "CLOUD_TRAIL_ENCRYPTION_ENABLED"
   }
+
+  tags = merge(
+    { "Name" = "cloudtrail_encrypted" },
+    var.tags
+  )
 }
 
 ####################################
@@ -61,6 +81,11 @@ resource "aws_config_config_rule" "cloudtrail_file_validation" {
     owner             = "AWS"
     source_identifier = "CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED"
   }
+
+  tags = merge(
+    { "Name" = "cloudtrail_file_validation" },
+    var.tags
+  )
 }
 
 ####################################
@@ -74,6 +99,11 @@ resource "aws_config_config_rule" "cloudtrail_to_cloudwatch" {
     owner             = "AWS"
     source_identifier = "CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED"
   }
+
+  tags = merge(
+    { "Name" = "cloudtrail_to_cloudwatch" },
+    var.tags
+  )
 }
 
 ####################################
@@ -87,6 +117,11 @@ resource "aws_config_config_rule" "iam_keys_rotated" {
     owner             = "AWS"
     source_identifier = "ACCESS_KEYS_ROTATED"
   }
+
+  tags = merge(
+    { "Name" = "iam_keys_rotated" },
+    var.tags
+  )
 
   input_parameters = "{\"maxAccessKeyAge\": \"90\"}"
 }
@@ -102,6 +137,11 @@ resource "aws_config_config_rule" "iam_root_keys" {
     owner             = "AWS"
     source_identifier = "IAM_ROOT_ACCESS_KEY_CHECK"
   }
+
+  tags = merge(
+    { "Name" = "iam_root_keys" },
+    var.tags
+  )
 }
 
 ####################################
@@ -115,6 +155,11 @@ resource "aws_config_config_rule" "iam_root_mfa" {
     owner             = "AWS"
     source_identifier = "ROOT_ACCOUNT_MFA_ENABLED"
   }
+
+  tags = merge(
+    { "Name" = "iam_root_mfa" },
+    var.tags
+  )
 }
 
 ####################################
@@ -128,6 +173,11 @@ resource "aws_config_config_rule" "iam_console_user_mfa" {
     owner             = "AWS"
     source_identifier = "MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS"
   }
+
+  tags = merge(
+    { "Name" = "iam_console_user_mfa" },
+    var.tags
+  )
 }
 
 ####################################
@@ -141,6 +191,11 @@ resource "aws_config_config_rule" "iam_unused_user" {
     owner             = "AWS"
     source_identifier = "IAM_USER_UNUSED_CREDENTIALS_CHECK"
   }
+
+  tags = merge(
+    { "Name" = "iam_unused_user" },
+    var.tags
+  )
 
   input_parameters = "{\"maxCredentialUsageAge\": \"90\"}"
 }
@@ -156,6 +211,11 @@ resource "aws_config_config_rule" "iam_user_policies" {
     owner             = "AWS"
     source_identifier = "IAM_USER_NO_POLICIES_CHECK"
   }
+
+  tags = merge(
+    { "Name" = "iam_user_policies" },
+    var.tags
+  )
 }
 
 ####################################
@@ -169,4 +229,9 @@ resource "aws_config_config_rule" "iam_user_in_group" {
     owner             = "AWS"
     source_identifier = "IAM_USER_GROUP_MEMBERSHIP_CHECK"
   }
+
+  tags = merge(
+    { "Name" = "iam_user_in_group" },
+    var.tags
+  )
 }
