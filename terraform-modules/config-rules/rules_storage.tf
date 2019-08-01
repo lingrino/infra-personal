@@ -9,6 +9,11 @@ resource "aws_config_config_rule" "ebs_usage" {
     owner             = "AWS"
     source_identifier = "EC2_VOLUME_INUSE_CHECK"
   }
+
+  tags = merge(
+    { "Name" = "ebs_usage" },
+    var.tags
+  )
 }
 
 ####################################
@@ -22,6 +27,11 @@ resource "aws_config_config_rule" "ebs_encrypted" {
     owner             = "AWS"
     source_identifier = "ENCRYPTED_VOLUMES"
   }
+
+  tags = merge(
+    { "Name" = "ebs_encrypted" },
+    var.tags
+  )
 }
 
 ####################################
@@ -35,6 +45,11 @@ resource "aws_config_config_rule" "ebs_optimization" {
     owner             = "AWS"
     source_identifier = "EBS_OPTIMIZED_INSTANCE"
   }
+
+  tags = merge(
+    { "Name" = "ebs_optimization" },
+    var.tags
+  )
 }
 
 ####################################
@@ -48,6 +63,11 @@ resource "aws_config_config_rule" "s3_ssl" {
     owner             = "AWS"
     source_identifier = "S3_BUCKET_SSL_REQUESTS_ONLY"
   }
+
+  tags = merge(
+    { "Name" = "s3_ssl" },
+    var.tags
+  )
 }
 
 ####################################
@@ -61,6 +81,11 @@ resource "aws_config_config_rule" "s3_encrypted" {
     owner             = "AWS"
     source_identifier = "S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED"
   }
+
+  tags = merge(
+    { "Name" = "s3_encrypted" },
+    var.tags
+  )
 }
 
 ####################################
@@ -74,6 +99,11 @@ resource "aws_config_config_rule" "s3_versioning" {
     owner             = "AWS"
     source_identifier = "S3_BUCKET_VERSIONING_ENABLED"
   }
+
+  tags = merge(
+    { "Name" = "s3_versioning" },
+    var.tags
+  )
 }
 
 ####################################
@@ -87,6 +117,11 @@ resource "aws_config_config_rule" "s3_public_read" {
     owner             = "AWS"
     source_identifier = "S3_BUCKET_PUBLIC_READ_PROHIBITED"
   }
+
+  tags = merge(
+    { "Name" = "s3_public_read" },
+    var.tags
+  )
 }
 
 ####################################
@@ -100,4 +135,9 @@ resource "aws_config_config_rule" "s3_public_write" {
     owner             = "AWS"
     source_identifier = "S3_BUCKET_PUBLIC_WRITE_PROHIBITED"
   }
+
+  tags = merge(
+    { "Name" = "s3_public_write" },
+    var.tags
+  )
 }

@@ -9,6 +9,11 @@ resource "aws_config_config_rule" "eip_utilized" {
     owner             = "AWS"
     source_identifier = "EIP_ATTACHED"
   }
+
+  tags = merge(
+    { "Name" = "eip_utilized" },
+    var.tags
+  )
 }
 
 #####################################
@@ -22,4 +27,9 @@ resource "aws_config_config_rule" "vpc_default_security_group" {
     owner             = "AWS"
     source_identifier = "VPC_DEFAULT_SECURITY_GROUP_CLOSED"
   }
+
+  tags = merge(
+    { "Name" = "vpc_default_security_group" },
+    var.tags
+  )
 }

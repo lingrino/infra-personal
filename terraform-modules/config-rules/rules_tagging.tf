@@ -18,4 +18,10 @@ resource "aws_config_config_rule" "tagging_policy" {
   "tag3Value": "true"
 }
 POLICY
+
+  tags = merge(
+    { "Name" = "tagging_policy" },
+    var.tags
+  )
+
 }
