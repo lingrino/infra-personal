@@ -39,7 +39,7 @@ somewhere manual process. Follow these steps.
 
 ```hcl
 module "account_ACCOUNTNAME" {
-  source = "../../../../terraform-modules/account//"
+  source = "../../../terraform-modules/account//"
 
   name  = "account_ACCOUNTNAME"
   email = "email+aws-account_ACCOUNTNAME@gmail.com"
