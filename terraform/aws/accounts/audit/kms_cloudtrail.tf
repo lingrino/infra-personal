@@ -7,7 +7,7 @@ resource "aws_kms_key" "cloudtrail" {
   is_enabled  = true
   description = "A key to encrypt all cloudtrail data"
 
-  policy = aws_iam_policy_document.kms_policy_cloudtrail.json
+  policy = data.aws_iam_policy_document.kms_policy_cloudtrail.json
 
   enable_key_rotation     = true
   deletion_window_in_days = 30
