@@ -33,7 +33,7 @@ resource "aws_s3_bucket" "s3" {
 
   tags = merge(
     { "Name" = var.name_prefix },
-    { "service" = "s3" }
+    { "service" = "s3" },
     var.tags
   )
 }
