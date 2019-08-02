@@ -22,6 +22,20 @@ resource "aws_kms_key" "cloudtrail" {
 
 data "aws_iam_policy_document" "kms_policy_cloudtrail" {
   statement {
+    sid    = "AllowAuditAdminManage"
+    effect = "Allow"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::${var.account_id_audit}:role/Admin"]
+    }
+
+    actions = ["kms:*"]
+
+    resources = ["*"]
+  }
+
+  statement {
     sid    = "AllowCloudTrailDecryptForSpecificRoles"
     effect = "Allow"
 
