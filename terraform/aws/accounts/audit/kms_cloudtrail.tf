@@ -27,7 +27,7 @@ data "aws_iam_policy_document" "kms_policy_cloudtrail" {
 
     principals {
       type        = "AWS"
-      identifiers = ["arn:aws:iam::${var.account_id_audit}:role/Admin"]
+      identifiers = ["arn:aws:iam::${var.account_id_audit}:root"]
     }
 
     actions = ["kms:*"]
