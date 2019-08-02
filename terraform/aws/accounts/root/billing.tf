@@ -108,4 +108,24 @@ data "aws_iam_policy_document" "bucket_policy_billing" {
 
     resources = ["${aws_s3_bucket.billing.arn}/*"]
   }
+
+  statement {
+    sid    = "DenyInsecureUsage"
+    effect = "Deny"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    actions = ["*"]
+
+    resources = ["${aws_s3_bucket.billing.arn}/*"]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = ["false"]
+    }
+  }
 }

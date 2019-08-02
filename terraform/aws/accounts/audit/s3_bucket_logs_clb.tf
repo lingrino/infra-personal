@@ -93,6 +93,26 @@ data "aws_iam_policy_document" "bucket_policy_logs_clb" {
       values   = ["bucket-owner-full-control"]
     }
   }
+
+  statement {
+    sid    = "DenyInsecureUsage"
+    effect = "Deny"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    actions = ["*"]
+
+    resources = ["${aws_s3_bucket.logs_clb.arn}/*"]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = ["false"]
+    }
+  }
 }
 
 output "bucket_logs_clb_arn" {

@@ -16,6 +16,7 @@ resource "aws_acm_certificate" "cert" {
     { "fqdn" = replace(local.dns_names[0], "*", "star") },
     { "sans" = replace(join(" / ", slice(local.dns_names, 1, length(local.dns_names))), "*", "star", ) },
     { "valid_domains" = replace(join(" / ", local.dns_names), "*", "star") },
+    { "service" = "acm" },
     var.tags
   )
 

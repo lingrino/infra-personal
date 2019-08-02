@@ -33,6 +33,7 @@ resource "aws_s3_bucket" "s3" {
 
   tags = merge(
     { "Name" = var.name_prefix },
+    { "service" = "s3" },
     var.tags
   )
 }
@@ -65,6 +66,26 @@ data "aws_iam_policy_document" "s3" {
     resources = [
       "${aws_s3_bucket.s3.arn}/*",
     ]
+  }
+
+  statement {
+    sid    = "DenyInsecureUsage"
+    effect = "Deny"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    actions = ["*"]
+
+    resources = ["${aws_s3_bucket.s3.arn}/*"]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = ["false"]
+    }
   }
 
   statement {

@@ -76,9 +76,7 @@ data "aws_iam_policy_document" "state" {
       identifiers = ["*"]
     }
 
-    actions = [
-      "s3:*",
-    ]
+    actions = ["*"]
 
     resources = [aws_s3_bucket.state.arn]
 

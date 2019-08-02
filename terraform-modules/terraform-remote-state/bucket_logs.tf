@@ -53,3 +53,8 @@ resource "aws_s3_bucket" "logs" {
     var.tags
   )
 }
+
+resource "aws_s3_bucket_policy" "logs" {
+  bucket = aws_s3_bucket.logs.id
+  policy = data.aws_iam_policy_document.logs.json
+}

@@ -1,6 +1,8 @@
 resource "aws_config_aggregate_authorization" "config" {
+  count = length(var.config_authorization_regions)
+
   account_id = var.account_id_audit
-  region     = var.config_authorization_region
+  region     = var.config_authorization_regions[count.index]
 
   tags = merge(
     { "Name" = "authorize-account-audit" },

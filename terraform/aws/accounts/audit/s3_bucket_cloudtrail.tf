@@ -85,6 +85,26 @@ data "aws_iam_policy_document" "bucket_policy_cloudtrail" {
       values   = ["bucket-owner-full-control"]
     }
   }
+
+  statement {
+    sid    = "DenyInsecureUsage"
+    effect = "Deny"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    actions = ["*"]
+
+    resources = ["${aws_s3_bucket.cloudtrail.arn}/*"]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = ["false"]
+    }
+  }
 }
 
 output "bucket_cloudtrail_arn" {
