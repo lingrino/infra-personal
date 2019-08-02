@@ -13,7 +13,7 @@ resource "aws_config_config_rule" "tagging_policy" {
   input_parameters = <<POLICY
 {
   "tag1Key": "Name",
-  "tag2Key": "service",
+  "tag2Key": "service"
 }
 POLICY
 
@@ -21,5 +21,4 @@ POLICY
     { "Name" = "tagging_policy" },
     var.tags
   )
-
 }
