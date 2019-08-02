@@ -14,8 +14,6 @@ resource "aws_config_config_rule" "tagging_policy" {
 {
   "tag1Key": "Name",
   "tag2Key": "service",
-  "tag3Key": "terraform",
-  "tag3Value": "true"
 }
 POLICY
 
