@@ -79,7 +79,7 @@ data "aws_iam_policy_document" "s3" {
 
     actions = ["*"]
 
-    resources = ["${aws_s3_bucket.serverless_deployment.arn}/*"]
+    resources = ["${aws_s3_bucket.s3.arn}/*"]
 
     condition {
       test     = "Bool"

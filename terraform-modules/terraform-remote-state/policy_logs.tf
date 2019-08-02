@@ -10,7 +10,7 @@ data "aws_iam_policy_document" "logs" {
 
     actions = ["*"]
 
-    resources = [aws_s3_bucket.state.arn]
+    resources = [aws_s3_bucket.logs.arn]
 
     condition {
       test     = "Bool"

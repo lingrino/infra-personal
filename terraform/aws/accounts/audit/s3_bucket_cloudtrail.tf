@@ -97,7 +97,7 @@ data "aws_iam_policy_document" "bucket_policy_cloudtrail" {
 
     actions = ["*"]
 
-    resources = ["${aws_s3_bucket.serverless_deployment.arn}/*"]
+    resources = ["${aws_s3_bucket.cloudtrail.arn}/*"]
 
     condition {
       test     = "Bool"
