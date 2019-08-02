@@ -68,6 +68,26 @@ data "aws_iam_policy_document" "s3" {
   }
 
   statement {
+    sid    = "DenyInsecureUsage"
+    effect = "Deny"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    actions = ["*"]
+
+    resources = ["${aws_s3_bucket.serverless_deployment.arn}/*"]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = ["false"]
+    }
+  }
+
+  statement {
     sid    = "AllowCloudFrontList"
     effect = "Allow"
 

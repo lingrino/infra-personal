@@ -47,6 +47,34 @@ resource "aws_s3_bucket" "logs_s3" {
   )
 }
 
+resource "aws_s3_bucket_policy" "logs_s3" {
+  bucket = aws_s3_bucket.logs_s3.id
+  policy = data.aws_iam_policy_document.bucket_policy_logs_s3.json
+}
+
+# https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-access-logs.html
+data "aws_iam_policy_document" "bucket_policy_logs_s3" {
+  statement {
+    sid    = "DenyInsecureUsage"
+    effect = "Deny"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    actions = ["*"]
+
+    resources = ["${aws_s3_bucket.serverless_deployment.arn}/*"]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = ["false"]
+    }
+  }
+}
+
 output "bucket_logs_s3_arn" {
   description = "The ARN of the logs s3 bucket"
   value       = aws_s3_bucket.logs_s3.arn

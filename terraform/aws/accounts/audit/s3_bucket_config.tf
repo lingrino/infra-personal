@@ -86,6 +86,26 @@ data "aws_iam_policy_document" "bucket_policy_config" {
       values   = ["bucket-owner-full-control"]
     }
   }
+
+  statement {
+    sid    = "DenyInsecureUsage"
+    effect = "Deny"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    actions = ["*"]
+
+    resources = ["${aws_s3_bucket.serverless_deployment.arn}/*"]
+
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = ["false"]
+    }
+  }
 }
 
 output "bucket_config_arn" {
