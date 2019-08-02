@@ -73,3 +73,8 @@ data "aws_iam_policy_document" "kms_policy_cloudtrail" {
     }
   }
 }
+
+output "kms_key_cloudtrail_arn" {
+  description = "The ARN of the kms key that cloudtrail should use to encrypt"
+  value       = aws_kms_key.cloudtrail.arn
+}
