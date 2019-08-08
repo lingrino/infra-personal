@@ -1,9 +1,9 @@
 # This provider is a dummy provider just because the acm-certificate module
 # requires that we pass an explicit provider
-provider "aws" {
-  alias  = "cert"
-  region = "us-east-1"
-}
+# provider "aws" {
+#   alias  = "cert"
+#   region = "us-east-1"
+# }
 
 module "cert" {
   source = "../acm-certificate//"
@@ -16,7 +16,7 @@ module "cert" {
   tags = var.tags
 
   providers = {
-    aws.dns  = aws.cert
     aws.cert = aws.cert
+    aws.dns  = aws.dns
   }
 }

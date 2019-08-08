@@ -16,6 +16,11 @@ module "vaku" {
   bucket_logs_domain  = data.terraform_remote_state.account_audit.outputs.bucket_logs_cloudfront_domain
 
   tags = var.tags
+
+  providers = {
+    aws.cert = aws.cert
+    aws.dns  = aws.dns
+  }
 }
 
 output "site_vaku_bucket_name" {
