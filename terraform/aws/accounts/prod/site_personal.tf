@@ -3,8 +3,10 @@ module "site_personal" {
 
   name_prefix = "site-personal"
 
-  dns_names_to_zone_names = {
-    "lingrino.com"    = "lingrino.com"
+  domain_name = "lingrino.com"
+  zone_name   = "lingrino.com"
+
+  sans_domain_names_to_zone_names = {
     "*.lingrino.com"  = "lingrino.com"
     "lingrino.dev"    = "lingrino.dev"
     "*.lingrino.dev"  = "lingrino.dev"
@@ -16,6 +18,11 @@ module "site_personal" {
   bucket_logs_domain  = data.terraform_remote_state.account_audit.outputs.bucket_logs_cloudfront_domain
 
   tags = var.tags
+
+  providers = {
+    aws.cert = aws.cert
+    aws.dns  = aws.dns
+  }
 }
 
 output "site_personal_bucket_name" {

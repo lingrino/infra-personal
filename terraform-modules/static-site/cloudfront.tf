@@ -4,14 +4,14 @@ resource "aws_cloudfront_origin_access_identity" "ai" {
 
 resource "aws_cloudfront_distribution" "cf" {
   enabled = true
-  comment = "Distribution for ${var.name_prefix}: ${join(",", local.dns_names)}"
+  comment = "Distribution for ${var.name_prefix}: ${join(",", local.domain_names)}"
 
   http_version        = "http2"
   is_ipv6_enabled     = true
   default_root_object = "index.html"
   price_class         = "PriceClass_100" # USA, Canada, & Europe (Cheapest)
 
-  aliases = local.dns_names
+  aliases = local.domain_names
 
   viewer_certificate {
     ssl_support_method       = "sni-only"

@@ -18,7 +18,10 @@ module "site" {
 
   name_prefix = "site"
 
-  dns_names_to_zone_names {
+  domain_name = "www.example.com"
+  zone_name = "example.com"
+
+  sans_domain_names_to_zone_names {
     "example.com"     = "example.com"
     "*.example.com"   = "example.com"
     "foo.example.org" = "example.org"

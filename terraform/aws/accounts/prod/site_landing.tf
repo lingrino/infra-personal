@@ -5,7 +5,11 @@ module "site_landing" {
 
   name_prefix = "site-landing"
 
-  dns_names_to_zone_names = {
+  domain_name = "churner.io"
+  zone_name   = "churner.io"
+
+  sans_domain_names_to_zone_names = {
+    "*.churner.io"   = "churner.io"
     "hoo.dev"        = "hoo.dev"
     "*.hoo.dev"      = "hoo.dev"
     "policies.dev"   = "policies.dev"
@@ -18,4 +22,9 @@ module "site_landing" {
   bucket_logs_domain  = data.terraform_remote_state.account_audit.outputs.bucket_logs_cloudfront_domain
 
   tags = var.tags
+
+  providers = {
+    aws.cert = aws.cert
+    aws.dns  = aws.dns
+  }
 }
