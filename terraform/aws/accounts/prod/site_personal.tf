@@ -3,8 +3,10 @@ module "site_personal" {
 
   name_prefix = "site-personal"
 
-  dns_names_to_zone_names = {
-    "lingrino.com"    = "lingrino.com"
+  domain_name = "lingrino.com"
+  zone_name   = "lingrino.com"
+
+  sans_domain_names_to_zone_names = {
     "*.lingrino.com"  = "lingrino.com"
     "lingrino.dev"    = "lingrino.dev"
     "*.lingrino.dev"  = "lingrino.dev"

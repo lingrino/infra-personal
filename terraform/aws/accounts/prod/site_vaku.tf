@@ -3,11 +3,13 @@ module "vaku" {
 
   name_prefix = "vaku"
 
-  dns_names_to_zone_names = {
+  domain_name = "vaku.dev"
+  zone_name   = "vaku.dev"
+
+  sans_domain_names_to_zone_names = {
+    "*.vaku.dev" = "vaku.dev"
     "vaku.io"    = "vaku.io"
     "*.vaku.io"  = "vaku.io"
-    "vaku.dev"   = "vaku.dev"
-    "*.vaku.dev" = "vaku.dev"
   }
 
   healthcheck_sns_arn = data.terraform_remote_state.account_audit.outputs.sns_alarm_high_priority_arn
@@ -16,18 +18,18 @@ module "vaku" {
   tags = var.tags
 }
 
-output "vaku_bucket_name" {
+output "site_vaku_bucket_name" {
   value = module.vaku.bucket_name
 }
 
-output "vaku_distribution_id" {
+output "site_vaku_distribution_id" {
   value = module.vaku.distribution_id
 }
 
-output "vaku_deployer_access_key_id" {
+output "site_vaku_deployer_access_key_id" {
   value = module.vaku.deployer_access_key_id
 }
 
-output "vaku_deployer_secret_access_key" {
+output "site_vaku_deployer_secret_access_key" {
   value = module.vaku.deployer_secret_access_key
 }
