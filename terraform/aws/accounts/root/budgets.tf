@@ -2,7 +2,7 @@ resource "aws_budgets_budget" "high" {
   name = "high"
 
   budget_type  = "COST"
-  limit_amount = "20.0"
+  limit_amount = "75.0"
   limit_unit   = "USD"
 
   time_unit         = "MONTHLY"
@@ -13,13 +13,21 @@ resource "aws_budgets_budget" "high" {
     use_amortized        = true
     include_subscription = false
   }
+
+  notification {
+    notification_type          = "FORECASTED"
+    comparison_operator        = "GREATER_THAN"
+    threshold                  = 100
+    threshold_type             = "PERCENTAGE"
+    subscriber_email_addresses = ["srlingren+aws-root@gmail.com"]
+  }
 }
 
 resource "aws_budgets_budget" "very_high" {
   name = "very_high"
 
   budget_type  = "COST"
-  limit_amount = "50.0"
+  limit_amount = "100.0"
   limit_unit   = "USD"
 
   time_unit         = "MONTHLY"
@@ -29,5 +37,13 @@ resource "aws_budgets_budget" "very_high" {
   cost_types {
     use_amortized        = true
     include_subscription = false
+  }
+
+  notification {
+    notification_type          = "FORECASTED"
+    comparison_operator        = "GREATER_THAN"
+    threshold                  = 100
+    threshold_type             = "PERCENTAGE"
+    subscriber_email_addresses = ["srlingren+aws-root@gmail.com"]
   }
 }
