@@ -55,6 +55,6 @@ data "aws_iam_policy_document" "deployer" {
 
     # Cloudfront does not support resource level permissioning
     # https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html
-    resources = ["*"]
+    resources = [aws_cloudfront_distribution.cf.arn]
   }
 }
