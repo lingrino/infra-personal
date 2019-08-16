@@ -14,3 +14,11 @@ module "zone_srlingren_com" {
     aws = aws.prod
   }
 }
+
+module "fastmail_srlingren_com" {
+  source = "../../../../terraform-modules/fastmail//"
+
+  domain_name = "srlingren.com"
+
+  enable_webmail_login_portal = false
+}

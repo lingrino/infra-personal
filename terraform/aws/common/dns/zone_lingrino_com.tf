@@ -15,6 +15,27 @@ module "zone_lingrino_com" {
   }
 }
 
+module "fastmail_lingrino_com" {
+  source = "../../../../terraform-modules/fastmail//"
+
+  domain_name = "lingrino.com"
+
+  enable_webmail_login_portal = true
+}
+
+module "ses_audit_lingrino_com" {
+  source = "../../../../terraform-modules/ses-domain//"
+
+  zone_name   = "lingrino.com"
+  domain_name = "audit.lingrino.com"
+  ses_sns_arn = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
+
+  providers = {
+    aws.dns = aws.prod
+    aws.ses = aws.audit
+  }
+}
+
 module "delegate_dev_lingrino_com" {
   source = "../../../../terraform-modules/route53-zone-delegation//"
 
@@ -40,18 +61,5 @@ module "zone_dev_lingrino_com" {
 
   providers = {
     aws = aws.dev
-  }
-}
-
-module "ses_audit_lingrino_com" {
-  source = "../../../../terraform-modules/ses-domain//"
-
-  zone_name   = "lingrino.com"
-  domain_name = "audit.lingrino.com"
-  ses_sns_arn = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
-
-  providers = {
-    aws.dns = aws.prod
-    aws.ses = aws.audit
   }
 }
