@@ -4,13 +4,13 @@ resource "aws_route53_record" "mx_verification" {
   type    = "MX"
   ttl     = 3600
   records = [
-    "10 in1-smtp.messagingengine.com"
+    "10 in1-smtp.messagingengine.com",
     "20 in2-smtp.messagingengine.com"
   ]
 }
 
 resource "aws_route53_record" "dkim_verification" {
-  count    = 3
+  count = 3
 
   zone_id = data.aws_route53_zone.zone.zone_id
   name    = "fm${count.index}._domainkey.${var.domain_name}"
@@ -28,14 +28,14 @@ resource "aws_route53_record" "spf_verification" {
 }
 
 resource "aws_route53_record" "webmail" {
-  count    = var.enable_webmail_login_portal ? 1 : 0
+  count = var.enable_webmail_login_portal ? 1 : 0
 
   zone_id = data.aws_route53_zone.zone.zone_id
-  name    = mail.${var.domain_name}
+  name    = "mail.${var.domain_name}"
   type    = "A"
   ttl     = 3600
   records = [
-    "66.111.4.147"
+    "66.111.4.147",
     "66.111.4.148"
   ]
 }
