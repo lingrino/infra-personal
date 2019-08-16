@@ -21,6 +21,10 @@ module "fastmail_lingrino_com" {
   domain_name = "lingrino.com"
 
   enable_webmail_login_portal = true
+
+  providers = {
+    aws = aws.prod
+  }
 }
 
 module "ses_audit_lingrino_com" {

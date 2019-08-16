@@ -21,4 +21,8 @@ module "fastmail_srlingren_com" {
   domain_name = "srlingren.com"
 
   enable_webmail_login_portal = false
+
+  providers = {
+    aws = aws.prod
+  }
 }

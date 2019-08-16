@@ -21,4 +21,8 @@ module "fastmail_lingrino_dev" {
   domain_name = "lingrino.dev"
 
   enable_webmail_login_portal = false
+
+  providers = {
+    aws = aws.prod
+  }
 }
