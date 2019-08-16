@@ -12,7 +12,7 @@ variable "delegation_set_id" {
 variable "configure_google_domains_email_forwarding" {
   type        = string
   description = "Default true. Whether or not to configure google domains email forwarding records for this domain"
-  default     = true
+  default     = false
 }
 
 variable "verify_ses" {

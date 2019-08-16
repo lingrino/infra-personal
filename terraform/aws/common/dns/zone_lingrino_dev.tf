@@ -14,3 +14,15 @@ module "zone_lingrino_dev" {
     aws = aws.prod
   }
 }
+
+module "fastmail_lingrino_dev" {
+  source = "../../../../terraform-modules/fastmail//"
+
+  domain_name = "lingrino.dev"
+
+  enable_webmail_login_portal = false
+
+  providers = {
+    aws = aws.prod
+  }
+}
