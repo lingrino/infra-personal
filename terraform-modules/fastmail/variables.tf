@@ -11,6 +11,6 @@ variable "zone_name" {
 
 variable "enable_webmail_login_portal" {
   type        = string
-  description = "Set to true to enable the fastmail login portal at mail.${var.domain_name}. Will not work for wildcard domains"
+  description = "Set to true to enable the fastmail login portal at mail.`var.domain_name`. Will not work for wildcard domains"
   default     = false
 }

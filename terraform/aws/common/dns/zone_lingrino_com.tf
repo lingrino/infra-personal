@@ -54,8 +54,7 @@ module "zone_dev_lingrino_com" {
   domain            = "dev.lingrino.com"
   delegation_set_id = aws_route53_delegation_set.lingrino_dev.id
 
-  ses_sns_arn                               = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
-  configure_google_domains_email_forwarding = false
+  ses_sns_arn = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
 
   tags = var.tags
 
