@@ -45,6 +45,18 @@ variable "google_site_verification_value" {
   default     = ""
 }
 
+variable "enable_fastmail" {
+  type        = string
+  description = "Whether or not to enable fastmail domain verification"
+  default     = false
+}
+
+variable "enable_fastmail_webmail_login_portal" {
+  type        = string
+  description = "Set to true to enable the fastmail login portal at mail.`var.domain`. Will not work for wildcard domains"
+  default     = false
+}
+
 variable "tags" {
   type        = map(string)
   description = "A map of tags to apply to all resources"
