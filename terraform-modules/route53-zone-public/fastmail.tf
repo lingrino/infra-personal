@@ -19,10 +19,10 @@ resource "aws_route53_record" "dkim_verification" {
   count = var.enable_fastmail ? 3 : 0
 
   zone_id = aws_route53_zone.zone.zone_id
-  name    = "fm${count.index}._domainkey.${var.domain}"
+  name    = "fm${count.index + 1}._domainkey.${var.domain}"
   type    = "CNAME"
   ttl     = 3600
-  records = ["fm${count.index}.${var.domain}.dkim.fmhosted.com"]
+  records = ["fm${count.index + 1}.${var.domain}.dkim.fmhosted.com"]
 }
 
 resource "aws_route53_record" "webmail" {
