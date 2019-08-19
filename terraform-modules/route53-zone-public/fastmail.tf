@@ -3,7 +3,7 @@
 # https://www.fastmail.com/help/technical/senderauthentication.html
 
 resource "aws_route53_record" "mx_verification" {
-  count = var.enable_fastmail != "" ? 1 : 0
+  count = var.enable_fastmail ? 1 : 0
 
   zone_id = aws_route53_zone.zone.zone_id
   name    = var.domain
@@ -16,7 +16,7 @@ resource "aws_route53_record" "mx_verification" {
 }
 
 resource "aws_route53_record" "dkim_verification" {
-  count = var.enable_fastmail != "" ? 3 : 0
+  count = var.enable_fastmail ? 3 : 0
 
   zone_id = aws_route53_zone.zone.zone_id
   name    = "fm${count.index}._domainkey.${var.domain}"
@@ -39,7 +39,7 @@ resource "aws_route53_record" "webmail" {
 }
 
 resource "aws_route53_record" "client_email_autodiscovery_submission" {
-  count = var.enable_fastmail != "" ? 1 : 0
+  count = var.enable_fastmail ? 1 : 0
 
   zone_id = aws_route53_zone.zone.zone_id
   name    = "_submission._tcp.${var.domain}"
@@ -49,7 +49,7 @@ resource "aws_route53_record" "client_email_autodiscovery_submission" {
 }
 
 resource "aws_route53_record" "client_email_autodiscovery_imap" {
-  count = var.enable_fastmail != "" ? 1 : 0
+  count = var.enable_fastmail ? 1 : 0
 
   zone_id = aws_route53_zone.zone.zone_id
   name    = "_imap._tcp.${var.domain}"
@@ -59,7 +59,7 @@ resource "aws_route53_record" "client_email_autodiscovery_imap" {
 }
 
 resource "aws_route53_record" "client_email_autodiscovery_imaps" {
-  count = var.enable_fastmail != "" ? 1 : 0
+  count = var.enable_fastmail ? 1 : 0
 
   zone_id = aws_route53_zone.zone.zone_id
   name    = "_imaps._tcp.${var.domain}"
@@ -69,7 +69,7 @@ resource "aws_route53_record" "client_email_autodiscovery_imaps" {
 }
 
 resource "aws_route53_record" "client_email_autodiscovery_pop3" {
-  count = var.enable_fastmail != "" ? 1 : 0
+  count = var.enable_fastmail ? 1 : 0
 
   zone_id = aws_route53_zone.zone.zone_id
   name    = "_pop3._tcp.${var.domain}"
@@ -87,7 +87,7 @@ resource "aws_route53_record" "client_email_autodiscovery_pop3s" {
 }
 
 resource "aws_route53_record" "client_carddav_autodiscovery" {
-  count = var.enable_fastmail != "" ? 1 : 0
+  count = var.enable_fastmail ? 1 : 0
 
   zone_id = aws_route53_zone.zone.zone_id
   name    = "_carddav._tcp.${var.domain}"
@@ -97,7 +97,7 @@ resource "aws_route53_record" "client_carddav_autodiscovery" {
 }
 
 resource "aws_route53_record" "client_carddavs_autodiscovery" {
-  count = var.enable_fastmail != "" ? 1 : 0
+  count = var.enable_fastmail ? 1 : 0
 
   zone_id = aws_route53_zone.zone.zone_id
   name    = "_carddavs._tcp.${var.domain}"
@@ -107,7 +107,7 @@ resource "aws_route53_record" "client_carddavs_autodiscovery" {
 }
 
 resource "aws_route53_record" "client_caldav_autodiscovery" {
-  count = var.enable_fastmail != "" ? 1 : 0
+  count = var.enable_fastmail ? 1 : 0
 
   zone_id = aws_route53_zone.zone.zone_id
   name    = "_caldav._tcp.${var.domain}"
@@ -117,7 +117,7 @@ resource "aws_route53_record" "client_caldav_autodiscovery" {
 }
 
 resource "aws_route53_record" "client_caldavs_autodiscovery" {
-  count = var.enable_fastmail != "" ? 1 : 0
+  count = var.enable_fastmail ? 1 : 0
 
   zone_id = aws_route53_zone.zone.zone_id
   name    = "_caldavs._tcp.${var.domain}"
