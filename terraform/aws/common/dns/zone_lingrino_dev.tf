@@ -8,19 +8,10 @@ module "zone_lingrino_dev" {
   google_site_verification_value = "google-site-verification=vxDuPgFxbbnn0WDnOzSZVz2zzv_rZr6EUegsu2gF6KY"
   ses_sns_arn                    = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
 
+  enable_fastmail                      = true
+  enable_fastmail_webmail_login_portal = true
+
   tags = var.tags
-
-  providers = {
-    aws = aws.prod
-  }
-}
-
-module "fastmail_lingrino_dev" {
-  source = "../../../../terraform-modules/fastmail//"
-
-  domain_name = "lingrino.dev"
-
-  enable_webmail_login_portal = false
 
   providers = {
     aws = aws.prod
