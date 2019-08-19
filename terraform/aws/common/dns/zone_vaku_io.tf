@@ -8,6 +8,9 @@ module "zone_vaku_io" {
   google_site_verification_value = ""
   ses_sns_arn                    = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
 
+  enable_fastmail                      = true
+  enable_fastmail_webmail_login_portal = true
+
   tags = var.tags
 
   providers = {
