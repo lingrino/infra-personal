@@ -27,6 +27,8 @@ module "site" {
     "foo.example.org" = "example.org"
   }
 
+  healthcheck_domains_enabled = true
+
   tags = var.tags
 }
 ```

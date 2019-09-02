@@ -20,16 +20,6 @@ resource "aws_s3_bucket" "cloudtrail" {
     enabled                                = true
     abort_incomplete_multipart_upload_days = 1
 
-    transition {
-      days          = "90"
-      storage_class = "GLACIER"
-    }
-
-    noncurrent_version_transition {
-      days          = "90"
-      storage_class = "GLACIER"
-    }
-
     expiration {
       days = "365"
     }

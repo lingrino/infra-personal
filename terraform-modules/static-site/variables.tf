@@ -23,6 +23,18 @@ variable "bucket_logs_domain" {
   description = "The domain of the S3 bucket to write logs to"
 }
 
+variable "healthcheck_cloudfront_enabled" {
+  type        = string
+  description = "Whether or not to run a healthcheck against the default cloudfront domain"
+  default     = true
+}
+
+variable "healthcheck_domains_enabled" {
+  type        = string
+  description = "Whether or not to run a healthcheck against ALL domain names pointing to the cloudfront"
+  default     = false
+}
+
 variable "healthcheck_sns_arn" {
   type        = string
   description = "The ARN of the SNS topic to notify when the configured healthcheck is unhealthy"
