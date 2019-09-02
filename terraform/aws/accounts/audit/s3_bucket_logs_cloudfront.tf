@@ -20,22 +20,12 @@ resource "aws_s3_bucket" "logs_cloudfront" {
     enabled                                = true
     abort_incomplete_multipart_upload_days = 1
 
-    transition {
-      days          = "90"
-      storage_class = "GLACIER"
-    }
-
-    noncurrent_version_transition {
-      days          = "90"
-      storage_class = "GLACIER"
-    }
-
     expiration {
-      days = "365"
+      days = "90"
     }
 
     noncurrent_version_expiration {
-      days = "365"
+      days = "90"
     }
   }
 
