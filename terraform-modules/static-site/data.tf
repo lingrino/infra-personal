@@ -13,10 +13,10 @@ locals {
   # wildcard-hash.example.com. This will work as intended except when the is a
   # more specific wildcard-hash.example.com record, which we just assume is rare
   # enough that it's not worth worrying about.
-  healthcheck_domains = [
+  healthcheck_domains = var.healthcheck_domains_enabled ? [
     for domain in local.domain_names :
     replace(domain, "*", format("wildcard-%s", md5(domain)))
-  ]
+  ] : []
 }
 
 data "aws_route53_zone" "base" {
