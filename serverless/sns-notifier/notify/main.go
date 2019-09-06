@@ -14,7 +14,7 @@ import (
 
 const (
 	from = "sns-notifier@audit.lingrino.com"
-	to   = "srlingren@gmail.com"
+	to   = "sean@lingrino.com"
 
 	subject = "SNS Notifier: Alert On %s"
 
