@@ -11,7 +11,7 @@ module "account_auth" {
   source = "../../../../terraform-modules/account//"
 
   name  = "auth"
-  email = "srlingren+aws-auth@gmail.com"
+  email = "sean+aws-auth@lingrino.com"
   tags  = var.tags
 }
 

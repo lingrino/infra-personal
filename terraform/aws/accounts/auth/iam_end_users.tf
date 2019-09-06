@@ -1,11 +1,11 @@
 resource "aws_iam_user" "srlingren_gmail_com" {
-  name = "srlingren@gmail.com"
+  name = "sean@lingrino.com"
   path = "/user/"
 
   force_destroy = true
 
   tags = merge(
-    { "Name" = "srlingren@gmail.com" },
+    { "Name" = "sean@lingrino.com" },
     var.tags
   )
 }
