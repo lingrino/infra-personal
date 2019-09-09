@@ -11,5 +11,5 @@ deploy: clean build
 	sls deploy --verbose
 
 gomod:
-	go get -u
+	go get -u all
 	go mod tidy
