@@ -25,7 +25,10 @@ resource "github_branch_protection" "docker" {
   enforce_admins = true
 
   required_status_checks {
-    strict   = true
-    contexts = ["ci/gitlab/gitlab.com"]
+    strict = true
+    contexts = [
+      "build-and-push",
+      "lint"
+    ]
   }
 }

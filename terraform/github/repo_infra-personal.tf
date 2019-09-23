@@ -29,6 +29,6 @@ resource "github_branch_protection" "infra-personal" {
 
   required_status_checks {
     strict   = true
-    contexts = ["ci/gitlab/gitlab.com"]
+    contexts = ["validate"]
   }
 }
