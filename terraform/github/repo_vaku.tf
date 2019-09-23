@@ -29,7 +29,10 @@ resource "github_branch_protection" "vaku" {
   enforce_admins = true
 
   required_status_checks {
-    strict   = true
-    contexts = ["ci/gitlab/gitlab.com"]
+    strict = true
+    contexts = [
+      "GolangCI",
+      "validate"
+    ]
   }
 }

@@ -28,7 +28,18 @@ resource "github_branch_protection" "infra-personal" {
   enforce_admins = true
 
   required_status_checks {
-    strict   = true
-    contexts = ["ci/gitlab/gitlab.com"]
+    strict = true
+    contexts = [
+      "atlas/lingrino/aws-accounts-audit",
+      "atlas/lingrino/aws-accounts-auth",
+      "atlas/lingrino/aws-accounts-dev",
+      "atlas/lingrino/aws-accounts-prod",
+      "atlas/lingrino/aws-accounts-root",
+      "atlas/lingrino/aws-common-dns",
+      "atlas/lingrino/aws-common-organization",
+      "atlas/lingrino/github",
+      "atlas/lingrino/tls",
+      "validate"
+    ]
   }
 }
