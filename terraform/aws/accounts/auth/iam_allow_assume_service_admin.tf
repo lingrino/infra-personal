@@ -25,7 +25,7 @@ resource "aws_iam_policy" "allow_assume_service_admin" {
 
 data "aws_iam_policy_document" "allow_assume_service_admin" {
   statement {
-    sid       = "AllowAssumeAtlantis"
+    sid       = "AllowAssumeServiceAdmin"
     effect    = "Allow"
     actions   = ["sts:AssumeRole"]
     resources = ["arn:aws:iam::*:role/ServiceAdmin"]
