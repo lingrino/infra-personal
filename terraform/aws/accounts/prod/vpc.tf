@@ -7,6 +7,9 @@ module "vpc" {
   # NAT Gateways are too expensive for my use
   create_nat_gateways = false
 
+  # Endpoint Interfaces are too expensive for my use
+  enabled_endpoint_interfaces = []
+
   azs = [
     "us-east-1a",
     "us-east-1b",
