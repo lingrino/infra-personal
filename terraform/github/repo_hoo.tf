@@ -4,7 +4,7 @@ resource "github_repository" "hoo" {
   homepage_url = "https://lingrino.com"
 
   default_branch = "master"
-  private        = true
+  private        = false
 
   has_wiki   = false
   has_issues = true
