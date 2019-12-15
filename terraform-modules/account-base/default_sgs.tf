@@ -1,5 +1,3 @@
-data "aws_caller_identity" "current" {}
-
 resource "null_resource" "default_sgs" {
   triggers = {
     account_id = var.account_id
