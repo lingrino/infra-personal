@@ -89,24 +89,6 @@ resource "aws_config_config_rule" "cloudtrail_file_validation" {
 }
 
 ####################################
-### Cloudtrail to Cloudwatch     ###
-####################################
-resource "aws_config_config_rule" "cloudtrail_to_cloudwatch" {
-  name        = "cloudtrail_to_cloudwatch"
-  description = "Noncompliant when cloudtrail is not writing to cloudwatch"
-
-  source {
-    owner             = "AWS"
-    source_identifier = "CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED"
-  }
-
-  tags = merge(
-    { "Name" = "cloudtrail_to_cloudwatch" },
-    var.tags
-  )
-}
-
-####################################
 ### IAM Keys Rotated             ###
 ####################################
 resource "aws_config_config_rule" "iam_keys_rotated" {
