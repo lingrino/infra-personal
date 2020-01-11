@@ -12,7 +12,7 @@ resource "aws_subnet" "public" {
 
   tags = merge(
     { "Name" = "${var.name_prefix}_subnet_public_${replace(var.azs[count.index], "-", "_")}" },
-    { "type" = "public" }
+    { "type" = "public" },
     var.tags
   )
 }

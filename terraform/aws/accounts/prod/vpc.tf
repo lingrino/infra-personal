@@ -18,7 +18,7 @@ module "vpc" {
   ]
 
   tags = merge(
-    { "default" = "true" }
+    { "default" = "true" },
     var.tags
   )
 }

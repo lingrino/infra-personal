@@ -11,7 +11,7 @@ resource "aws_subnet" "intra" {
 
   tags = merge(
     { "Name" = "${var.name_prefix}_subnet_intra_${replace(var.azs[count.index], "-", "_")}" },
-    { "type" = "intra" }
+    { "type" = "intra" },
     var.tags
   )
 }
