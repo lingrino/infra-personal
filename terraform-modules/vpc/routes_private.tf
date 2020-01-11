@@ -4,6 +4,7 @@ resource "aws_route_table" "private" {
 
   tags = merge(
     { "Name" = "${var.name_prefix}_route_table_private_${replace(var.azs[count.index], "-", "_")}" },
+    { "type" = "private" },
     var.tags
   )
 }

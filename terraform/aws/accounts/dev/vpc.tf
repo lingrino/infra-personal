@@ -1,8 +1,8 @@
 module "vpc" {
   source = "../../../../terraform-modules/vpc//"
 
-  name_prefix    = "prod"
-  vpc_cidr_block = "10.10.0.0/16"
+  name_prefix    = "dev"
+  vpc_cidr_block = "10.100.0.0/16"
 
   # NAT Gateways are too expensive for my use
   create_nat_gateways = false

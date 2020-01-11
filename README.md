@@ -1,8 +1,7 @@
 # Personal Infrastructure
 
-This repo contains code (mostly terraform) for configuring all of my personal infrastructure in
-code. If you're interested, the terraform modules inside of `terraform-modules` should be well
-documented and usable on their own.
+This repo contains code for configuring all of my personal infrastructure. If you're interested,
+the terraform modules inside of `terraform-modules` should be well documented and usable on their own.
 
 I have operated versions of this infrastructure at much larger scale and this repo should be laid
 out in such a way that you can adapt it to your needs easily.
