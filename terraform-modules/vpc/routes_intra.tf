@@ -4,6 +4,7 @@ resource "aws_route_table" "intra" {
 
   tags = merge(
     { "Name" = "${var.name_prefix}_route_table_intra_${replace(var.azs[count.index], "-", "_")}" },
+    { "type" = "intra" },
     var.tags
   )
 }
