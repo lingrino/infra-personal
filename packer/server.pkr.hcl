@@ -4,18 +4,7 @@ source "docker" "amazonlinux2" {
 }
 
 source "amazon-ebs" "amazonlinux2" {
-  ssh_username = "ec2-user"
-  region = "us-east-1"
-  shutdown_behavior = "terminate"
-
-  subnet_filter {
-    filters {
-      tag:default = "true"
-      tag:type = "public"
-    }
-    random = true
-  }
-
+  # Pick the right AMI
   source_ami_filter {
     filters {
       name = "amzn2-ami-hvm-*-x86_64-gp2"
@@ -26,6 +15,18 @@ source "amazon-ebs" "amazonlinux2" {
     most_recent = true
   }
 
+  # Pick where to launch the AMI
+  region = "us-east-1"
+
+  subnet_filter {
+    filters {
+      tag:default = "true"
+      tag:type = "public"
+    }
+    random = true
+  }
+
+  # Pick AMI hardware
   spot_price = "auto"
   spot_price_auto_product = "Linux/UNIX (Amazon VPC)"
   spot_instance_types = [
@@ -36,50 +37,64 @@ source "amazon-ebs" "amazonlinux2" {
   ]
 
   spot_tags {
-    Name = "name"
-    os = "OS"
-    build_date = ""
-    packer = true
-    packer_version = "packer version here"
+    Name = "infra-selfhosted"
+    build_date = "{{ timestamp }}"
+    os = "amazonlinux2"
+    packer = "true"
+    packer_version = "{{ packer_version }}"
+    source_ami_id = "{{ .SourceAMI }}"
+    source_ami_name = "{{ .SourceAMIName }}"
   }
 
+  # How the AMI runs
+  ssh_username = "ec2-user"
+  shutdown_behavior = "terminate"
 
   run_tags {
-    Name = "name"
-    os = "OS"
-    build_date = ""
-    packer = true
-    packer_version = "packer version here"
+    Name = "infra-selfhosted"
+    build_date = "{{ timestamp }}"
+    os = "amazonlinux2"
+    packer = "true"
+    packer_version = "{{ packer_version }}"
+    source_ami_id = "{{ .SourceAMI }}"
+    source_ami_name = "{{ .SourceAMIName }}"
   }
 
   run_volume_tags {
-    Name = "name"
-    os = "OS"
-    build_date = ""
-    packer = true
-    packer_version = "packer version here"
+    Name = "infra-selfhosted"
+    build_date = "{{ timestamp }}"
+    os = "amazonlinux2"
+    packer = "true"
+    packer_version = "{{ packer_version }}"
+    source_ami_id = "{{ .SourceAMI }}"
+    source_ami_name = "{{ .SourceAMIName }}"
   }
 
-  ami_name = "server"
-  ami_description = "myserver"
+  # How to save the AMI
+  ami_name = "infra-selfhosted-{{ timestamp }}"
+  ami_description = "a general AMI for my self hosted infrastructure"
 
   ami_users = [
-    "all my account ids",
+    "038361916180",
+    "840856573771",
   ]
 
   ami_regions = [
-    "all my regions",
+    "us-east-1",
   ]
 
   tags {
-    Name = "name"
-    os = "OS"
-    build_date = ""
-    packer = true
-    packer_version = "packer version here"
+    Name = "infra-selfhosted"
+    build_date = "{{ timestamp }}"
+    os = "amazonlinux2"
+    packer = "true"
+    packer_version = "{{ packer_version }}"
+    source_ami_id = "{{ .SourceAMI }}"
+    source_ami_name = "{{ .SourceAMIName }}"
   }
 }
 
+# Prepare the docker image to support ansible
 build {
   sources = [
     "source.docker.amazonlinux2"
@@ -92,6 +107,7 @@ build {
   }
 }
 
+# Provision the images
 build {
   sources = [
     "source.docker.amazonlinux2",
@@ -99,6 +115,6 @@ build {
   ]
 
   provisioner "ansible" {
-    playbook_file = "./ansible/site.yml"
+    playbook_file = "../ansible/site.yml"
   }
 }

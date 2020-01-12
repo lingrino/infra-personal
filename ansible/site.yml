@@ -1,0 +1,5 @@
+- name: Configure the AMI
+  hosts: all
+  become: yes
+  roles:
+    - base
