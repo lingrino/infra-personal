@@ -2,3 +2,16 @@
   package:
     name: '*'
     state: latest
+
+- name: Install base packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - curl
+    - git
+    - htop
+    - jq
+    - tar
+    - unzip
+    - wget
