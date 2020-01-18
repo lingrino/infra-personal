@@ -1,5 +1,6 @@
-- name: Configure the AMI
+- name: Setup wireguard
   hosts: all
   become: yes
   roles:
+    - base
     - wireguard

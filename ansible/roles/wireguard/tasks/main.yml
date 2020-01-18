@@ -31,7 +31,7 @@
 - name: Create the wireguard directory
   file:
     state: directory
-    path: /etc/wireguard/wg0.conf
+    path: /etc/wireguard
     owner: root
     group: root
     mode: 0700
