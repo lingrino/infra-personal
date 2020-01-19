@@ -70,6 +70,12 @@ data "aws_iam_policy_document" "wg_role" {
     resources = [
       aws_secretsmanager_secret.wg.arn
     ]
+
+    condition {
+      test     = "ForAnyValue:StringEquals"
+      variable = "secretsmanager:VersionStage"
+      values   = ["AWSCURRENT"]
+    }
   }
 
   statement {
