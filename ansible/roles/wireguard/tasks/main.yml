@@ -43,3 +43,7 @@
     owner: root
     group: root
     mode: 0600
+
+- name: Reboot
+  reboot:
+    msg: rebooting for wireguard headers
