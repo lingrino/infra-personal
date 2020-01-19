@@ -1,9 +1,19 @@
 #cloud-config
 # DOCS - https://cloudinit.readthedocs.io/en/latest/topics/modules.html
 
-runcmd:
-  - aws --region ${ region } ec2 associate-address --allocation-id ${ allocation_id } --instance-id "$(curl http://169.254.169.254/latest/meta-data/instance-id)"
-  - aws --region ${ region } s3 cp s3://${ bucket_name }/wg0.conf /etc/wireguard/wg0.conf
-  - aws --region ${ region } secretsmanager get-secret-value --secret-id ${ secret_arn }
-  - systemctl enable wg-quick@wg0
-  - systemctl start wg-quick@wg0
+runcmd: |
+  aws --region ${ region } ec2 associate-address --allocation-id ${ allocation_id } --instance-id "$(curl http://169.254.169.254/latest/meta-data/instance-id)"
+  aws --region ${ region } ec2 modify-instance-attribute --instance-id "$(curl http://169.254.169.254/latest/meta-data/instance-id)" --no-source-dest-check
+  aws --region ${ region } s3 cp s3://${ bucket_name }/wg0.conf /etc/wireguard/wg0.conf
+  aws --region ${ region } secretsmanager get-secret-value --secret-id ${ secret_arn }
+
+  secret=$(aws --region us-east-1 secretsmanager get-secret-value --secret-id seantest --query 'SecretString' | jq -r)
+  file=$(jq -r .file <<<"$secret")
+  replacements=$(jq -r '.replacements' <<<"$secret")
+  for key in $(jq -r 'keys | .[]' <<<"$replacements"); do
+      value=$(jq -r '.'"$key"'' <<<"$replacements")
+      sed -i -e "s/$key/$value/g" "$file"
+  done
+
+  systemctl enable wg-quick@wg0
+  systemctl start wg-quick@wg0

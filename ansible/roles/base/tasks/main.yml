@@ -9,6 +9,7 @@
     state: latest
   loop:
     - curl
+    - ec2-net-utils
     - git
     - htop
     - jq

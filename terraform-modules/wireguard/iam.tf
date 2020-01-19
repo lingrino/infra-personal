@@ -77,4 +77,15 @@ data "aws_iam_policy_document" "wg_role" {
       values   = ["AWSCURRENT"]
     }
   }
+
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "ec2:AssociateAddress",
+      "ec2:ModifyInstanceAttribute",
+    ]
+
+    resources = ["*"]
+  }
 }
