@@ -2,11 +2,16 @@
 # DOCS - https://cloudinit.readthedocs.io/en/latest/topics/modules.html
 
 runcmd: |
+  # Assign the elastic IP
   aws --region ${ region } ec2 associate-address --allocation-id ${ allocation_id } --instance-id "$(curl http://169.254.169.254/latest/meta-data/instance-id)"
-  aws --region ${ region } ec2 modify-instance-attribute --instance-id "$(curl http://169.254.169.254/latest/meta-data/instance-id)" --no-source-dest-check
-  aws --region ${ region } s3 cp s3://${ bucket_name }/wg0.conf /etc/wireguard/wg0.conf
-  aws --region ${ region } secretsmanager get-secret-value --secret-id ${ secret_arn }
 
+  # Turn off source/destination checks
+  aws --region ${ region } ec2 modify-instance-attribute --instance-id "$(curl http://169.254.169.254/latest/meta-data/instance-id)" --no-source-dest-check
+
+  # Copy down the config file
+  aws --region ${ region } s3 cp s3://${ bucket_name }/wg0.conf /etc/wireguard/wg0.conf
+
+  # Template the secrets into the config file
   secret=$(aws --region us-east-1 secretsmanager get-secret-value --secret-id seantest --query 'SecretString' | jq -r)
   file=$(jq -r .file <<<"$secret")
   replacements=$(jq -r '.replacements' <<<"$secret")
@@ -15,5 +20,6 @@ runcmd: |
       sed -i -e "s/$key/$value/g" "$file"
   done
 
+  # Start wireguard
   systemctl enable wg-quick@wg0
   systemctl start wg-quick@wg0
