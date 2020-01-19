@@ -15,7 +15,7 @@ data "aws_ami" "wg" {
 }
 
 data "template_file" "userdata" {
-  template = file("${path.module}/files/userdata.yml.j2")
+  template = file("${path.module}/files/userdata.sh.j2")
 
   vars = {
     region        = data.aws_region.current.name
