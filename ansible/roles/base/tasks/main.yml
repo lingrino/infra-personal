@@ -22,3 +22,13 @@
     - tar
     - unzip
     - wget
+
+# jq 1.5 has a bug that won't allow it to work in bash commands such as a=$(echo "{}" | jq -r)
+# you can remove this when jq 1.6+ is installed by apt
+- name: Install jq 1.6
+  get_url:
+    url: "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"
+    dest: "/usr/local/bin/jq"
+    owner: root
+    group: root
+    mode: 0755
