@@ -1,0 +1,200 @@
+{
+    "builders": [
+        {
+            "name": "docker-selfhosted",
+            "type": "docker",
+            "image": "amazonlinux:2",
+            "discard": true
+        },
+        {
+            "name": "ec2-selfhosted",
+            "type": "amazon-ebs",
+            "source_ami_filter": {
+                "filters": {
+                    "name": "amzn2-ami-hvm-*-x86_64-gp2",
+                    "root-device-type": "ebs",
+                    "virtualization-type": "hvm"
+                },
+                "owners": [
+                    "amazon"
+                ],
+                "most_recent": true
+            },
+            "region": "us-east-1",
+            "subnet_filter": {
+                "filters": {
+                    "tag:default": "true",
+                    "tag:type": "public"
+                },
+                "random": true
+            },
+            "spot_price": "auto",
+            "spot_instance_types": [
+                "t3.nano",
+                "t3.micro",
+                "t3.small",
+                "t3.medium"
+            ],
+            "spot_tags": {
+                "Name": "selfhosted",
+                "build_date": "{{ timestamp }}",
+                "os": "amazonlinux2",
+                "packer": "true",
+                "packer_version": "{{ packer_version }}",
+                "source_ami_id": "{{ .SourceAMI }}",
+                "source_ami_name": "{{ .SourceAMIName }}"
+            },
+            "ssh_username": "ec2-user",
+            "ssh_interface": "public_ip",
+            "shutdown_behavior": "terminate",
+            "run_tags": {
+                "Name": "selfhosted",
+                "build_date": "{{ timestamp }}",
+                "os": "amazonlinux2",
+                "packer": "true",
+                "packer_version": "{{ packer_version }}",
+                "source_ami_id": "{{ .SourceAMI }}",
+                "source_ami_name": "{{ .SourceAMIName }}"
+            },
+            "run_volume_tags": {
+                "Name": "selfhosted",
+                "build_date": "{{ timestamp }}",
+                "os": "amazonlinux2",
+                "packer": "true",
+                "packer_version": "{{ packer_version }}",
+                "source_ami_id": "{{ .SourceAMI }}",
+                "source_ami_name": "{{ .SourceAMIName }}"
+            },
+            "ami_name": "selfhosted-{{ timestamp }}",
+            "ami_description": "a general AMI for my selfhosted infrastructure",
+            "ami_users": [
+                "038361916180",
+                "840856573771"
+            ],
+            "ami_regions": [
+                "us-east-1"
+            ],
+            "tags": {
+                "Name": "selfhosted",
+                "build_date": "{{ timestamp }}",
+                "os": "amazonlinux2",
+                "packer": "true",
+                "packer_version": "{{ packer_version }}",
+                "source_ami_id": "{{ .SourceAMI }}",
+                "source_ami_name": "{{ .SourceAMIName }}"
+            }
+        },
+        {
+            "name": "docker-wireguard",
+            "type": "docker",
+            "image": "amazonlinux:2",
+            "discard": true
+        },
+        {
+            "name": "ec2-wireguard",
+            "type": "amazon-ebs",
+            "source_ami_filter": {
+                "filters": {
+                    "name": "amzn2-ami-hvm-*-x86_64-gp2",
+                    "root-device-type": "ebs",
+                    "virtualization-type": "hvm"
+                },
+                "owners": [
+                    "amazon"
+                ],
+                "most_recent": true
+            },
+            "region": "us-east-1",
+            "subnet_filter": {
+                "filters": {
+                    "tag:default": "true",
+                    "tag:type": "public"
+                },
+                "random": true
+            },
+            "spot_price": "auto",
+            "spot_instance_types": [
+                "t3.nano",
+                "t3.micro",
+                "t3.small",
+                "t3.medium"
+            ],
+            "spot_tags": {
+                "Name": "wireguard",
+                "build_date": "{{ timestamp }}",
+                "os": "amazonlinux2",
+                "packer": "true",
+                "packer_version": "{{ packer_version }}",
+                "source_ami_id": "{{ .SourceAMI }}",
+                "source_ami_name": "{{ .SourceAMIName }}"
+            },
+            "ssh_username": "ec2-user",
+            "ssh_interface": "public_ip",
+            "shutdown_behavior": "terminate",
+            "run_tags": {
+                "Name": "wireguard",
+                "build_date": "{{ timestamp }}",
+                "os": "amazonlinux2",
+                "packer": "true",
+                "packer_version": "{{ packer_version }}",
+                "source_ami_id": "{{ .SourceAMI }}",
+                "source_ami_name": "{{ .SourceAMIName }}"
+            },
+            "run_volume_tags": {
+                "Name": "wireguard",
+                "build_date": "{{ timestamp }}",
+                "os": "amazonlinux2",
+                "packer": "true",
+                "packer_version": "{{ packer_version }}",
+                "source_ami_id": "{{ .SourceAMI }}",
+                "source_ami_name": "{{ .SourceAMIName }}"
+            },
+            "ami_name": "wireguard-{{ timestamp }}",
+            "ami_description": "The base OS for a wireguard deployment",
+            "ami_users": [
+                "038361916180",
+                "840856573771"
+            ],
+            "ami_regions": [
+                "us-east-1"
+            ],
+            "tags": {
+                "Name": "wireguard",
+                "build_date": "{{ timestamp }}",
+                "os": "amazonlinux2",
+                "packer": "true",
+                "packer_version": "{{ packer_version }}",
+                "source_ami_id": "{{ .SourceAMI }}",
+                "source_ami_name": "{{ .SourceAMIName }}"
+            }
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "yum install -y sudo shadow-utils systemd python3"
+            ],
+            "only": [
+                "docker-selfhosted",
+                "docker-wireguard"
+            ]
+        },
+        {
+            "type": "ansible",
+            "playbook_file": "../ansible/selfhosted.yml",
+            "only": [
+                "docker-selfhosted",
+                "ec2-selfhosted"
+            ]
+        },
+        {
+            "type": "ansible",
+            "playbook_file": "../ansible/wireguard.yml",
+            "only": [
+                "docker-wireguard",
+                "ec2-wireguard"
+            ]
+        }
+    ]
+}

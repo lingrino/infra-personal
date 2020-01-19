@@ -1,0 +1,6 @@
+- name: Setup selfhosted AMI
+  hosts: all
+  become: yes
+  roles:
+    - base
+    - selfhosted
