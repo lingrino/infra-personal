@@ -1,3 +1,7 @@
+- name: Add the eternal terminal ppa
+  apt_repository:
+    repo: ppa:jgmath2000/et
+
 - name: Update all packages
   package:
     name: '*'
@@ -8,11 +12,13 @@
     name: "{{ item }}"
     state: latest
   loop:
+    - awscli
     - curl
-    - ec2-net-utils
+    - et
     - git
     - htop
     - jq
+    - snapd
     - tar
     - unzip
     - wget

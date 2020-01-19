@@ -1,11 +1,3 @@
-- name: Write the wiregaurd yum repo list
-  copy:
-    src: wireguard.repo
-    dest: /etc/yum.repos.d/wireguard.repo
-    owner: root
-    group: root
-    mode: 0600
-
 - name: Update all packages
   package:
     name: '*'
@@ -13,12 +5,10 @@
 
 - name: Install necessary packages
   package:
-    name: "{{ item }}"
     state: latest
+    name: "{{ item }}"
   loop:
-    - iptables-services
-    - wireguard-dkms
-    - wireguard-tools
+    - wireguard
 
 - name: Write the sysctl conf for ip forwarding
   copy:
@@ -43,8 +33,3 @@
     owner: root
     group: root
     mode: 0600
-
-# rebooting is necessary for wireguard to work
-- name: Reboot
-  reboot:
-    msg: rebooting for wireguard
