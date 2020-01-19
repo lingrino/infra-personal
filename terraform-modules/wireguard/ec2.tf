@@ -49,7 +49,7 @@ resource "aws_launch_template" "wg" {
 
   network_interfaces {
     device_index                = 0
-    associate_public_ip_address = false
+    associate_public_ip_address = true
     delete_on_termination       = true
 
     security_groups = [aws_security_group.wg.id]
