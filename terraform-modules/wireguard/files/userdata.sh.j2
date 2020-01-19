@@ -10,7 +10,7 @@ aws --region ${ region } ec2 modify-instance-attribute --instance-id "$(curl htt
 aws --region ${ region } s3 cp s3://${ bucket_name }/wg0.conf /etc/wireguard/wg0.conf
 
 # Template the secrets into the config file
-secret=$(aws --region us-east-1 secretsmanager get-secret-value --secret-id ${ secret_arn } --query 'SecretString' | jq -r)
+secret=$(aws --region us-east-1 secretsmanager get-secret-value --secret-id ${ secret_arn } --version-stage AWSCURRENT --query 'SecretString' | jq -r)
 file=$(jq -r .file <<<"$secret")
 replacements=$(jq -r '.replacements' <<<"$secret")
 for key in $(jq -r 'keys | .[]' <<<"$replacements"); do
