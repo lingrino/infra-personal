@@ -43,3 +43,8 @@
     owner: root
     group: root
     mode: 0600
+
+# rebooting is necessary for wireguard to work
+- name: Reboot
+  reboot:
+    msg: rebooting for wireguard
