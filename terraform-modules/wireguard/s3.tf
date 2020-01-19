@@ -17,10 +17,19 @@ data "template_file" "wg0_conf" {
 }
 
 resource "aws_s3_bucket_object" "wg0_conf" {
-  bucket  = aws_s3_bucket.wg.id
-  key     = "wg0.conf"
+  bucket = aws_s3_bucket.wg.id
+  key    = "wg0.conf"
+
   content = data.template_file.wg0_conf.rendered
   etag    = md5(data.template_file.wg0_conf.rendered)
+
+  acl                    = "bucket-owner-full-control"
+  server_side_encryption = "AES256"
+
+  tags = merge(
+    { "Name" = var.name_prefix },
+    var.tags,
+  )
 }
 
 resource "aws_s3_bucket" "wg" {
