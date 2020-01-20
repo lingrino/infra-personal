@@ -8,15 +8,19 @@
     state: latest
     name: "{{ item }}"
   loop:
+    - net-tools
+    - qrencode
     - wireguard
 
-- name: Write the sysctl conf for ip forwarding
-  copy:
-    src: sysctl-wg.conf
-    dest: /etc/sysctl.d/wg.conf
-    owner: root
-    group: root
-    mode: 0600
+- name: allow ip forwarding
+  sysctl:
+    name: "{{ item }}"
+    value: '1'
+    sysctl_set: yes
+  loop:
+    - net.ipv4.ip_forward
+    - net.ipv4.conf.all.forwarding
+    - net.ipv6.conf.all.forwarding
 
 - name: Create the wireguard directory
   file:
