@@ -4,13 +4,13 @@
     state: latest
 
 - name: Install necessary packages
-  package:
+  apt:
     state: latest
-    name: "{{ item }}"
-  loop:
-    - net-tools
-    - qrencode
-    - wireguard
+    update_cache: yes
+    name:
+      - net-tools
+      - qrencode
+      - wireguard
 
 - name: allow ip forwarding
   sysctl:

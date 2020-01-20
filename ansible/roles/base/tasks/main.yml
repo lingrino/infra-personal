@@ -8,20 +8,20 @@
     state: latest
 
 - name: Install base packages
-  package:
-    name: "{{ item }}"
+  apt:
     state: latest
-  loop:
-    - awscli
-    - curl
-    - et
-    - git
-    - htop
-    - jq
-    - snapd
-    - tar
-    - unzip
-    - wget
+    update_cache: yes
+    name:
+      - awscli
+      - curl
+      - et
+      - git
+      - htop
+      - jq
+      - snapd
+      - tar
+      - unzip
+      - wget
 
 # jq 1.5 has a bug that won't allow it to work in bash commands such as a=$(echo "{}" | jq -r)
 # you can remove this when jq 1.6+ is installed by apt
