@@ -15,7 +15,7 @@ file=$(jq -r .file <<<"$secret")
 replacements=$(jq -r '.replacements' <<<"$secret")
 for key in $(jq -r 'keys | .[]' <<<"$replacements"); do
     value=$(jq -r '.'"$key"'' <<<"$replacements")
-    sed -i -e "s/$key/$value/g" "$file"
+    sed -i -e "s@$key@$value@g" "$file"
 done
 
 # Start wireguard
