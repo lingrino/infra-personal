@@ -1,7 +1,7 @@
 resource "github_repository" "vaku" {
   name         = "vaku"
   description  = "A CLI and Go API to extend the official Vault client"
-  homepage_url = "https://vaku.io/"
+  homepage_url = "https://vaku.dev/"
 
   default_branch = "master"
   private        = false
