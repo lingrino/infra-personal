@@ -21,6 +21,8 @@
     - net.ipv4.ip_forward
     - net.ipv4.conf.all.forwarding
     - net.ipv6.conf.all.forwarding
+  when:
+    - ansible_virtualization_type != "docker"
 
 - name: Create the wireguard directory
   file:
