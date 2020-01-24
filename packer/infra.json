@@ -67,10 +67,6 @@
             },
             "ami_name": "selfhosted-{{ timestamp }}",
             "ami_description": "a general AMI for my selfhosted infrastructure",
-            "ami_users": [
-                "038361916180",
-                "840856573771"
-            ],
             "ami_regions": [
                 "us-east-1"
             ],
@@ -151,10 +147,6 @@
             },
             "ami_name": "wireguard-{{ timestamp }}",
             "ami_description": "The base OS for a wireguard deployment",
-            "ami_users": [
-                "038361916180",
-                "840856573771"
-            ],
             "ami_regions": [
                 "us-east-1"
             ],
@@ -174,7 +166,7 @@
             "type": "shell",
             "inline": [
                 "apt-get update",
-                "apt-get install -y sudo systemd python3"
+                "apt-get install -y sudo systemd python3 software-properties-common"
             ],
             "only": [
                 "docker-selfhosted",

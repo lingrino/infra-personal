@@ -1,0 +1,67 @@
+# https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/building-shared-amis.html
+# https://aws.amazon.com/articles/how-to-share-and-use-public-amis-in-a-secure-manner/
+# https://aws.amazon.com/articles/public-ami-publishing-hardening-and-clean-up-requirements/
+
+- name: Cleanup apt cache
+  apt:
+    autoclean: true
+    autoremove: true
+
+- name: Find all ssh key files
+  find:
+    paths:
+      - /etc/ssh
+    patterns:
+      - "*_key"
+      - "*_key.pub"
+    hidden: true
+  register: R_cleanup_ssh_files
+
+- name: Delete all ssh keys
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ R_cleanup_ssh_files.files }}"
+  when:
+    - R_cleanup_ssh_files.files != []
+
+- name: Remove authorized keys
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /root/.ssh/authorized_keys
+    - /home/ubuntu/.ssh/authorized_keys
+
+- name: Find all log files
+  find:
+    paths:
+      - /var/log
+    hidden: true
+    recurse: true
+  register: R_cleanup_log_files
+
+- name: Truncate all log files
+  command: truncate -s0 "{{ item.path }}"
+  loop: "{{ R_cleanup_log_files.files }}"
+  when:
+    - R_cleanup_log_files.files != []
+
+- name: Find all history files
+  find:
+    paths:
+      - /root
+      - /home/ubuntu
+    patterns:
+      - ".*history"
+    hidden: true
+  register: R_cleanup_history_files
+
+- name: Delete all history files
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ R_cleanup_history_files.files }}"
+
+- name: Clear history
+  command: history -c && history -w
