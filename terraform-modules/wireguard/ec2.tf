@@ -8,9 +8,9 @@ resource "aws_eip" "wg" {
 }
 
 data "aws_ami" "wg" {
-  owners           = [var.ami_owner_id]
-  most_recent      = true
-  name_regex       = "wireguard-*"
+  owners      = [var.ami_owner_id]
+  most_recent = true
+  name_regex  = "wireguard-*"
 }
 
 data "template_file" "userdata" {
