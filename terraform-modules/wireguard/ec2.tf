@@ -9,7 +9,6 @@ resource "aws_eip" "wg" {
 
 data "aws_ami" "wg" {
   owners           = [var.ami_owner_id]
-  executable_users = ["self"]
   most_recent      = true
   name_regex       = "wireguard-*"
 }
