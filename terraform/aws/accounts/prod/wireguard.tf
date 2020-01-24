@@ -9,7 +9,7 @@ module "wireguard" {
   vpc_id  = module.vpc.vpc_id
   subnets = module.vpc.subnets_public_ids
 
-  ami_owner_id  = data.terraform_remote_state.organization.outputs.account_names_to_account_ids["dev"]
+  ami_owner_id  = var.account_id_prod
   instance_type = "t3.nano"
   key_name      = var.keypair_main_name
 

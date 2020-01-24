@@ -64,4 +64,6 @@
   loop: "{{ R_cleanup_history_files.files }}"
 
 - name: Clear history
-  command: history -c && history -w
+  shell: history -c && history -w
+  args:
+    executable: /bin/bash
