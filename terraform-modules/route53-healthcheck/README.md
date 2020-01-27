@@ -1,9 +1,6 @@
 # Module - Route53 Healthcheck
 
-This module creates a healhcheck against a list of domains using route53 and CloudWath metrics. The
-module requires that you already have an SNS topic set up that can receive all of your ok, alarm,
-and insufficient actions. The defaults work well for reliable static sites deployed to cloudfront
-but can be modified but other use cases.
+This module creates a healhcheck against a list of domains using route53 and CloudWath metrics. The module requires that you already have an SNS topic set up that can receive all of your ok, alarm, and insufficient actions. The defaults work well for reliable static sites deployed to cloudfront but can be modified but other use cases.
 
 ## Usage
 

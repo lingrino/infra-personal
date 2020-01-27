@@ -1,8 +1,6 @@
 # Module - Route53 Zone Delegation
 
-This module helps you delegate a subdomain from one route53 zone that you own to another route53
-zone that you own. Both zones must already exist. All this module does is create NS delegation
-records in the zone doing the delegation equal to the root NS records of the zone being delegated.
+This module helps you delegate a subdomain from one route53 zone that you own to another route53 zone that you own. Both zones must already exist. All this module does is create NS delegation records in the zone doing the delegation equal to the root NS records of the zone being delegated.
 
 ## Usage
 

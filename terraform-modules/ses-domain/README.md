@@ -1,14 +1,11 @@
 
 # Module - SES Domain
 
-This module creates an SES sending domain and validates it with route53 DNS. The module will work
-even when the account that owns the DNS zone and the account that needs the delegation are different
-because the module takes explicitly passed providers.
+This module creates an SES sending domain and validates it with route53 DNS. The module will work even when the account that owns the DNS zone and the account that needs the delegation are different because the module takes explicitly passed providers.
 
 ## Usage
 
-The below code is a simple way of calling the module to create an ses domain in the same account
-that owns the route53 zone. Note that you still must pass providers explicitly.
+The below code is a simple way of calling the module to create an ses domain in the same account that owns the route53 zone. Note that you still must pass providers explicitly.
 
 ```terraform
 module "ses" {
@@ -23,8 +20,7 @@ module "ses" {
 }
 ```
 
-This code is a simple way of calling the module to create an ses domain where the owner of the
-route53 zones is in a different account than the owner of the ses domain.
+This code is a simple way of calling the module to create an ses domain where the owner of the route53 zones is in a different account than the owner of the ses domain.
 
 ```terraform
 provider "aws" {
@@ -60,7 +56,4 @@ module "ses" {
 
 ## Provider Reasoning
 
-You'll notice that even when you're making a cert in the same account as the DNS zone you must
-explicitly pass the same provider to both `aws.dns` and `aws.ses` in the module. The benefit of this
-is that the module works exactly the same for both same and cross account validations. The downside
-is that sometimes you have to be more explicit than terraform usually requires.
+You'll notice that even when you're making a cert in the same account as the DNS zone you must explicitly pass the same provider to both `aws.dns` and `aws.ses` in the module. The benefit of this is that the module works exactly the same for both same and cross account validations. The downside is that sometimes you have to be more explicit than terraform usually requires.
