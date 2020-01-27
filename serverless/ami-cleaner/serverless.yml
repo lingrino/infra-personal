@@ -1,4 +1,4 @@
-service: sns-notifier
+service: ami-cleaner
 
 provider:
   name: aws
@@ -9,7 +9,7 @@ provider:
   stage: ${opt:stage, "prod"}
   region: ${opt:region, "us-east-1"}
 
-  timeout: 5
+  timeout: 120
   memorySize: 128
   logRetentionInDays: 90
 
@@ -21,12 +21,11 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - ses:SendEmail
+        - ec2:DescribeImages
+        - ec2:DescribeInstances
+        - ec2:DeregisterImage
+        - ec2:DeleteSnapshot
       Resource: "*"
-      Condition:
-        StringEquals:
-          ses:FromAddress:
-            - sns-notifier@audit.lingrino.com
 
   tags:
     service: serverless
@@ -39,10 +38,12 @@ package:
     - ./bin/**
 
 functions:
-  notify:
-    name: notify
-    description: Notifies me of received cloudwatch events
-    handler: bin/notify
+  ami-cleaner:
+    name: ${self:service}
+    description: cleans up unused AMIs
+    handler: bin/ami-cleaner
     events:
-      - sns: arn:aws:sns:us-east-1:418875065733:alarm_high_priority
-      - sns: arn:aws:sns:us-east-1:418875065733:alarm_low_priority
+      - schedule:
+          name: ${self:service}
+          description: cleans up unused AMIs
+          rate: cron(0 17 * * ? *)
