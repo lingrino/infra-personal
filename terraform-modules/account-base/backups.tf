@@ -8,7 +8,7 @@ resource "aws_backup_vault" "tag_backup_true" {
 
   tags = merge(
     { "Name" = "tag-backup-true" },
-    { "description" = "the vault for all our backups where the resource is tagged 'backup: true'" },
+    { "description" = "the vault for all our backups where the resource is tagged backup: true" },
     var.tags
   )
 }
@@ -30,7 +30,7 @@ resource "aws_backup_plan" "tag_backup_true" {
 
   tags = merge(
     { "Name" = "tag-backup-true" },
-    { "description" = "backup all resources with the tag 'backup: true'" },
+    { "description" = "backup all resources with the tag backup: true" },
     var.tags
   )
 }
