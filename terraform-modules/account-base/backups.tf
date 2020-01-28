@@ -1,6 +1,10 @@
+data "aws_kms_key" "backup" {
+  key_id = "alias/aws/backup"
+}
+
 resource "aws_backup_vault" "default" {
   name        = "default"
-  kms_key_arn = "aws/backup"
+  kms_key_arn = data.aws_kms_key.backup.arn
 
   tags = merge(
     { "Name" = "default" },
