@@ -67,3 +67,5 @@
   shell: history -c && history -w
   args:
     executable: /bin/bash
+  register: R_clear_history
+  changed_when: R_clear_history.rc >= 0

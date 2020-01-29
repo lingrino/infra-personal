@@ -3,7 +3,7 @@ resource "aws_iam_group_membership" "allow_assume_read_only" {
   group = aws_iam_group.allow_assume_read_only.name
 
   users = [
-    aws_iam_user.srlingren_gmail_com.name,
+    aws_iam_user.sean_lingrino_com.name,
   ]
 }
 

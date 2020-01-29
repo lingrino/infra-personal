@@ -1,4 +1,4 @@
-resource "aws_iam_user" "srlingren_gmail_com" {
+resource "aws_iam_user" "sean_lingrino_com" {
   name = "sean@lingrino.com"
   path = "/user/"
 
@@ -10,8 +10,8 @@ resource "aws_iam_user" "srlingren_gmail_com" {
   )
 }
 
-resource "aws_iam_user_login_profile" "srlingren_gmail_com" {
-  user = aws_iam_user.srlingren_gmail_com.name
+resource "aws_iam_user_login_profile" "sean_lingrino_com" {
+  user = aws_iam_user.sean_lingrino_com.name
 
   pgp_key                 = "keybase:lingrino"
   password_length         = 30
