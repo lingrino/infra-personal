@@ -30,7 +30,8 @@ jobs:
     container: lingrino/ci:latest
     strategy:
       matrix:
-        account-id: ["418875065733", "038361916180", "840856573771"]
+        account-id: ["038361916180", "840856573771"]
+      fail-fast: false
     steps:
       - name: Checkout Code
         uses: actions/checkout@master

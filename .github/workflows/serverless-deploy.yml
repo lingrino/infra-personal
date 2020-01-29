@@ -30,6 +30,7 @@ jobs:
     strategy:
       matrix:
         account-id: ["418875065733"]
+      fail-fast: false
     steps:
       - name: Checkout Code
         uses: actions/checkout@master
@@ -46,7 +47,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_USER }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_USER }}
       - name: Deploy SNS Notifier
-        run: eval "$(cat ${HOME}/assume.sh)" && packer build infra.json
+        run: eval "$(cat ${HOME}/assume.sh)" && make deploy
         working-directory: ./serverless/sns-notifier
   deploy-amicleaner:
     needs: validate
@@ -55,6 +56,7 @@ jobs:
     strategy:
       matrix:
         account-id: ["418875065733", "038361916180", "840856573771"]
+      fail-fast: false
     steps:
       - name: Checkout Code
         uses: actions/checkout@master
@@ -71,5 +73,5 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_USER }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_USER }}
       - name: Deploy AMI Cleaner
-        run: eval "$(cat ${HOME}/assume.sh)" && packer build infra.json
+        run: eval "$(cat ${HOME}/assume.sh)" && make deploy
         working-directory: ./serverless/ami-cleaner
