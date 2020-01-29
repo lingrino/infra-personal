@@ -21,6 +21,3 @@ jobs:
       - name: Packer Validate
         run: packer validate infra.json
         working-directory: ./packer
-      - name: Packer Build
-        run: packer build infra.json
-        working-directory: ./packer

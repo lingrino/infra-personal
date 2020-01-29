@@ -15,4 +15,6 @@ jobs:
         with:
           fetch-depth: 1
       - name: Go Format
-        run: test -z $(gofmt -l -w -s ./)
+        run: test -z $(gofmt -l -w -s ./...)
+      - name: GolangCI Lint
+        run: for d in ./*/ ; do (cd "$d" && golangci-lint run); done
