@@ -3,6 +3,7 @@ resource "aws_iam_group_membership" "allow_assume_service_admin" {
   group = aws_iam_group.allow_assume_service_admin.name
 
   users = [
+    aws_iam_user.github_actions.name,
     aws_iam_user.terraform_cloud.name,
   ]
 }

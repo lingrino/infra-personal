@@ -11,5 +11,10 @@ jobs:
         uses: actions/checkout@master
         with:
           fetch-depth: 1
+      - name: Ansible Lint
+        run: ansible-lint ansible/*.yml
+      - name: Packer Validate
+        run: packer validate infra.json
+        working-directory: ./packer
       - name: Terraform Format Check
         run: terraform fmt -check -diff -recursive
