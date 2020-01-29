@@ -42,6 +42,7 @@ func Handler(ctx context.Context) {
 			fmt.Printf("UNKNOWN ERROR: %v\n", err)
 		}
 	}
+
 	if len(deleted) > 0 {
 		fmt.Printf("Successfully deleted:\n  %s\n", strings.Join(deleted, "\n  "))
 	}

@@ -16,16 +16,16 @@ const (
 	from = "sns-notifier@audit.lingrino.com"
 	to   = "sean@lingrino.com"
 
-	subject = "SNS Notifier: Alert On %s"
+	subjectF = "SNS Notifier: Alert On %s"
 
 	// This could be way better if the JSON was formatted and highlighted
-	htmlBody = "<h2>SNS Notifier</h2>" +
+	htmlBodyF = "<h2>SNS Notifier</h2>" +
 		"Source: %s" +
 		"<pre><code>" +
 		"%s" +
 		"</code></pre>"
 
-	textBody = "SNS Notifier\nSource: %s\n%s"
+	textBodyF = "SNS Notifier\nSource: %s\n%s"
 )
 
 func main() {
@@ -49,32 +49,12 @@ func Handler(ctx context.Context, snsEvent events.SNSEvent) {
 		snsARN := snsRecord.TopicArn
 		snsMSG := snsRecord.Message
 
+		subject := fmt.Sprintf(subjectF, snsARN)
+		htmlBody := fmt.Sprintf(htmlBodyF, snsARN, snsMSG)
+		textBody := fmt.Sprintf(textBodyF, snsARN, snsMSG)
+
 		// Build an Email Struct
-		emailInput := &ses.SendEmailInput{
-			Source: aws.String(from),
-			Destination: &ses.Destination{
-				CcAddresses: []*string{},
-				ToAddresses: []*string{
-					aws.String(to),
-				},
-			},
-			Message: &ses.Message{
-				Subject: &ses.Content{
-					Charset: aws.String("UTF-8"),
-					Data:    aws.String(fmt.Sprintf(subject, snsARN)),
-				},
-				Body: &ses.Body{
-					Html: &ses.Content{
-						Charset: aws.String("UTF-8"),
-						Data:    aws.String(fmt.Sprintf(htmlBody, snsARN, snsMSG)),
-					},
-					Text: &ses.Content{
-						Charset: aws.String("UTF-8"),
-						Data:    aws.String(fmt.Sprintf(textBody, snsARN, snsMSG)),
-					},
-				},
-			},
-		}
+		emailInput := buildEmailInput(to, from, subject, htmlBody, textBody)
 
 		// Send the Email
 		result, err := sesC.SendEmail(emailInput)
@@ -99,5 +79,34 @@ func Handler(ctx context.Context, snsEvent events.SNSEvent) {
 		// Log Result
 		fmt.Println("Email Sent to address: " + to)
 		fmt.Println(result.MessageId)
+	}
+}
+
+// buildEmailInput returns our emailInput struct
+func buildEmailInput(to, from, subject, htmlBody, textBody string) *ses.SendEmailInput {
+	return &ses.SendEmailInput{
+		Source: aws.String(from),
+		Destination: &ses.Destination{
+			CcAddresses: []*string{},
+			ToAddresses: []*string{
+				aws.String(to),
+			},
+		},
+		Message: &ses.Message{
+			Subject: &ses.Content{
+				Charset: aws.String("UTF-8"),
+				Data:    aws.String(subject),
+			},
+			Body: &ses.Body{
+				Html: &ses.Content{
+					Charset: aws.String("UTF-8"),
+					Data:    aws.String(htmlBody),
+				},
+				Text: &ses.Content{
+					Charset: aws.String("UTF-8"),
+					Data:    aws.String(textBody),
+				},
+			},
+		},
 	}
 }
