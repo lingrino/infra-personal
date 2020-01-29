@@ -2,13 +2,13 @@ name: Packer - Deploy
 
 on:
   push:
-    branches:
-      - master
-    paths:
-      - packer/**
-      - ansible/**
-  schedule:
-    - cron: 0 16 * * 1 # Every Monday at 4pm UTC
+  #   branches:
+  #     - master
+  #   paths:
+  #     - packer/**
+  #     - ansible/**
+  # schedule:
+  #   - cron: 0 16 * * 1 # Every Monday at 4pm UTC
 
 jobs:
   validate:
