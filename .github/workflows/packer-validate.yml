@@ -2,9 +2,9 @@ name: Packer - Validate
 
 on:
   push:
-    # paths:
-    #   - packer/**
-    #   - ansible/**
+    paths:
+      - packer/**
+      - ansible/**
 
 jobs:
   validate:

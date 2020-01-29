@@ -2,9 +2,9 @@ name: Terraform - Validate
 
 on:
   push:
-    # paths:
-    #   - terraform/**
-    #   - terraform-modules/**
+    paths:
+      - terraform/**
+      - terraform-modules/**
 
 jobs:
   validate:

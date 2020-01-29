@@ -2,12 +2,12 @@ name: Serverless - Deploy
 
 on:
   push:
-  #   branches:
-  #     - master
-  #   paths:
-  #     - serverless/**
-  # schedule:
-  #   - cron: 0 16 * * 1 # Every Monday at 4pm UTC
+    branches:
+      - master
+    paths:
+      - serverless/**
+  schedule:
+    - cron: 0 16 * * 1 # Every Monday at 4pm UTC
 
 jobs:
   validate:

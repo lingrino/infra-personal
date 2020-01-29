@@ -2,8 +2,8 @@ name: Serverless - Validate
 
 on:
   push:
-    # paths:
-    #   - serverless/**
+    paths:
+      - serverless/**
 
 jobs:
   validate:
