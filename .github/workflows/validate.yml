@@ -14,7 +14,7 @@ jobs:
       - name: Ansible Lint
         run: ansible-lint ansible/*.yml
       - name: Packer Validate
-        run: packer validate packer/infra.json
+        run: packer validate infra.json
         working-directory: ./packer
       - name: Terraform Format Check
         run: terraform fmt -check -diff -recursive
