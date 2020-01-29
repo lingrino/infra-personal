@@ -18,3 +18,4 @@ jobs:
         run: test -z $(gofmt -l -w -s ./...)
       - name: GolangCI Lint
         run: for d in ./*/ ; do (cd "$d" && golangci-lint run); done
+        working-directory: ./serverless

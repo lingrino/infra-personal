@@ -16,8 +16,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Ansible Lint
-        run: ansible-lint
-        working-directory: ./ansible
+        run: ansible-lint ansible/**
       - name: Packer Validate
         run: packer validate infra.json
         working-directory: ./packer
