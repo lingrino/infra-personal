@@ -176,6 +176,7 @@
         {
             "type": "ansible",
             "playbook_file": "../ansible/selfhosted.yml",
+            "user": "ubuntu",
             "only": [
                 "docker-selfhosted",
                 "ec2-selfhosted"
@@ -184,6 +185,7 @@
         {
             "type": "ansible",
             "playbook_file": "../ansible/wireguard.yml",
+            "user": "ubuntu",
             "only": [
                 "docker-wireguard",
                 "ec2-wireguard"

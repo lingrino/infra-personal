@@ -51,6 +51,4 @@ jobs:
         run: |
           eval "$(cat ${HOME}/assume.sh)"
           packer build -except=docker-selfhosted,docker-wireguard infra.json
-        env:
-          USER: ubuntu
         working-directory: ./packer
