@@ -1,0 +1,19 @@
+name: Terraform - Validate
+
+on:
+  push:
+    paths:
+      - terraform/**
+      - terraform-modules/**
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    container: lingrino/ci:latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+      - name: Terraform Format
+        run: terraform fmt -check -diff -recursive
