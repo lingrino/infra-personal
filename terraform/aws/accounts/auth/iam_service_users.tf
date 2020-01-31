@@ -34,8 +34,17 @@ resource "aws_iam_access_key" "terraform_cloud" {
   status = "Active"
 }
 
+locals {
+  # The set of workspaces that should have the terraform cloud variables and secrets
+  # All of the workspaces that start with aws-*
+  user_tf_cloud_workspaces = toset([
+    for ws in data.terraform_remote_state.terraform.outputs.workspace_names :
+    format("lingrino/%s", ws) if length(regexall("^aws-*", ws)) > 0
+  ])
+}
+
 resource "tfe_variable" "assume_role_name" {
-  for_each = toset(data.terraform_remote_state.terraform.outputs.workspace_names)
+  for_each = local.user_tf_cloud_workspaces
 
   workspace_id = each.key
   category     = "terraform"
@@ -45,7 +54,7 @@ resource "tfe_variable" "assume_role_name" {
 }
 
 resource "tfe_variable" "assume_role_session_name" {
-  for_each = toset(data.terraform_remote_state.terraform.outputs.workspace_names)
+  for_each = local.user_tf_cloud_workspaces
 
   workspace_id = each.key
   category     = "terraform"
@@ -55,7 +64,7 @@ resource "tfe_variable" "assume_role_session_name" {
 }
 
 resource "tfe_variable" "terraform_cloud_akid" {
-  for_each = toset(data.terraform_remote_state.terraform.outputs.workspace_names)
+  for_each = local.user_tf_cloud_workspaces
 
   workspace_id = each.key
   category     = "env"
@@ -65,11 +74,12 @@ resource "tfe_variable" "terraform_cloud_akid" {
 }
 
 resource "tfe_variable" "terraform_cloud_sak" {
-  for_each = toset(data.terraform_remote_state.terraform.outputs.workspace_names)
+  for_each = local.user_tf_cloud_workspaces
 
   workspace_id = each.key
   category     = "env"
 
-  key   = "AWS_SECRET_ACCESS_KEY"
-  value = aws_iam_access_key.terraform_cloud.secret
+  key       = "AWS_SECRET_ACCESS_KEY"
+  value     = aws_iam_access_key.terraform_cloud.secret
+  sensitive = true
 }
