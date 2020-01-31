@@ -20,7 +20,7 @@ locals {
 
 output "workspace_names" {
   description = "a list of all workspace names (does not includes organization name)"
-  value       = list(local.workspaces.*.name)
+  value       = local.workspaces.*.name
 }
 
 output "workspace_names_to_external_ids" {
