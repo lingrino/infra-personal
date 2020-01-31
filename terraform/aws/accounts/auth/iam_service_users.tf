@@ -36,7 +36,7 @@ resource "aws_iam_access_key" "terraform_cloud" {
 
 locals {
   # The set of workspaces that should have the terraform cloud variables and secrets
-  # All of the workspaces that start with aws-*
+  # All of the workspaces that start with org/aws-*
   user_tf_cloud_workspaces = toset([
     for ws in data.terraform_remote_state.terraform.outputs.workspace_ids :
     ws if length(regexall("^*/aws-*", ws)) > 0
