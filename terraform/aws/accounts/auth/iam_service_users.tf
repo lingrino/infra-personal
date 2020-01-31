@@ -38,8 +38,8 @@ locals {
   # The set of workspaces that should have the terraform cloud variables and secrets
   # All of the workspaces that start with aws-*
   user_tf_cloud_workspaces = toset([
-    for ws in data.terraform_remote_state.terraform.outputs.workspace_names :
-    format("lingrino/%s", ws) if length(regexall("^aws-*", ws)) > 0
+    for ws in data.terraform_remote_state.terraform.outputs.workspace_ids :
+    ws if length(regexall("^*/aws-*", ws)) > 0
   ])
 }
 
