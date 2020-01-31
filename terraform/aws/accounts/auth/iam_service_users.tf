@@ -33,3 +33,43 @@ resource "aws_iam_access_key" "terraform_cloud" {
   user   = aws_iam_user.terraform_cloud.name
   status = "Active"
 }
+
+resource "tfe_variable" "assume_role_name" {
+  for_each = { for v in data.terraform_remote_state.terraform.outputs.workspace_names : v => v }
+
+  workspace_id = each.key
+  category     = "terraform"
+
+  key   = "assume_role_name"
+  value = "ServiceAdmin"
+}
+
+resource "tfe_variable" "assume_role_session_name" {
+  for_each = { for v in data.terraform_remote_state.terraform.outputs.workspace_names : v => v }
+
+  workspace_id = each.key
+  category     = "terraform"
+
+  key   = "assume_role_session_name"
+  value = "TerraformCloud"
+}
+
+resource "tfe_variable" "terraform_cloud_akid" {
+  for_each = { for v in data.terraform_remote_state.terraform.outputs.workspace_names : v => v }
+
+  workspace_id = each.key
+  category     = "env"
+
+  key   = "AWS_ACCESS_KEY_ID"
+  value = aws_iam_access_key.terraform_cloud.id
+}
+
+resource "tfe_variable" "terraform_cloud_sak" {
+  for_each = { for v in data.terraform_remote_state.terraform.outputs.workspace_names : v => v }
+
+  workspace_id = each.key
+  category     = "env"
+
+  key   = "AWS_SECRET_ACCESS_KEY"
+  value = aws_iam_access_key.terraform_cloud.secret
+}
