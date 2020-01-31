@@ -35,7 +35,7 @@ resource "aws_iam_access_key" "terraform_cloud" {
 }
 
 resource "tfe_variable" "assume_role_name" {
-  for_each = { for v in data.terraform_remote_state.terraform.outputs.workspace_names : v => v }
+  for_each = toset(data.terraform_remote_state.terraform.workspace_names)
 
   workspace_id = each.key
   category     = "terraform"
@@ -45,9 +45,9 @@ resource "tfe_variable" "assume_role_name" {
 }
 
 resource "tfe_variable" "assume_role_session_name" {
-  for_each = { for v in data.terraform_remote_state.terraform.outputs.workspace_names : v => v }
+  for_each = toset(data.terraform_remote_state.terraform.workspace_names)
 
-  workspace_id = each.key
+  workspace_id = tfe_workspace.test.id
   category     = "terraform"
 
   key   = "assume_role_session_name"
@@ -55,9 +55,9 @@ resource "tfe_variable" "assume_role_session_name" {
 }
 
 resource "tfe_variable" "terraform_cloud_akid" {
-  for_each = { for v in data.terraform_remote_state.terraform.outputs.workspace_names : v => v }
+  for_each = toset(data.terraform_remote_state.terraform.workspace_names)
 
-  workspace_id = each.key
+  workspace_id = tfe_workspace.test.id
   category     = "env"
 
   key   = "AWS_ACCESS_KEY_ID"
@@ -65,9 +65,9 @@ resource "tfe_variable" "terraform_cloud_akid" {
 }
 
 resource "tfe_variable" "terraform_cloud_sak" {
-  for_each = { for v in data.terraform_remote_state.terraform.outputs.workspace_names : v => v }
+  for_each = toset(data.terraform_remote_state.terraform.workspace_names)
 
-  workspace_id = each.key
+  workspace_id = tfe_workspace.test.id
   category     = "env"
 
   key   = "AWS_SECRET_ACCESS_KEY"
