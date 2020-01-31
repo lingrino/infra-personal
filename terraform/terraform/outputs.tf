@@ -30,10 +30,10 @@ output "workspace_ids" {
 
 output "workspace_ids_to_external_ids" {
   description = "a map of workspace ids to their external ids"
-  value       = zipmap(local.workspaces.*.name, local.workspaces.*.external_id)
+  value       = zipmap(local.workspaces.*.id, local.workspaces.*.external_id)
 }
 
 output "workspace_external_ids_to_ids" {
   description = "a map of workspace external ids to their ids"
-  value       = zipmap(local.workspaces.*.external_id, local.workspaces.*.name)
+  value       = zipmap(local.workspaces.*.external_id, local.workspaces.*.id)
 }
