@@ -50,7 +50,10 @@ locals {
 data "aws_route53_zone" "zone" {
   provider = aws.dns
 
+  for_each = zipmap(local.distinct_domain_names, )
+
   count = length(local.distinct_domain_names)
+  for_each = toset(local.distinct_domain_names)
   name  = element(local.validation_domains, count.index)["domain_name"]
 }
 

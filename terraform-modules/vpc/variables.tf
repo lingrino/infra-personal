@@ -19,13 +19,13 @@ variable "tags" {
 }
 
 variable "create_vpn_gateway" {
-  type        = string
+  type        = bool
   description = "Whether or not to create a VPN gateway. True or False."
   default     = true
 }
 
 variable "create_nat_gateways" {
-  type        = string
+  type        = bool
   description = "Whether or not to create NAT gateways. These can be expensive. True or False."
   default     = true
 }

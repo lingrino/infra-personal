@@ -15,7 +15,7 @@ variable "healthcheck_type" {
 }
 
 variable "healthcheck_port" {
-  type        = string
+  type        = number
   description = "The port that the healthcheck uses (default 443)"
   default     = 443
 }
@@ -27,13 +27,13 @@ variable "healthcheck_path" {
 }
 
 variable "healthcheck_interval" {
-  type        = string
+  type        = number
   description = "The number of seconds between pings, either 10 or 30. Default 30"
   default     = 30
 }
 
 variable "healthcheck_failure_threshold" {
-  type        = string
+  type        = number
   description = "The number of failures before the healthcheck is considered unhealthy. Default 3."
   default     = 3
 }
