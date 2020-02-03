@@ -15,3 +15,21 @@ resource "tfe_workspace" "github" {
     oauth_token_id = var.oauth_token_id
   }
 }
+
+resource "tfe_variable" "github_github_organization" {
+  workspace_id = tfe_workspace.github.id
+  category     = "env"
+
+  key   = "GITHUB_ORGANIZATION"
+  value = "lingrino"
+}
+
+# TODO - This variable should be read from a secret place and added here
+# resource "tfe_variable" "github_github_token" {
+#   workspace_id = tfe_workspace.github.id
+#   category     = "env"
+
+#   key       = "GITHUB_TOKEN"
+#   value     = "TODO"
+#   sensitive = true
+# }

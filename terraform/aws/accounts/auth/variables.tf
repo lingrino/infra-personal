@@ -18,6 +18,11 @@ variable "keypair_main_name" {
   description = "The name of the default ssh keypair to use"
 }
 
+variable "rotate_iam_keys" {
+  type        = string
+  description = "Increase this number by 1 to automatically rotate keys for supported IAM users"
+}
+
 variable "tags" {
   type        = map(string)
   description = "A map of tags to apply to all resources"

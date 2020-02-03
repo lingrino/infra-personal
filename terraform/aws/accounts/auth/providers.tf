@@ -7,3 +7,5 @@ provider "aws" {
     session_name = var.assume_role_session_name
   }
 }
+
+provider "tfe" {}
