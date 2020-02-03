@@ -9,7 +9,7 @@ variable "vpc_cidr_block" {
 }
 
 variable "azs" {
-  type        = list(string)
+  type        = set(string)
   description = "A list of azs to launch subnets in"
 }
 
@@ -31,7 +31,7 @@ variable "create_nat_gateways" {
 }
 
 variable "enabled_endpoint_gateways" {
-  type        = list(string)
+  type        = set(string)
   description = "A list of vpc endpoint gateways to enable (do not include com.amazonaws.region)"
 
   default = [
@@ -41,7 +41,7 @@ variable "enabled_endpoint_gateways" {
 }
 
 variable "enabled_endpoint_interfaces" {
-  type        = list(string)
+  type        = set(string)
   description = "A list of vpc endpoint interfaces to enable (do not include com.amazonaws.region)"
 
   default = [

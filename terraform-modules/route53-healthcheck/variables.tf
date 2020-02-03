@@ -1,5 +1,5 @@
 variable "domains" {
-  type        = list(string)
+  type        = set(string)
   description = "A list of domains to set up healthchecks against"
 }
 

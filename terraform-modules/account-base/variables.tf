@@ -32,7 +32,7 @@ variable "bucket_config_arn" {
 # at errors. It's defnitely not ALL regions or all regions where config is
 # enabled. This list is a subset of regions based on errors I was seeing.
 variable "config_authorization_regions" {
-  type        = list(string)
+  type        = set(string)
   description = "The regions to authorize that the config account will aggregate from"
   default = [
     "us-west-1",

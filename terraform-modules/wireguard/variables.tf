@@ -14,7 +14,7 @@ variable "vpc_id" {
 }
 
 variable "subnets" {
-  type        = list(string)
+  type        = set(string)
   description = "A list of subnets to launch the instance in"
 }
 
