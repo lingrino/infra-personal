@@ -1,21 +1,3 @@
-resource "aws_iam_user" "github_actions" {
-  name = "github-actions"
-  path = "/service/"
-
-  force_destroy = true
-
-  tags = merge(
-    { "Name" = "github-actions" },
-    { "description" = "This user should be used by github actions to run CI" },
-    var.tags
-  )
-}
-
-resource "aws_iam_access_key" "github_actions" {
-  user   = aws_iam_user.github_actions.name
-  status = "Active"
-}
-
 resource "aws_iam_user" "terraform_cloud" {
   name = "terraform-cloud"
   path = "/service/"
@@ -29,12 +11,24 @@ resource "aws_iam_user" "terraform_cloud" {
   )
 }
 
-resource "aws_iam_access_key" "terraform_cloud" {
+resource "aws_iam_access_key" "terraform_cloud_even" {
+  count = (var.rotate_iam_keys + 1) % 2 // Exists on even rotate num
+
+  user   = aws_iam_user.terraform_cloud.name
+  status = "Active"
+}
+
+resource "aws_iam_access_key" "terraform_cloud_odd" {
+  count = var.rotate_iam_keys % 2 // Exists on odd rotate num
+
   user   = aws_iam_user.terraform_cloud.name
   status = "Active"
 }
 
 locals {
+  terraform_cloud_akid = try(aws_iam_access_key.terraform_cloud_even.0.id, aws_iam_access_key.terraform_cloud_odd.0.id)
+  terraform_cloud_sak  = try(aws_iam_access_key.terraform_cloud_even.0.secret, aws_iam_access_key.terraform_cloud_odd.0.secret)
+
   # The set of workspaces that should have the terraform cloud variables and secrets
   # All of the workspaces that start with org/aws-*
   user_tf_cloud_workspaces = toset([
@@ -70,7 +64,7 @@ resource "tfe_variable" "terraform_cloud_akid" {
   category     = "env"
 
   key   = "AWS_ACCESS_KEY_ID"
-  value = aws_iam_access_key.terraform_cloud.id
+  value = local.terraform_cloud_akid
 }
 
 resource "tfe_variable" "terraform_cloud_sak" {
@@ -80,6 +74,6 @@ resource "tfe_variable" "terraform_cloud_sak" {
   category     = "env"
 
   key       = "AWS_SECRET_ACCESS_KEY"
-  value     = aws_iam_access_key.terraform_cloud.secret
+  value     = local.terraform_cloud_sak
   sensitive = true
 }
