@@ -74,7 +74,7 @@ resource "aws_acm_certificate_validation" "cert" {
   provider = aws.cert
 
   certificate_arn         = aws_acm_certificate.cert.arn
-  validation_record_fqdns = aws_acm_certificate.cert.domain_validation_options.*.resource_record_name
+  validation_record_fqdns = aws_acm_certificate.cert.domain_validation_options[*].resource_record_name
 
   depends_on = [aws_route53_record.cert]
 

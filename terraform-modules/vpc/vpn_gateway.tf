@@ -17,14 +17,14 @@ resource "aws_vpn_gateway_route_propagation" "public" {
 }
 
 resource "aws_vpn_gateway_route_propagation" "private" {
-  for_each = var.create_vpn_gateway ? toset(aws_route_table.private) : {}
+  for_each = var.create_vpn_gateway ? aws_route_table.private : {}
 
   route_table_id = each.value.id
   vpn_gateway_id = aws_vpn_gateway.vpn.0.id
 }
 
 resource "aws_vpn_gateway_route_propagation" "intra" {
-  for_each = var.create_vpn_gateway ? toset(aws_route_table.intra) : {}
+  for_each = var.create_vpn_gateway ? aws_route_table.intra : {}
 
   route_table_id = each.value.id
   vpn_gateway_id = aws_vpn_gateway.vpn.0.id

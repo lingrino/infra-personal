@@ -20,20 +20,20 @@ locals {
 
 output "workspace_names" {
   description = "a list of all workspace names (does not includes organization name)"
-  value       = local.workspaces.*.name
+  value       = local.workspaces[*].name
 }
 
 output "workspace_ids" {
   description = "a list of all workspace ids (org-name/ws-name)"
-  value       = local.workspaces.*.id
+  value       = local.workspaces[*].id
 }
 
 output "workspace_ids_to_external_ids" {
   description = "a map of workspace ids to their external ids"
-  value       = zipmap(local.workspaces.*.id, local.workspaces.*.external_id)
+  value       = zipmap(local.workspaces[*].id, local.workspaces[*].external_id)
 }
 
 output "workspace_external_ids_to_ids" {
   description = "a map of workspace external ids to their ids"
-  value       = zipmap(local.workspaces.*.external_id, local.workspaces.*.id)
+  value       = zipmap(local.workspaces[*].external_id, local.workspaces[*].id)
 }
