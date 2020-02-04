@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Assign the elastic IP
-aws --region ${ region } ec2 associate-address --allocation-id ${ allocation_id } --instance-id "$(curl http://169.254.169.254/latest/meta-data/instance-id)"
+aws --region ${ region } ec2 associate-address --allow-reassociation --allocation-id ${ allocation_id } --instance-id "$(curl http://169.254.169.254/latest/meta-data/instance-id)"
 
 # Turn off source/destination checks
 aws --region ${ region } ec2 modify-instance-attribute --instance-id "$(curl http://169.254.169.254/latest/meta-data/instance-id)" --no-source-dest-check

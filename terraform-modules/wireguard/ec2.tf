@@ -88,8 +88,8 @@ resource "aws_autoscaling_group" "wg" {
 
   vpc_zone_identifier = var.subnets
 
-  min_size         = 0
-  max_size         = 1
+  min_size         = 1
+  max_size         = 2
   desired_capacity = 1
 
   health_check_type         = "EC2"
@@ -101,4 +101,26 @@ resource "aws_autoscaling_group" "wg" {
     for k, v in merge({ "Name" = var.name_prefix }, var.tags) :
     { "key" : k, "value" : v, "propagate_at_launch" : "true" }
   ]
+}
+
+resource "aws_autoscaling_schedule" "up" {
+  scheduled_action_name  = "${var.name_prefix}-up"
+  autoscaling_group_name = aws_autoscaling_group.wg.name
+
+  min_size         = aws_autoscaling_group.wg.min_size
+  desired_capacity = aws_autoscaling_group.wg.desired_capacity + 1
+  max_size         = aws_autoscaling_group.wg.max_size
+
+  recurrence = "0 9 * * *"
+}
+
+resource "aws_autoscaling_schedule" down {
+  scheduled_action_name  = "${var.name_prefix}-down"
+  autoscaling_group_name = aws_autoscaling_group.wg.name
+
+  min_size         = aws_autoscaling_group.wg.min_size
+  desired_capacity = aws_autoscaling_group.wg.desired_capacity
+  max_size         = aws_autoscaling_group.wg.max_size
+
+  recurrence = "5 9 * * *"
 }

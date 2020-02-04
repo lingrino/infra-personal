@@ -83,6 +83,7 @@ data "aws_iam_policy_document" "wg_role" {
 
     actions = [
       "ec2:AssociateAddress",
+      "ec2:DisassociateAddress",
       "ec2:ModifyInstanceAttribute",
     ]
 
