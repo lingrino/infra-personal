@@ -9,13 +9,9 @@ module "site_landing" {
   zone_name   = "churner.io"
 
   sans_domain_names_to_zone_names = {
-    "*.churner.io"   = "churner.io"
-    "hoo.dev"        = "hoo.dev"
-    "*.hoo.dev"      = "hoo.dev"
-    "policies.dev"   = "policies.dev"
-    "*.policies.dev" = "policies.dev"
-    "releases.dev"   = "releases.dev"
-    "*.releases.dev" = "releases.dev"
+    "*.churner.io" = "churner.io"
+    "hoo.dev"      = "hoo.dev"
+    "*.hoo.dev"    = "hoo.dev"
   }
 
   healthcheck_sns_arn = data.terraform_remote_state.account_audit.outputs.sns_alarm_high_priority_arn

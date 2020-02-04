@@ -9,7 +9,7 @@ variable "vpc_cidr_block" {
 }
 
 variable "azs" {
-  type        = list(string)
+  type        = set(string)
   description = "A list of azs to launch subnets in"
 }
 
@@ -19,19 +19,19 @@ variable "tags" {
 }
 
 variable "create_vpn_gateway" {
-  type        = string
+  type        = bool
   description = "Whether or not to create a VPN gateway. True or False."
   default     = true
 }
 
 variable "create_nat_gateways" {
-  type        = string
+  type        = bool
   description = "Whether or not to create NAT gateways. These can be expensive. True or False."
   default     = true
 }
 
 variable "enabled_endpoint_gateways" {
-  type        = list(string)
+  type        = set(string)
   description = "A list of vpc endpoint gateways to enable (do not include com.amazonaws.region)"
 
   default = [
@@ -41,7 +41,7 @@ variable "enabled_endpoint_gateways" {
 }
 
 variable "enabled_endpoint_interfaces" {
-  type        = list(string)
+  type        = set(string)
   description = "A list of vpc endpoint interfaces to enable (do not include com.amazonaws.region)"
 
   default = [

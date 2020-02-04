@@ -10,13 +10,13 @@ variable "delegation_set_id" {
 
 # https://support.google.com/domains/answer/3251241?hl=en
 variable "configure_google_domains_email_forwarding" {
-  type        = string
+  type        = bool
   description = "Default true. Whether or not to configure google domains email forwarding records for this domain"
   default     = false
 }
 
 variable "verify_ses" {
-  type        = string
+  type        = bool
   description = "Default true. Whether or not to create a domain in SES and verify it"
   default     = true
 }
@@ -46,13 +46,13 @@ variable "google_site_verification_value" {
 }
 
 variable "enable_fastmail" {
-  type        = string
+  type        = bool
   description = "Whether or not to enable fastmail domain verification"
   default     = false
 }
 
 variable "enable_fastmail_webmail_login_portal" {
-  type        = string
+  type        = bool
   description = "Set to true to enable the fastmail login portal at mail.`var.domain`. Will not work for wildcard domains"
   default     = false
 }

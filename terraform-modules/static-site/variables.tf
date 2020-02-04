@@ -24,13 +24,13 @@ variable "bucket_logs_domain" {
 }
 
 variable "healthcheck_cloudfront_enabled" {
-  type        = string
+  type        = bool
   description = "Whether or not to run a healthcheck against the default cloudfront domain"
   default     = true
 }
 
 variable "healthcheck_domains_enabled" {
-  type        = string
+  type        = bool
   description = "Whether or not to run a healthcheck against ALL domain names pointing to the cloudfront"
   default     = false
 }

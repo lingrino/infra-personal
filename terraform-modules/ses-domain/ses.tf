@@ -24,10 +24,11 @@ resource "aws_ses_domain_dkim" "ses" {
 
 resource "aws_ses_identity_notification_topic" "topics" {
   provider = aws.ses
-  count    = length(local.ses_notification_types)
+
+  for_each = toset(local.ses_notification_types)
 
   topic_arn         = var.ses_sns_arn
-  notification_type = local.ses_notification_types[count.index]
+  notification_type = each.value
   identity          = aws_ses_domain_identity.ses.domain
 
   depends_on = [aws_ses_domain_identity_verification.ses]

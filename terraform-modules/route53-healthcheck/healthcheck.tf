@@ -1,10 +1,10 @@
 resource "aws_route53_health_check" "check" {
-  count = length(var.domains)
+  for_each = toset(var.domains)
 
-  cloudwatch_alarm_name   = var.domains[count.index]
+  cloudwatch_alarm_name   = each.value
   cloudwatch_alarm_region = data.aws_region.current.name
 
-  fqdn          = var.domains[count.index]
+  fqdn          = each.value
   type          = var.healthcheck_type
   port          = var.healthcheck_port
   resource_path = var.healthcheck_path
@@ -13,15 +13,16 @@ resource "aws_route53_health_check" "check" {
   failure_threshold = var.healthcheck_failure_threshold
 
   tags = merge(
-    { "Name" = var.domains[count.index] },
+    { "Name" = each.value },
     var.tags
   )
 }
 
 resource "aws_cloudwatch_metric_alarm" "check" {
-  count             = length(var.domains)
-  alarm_name        = var.domains[count.index]
-  alarm_description = "Alarms when ${var.domains[count.index]} is down"
+  for_each = aws_route53_health_check.check
+
+  alarm_name        = each.value.cloudwatch_alarm_name
+  alarm_description = "Alarms when ${each.value.cloudwatch_alarm_name} is down"
 
   namespace           = "AWS/Route53"
   metric_name         = "HealthCheckStatus"
@@ -33,7 +34,7 @@ resource "aws_cloudwatch_metric_alarm" "check" {
   evaluation_periods = "2"
 
   dimensions = {
-    HealthCheckId = aws_route53_health_check.check.*.id[count.index]
+    HealthCheckId = each.value.id
   }
 
   actions_enabled    = true

@@ -11,33 +11,33 @@ output "vpc_cidr_ipv6" {
 }
 
 output "subnets_public_ids" {
-  value = aws_subnet.public.*.id
+  value = [for sn in aws_subnet.public : sn.id]
 }
 
 output "subnets_public_cidrs" {
-  value = aws_subnet.public.*.cidr_block
+  value = [for sn in aws_subnet.public : sn.cidr_block]
 }
 
 output "subnets_public_cidrs_ipv6" {
-  value = aws_subnet.public.*.ipv6_cidr_block
+  value = [for sn in aws_subnet.public : sn.ipv6_cidr_block]
 }
 
 output "subnets_private_ids" {
-  value = aws_subnet.private.*.id
+  value = [for sn in aws_subnet.private : sn.id]
 }
 
 output "subnets_private_cidrs" {
-  value = aws_subnet.private.*.cidr_block
+  value = [for sn in aws_subnet.private : sn.cidr_block]
 }
 
 output "subnets_private_cidrs_ipv6" {
-  value = aws_subnet.private.*.ipv6_cidr_block
+  value = [for sn in aws_subnet.private : sn.ipv6_cidr_block]
 }
 
 output "subnets_intra_ids" {
-  value = aws_subnet.intra.*.id
+  value = [for sn in aws_subnet.intra : sn.id]
 }
 
 output "subnets_intra_cidrs" {
-  value = aws_subnet.intra.*.cidr_block
+  value = [for sn in aws_subnet.intra : sn.cidr_block]
 }

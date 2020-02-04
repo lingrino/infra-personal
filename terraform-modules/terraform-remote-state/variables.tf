@@ -9,7 +9,7 @@ variable "tags" {
 }
 
 variable "create_lock_table" {
-  type        = string
+  type        = bool
   description = "Whether or not to create a Dynamo DB lock table"
-  default     = "false"
+  default     = false
 }

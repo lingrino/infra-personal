@@ -19,7 +19,7 @@ variable "keypair_main_name" {
 }
 
 variable "rotate_iam_keys" {
-  type        = string
+  type        = number
   description = "Increase this number by 1 to automatically rotate keys for supported IAM users"
 }
 

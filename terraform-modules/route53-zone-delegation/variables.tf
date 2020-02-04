@@ -9,6 +9,6 @@ variable "domain" {
 }
 
 variable "nameservers" {
-  type        = list(string)
+  type        = set(string)
   description = "The list of nameservers of the route53 zone that we are delegating to"
 }

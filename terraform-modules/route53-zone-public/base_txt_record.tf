@@ -1,5 +1,4 @@
-# This file manages the base TXT record values, which are used by multiple
-# services
+# This file manages the base TXT record values, which are used by multiple services
 
 resource "aws_route53_record" "txt_base" {
   count = var.enable_fastmail || var.google_site_verification_value != "" ? 1 : 0
