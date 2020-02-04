@@ -10,13 +10,14 @@ resource "aws_route53_record" "ses_txt_verification" {
 
 resource "aws_route53_record" "ses_dkim_verification" {
   provider = aws.dns
-  count    = 3
+
+  for_each = toset(aws_ses_domain_dkim.ses.dkim_tokens)
 
   zone_id = data.aws_route53_zone.zone.zone_id
-  name    = "${aws_ses_domain_dkim.ses.dkim_tokens[count.index]}._domainkey.${aws_ses_domain_identity.ses.domain}"
+  name    = "${each.value}._domainkey.${aws_ses_domain_identity.ses.domain}"
   type    = "CNAME"
   ttl     = 3600
-  records = ["${aws_ses_domain_dkim.ses.dkim_tokens[count.index]}.dkim.amazonses.com"]
+  records = ["${each.value}.dkim.amazonses.com"]
 }
 
 resource "aws_route53_record" "ses_mailfrom_mx_verification" {

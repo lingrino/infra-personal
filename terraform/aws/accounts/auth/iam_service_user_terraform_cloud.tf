@@ -26,8 +26,8 @@ resource "aws_iam_access_key" "terraform_cloud_odd" {
 }
 
 locals {
-  terraform_cloud_akid = try(aws_iam_access_key.terraform_cloud_even.0.id, aws_iam_access_key.terraform_cloud_odd.0.id)
-  terraform_cloud_sak  = try(aws_iam_access_key.terraform_cloud_even.0.secret, aws_iam_access_key.terraform_cloud_odd.0.secret)
+  terraform_cloud_akid = try(aws_iam_access_key.terraform_cloud_even[0].id, aws_iam_access_key.terraform_cloud_odd[0].id)
+  terraform_cloud_sak  = try(aws_iam_access_key.terraform_cloud_even[0].secret, aws_iam_access_key.terraform_cloud_odd[0].secret)
 
   # The set of workspaces that should have the terraform cloud variables and secrets
   # All of the workspaces that start with org/aws-*

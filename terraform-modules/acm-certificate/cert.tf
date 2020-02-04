@@ -2,9 +2,9 @@
 locals {
   sans = keys(var.sans_domain_names_to_zone_names)
 
-  // example.com and *.example.com will have the same validation records
-  // here we make a list removing the *. domains if there's also a base domain
-  // This list lets us know the count of validation records before we apply
+  # example.com and *.example.com will have the same validation records
+  # here we make a list removing the *. domains if there's also a base domain
+  # This list lets us know the count of validation records before we apply
   distinct_domain_names = distinct(concat([var.domain_name], [
     for domain_name in local.sans :
     replace(domain_name, "*.", "")
@@ -31,15 +31,15 @@ resource "aws_acm_certificate" "cert" {
   lifecycle {
     create_before_destroy = true
 
-    // We ignore changes here because AWS doesn't return these in the same order
-    // that we create them and that can cause infinite loops of cert creation
+    # We ignore changes here because AWS doesn't return these in the same order
+    # that we create them and that can cause infinite loops of cert creation
     ignore_changes = [subject_alternative_names]
   }
 }
 
 locals {
-  // Create a list of maps of validations to create certificates for, where we
-  // again deduplicate against our earlier local for the *. domains
+  # Create a list of maps of validations to create certificates for, where we
+  # again deduplicate against our earlier local for the *. domains
   validation_domains = [
     for domain, options in aws_acm_certificate.cert.domain_validation_options :
     tomap(options) if contains(local.distinct_domain_names, options.domain_name)
@@ -50,20 +50,33 @@ locals {
 data "aws_route53_zone" "zone" {
   provider = aws.dns
 
-  count = length(local.distinct_domain_names)
-  name  = element(local.validation_domains, count.index)["domain_name"]
+  for_each = {
+    for i in range(length(local.distinct_domain_names)) :
+    i => {
+      domain_name = local.validation_domains[i]["domain_name"]
+    }
+  }
+
+  name = each.value.domain_name
 }
 
 resource "aws_route53_record" "cert" {
   provider = aws.dns
 
-  count = length(local.distinct_domain_names)
+  for_each = {
+    for i in range(length(local.distinct_domain_names)) :
+    i => {
+      zone    = data.aws_route53_zone.zone[i]
+      options = local.validation_domains[i]
 
-  zone_id = data.aws_route53_zone.zone[count.index].zone_id
-  name    = element(local.validation_domains, count.index)["resource_record_name"]
-  type    = element(local.validation_domains, count.index)["resource_record_type"]
+    }
+  }
+
+  zone_id = each.value.zone.zone_id
+  name    = each.value.options.resource_record_name
+  type    = each.value.options.resource_record_type
   ttl     = 60
-  records = [element(local.validation_domains, count.index)["resource_record_value"]]
+  records = [each.value.options.resource_record_value]
 
   lifecycle {
     create_before_destroy = true

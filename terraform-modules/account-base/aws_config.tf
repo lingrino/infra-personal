@@ -1,5 +1,5 @@
 resource "aws_config_aggregate_authorization" "config" {
-  for_each = toset(var.config_authorization_regions)
+  for_each = var.config_authorization_regions
 
   account_id = var.account_id_audit
   region     = each.key

@@ -2,20 +2,26 @@
 ### Interfaces         ###
 ##########################
 data "aws_vpc_endpoint_service" "interfaces" {
-  count = length(var.enabled_endpoint_interfaces)
+  for_each = var.enabled_endpoint_interfaces
 
-  service = element(var.enabled_endpoint_interfaces, count.index)
+  service = each.value
 }
 
 resource "aws_vpc_endpoint" "interfaces" {
-  count = length(var.enabled_endpoint_interfaces)
+  for_each = {
+    for i in range(length(data.aws_vpc_endpoint_service.interfaces)) :
+    i => {
+      interface = data.aws_vpc_endpoint_service.interfaces[i]
+      subnets   = aws_subnet.private
+    }
+  }
 
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.vpc.id
-  service_name      = element(data.aws_vpc_endpoint_service.interfaces[*].service_name, count.index)
+  service_name      = each.value.interface.service_name
 
   private_dns_enabled = true
-  subnet_ids          = aws_subnet.private[*].id
+  subnet_ids          = [for sn in each.value.subnets : sn.id]
   security_group_ids  = [aws_security_group.endpoints.id]
 }
 
@@ -23,36 +29,36 @@ resource "aws_vpc_endpoint" "interfaces" {
 ### Gateways           ###
 ##########################
 data "aws_vpc_endpoint_service" "gateways" {
-  count = length(var.enabled_endpoint_gateways)
+  for_each = var.enabled_endpoint_gateways
 
-  service = element(var.enabled_endpoint_gateways, count.index)
+  service = each.value
 }
 
 resource "aws_vpc_endpoint" "gateways" {
-  count = length(data.aws_vpc_endpoint_service.gateways[*].id)
+  for_each = data.aws_vpc_endpoint_service.gateways
 
   vpc_id       = aws_vpc.vpc.id
   auto_accept  = true
-  service_name = element(data.aws_vpc_endpoint_service.gateways[*].service_name, count.index)
+  service_name = each.value.service_name
 }
 
-resource "aws_vpc_endpoint_route_table_association" "gateways_public" {
-  count = length(data.aws_vpc_endpoint_service.gateways[*].id)
-
-  vpc_endpoint_id = element(aws_vpc_endpoint.gateways[*].id, count.index)
-  route_table_id  = aws_route_table.public.id
+locals {
+  associations = concat(
+    setproduct([for gw in aws_vpc_endpoint.gateways : gw.id], [aws_route_table.public.id]),
+    setproduct([for gw in aws_vpc_endpoint.gateways : gw.id], [for rt in aws_route_table.private : rt.id]),
+    setproduct([for gw in aws_vpc_endpoint.gateways : gw.id], [for rt in aws_route_table.intra : rt.id]),
+  )
 }
 
-resource "aws_vpc_endpoint_route_table_association" "gateways_private" {
-  count = length(var.azs) * length(data.aws_vpc_endpoint_service.gateways[*].id)
+resource "aws_vpc_endpoint_route_table_association" "gateways" {
+  for_each = {
+    for i in range(length(local.associations)) :
+    i => {
+      endpoint = local.associations[i][0]
+      rt       = local.associations[i][1]
+    }
+  }
 
-  vpc_endpoint_id = element(aws_vpc_endpoint.gateways[*].id, count.index)
-  route_table_id  = element(aws_route_table.private[*].id, count.index)
-}
-
-resource "aws_vpc_endpoint_route_table_association" "gateways_intra" {
-  count = length(var.azs) * length(data.aws_vpc_endpoint_service.gateways[*].id)
-
-  vpc_endpoint_id = element(aws_vpc_endpoint.gateways[*].id, count.index)
-  route_table_id  = element(aws_route_table.intra[*].id, count.index)
+  vpc_endpoint_id = each.value.endpoint
+  route_table_id  = each.value.rt
 }

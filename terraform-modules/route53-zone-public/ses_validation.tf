@@ -9,68 +9,123 @@ resource "aws_ses_domain_identity" "ses" {
 }
 
 resource "aws_ses_domain_mail_from" "ses" {
-  count = var.verify_ses ? 1 : 0
+  for_each = {
+    for i in range(length(aws_ses_domain_identity.ses[*])) :
+    i => {
+      di = aws_ses_domain_identity.ses[i]
+    }
+  }
 
-  domain                 = aws_ses_domain_identity.ses[0].domain
-  mail_from_domain       = "bounce.${aws_ses_domain_identity.ses[0].domain}"
+  domain                 = each.value.di.domain
+  mail_from_domain       = "bounce.${each.value.di.domain}"
   behavior_on_mx_failure = "RejectMessage"
 }
 
 resource "aws_ses_domain_dkim" "ses" {
-  count = var.verify_ses ? 1 : 0
+  for_each = {
+    for i in range(length(aws_ses_domain_identity.ses[*])) :
+    i => {
+      di = aws_ses_domain_identity.ses[i]
+    }
+  }
 
-  domain = aws_ses_domain_identity.ses[0].domain
+  domain = each.value.di.domain
+}
+
+locals {
+  ses_topics = setproduct(aws_ses_domain_identity.ses[*].domain, local.ses_notification_types)
 }
 
 resource "aws_ses_identity_notification_topic" "topics" {
-  count = var.verify_ses ? length(local.ses_notification_types) : 0
+  for_each = {
+    for i in range(length(local.ses_topics)) :
+    i => {
+      domain = local.ses_topics[i][0]
+      type   = local.ses_topics[i][1]
+    }
+  }
 
   topic_arn         = var.ses_sns_arn
-  notification_type = local.ses_notification_types[count.index]
-  identity          = aws_ses_domain_identity.ses[0].domain
+  identity          = each.value.domain
+  notification_type = each.value.type
 }
 
 resource "aws_ses_domain_identity_verification" "ses" {
-  domain = aws_ses_domain_identity.ses[0].id
+  for_each = {
+    for i in range(length(aws_ses_domain_identity.ses[*])) :
+    i => {
+      di = aws_ses_domain_identity.ses[i]
+    }
+  }
+
+  domain = each.value.di.id
 
   depends_on = [aws_route53_record.ses_txt_verification]
 }
 
 resource "aws_route53_record" "ses_txt_verification" {
-  count = var.verify_ses ? 1 : 0
+  for_each = {
+    for i in range(length(aws_ses_domain_identity.ses[*])) :
+    i => {
+      di = aws_ses_domain_identity.ses[i]
+    }
+  }
 
   zone_id = aws_route53_zone.zone.id
-  name    = "_amazonses.${aws_ses_domain_identity.ses[0].domain}"
+  name    = "_amazonses.${each.value.di.domain}"
   type    = "TXT"
   ttl     = 3600
-  records = [aws_ses_domain_identity.ses[0].verification_token]
+  records = [each.value.di.verification_token]
+}
+
+locals {
+  dkim_tokens = setproduct(
+    aws_ses_domain_identity.ses[*].domain,
+    [for t in flatten([for d in aws_ses_domain_dkim.ses : d.dkim_tokens]) : t]
+  )
 }
 
 resource "aws_route53_record" "ses_dkim_verification" {
-  count = var.verify_ses ? 3 : 0
+  for_each = {
+    for i in range(length(local.dkim_tokens)) :
+    i => {
+      domain     = local.dkim_tokens[i][0]
+      dkim_token = local.dkim_tokens[i][1]
+    }
+  }
 
   zone_id = aws_route53_zone.zone.id
-  name    = "${aws_ses_domain_dkim.ses[0].dkim_tokens[count.index]}._domainkey.${aws_ses_domain_identity.ses[0].domain}"
+  name    = "${each.value.dkim_token}._domainkey.${each.value.domain}"
   type    = "CNAME"
   ttl     = 3600
-  records = ["${aws_ses_domain_dkim.ses[0].dkim_tokens[count.index]}.dkim.amazonses.com"]
+  records = ["${each.value.dkim_token}.dkim.amazonses.com"]
 }
 
 resource "aws_route53_record" "ses_mailfrom_mx_verification" {
-  count = var.verify_ses ? 1 : 0
+  for_each = {
+    for i in range(length(aws_ses_domain_mail_from.ses)) :
+    i => {
+      mf = aws_ses_domain_mail_from.ses[i]
+    }
+  }
 
   zone_id = aws_route53_zone.zone.id
-  name    = aws_ses_domain_mail_from.ses[0].mail_from_domain
+  name    = each.value.mf.mail_from_domain
   type    = "MX"
   ttl     = 3600
   records = ["10 feedback-smtp.${var.ses_region}.amazonses.com"]
 }
 
 resource "aws_route53_record" "ses_mailfrom_spf_verification" {
-  count = var.verify_ses ? 1 : 0
+  for_each = {
+    for i in range(length(aws_ses_domain_mail_from.ses)) :
+    i => {
+      mf = aws_ses_domain_mail_from.ses[i]
+    }
+  }
 
   zone_id = aws_route53_zone.zone.id
-  name    = aws_ses_domain_mail_from.ses[0].mail_from_domain
+  name    = each.value.mf.mail_from_domain
   type    = "TXT"
   ttl     = 3600
   records = ["v=spf1 include:amazonses.com -all"]

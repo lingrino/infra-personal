@@ -23,10 +23,16 @@ resource "aws_route53_record" "dns_ipv6" {
 }
 
 resource "aws_route53_record" "sans_dns" {
-  count = length(local.sans_domain_names)
+  for_each = {
+    for i in range(length([for zone in data.aws_route53_zone.sans : zone])) :
+    i => {
+      zone = [for zone in data.aws_route53_zone.sans : zone][i]
+      name = local.sans_domain_names[i]
+    }
+  }
 
-  zone_id = data.aws_route53_zone.sans[count.index].zone_id
-  name    = local.sans_domain_names[count.index]
+  zone_id = each.value.zone.zone_id
+  name    = each.value.name
   type    = "A"
 
   alias {
@@ -37,10 +43,16 @@ resource "aws_route53_record" "sans_dns" {
 }
 
 resource "aws_route53_record" "sans_dns_ipv6" {
-  count = length(local.sans_domain_names)
+  for_each = {
+    for i in range(length([for zone in data.aws_route53_zone.sans : zone])) :
+    i => {
+      zone = [for zone in data.aws_route53_zone.sans : zone][i]
+      name = local.sans_domain_names[i]
+    }
+  }
 
-  zone_id = data.aws_route53_zone.sans[count.index].zone_id
-  name    = local.sans_domain_names[count.index]
+  zone_id = each.value.zone.zone_id
+  name    = each.value.name
   type    = "AAAA"
 
   alias {
