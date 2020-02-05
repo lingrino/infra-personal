@@ -1,14 +1,11 @@
 #####################################
 ### Tagging Policy                ###
 #####################################
-resource "aws_config_config_rule" "tagging_policy" {
+resource "aws_config_organization_managed_rule" "tagging_policy" {
   name        = "tagging_policy"
   description = "Noncompliant when a resource does not meet the tagging policy"
 
-  source {
-    owner             = "AWS"
-    source_identifier = "REQUIRED_TAGS"
-  }
+  rule_identifier = "REQUIRED_TAGS"
 
   input_parameters = <<POLICY
 {
@@ -16,9 +13,4 @@ resource "aws_config_config_rule" "tagging_policy" {
   "tag2Key": "service"
 }
 POLICY
-
-  tags = merge(
-    { "Name" = "tagging_policy" },
-    var.tags
-  )
 }
