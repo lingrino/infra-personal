@@ -13,9 +13,4 @@ resource "aws_config_organization_managed_rule" "tagging_policy" {
   "tag2Key": "service"
 }
 POLICY
-
-  tags = merge(
-    { "Name" = "tagging_policy" },
-    var.tags
-  )
 }
