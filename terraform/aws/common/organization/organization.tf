@@ -5,6 +5,7 @@ resource "aws_organizations_organization" "org" {
     "aws-artifact-account-sync.amazonaws.com",
     "cloudtrail.amazonaws.com",
     "config.amazonaws.com",
+    "config-multiaccountsetup.amazonaws.com",
     "ram.amazonaws.com",
   ]
 }
