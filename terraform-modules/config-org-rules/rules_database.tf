@@ -1,14 +1,11 @@
 ####################################
 ### Dynamo Encrypted             ###
 ####################################
-resource "aws_config_config_rule" "dynamo_encrypted" {
+resource "aws_config_organization_managed_rule" "dynamo_encrypted" {
   name        = "dynamo_encrypted"
   description = "Noncompliant when DynamoDB tables are not encrypted"
 
-  source {
-    owner             = "AWS"
-    source_identifier = "DYNAMODB_TABLE_ENCRYPTION_ENABLED"
-  }
+  rule_identifier = "DYNAMODB_TABLE_ENCRYPTION_ENABLED"
 
   tags = merge(
     { "Name" = "dynamo_encrypted" },
@@ -19,14 +16,11 @@ resource "aws_config_config_rule" "dynamo_encrypted" {
 ####################################
 ### RDS Encrypted                ###
 ####################################
-resource "aws_config_config_rule" "rds_encrypted" {
+resource "aws_config_organization_managed_rule" "rds_encrypted" {
   name        = "rds_encrypted"
   description = "Noncompliant when RDS databases are not encrypted"
 
-  source {
-    owner             = "AWS"
-    source_identifier = "RDS_STORAGE_ENCRYPTED"
-  }
+  rule_identifier = "RDS_STORAGE_ENCRYPTED"
 
   tags = merge(
     { "Name" = "rds_encrypted" },
@@ -37,14 +31,11 @@ resource "aws_config_config_rule" "rds_encrypted" {
 ####################################
 ### RDS Multi AZ                 ###
 ####################################
-resource "aws_config_config_rule" "rds_multi_az" {
+resource "aws_config_organization_managed_rule" "rds_multi_az" {
   name        = "rds_multi_az"
   description = "Noncompliant when RDS databases do not have multi az enabled"
 
-  source {
-    owner             = "AWS"
-    source_identifier = "RDS_MULTI_AZ_SUPPORT"
-  }
+  rule_identifier = "RDS_MULTI_AZ_SUPPORT"
 
   tags = merge(
     { "Name" = "rds_multi_az" },
@@ -55,14 +46,11 @@ resource "aws_config_config_rule" "rds_multi_az" {
 ####################################
 ### RDS Public Access            ###
 ####################################
-resource "aws_config_config_rule" "rds_public_access" {
+resource "aws_config_organization_managed_rule" "rds_public_access" {
   name        = "rds_public_access"
   description = "Noncompliant when RDS databases are accessible to the public"
 
-  source {
-    owner             = "AWS"
-    source_identifier = "RDS_INSTANCE_PUBLIC_ACCESS_CHECK"
-  }
+  rule_identifier = "RDS_INSTANCE_PUBLIC_ACCESS_CHECK"
 
   tags = merge(
     { "Name" = "rds_public_access" },
@@ -73,14 +61,11 @@ resource "aws_config_config_rule" "rds_public_access" {
 ####################################
 ### RDS Backup                   ###
 ####################################
-resource "aws_config_config_rule" "rds_backup" {
+resource "aws_config_organization_managed_rule" "rds_backup" {
   name        = "rds_backup"
   description = "Noncompliant when RDS databases are not backed up"
 
-  source {
-    owner             = "AWS"
-    source_identifier = "DB_INSTANCE_BACKUP_ENABLED"
-  }
+  rule_identifier = "DB_INSTANCE_BACKUP_ENABLED"
 
   tags = merge(
     { "Name" = "rds_backup" },
@@ -91,14 +76,11 @@ resource "aws_config_config_rule" "rds_backup" {
 ####################################
 ### RDS Public Snapshots         ###
 ####################################
-resource "aws_config_config_rule" "rds_public_snapshots" {
+resource "aws_config_organization_managed_rule" "rds_public_snapshots" {
   name        = "rds_public_snapshots"
   description = "Noncompliant when RDS snapshots are accessible to the public"
 
-  source {
-    owner             = "AWS"
-    source_identifier = "RDS_INSTANCE_PUBLIC_ACCESS_CHECK"
-  }
+  rule_identifier = "RDS_INSTANCE_PUBLIC_ACCESS_CHECK"
 
   tags = merge(
     { "Name" = "rds_public_snapshots" },
