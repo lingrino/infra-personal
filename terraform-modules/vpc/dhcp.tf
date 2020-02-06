@@ -16,3 +16,11 @@ resource "aws_vpc_dhcp_options_association" "dhcp" {
   vpc_id          = aws_vpc.vpc.id
   dhcp_options_id = aws_vpc_dhcp_options.dhcp.id
 }
+
+resource "aws_default_vpc_dhcp_options" "default" {
+  tags = merge(
+    { "Name" = "DO_NOT_USE" },
+    { "description" = "do not use. default dhcp options created by AWS in this VPC" },
+    var.tags
+  )
+}
