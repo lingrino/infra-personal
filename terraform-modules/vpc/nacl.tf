@@ -1,7 +1,7 @@
 resource "aws_network_acl" "main" {
   vpc_id = aws_vpc.vpc.id
 
-  subnet_ids = local.subnets
+  subnet_ids = flatten(local.subnets)
 
   ingress {
     rule_no    = 100
