@@ -105,3 +105,16 @@ resource "aws_route_table" "intra" {
     var.tags
   )
 }
+
+##########################
+### Default            ###
+##########################
+resource "aws_default_route_table" "default" {
+  default_route_table_id = aws_vpc.vpc.default_route_table_id
+
+  tags = merge(
+    { "Name" = "DO_NOT_USE" },
+    { "description" = "do not use. default route table options created by AWS in this VPC" },
+    var.tags
+  )
+}
