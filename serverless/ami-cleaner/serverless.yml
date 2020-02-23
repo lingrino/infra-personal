@@ -47,3 +47,4 @@ functions:
           name: ${self:service}
           description: cleans up unused AMIs
           rate: cron(0 17 * * ? *)
+    onError: arn:aws:sns:us-east-1:418875065733:alarm_low_priority
