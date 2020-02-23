@@ -4,8 +4,12 @@
 
 - name: Update all packages
   package:
-    name: '*'
+    name: "*"
     state: latest
+  register: R_apt_update
+  retries: 3
+  delay: 10
+  until: R_apt_update.rc == 0
 
 - name: Install base packages
   apt:
@@ -22,6 +26,10 @@
       - tar
       - unzip
       - wget
+  register: R_apt_install
+  retries: 3
+  delay: 10
+  until: R_apt_install.rc == 0
 
 # jq 1.5 has a bug that won't allow it to work in bash commands such as a=$(echo "{}" | jq -r)
 # you can remove this when jq 1.6+ is installed by apt

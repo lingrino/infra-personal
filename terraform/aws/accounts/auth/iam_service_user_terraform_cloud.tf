@@ -43,8 +43,9 @@ resource "tfe_variable" "assume_role_name" {
   workspace_id = each.key
   category     = "terraform"
 
-  key   = "assume_role_name"
-  value = "ServiceAdmin"
+  description = "name of the aws role that aws provider will assume"
+  key         = "assume_role_name"
+  value       = "ServiceAdmin"
 }
 
 resource "tfe_variable" "assume_role_session_name" {
@@ -53,8 +54,9 @@ resource "tfe_variable" "assume_role_session_name" {
   workspace_id = each.key
   category     = "terraform"
 
-  key   = "assume_role_session_name"
-  value = "TerraformCloud"
+  description = "friendly name of the session that aws provider will create"
+  key         = "assume_role_session_name"
+  value       = "TerraformCloud"
 }
 
 resource "tfe_variable" "terraform_cloud_akid" {
@@ -63,8 +65,9 @@ resource "tfe_variable" "terraform_cloud_akid" {
   workspace_id = each.key
   category     = "env"
 
-  key   = "AWS_ACCESS_KEY_ID"
-  value = local.terraform_cloud_akid
+  description = "AWS_ACCESS_KEY_ID that will be used to assume the role"
+  key         = "AWS_ACCESS_KEY_ID"
+  value       = local.terraform_cloud_akid
 }
 
 resource "tfe_variable" "terraform_cloud_sak" {
@@ -73,7 +76,8 @@ resource "tfe_variable" "terraform_cloud_sak" {
   workspace_id = each.key
   category     = "env"
 
-  key       = "AWS_SECRET_ACCESS_KEY"
-  value     = local.terraform_cloud_sak
-  sensitive = true
+  description = "AWS_SECRET_ACCESS_KEY that will be used to assume the role"
+  key         = "AWS_SECRET_ACCESS_KEY"
+  value       = local.terraform_cloud_sak
+  sensitive   = true
 }

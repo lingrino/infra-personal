@@ -25,6 +25,7 @@ resource "tfe_workspace" "aws_accounts_auth" {
 #   workspace_id = tfe_workspace.auth.id
 #   category     = "env"
 
+#   description = "token used with the terraform provider"
 #   key       = "TFE_TOKEN"
 #   value     = "TODO"
 #   sensitive = true

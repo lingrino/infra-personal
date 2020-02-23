@@ -1,7 +1,11 @@
 - name: Update all packages
   package:
-    name: '*'
+    name: "*"
     state: latest
+  register: R_apt_update
+  retries: 3
+  delay: 10
+  until: R_apt_update.rc == 0
 
 - name: Install necessary packages
   apt:
@@ -11,11 +15,15 @@
       - net-tools
       - qrencode
       - wireguard
+  register: R_apt_install
+  retries: 3
+  delay: 10
+  until: R_apt_install.rc == 0
 
 - name: allow ip forwarding
   sysctl:
     name: "{{ item }}"
-    value: '1'
+    value: "1"
     sysctl_set: yes
   loop:
     - net.ipv4.ip_forward
