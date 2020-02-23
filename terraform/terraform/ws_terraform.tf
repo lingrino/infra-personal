@@ -21,7 +21,8 @@ resource "tfe_workspace" "terraform" {
 #   workspace_id = tfe_workspace.terraform.id
 #   category     = "env"
 
-#   key       = "TFE_TOKEN"
-#   value     = "TODO"
-#   sensitive = true
+#   description = "token used with the terraform provider"
+#   key         = "TFE_TOKEN"
+#   value       = "TODO"
+#   sensitive   = true
 # }
