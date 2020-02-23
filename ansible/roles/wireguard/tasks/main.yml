@@ -5,7 +5,7 @@
   register: R_apt_update
   retries: 3
   delay: 10
-  until: R_apt_update.rc == 0
+  until: R_apt_update is not failed
 
 - name: Install necessary packages
   apt:
@@ -18,7 +18,7 @@
   register: R_apt_install
   retries: 3
   delay: 10
-  until: R_apt_install.rc == 0
+  until: R_apt_install is not failed
 
 - name: allow ip forwarding
   sysctl:
