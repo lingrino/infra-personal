@@ -9,7 +9,7 @@
   register: R_apt_update
   retries: 3
   delay: 10
-  until: R_apt_update.rc == 0
+  until: R_apt_update is not failed
 
 - name: Install base packages
   apt:
@@ -29,7 +29,7 @@
   register: R_apt_install
   retries: 3
   delay: 10
-  until: R_apt_install.rc == 0
+  until: R_apt_install is not failed
 
 # jq 1.5 has a bug that won't allow it to work in bash commands such as a=$(echo "{}" | jq -r)
 # you can remove this when jq 1.6+ is installed by apt
