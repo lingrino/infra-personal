@@ -1,6 +1,10 @@
 - name: Add the eternal terminal ppa
   apt_repository:
     repo: ppa:jgmath2000/et
+  register: R_apt_et
+  retries: 3
+  delay: 10
+  until: R_apt_et is not failed
 
 - name: Update all packages
   package:
