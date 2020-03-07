@@ -39,10 +39,10 @@ variable "keybase_record_value" {
   default     = ""
 }
 
-variable "google_site_verification_value" {
-  type        = string
-  description = "An optional google site verification string"
-  default     = ""
+variable "google_site_verifications" {
+  type        = list(string)
+  description = "An optional list of google site verification strings"
+  default     = []
 }
 
 variable "enable_fastmail" {
