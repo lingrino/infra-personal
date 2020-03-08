@@ -4,16 +4,14 @@ module "zone_lingrino_com" {
   domain            = "lingrino.com"
   delegation_set_id = aws_route53_delegation_set.lingrino_prod.id
 
+  enable_gsuite        = true
   keybase_record_value = "keybase-site-verification=OSEFJcKRkkit1mlWF_9zDpsE0q3ocWV8AfDWtbDU6lo"
   google_site_verifications = [
     "google-site-verification=x960BR9hmXBErt3Hu1OzopZuf-CCkeOHCphwD4ZZHIY",
-    "google-site-verification=Z_0sabCX_ouSK55gpGCOfT94pJ3PS8opdHpWDfA2zY4"
+    "google-site-verification=Z_0sabCX_ouSK55gpGCOfT94pJ3PS8opdHpWDfA2zY4",
   ]
 
   ses_sns_arn = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
-
-  enable_fastmail                      = true
-  enable_fastmail_webmail_login_portal = true
 
   tags = var.tags
 

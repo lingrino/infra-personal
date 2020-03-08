@@ -8,9 +8,6 @@ module "zone_churner_io" {
   google_site_verifications = ["google-site-verification=LCtlVnToa3tUsyOOF5mFRUlULkxBrTkwmoHHHw7SSEI"]
   ses_sns_arn               = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
 
-  enable_fastmail                      = true
-  enable_fastmail_webmail_login_portal = true
-
   tags = var.tags
 
   providers = {

@@ -2,7 +2,7 @@
 
 This module creates a public route53 zone, optionally with some standard DNS records that are common to every domain. You can use this module to create a zone and also SES domain verification, keybase domain verification, and google domains email forwarding MX records.
 
-This module is relatively opinionated towards the services that I use (google domains, fastmail, ses, keybase). You may not find much generic use for this module if you don't use the same services. The module also requires that you are using Route53 delegation sets for white label NS records.
+This module is relatively opinionated towards the services that I use (google domains, gsuite, ses, keybase). You may not find much generic use for this module if you don't use the same services. The module also requires that you are using Route53 delegation sets for white label NS records.
 
 ## Usage
 
@@ -19,7 +19,7 @@ module "zone_example_com" {
   domain            = "example.com"
   delegation_set_id = aws_route53_delegation_set.example.id
 
-  enable_fastmail = true
+  enable_gsuite        = true
   keybase_record_value = "keybase-site-verification=kjfsdlkfjsdfjsd_mcweoiiier1qpcdnij"
 
   tags = var.tags
@@ -42,6 +42,6 @@ Keybase is a great service for proving identity on the web. If you would like to
 
 I use google domains for my domain registrar, mostly because it supports the most top level domains (`.dev`) specifically. Google domains also has a nice feature that will forward email addresses, which I use to receive email. Set `${ var.configure_google_domains_email_forwarding }` (default `true`) if you have a similar setup.
 
-## Fastmail Verification
+## Gsuite Verification
 
-I use fastmail as an email provider for custom domains. You can enable fastmail domain verification by setting `${ var.enable_fastmail }` to `true` and enable fastmail web login for at `mail.${ var.domain }` by setting `${ var.enable_fastmail_webmail_login_portal }` to `true`
+I use gsuite as an email provider for custom domains. You can enable gsuite domain verification by setting `${ var.enable_gsuite }` to `true`.

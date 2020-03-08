@@ -8,11 +8,16 @@ variable "delegation_set_id" {
   description = "The ID of the delegation set to use for the domain"
 }
 
-# https://support.google.com/domains/answer/3251241?hl=en
-variable "configure_google_domains_email_forwarding" {
+variable "enable_gsuite" {
   type        = bool
-  description = "Default true. Whether or not to configure google domains email forwarding records for this domain"
+  description = "Whether or not to enable gsuite domain verification"
   default     = false
+}
+
+variable "google_site_verifications" {
+  type        = list(string)
+  description = "An optional list of google site verification strings"
+  default     = []
 }
 
 variable "verify_ses" {
@@ -37,24 +42,6 @@ variable "keybase_record_value" {
   type        = string
   description = "An optional keybase verification string, starts with keybase-site-verification="
   default     = ""
-}
-
-variable "google_site_verifications" {
-  type        = list(string)
-  description = "An optional list of google site verification strings"
-  default     = []
-}
-
-variable "enable_fastmail" {
-  type        = bool
-  description = "Whether or not to enable fastmail domain verification"
-  default     = false
-}
-
-variable "enable_fastmail_webmail_login_portal" {
-  type        = bool
-  description = "Set to true to enable the fastmail login portal at mail.`var.domain`. Will not work for wildcard domains"
-  default     = false
 }
 
 variable "tags" {

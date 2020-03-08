@@ -7,9 +7,6 @@ module "zone_vaku_io" {
   keybase_record_value = "keybase-site-verification=MCj8gnnw6xQz-RfOHNZuDY-oXMqOFTKcnjuOZFmSnQA"
   ses_sns_arn          = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
 
-  enable_fastmail                      = true
-  enable_fastmail_webmail_login_portal = true
-
   tags = var.tags
 
   providers = {
