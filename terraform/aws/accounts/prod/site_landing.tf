@@ -5,13 +5,11 @@ module "site_landing" {
 
   name_prefix = "site-landing"
 
-  domain_name = "churner.io"
-  zone_name   = "churner.io"
+  domain_name = "hoo.dev"
+  zone_name   = "hoo.dev"
 
   sans_domain_names_to_zone_names = {
-    "*.churner.io" = "churner.io"
-    "hoo.dev"      = "hoo.dev"
-    "*.hoo.dev"    = "hoo.dev"
+    "*.hoo.dev" = "hoo.dev"
   }
 
   healthcheck_sns_arn = data.terraform_remote_state.account_audit.outputs.sns_alarm_high_priority_arn

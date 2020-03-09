@@ -8,8 +8,6 @@ module "vaku" {
 
   sans_domain_names_to_zone_names = {
     "*.vaku.dev" = "vaku.dev"
-    "vaku.io"    = "vaku.io"
-    "*.vaku.io"  = "vaku.io"
   }
 
   healthcheck_sns_arn = data.terraform_remote_state.account_audit.outputs.sns_alarm_high_priority_arn
