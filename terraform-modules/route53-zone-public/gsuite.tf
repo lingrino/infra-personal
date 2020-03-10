@@ -1,4 +1,4 @@
-resource "aws_route53_record" "mx_verification" {
+resource "aws_route53_record" "mx_gsuite_verification" {
   count = var.enable_gsuite ? 1 : 0
 
   zone_id = aws_route53_zone.zone.zone_id
@@ -14,7 +14,7 @@ resource "aws_route53_record" "mx_verification" {
   ]
 }
 
-resource "aws_route53_record" "custom_urls" {
+resource "aws_route53_record" "cname_gsuite_custom_urls" {
   for_each = var.enable_gsuite ? toset(["mail", "calendar", "drive"]) : []
 
   zone_id = aws_route53_zone.zone.zone_id
@@ -42,4 +42,14 @@ resource "aws_route53_record" "txt_gsuite_dkim" {
       format("%s", substr(var.gsuite_dkim_value, i, 255))
     ])
   ]
+}
+
+resource "aws_route53_record" "txt_gsuite_dmarc" {
+  count = var.gsuite_dkim_value != "" ? 1 : 0
+
+  zone_id = aws_route53_zone.zone.zone_id
+  name    = "_dmarc"
+  type    = "TXT"
+  ttl     = 3600
+  records = ["v=DMARC1; p=none; sp=none; adkim=s; aspf=s; pct=100; rua=mailto:sean+dmarc@lingrino.com"]
 }
