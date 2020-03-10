@@ -33,9 +33,9 @@ resource "aws_route53_record" "txt_gsuite_dkim" {
   ttl     = 3600
 
   # https://aws.amazon.com/premiumsupport/knowledge-center/route53-resolve-dkim-text-record-error/
-  # The max length for a TXT record is 255. In route53 you can have a longer record by chaining
-  # pieces together. Pieces will be chained together into a single longer record if you chunk the
-  # record into 255 character pieces and wrap each piece in quotes without line breaks.
+  # The max length for a TXT record is 255. In route53 you can have a longer record by chaining text
+  # together. Pieces will be chained together into a single longer record if you chunk the record
+  # into 255 character pieces and wrap each piece in quotes without line breaks.
   records = [
     join("\"\"", [
       for i in range(0, ceil(length(var.gsuite_dkim_value) / 255) * 255, 255) :
