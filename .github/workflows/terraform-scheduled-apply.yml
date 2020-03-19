@@ -5,7 +5,7 @@ on:
     - cron: 0 17 * * 1 # Every Monday at 5pm UTC
 
 jobs:
-  validate:
+  apply:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Run on All Workspaces
