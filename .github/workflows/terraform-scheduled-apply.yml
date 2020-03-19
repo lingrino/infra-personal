@@ -1,0 +1,24 @@
+name: Terraform - Scheduled Apply
+
+on:
+  push:
+  schedule:
+    - cron: 0 17 * * 1 # Every Monday at 5pm UTC
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Run on All Workspaces
+        run: |
+          for wsid in $(curl --header "Authorization: Bearer $TFE_TOKEN" --header "Content-Type: application/vnd.api+json" https://app.terraform.io/api/v2/organizations/lingrino/workspaces | jq -r '.data[].id'); do
+            curl \
+              --header "Authorization: Bearer $TFE_TOKEN" \
+              --header "Content-Type: application/vnd.api+json" \
+              --request POST \
+              --data '{"data":{"type":"runs","attributes":{"message":"GitHub Actions Scheduled Run"},"relationships":{"workspace":{"data":{"type":"workspaces","id":"'$wsid'"}}}}}' \
+              https://app.terraform.io/api/v2/
+          done
+        shell: bash
+        env:
+          TFE_TOKEN: ${{ secrets.TFE_TOKEN }}
