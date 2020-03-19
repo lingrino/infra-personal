@@ -51,5 +51,5 @@ resource "aws_route53_record" "txt_gsuite_dmarc" {
   name    = "_dmarc"
   type    = "TXT"
   ttl     = 3600
-  records = ["v=DMARC1; p=none; sp=none; adkim=s; aspf=s; pct=100; rua=mailto:sean+dmarc@lingrino.com"]
+  records = ["v=DMARC1; p=reject; sp=reject; adkim=s; aspf=s; pct=100; rua=mailto:sean+dmarc@lingrino.com"]
 }
