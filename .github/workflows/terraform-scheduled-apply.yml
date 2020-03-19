@@ -17,7 +17,7 @@ jobs:
               --header "Content-Type: application/vnd.api+json" \
               --request POST \
               --data '{"data":{"type":"runs","attributes":{"message":"GitHub Actions Scheduled Run"},"relationships":{"workspace":{"data":{"type":"workspaces","id":"'$wsid'"}}}}}' \
-              https://app.terraform.io/api/v2/
+              https://app.terraform.io/api/v2/runs
           done
         shell: bash
         env:
