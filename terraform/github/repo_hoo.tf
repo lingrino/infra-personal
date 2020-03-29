@@ -2,6 +2,7 @@ resource "github_repository" "hoo" {
   name         = "hoo"
   description  = "A CLI for determining who you are"
   homepage_url = "https://lingrino.com"
+  archived     = true
 
   default_branch = "master"
   private        = false
