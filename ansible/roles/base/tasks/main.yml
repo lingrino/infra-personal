@@ -20,12 +20,10 @@
     state: latest
     update_cache: yes
     name:
-      - awscli
       - curl
       - et
       - git
       - htop
-      - jq
       - snapd
       - tar
       - unzip
@@ -44,3 +42,33 @@
     owner: root
     group: root
     mode: 0755
+
+# AWS CLI v2 must be installed directly
+- name: Install AWS CLI
+  block:
+    - name: Download AWS CLI Zip
+      get_url:
+        url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+        dest: /usr/local/src/awscli.zip
+        owner: root
+        group: root
+        mode: 0744
+
+    - name: Unarchive AWS CLI Zip
+      unarchive:
+        src: /usr/local/src/awscli.zip
+        dest: /usr/local/src
+        remote_src: True
+
+    - name: Run Install
+      command: /usr/local/src/aws/install
+
+    - name: Cleanup AWS CLI Zip
+      file:
+        path: "/usr/local/src/awscli.zip"
+        state: absent
+
+    - name: Cleanup AWS CLI Folder
+      file:
+        path: "/usr/local/src/aws"
+        state: absent
