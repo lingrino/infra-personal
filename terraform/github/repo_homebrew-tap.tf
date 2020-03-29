@@ -1,7 +1,7 @@
 resource "github_repository" "homebrew-tap" {
   name         = "homebrew-tap"
-  description  = "A Homebrew Tap for my personal projects"
-  homepage_url = "https://lingrino.com"
+  description  = "Homebrew Tap for my personal projects. Powered by @goreleaser"
+  homepage_url = "https://lingrino.com/"
 
   default_branch = "master"
   private        = false
@@ -15,8 +15,6 @@ resource "github_repository" "homebrew-tap" {
 
   topics = [
     "brew",
-    "glen",
     "homebrew",
-    "vaku",
   ]
 }
