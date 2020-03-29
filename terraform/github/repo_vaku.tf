@@ -31,7 +31,6 @@ resource "github_branch_protection" "vaku" {
   required_status_checks {
     strict = true
     contexts = [
-      "GolangCI",
       "validate"
     ]
   }

@@ -29,7 +29,6 @@ resource "github_branch_protection" "glen" {
   required_status_checks {
     strict = true
     contexts = [
-      "GolangCI",
       "validate"
     ]
   }
