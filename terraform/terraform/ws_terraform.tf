@@ -16,13 +16,13 @@ resource "tfe_workspace" "terraform" {
   }
 }
 
-# TODO - This variable should be read from a secret place and added here
+# This variable should be read from a secret place and added here
 # resource "tfe_variable" "terraform_tfe_token" {
 #   workspace_id = tfe_workspace.terraform.id
 #   category     = "env"
 
 #   description = "token used with the terraform provider"
 #   key         = "TFE_TOKEN"
-#   value       = "TODO"
+#   value       = ""
 #   sensitive   = true
 # }
