@@ -1,1 +1,2 @@
-adguard_port: 3000
+adguard_port: 3001
+adguard_server_name: adguard.lingrino.dev

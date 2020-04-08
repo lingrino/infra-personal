@@ -18,6 +18,39 @@
         owner: ubuntu
         group: ubuntu
 
+- name: Install traefik
+  block:
+    - name: Download traefik
+      get_url:
+        url: https://github.com/containous/traefik/releases/download/v{{ traefik_version }}/traefik_v{{ traefik_version }}_linux_arm64.tar.gz
+        dest: /usr/local/src/traefik.tar.gz
+        mode: 0744
+        owner: root
+        group: root
+
+    - name: Extract traefik
+      unarchive:
+        remote_src: true
+        src: /usr/local/src/traefik.tar.gz
+        dest: /usr/local/src
+
+    - name: Copy traefik binary
+      copy:
+        remote_src: true
+        src: /usr/local/src/traefik
+        dest: /usr/local/bin/traefik
+        mode: 0755
+        owner: root
+        group: root
+
+    - name: Cleanup traefik
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /usr/local/src/traefik
+        - /usr/local/src/traefik.tar.gz
+
 - name: Install adguard
   block:
     - name: Download adguard
@@ -68,14 +101,27 @@
         mode: 0644
         owner: root
         group: root
-# - name: Add adguard user/pass
-# /home/pi/AdGuardHome/AdGuardHome.yaml
 
-# other text
-# ...
-# auth_name: "your-secret-name"
-# auth_pass: "your-secret-password"
-# ...
+    - name: Enable adguard
+      service:
+        name: adguard
+        enabled: true
 
-# - name: Copy over adguard config file
-# https://github.com/AdguardTeam/AdGuardHome/wiki/Configuration#configuration-file
+    - name: Stop adguard
+      service:
+        name: adguard
+        state: stopped
+
+    # adguard must be stopped to prevent overwrites
+    - name: Copy adguard config file
+      template:
+        src: adguard_config.yaml.j2
+        dest: /var/lib/adguard/config.yaml
+        mode: 0600
+        owner: root
+        group: root
+
+    - name: Start adguard
+      service:
+        name: adguard
+        state: started
