@@ -2,6 +2,6 @@
   hosts: all
   become: yes
   roles:
-    - base
-    - wireguard
-    - cleanup
+    - { role: base, tags: ["base"] }
+    - { role: wireguard, tags: ["wireguard"] }
+    - { role: cleanup, tags: ["cleanup"] }

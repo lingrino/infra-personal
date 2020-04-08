@@ -1,10 +1,16 @@
-- name: Add the eternal terminal ppa
+- name: Add the tailscale key
+  apt_key:
+    url: https://pkgs.tailscale.com/stable/ubuntu/{{ os_name }}.gpg
+    state: present
+
+- name: Add the tailscale repo
   apt_repository:
-    repo: ppa:jgmath2000/et
-  register: R_apt_et
-  retries: 3
-  delay: 10
-  until: R_apt_et is not failed
+    repo: deb https://pkgs.tailscale.com/stable/ubuntu {{ os_name }} main
+    state: present
+
+- name: Add the git ppa
+  apt_repository:
+    repo: ppa:git-core/ppa
 
 - name: Update all packages
   package:
@@ -21,10 +27,12 @@
     update_cache: yes
     name:
       - curl
-      - et
       - git
       - htop
+      - mosh
+      - net-tools
       - snapd
+      - tailscale
       - tar
       - unzip
       - wget
@@ -33,17 +41,14 @@
   delay: 10
   until: R_apt_install is not failed
 
-# jq 1.5 has a bug that won't allow it to work in bash commands such as a=$(echo "{}" | jq -r)
-# you can remove this when jq 1.6+ is installed by apt
-- name: Install jq 1.6
+- name: Install jq
   get_url:
-    url: "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"
+    url: "https://github.com/stedolan/jq/releases/download/jq-{{ jq_version }}/jq-linux64"
     dest: "/usr/local/bin/jq"
     owner: root
     group: root
     mode: 0755
 
-# AWS CLI v2 must be installed directly
 - name: Install AWS CLI
   block:
     - name: Download AWS CLI Zip
@@ -60,8 +65,8 @@
         dest: /usr/local/src
         remote_src: True
 
-    - name: Run Install
-      command: /usr/local/src/aws/install
+    - name: Run AWS CLI Install
+      command: /usr/local/src/aws/install --update
 
     - name: Cleanup AWS CLI Zip
       file:
@@ -72,3 +77,4 @@
       file:
         path: "/usr/local/src/aws"
         state: absent
+  when: ansible_architecture == "x86_64"

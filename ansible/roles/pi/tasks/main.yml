@@ -1,0 +1,81 @@
+- name: Configure ssh
+  block:
+    - name: Enable ssh
+      service:
+        name: ssh
+        enabled: true
+
+    - name: Start ssh
+      service:
+        name: ssh
+        state: started
+
+    - name: Add ssh keys
+      template:
+        src: authorized_keys.j2
+        dest: /home/ubuntu/.ssh/authorized_keys
+        mode: 0600
+        owner: ubuntu
+        group: ubuntu
+
+- name: Install adguard
+  block:
+    - name: Download adguard
+      get_url:
+        url: https://static.adguard.com/adguardhome/release/AdGuardHome_linux_arm.tar.gz
+        dest: /usr/local/src/adguard.tar.gz
+        mode: 0744
+        owner: root
+        group: root
+
+    - name: Extract adguard
+      unarchive:
+        remote_src: true
+        src: /usr/local/src/adguard.tar.gz
+        dest: /usr/local/src
+
+    - name: Copy adguard binary
+      copy:
+        remote_src: true
+        src: /usr/local/src/AdGuardHome/AdGuardHome
+        dest: /usr/local/bin/adguard
+        mode: 0755
+        owner: root
+        group: root
+
+    - name: Cleanup adguard
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /usr/local/src/adguard.tar.gz
+        - /usr/local/src/AdGuardHome
+
+- name: Configure adguard
+  block:
+    - name: Create adguard directory
+      file:
+        state: directory
+        path: /var/lib/adguard
+        mode: 0700
+        owner: root
+        group: root
+
+    - name: Copy adguard service file
+      copy:
+        src: adguard.service
+        dest: /etc/systemd/system/adguard.service
+        mode: 0644
+        owner: root
+        group: root
+# - name: Add adguard user/pass
+# /home/pi/AdGuardHome/AdGuardHome.yaml
+
+# other text
+# ...
+# auth_name: "your-secret-name"
+# auth_pass: "your-secret-password"
+# ...
+
+# - name: Copy over adguard config file
+# https://github.com/AdguardTeam/AdGuardHome/wiki/Configuration#configuration-file

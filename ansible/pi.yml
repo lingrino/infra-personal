@@ -1,0 +1,7 @@
+- name: Setup Raspberry Pi
+  hosts: pis
+  become: yes
+  roles:
+    - { role: base, tags: ["base"] }
+    - { role: interactive, tags: ["interactive"] }
+    - { role: pi, tags: ["pi"] }
