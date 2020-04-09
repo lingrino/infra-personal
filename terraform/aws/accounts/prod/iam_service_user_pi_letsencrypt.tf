@@ -76,6 +76,6 @@ data "aws_iam_policy_document" "letsencrypt_lingrino_dev" {
       "route53:ChangeResourceRecordSets",
     ]
 
-    resources = [data.aws_route53_zone.lingrino_dev.arn]
+    resources = ["arn:aws:route53:::hostedzone/${data.aws_route53_zone.lingrino_dev.zone_id}"]
   }
 }
