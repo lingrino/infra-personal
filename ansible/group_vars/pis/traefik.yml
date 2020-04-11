@@ -4,6 +4,7 @@ traefik_version: 2.2.0
 traefik_name: traefik
 traefik_bin_path: /usr/local/bin/traefik
 traefik_data_dir: /var/lib/traefik
+traefik_dynamic_dir: /var/lib/traefik/dynamic
 traefik_config_path: /var/lib/traefik/traefik.yml
 traefik_acme_path: /var/lib/traefik/acme.json
 traefik_log_path: /var/log/traefik.log

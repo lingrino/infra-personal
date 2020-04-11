@@ -64,10 +64,18 @@
         owner: root
         group: "{{ traefik_name }}"
 
-    - name: Create traefik config file
+    - name: Copy traefik config file
       template:
         src: traefik.yml.j2
         dest: "{{ traefik_config_path }}"
+        mode: 0644
+        owner: root
+        group: "{{ traefik_name }}"
+
+    - name: Copy traefik dynamic file
+      template:
+        src: traefik_dynamic.yml.j2
+        dest: "{{ traefik_dynamic_dir }}/dynamic.yml"
         mode: 0644
         owner: root
         group: "{{ traefik_name }}"
