@@ -20,7 +20,7 @@ entryPoints:
 providers:
   file:
     watch: true
-    directory: "/path/to/dynamic/conf"
+    directory: "{{ traefik_dynamic_dir }}"
 
 certificatesResolvers:
   letsencrypt:

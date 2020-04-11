@@ -56,6 +56,14 @@
         owner: root
         group: "{{ traefik_name }}"
 
+    - name: Create traefik dynamic directory
+      file:
+        state: directory
+        path: "{{ traefik_dynamic_dir }}"
+        mode: 0775
+        owner: root
+        group: "{{ traefik_name }}"
+
     - name: Create traefik config file
       template:
         src: traefik.yml.j2

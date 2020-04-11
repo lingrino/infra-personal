@@ -15,7 +15,7 @@ ExecStart={{ traefik_bin_path }} --configFile={{ traefik_config_path }}
 EnvironmentFile=-/etc/default/{{ traefik_name }}
 
 WorkingDirectory={{ traefik_data_dir }}
-ReadWritePaths={{ traefik_acme_path }} {{ traefik_log_path }} {{ traefik_access_log_path }}
+ReadWritePaths={{ traefik_dynamic_dir }} {{ traefik_acme_path }} {{ traefik_log_path }} {{ traefik_access_log_path }}
 
 KillSignal=SIGINT
 TimeoutStopSec=30
