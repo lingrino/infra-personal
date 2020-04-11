@@ -89,7 +89,7 @@
                 "apt-get install -y sudo systemd python3 software-properties-common"
             ],
             "only": [
-                "docker-selfhosted",
+                "docker-selfhosted"
             ]
         },
         {
