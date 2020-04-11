@@ -13,7 +13,7 @@ Build images with the following commands
 > packer build infra.json
 
 # Build only the AWS Images
-> packer build -except=docker-selfhosted,docker-wireguard infra.json
+> packer build -except=docker-selfhosted infra.json
 ```
 
 ## Docker Based Images

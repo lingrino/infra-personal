@@ -79,86 +79,6 @@
                 "source_ami_id": "{{ .SourceAMI }}",
                 "source_ami_name": "{{ .SourceAMIName }}"
             }
-        },
-        {
-            "name": "docker-wireguard",
-            "type": "docker",
-            "image": "ubuntu:eoan",
-            "discard": true
-        },
-        {
-            "name": "ec2-wireguard",
-            "type": "amazon-ebs",
-            "source_ami_filter": {
-                "filters": {
-                    "name": "ubuntu/images/hvm-ssd/ubuntu-eoan-19.10-amd64-server-*",
-                    "root-device-type": "ebs",
-                    "virtualization-type": "hvm"
-                },
-                "owners": [
-                    "099720109477"
-                ],
-                "most_recent": true
-            },
-            "region": "us-east-1",
-            "subnet_filter": {
-                "filters": {
-                    "tag:default": "true",
-                    "tag:type": "public"
-                },
-                "random": true
-            },
-            "spot_price": "auto",
-            "spot_instance_types": [
-                "t3.nano",
-                "t3.micro",
-                "t3.small",
-                "t3.medium"
-            ],
-            "spot_tags": {
-                "Name": "wireguard",
-                "build_date": "{{ timestamp }}",
-                "os": "ubuntu",
-                "packer": "true",
-                "packer_version": "{{ packer_version }}",
-                "source_ami_id": "{{ .SourceAMI }}",
-                "source_ami_name": "{{ .SourceAMIName }}"
-            },
-            "ssh_username": "ubuntu",
-            "ssh_interface": "public_ip",
-            "shutdown_behavior": "terminate",
-            "run_tags": {
-                "Name": "wireguard",
-                "build_date": "{{ timestamp }}",
-                "os": "ubuntu",
-                "packer": "true",
-                "packer_version": "{{ packer_version }}",
-                "source_ami_id": "{{ .SourceAMI }}",
-                "source_ami_name": "{{ .SourceAMIName }}"
-            },
-            "run_volume_tags": {
-                "Name": "wireguard",
-                "build_date": "{{ timestamp }}",
-                "os": "ubuntu",
-                "packer": "true",
-                "packer_version": "{{ packer_version }}",
-                "source_ami_id": "{{ .SourceAMI }}",
-                "source_ami_name": "{{ .SourceAMIName }}"
-            },
-            "ami_name": "wireguard-{{ timestamp }}",
-            "ami_description": "The base OS for a wireguard deployment",
-            "ami_regions": [
-                "us-east-1"
-            ],
-            "tags": {
-                "Name": "wireguard",
-                "build_date": "{{ timestamp }}",
-                "os": "ubuntu",
-                "packer": "true",
-                "packer_version": "{{ packer_version }}",
-                "source_ami_id": "{{ .SourceAMI }}",
-                "source_ami_name": "{{ .SourceAMIName }}"
-            }
         }
     ],
     "provisioners": [
@@ -170,7 +90,6 @@
             ],
             "only": [
                 "docker-selfhosted",
-                "docker-wireguard"
             ]
         },
         {
@@ -180,15 +99,6 @@
             "only": [
                 "docker-selfhosted",
                 "ec2-selfhosted"
-            ]
-        },
-        {
-            "type": "ansible",
-            "playbook_file": "../ansible/wireguard.yml",
-            "user": "ubuntu",
-            "only": [
-                "docker-wireguard",
-                "ec2-wireguard"
             ]
         }
     ]

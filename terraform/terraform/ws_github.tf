@@ -5,8 +5,8 @@ resource "tfe_workspace" "github" {
   terraform_version = "latest"
   working_directory = "terraform/github"
 
-  operations            = true
-  auto_apply            = true
+  operations            = false
+  auto_apply            = false
   queue_all_runs        = false
   file_triggers_enabled = true
 
@@ -16,16 +16,7 @@ resource "tfe_workspace" "github" {
   }
 }
 
-resource "tfe_variable" "github_github_organization" {
-  workspace_id = tfe_workspace.github.id
-  category     = "env"
-
-  description = "github organization for the github provider"
-  key         = "GITHUB_ORGANIZATION"
-  value       = "lingrino"
-}
-
-# his variable should be read from a secret place and added here
+# This variable should be read from a secret place and added here
 # resource "tfe_variable" "github_github_token" {
 #   workspace_id = tfe_workspace.github.id
 #   category     = "env"

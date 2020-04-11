@@ -28,6 +28,11 @@ output "workspace_ids" {
   value       = local.workspaces[*].id
 }
 
+output "workspace_external_ids" {
+  description = "a list of all workspace external ids"
+  value       = local.workspaces[*].external_id
+}
+
 output "workspace_ids_to_external_ids" {
   description = "a map of workspace ids to their external ids"
   value       = zipmap(local.workspaces[*].id, local.workspaces[*].external_id)
