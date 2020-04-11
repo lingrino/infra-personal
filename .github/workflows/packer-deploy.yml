@@ -50,5 +50,5 @@ jobs:
       - name: Packer Build
         run: |
           eval "$(cat ${HOME}/assume.sh)"
-          packer build -except=docker-selfhosted,docker-wireguard infra.json
+          packer build -except=docker-selfhosted infra.json
         working-directory: ./packer

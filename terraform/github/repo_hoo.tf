@@ -10,9 +10,10 @@ resource "github_repository" "hoo" {
   has_wiki   = false
   has_issues = true
 
-  allow_merge_commit = true
-  allow_squash_merge = true
-  allow_rebase_merge = true
+  allow_merge_commit     = true
+  allow_squash_merge     = true
+  allow_rebase_merge     = true
+  delete_branch_on_merge = true
 
   topics = [
     "aws",

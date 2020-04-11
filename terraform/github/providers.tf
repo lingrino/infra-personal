@@ -1,1 +1,3 @@
-provider "github" {}
+provider "github" {
+  #   individual = true
+}
