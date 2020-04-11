@@ -1,0 +1,29 @@
+http:
+  routers:
+    traefik:
+      rule: "Host(`{{ traefik_domain_main }}`, {% for san in traefik_domain_sans %}`{{san}}`{% if not loop.last %}, {% endif %}{% endfor %})"
+      service: "api@internal"
+      tls:
+        certResolver: "letsencrypt"
+        domains:
+          - main: "{{ traefik_domain_main }}"
+            sans:
+{% for san in traefik_domain_sans %}
+              - "{{ san }}"
+{% endfor %}
+    adguard:
+      rule: "Host(`{{ adguard_domain_main }}`, {% for san in adguard_domain_sans %}`{{san}}`{% if not loop.last %}, {% endif %}{% endfor %})"
+      service: "adguard"
+      tls:
+        certResolver: "letsencrypt"
+        domains:
+          - main: "{{ adguard_domain_main }}"
+            sans:
+{% for san in adguard_domain_sans %}
+              - "{{ san }}"
+{% endfor %}
+  services:
+    adguard:
+      loadBalancer:
+        servers:
+          - "http://127.0.0.1:{{ adguard_port }}/"

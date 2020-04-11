@@ -1,0 +1,36 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+
+api:
+  dashboard: true
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: "webs"
+          scheme: "https"
+          permanent: true
+  webs:
+    address: ":443"
+
+providers:
+  file:
+    watch: true
+    directory: "/path/to/dynamic/conf"
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: "sean@lingrino.com"
+      storage: "{{ traefik_acme_path }}"
+      dnsChallenge:
+        provider: "route53"
+
+log:
+  filePath: "{{ traefik_log_path }}"
+accessLog:
+  filePath: "{{ traefik_access_log_path }}"

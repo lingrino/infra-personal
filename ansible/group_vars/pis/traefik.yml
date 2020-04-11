@@ -1,2 +1,18 @@
 # https://github.com/containous/traefik/releases
 traefik_version: 2.2.0
+
+traefik_name: traefik
+traefik_bin_path: /usr/local/bin/traefik
+traefik_data_dir: /var/lib/traefik
+traefik_config_path: /var/lib/traefik/traefik.yml
+traefik_acme_path: /var/lib/traefik/acme.json
+traefik_log_path: /var/log/traefik.log
+traefik_access_log_path: /var/log/traefik-access.log
+
+# Records must also be created in terraform/route53 to point here
+traefik_domain_main: traefik.lingrino.dev
+traefik_domain_sans:
+  - lb.lingrino.dev
+
+letsencrypt_aws_region: us-east-1
+letsencrypt_aws_hosted_zone: Z2HF08LTT2UPFO

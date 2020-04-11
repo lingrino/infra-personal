@@ -1,25 +1,20 @@
-- name: Configure ssh
-  block:
-    - name: Enable ssh
-      service:
-        name: ssh
-        enabled: true
-
-    - name: Start ssh
-      service:
-        name: ssh
-        state: started
-
-    - name: Add ssh keys
-      template:
-        src: authorized_keys.j2
-        dest: /home/ubuntu/.ssh/authorized_keys
-        mode: 0600
-        owner: ubuntu
-        group: ubuntu
-
 - name: Install traefik
   block:
+    - name: Create the traefik Group
+      group:
+        name: "{{ traefik_name }}"
+        system: true
+
+    - name: Create the traefik User
+      user:
+        name: "{{ traefik_name }}"
+        group: "{{ traefik_name }}"
+        system: true
+        createhome: false
+        home: "{{ traefik_data_dir }}"
+        shell: /sbin/nologin
+        comment: service account to run {{ traefik_name }}
+
     - name: Download traefik
       get_url:
         url: https://github.com/containous/traefik/releases/download/v{{ traefik_version }}/traefik_v{{ traefik_version }}_linux_arm64.tar.gz
@@ -38,7 +33,7 @@
       copy:
         remote_src: true
         src: /usr/local/src/traefik
-        dest: /usr/local/bin/traefik
+        dest: "{{ traefik_bin_path }}"
         mode: 0755
         owner: root
         group: root
@@ -51,8 +46,86 @@
         - /usr/local/src/traefik
         - /usr/local/src/traefik.tar.gz
 
+- name: Configure traefik
+  block:
+    - name: Create traefik data directory
+      file:
+        state: directory
+        path: "{{ traefik_data_dir }}"
+        mode: 0775
+        owner: root
+        group: "{{ traefik_name }}"
+
+    - name: Create traefik config file
+      template:
+        src: traefik.yml.j2
+        dest: "{{ traefik_config_path }}"
+        mode: 0644
+        owner: root
+        group: "{{ traefik_name }}"
+
+    - name: Create traefik acme file
+      file:
+        state: touch
+        path: "{{ traefik_acme_path }}"
+        mode: 0600
+        owner: "{{ traefik_name }}"
+        group: "{{ traefik_name }}"
+
+    - name: Create traefik log files
+      file:
+        state: touch
+        path: "{{ item }}"
+        mode: 0664
+        owner: root
+        group: "{{ traefik_name }}"
+      loop:
+        - "{{ traefik_log_path }}"
+        - "{{ traefik_access_log_path }}"
+
+    - name: Copy traefik environment file
+      template:
+        src: traefik_env.j2
+        dest: /etc/default/{{ traefik_name }}
+        mode: 0400
+        owner: "{{ traefik_name }}"
+        group: "{{ traefik_name }}"
+
+    - name: Copy traefik service file
+      template:
+        src: traefik.service.j2
+        dest: /etc/systemd/system/{{ traefik_name }}.service
+        mode: 0644
+        owner: root
+        group: root
+
+    - name: Enable traefik
+      service:
+        name: "{{ traefik_name }}"
+        enabled: true
+
+    # - name: Start traefik
+    #   service:
+    #     name: "{{ traefik_name }}"
+    #     state: started
+
 - name: Install adguard
   block:
+    - name: Create the adguard Group
+      group:
+        name: "{{ adguard_name }}"
+        system: true
+
+    - name: Create the adguard User
+      user:
+        name: "{{ adguard_name }}"
+        group: "{{ adguard_name }}"
+        system: true
+        createhome: false
+        home: "{{ adguard_data_dir }}"
+        shell: /sbin/nologin
+        comment: service account to run {{ adguard_name }}
+
     - name: Download adguard
       get_url:
         url: https://static.adguard.com/adguardhome/release/AdGuardHome_linux_arm.tar.gz
@@ -71,7 +144,7 @@
       copy:
         remote_src: true
         src: /usr/local/src/AdGuardHome/AdGuardHome
-        dest: /usr/local/bin/adguard
+        dest: "{{ adguard_bin_path }}"
         mode: 0755
         owner: root
         group: root
@@ -86,42 +159,52 @@
 
 - name: Configure adguard
   block:
-    - name: Create adguard directory
+    - name: Create adguard data directory
       file:
         state: directory
-        path: /var/lib/adguard
-        mode: 0700
+        path: "{{ adguard_data_dir }}"
+        mode: 0775
         owner: root
-        group: root
+        group: "{{ adguard_name }}"
+
+    - name: Create adguard log files
+      file:
+        state: touch
+        path: "{{ item }}"
+        mode: 0664
+        owner: root
+        group: "{{ adguard_name }}"
+      loop:
+        - "{{ adguard_log_path }}"
 
     - name: Copy adguard service file
-      copy:
-        src: adguard.service
-        dest: /etc/systemd/system/adguard.service
+      template:
+        src: adguard.service.j2
+        dest: /etc/systemd/system/{{ adguard_name }}.service
         mode: 0644
         owner: root
         group: root
 
     - name: Enable adguard
       service:
-        name: adguard
+        name: "{{ adguard_name }}"
         enabled: true
 
+    # TODO - Only stop adguard if file will change
+    # adguard must be stopped to prevent config overwrites
     - name: Stop adguard
       service:
-        name: adguard
+        name: "{{ adguard_name }}"
         state: stopped
 
-    # adguard must be stopped to prevent overwrites
     - name: Copy adguard config file
       template:
         src: adguard_config.yaml.j2
-        dest: /var/lib/adguard/config.yaml
-        mode: 0600
+        dest: "{{ adguard_config_path }}"
+        mode: 0664
         owner: root
-        group: root
-
-    - name: Start adguard
-      service:
-        name: adguard
-        state: started
+        group: "{{ adguard_name }}"
+    # - name: Start adguard
+    #   service:
+    #     name: "{{ adguard_name }}"
+    #     state: started

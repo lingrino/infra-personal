@@ -1,15 +1,99 @@
 # - bandwhich
 # - bat
 # - dive
-# - doker
+# - docker
 # - dust
 # - exa
 # - fd
 # - fzf
 # - git-delta
-# - git-lfs
-# - nmap
 # - ripgrep
 # - starship
-# - zsh
-# - unrar
+
+- name: Update packages
+  package:
+    name: "*"
+    state: latest
+  register: R_apt_update
+  retries: 3
+  delay: 10
+  until: R_apt_update is not failed
+
+- name: Install packages
+  apt:
+    state: latest
+    update_cache: yes
+    name:
+      - git-lfs
+      - nmap
+      - unrar
+      - zsh
+  register: R_apt_install
+  retries: 3
+  delay: 10
+  until: R_apt_install is not failed
+
+- name: Configure ssh
+  block:
+    - name: Enable ssh
+      service:
+        name: ssh
+        enabled: true
+
+    - name: Start ssh
+      service:
+        name: ssh
+        state: started
+
+- name: Configure default user
+  block:
+    - name: Create default user ssh directory
+      file:
+        state: directory
+        path: /home/{{ default_username }}/.ssh
+        mode: 0700
+        owner: "{{ default_username }}"
+        group: "{{ default_username }}"
+
+    - name: Add default user authorized keys
+      template:
+        src: default_user_authorized_keys.j2
+        dest: /home/{{ default_username }}/.ssh/authorized_keys
+        mode: 0600
+        owner: "{{ default_username }}"
+        group: "{{ default_username }}"
+
+- name: Configure user
+  block:
+    - name: Create user group
+      group:
+        name: "{{ username }}"
+        system: false
+
+    - name: Create user
+      user:
+        name: "{{ username }}"
+        group: "{{ username }}"
+        system: false
+        createhome: true
+        home: /home/{{ username }}
+        shell: /usr/bin/zsh
+        comment: my user account
+        groups:
+          - sudo
+
+    - name: Create user ssh directory
+      file:
+        state: directory
+        path: /home/{{ username }}/.ssh
+        mode: 0700
+        owner: "{{ username }}"
+        group: "{{ username }}"
+
+    - name: Add user authorized keys
+      template:
+        src: user_authorized_keys.j2
+        dest: /home/{{ username }}/.ssh/authorized_keys
+        mode: 0600
+        owner: "{{ username }}"
+        group: "{{ username }}"

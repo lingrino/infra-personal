@@ -1,2 +1,16 @@
+adguard_name: adguard
+adguard_bin_path: /usr/local/bin/adguard
+adguard_data_dir: /var/lib/adguard
+adguard_config_path: /var/lib/adguard/config.yaml
+adguard_log_path: /var/log/adguard.log
+
 adguard_port: 3001
-adguard_server_name: adguard.lingrino.dev
+
+# Records must also be created in terraform/route53 to point here
+adguard_domain_main: adguard.lingrino.dev
+adguard_domain_sans:
+  - ad.lingrino.dev
+  - adg.lingrino.dev
+
+adguard_web_username: lingrino
+adguard_web_passhash: "$2a$10$McM8A.r8YelurAYqZ1AireBakMXBx6XZVBkUR83ofNBGdVGB2qNEW"

@@ -1,0 +1,36 @@
+[Unit]
+Description=AdGuard Home
+Documentation=https://github.com/AdguardTeam/AdGuardHome/wiki/Getting-Started
+After=syslog.target network-online.target
+AssertFileIsExecutable={{ adguard_bin_path }}
+AssertPathExists={{ adguard_config_path }}
+
+[Service]
+Type=simple
+User={{ adguard_name }}
+Group={{ adguard_name }}
+
+ExecStart={{ adguard_bin_path }} -w {{ adguard_data_dir }} -c {{ adguard_config_path }}
+EnvironmentFile=-/etc/default/{{ adguard_name }}
+
+WorkingDirectory={{ adguard_data_dir }}
+ReadWritePaths={{ adguard_data_dir }} {{ adguard_config_path }} {{ adguard_log_path }}
+
+KillSignal=SIGINT
+TimeoutStopSec=30
+Restart=always
+RestartSec=10
+WatchdogSec=0
+
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+SecureBits=keep-caps
+ProtectSystem=strict
+PrivateTmp=true
+ProtectHome=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target
