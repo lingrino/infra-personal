@@ -26,7 +26,7 @@ resource "aws_route53_record" "pi_lingrino_dev" {
   name    = each.key
   type    = "A"
   ttl     = 300
-  records = ["100.73.130.78"]
+  records = ["100.106.105.28"]
 }
 
 resource "aws_route53_record" "phone_lingrino_dev" {
