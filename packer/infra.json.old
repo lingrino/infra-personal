@@ -1,0 +1,105 @@
+{
+    "builders": [
+        {
+            "name": "docker-selfhosted",
+            "type": "docker",
+            "image": "ubuntu:eoan",
+            "discard": true
+        },
+        {
+            "name": "ec2-selfhosted",
+            "type": "amazon-ebs",
+            "source_ami_filter": {
+                "filters": {
+                    "name": "ubuntu/images/hvm-ssd/ubuntu-eoan-19.10-amd64-server-*",
+                    "root-device-type": "ebs",
+                    "virtualization-type": "hvm"
+                },
+                "owners": [
+                    "099720109477"
+                ],
+                "most_recent": true
+            },
+            "region": "us-east-1",
+            "subnet_filter": {
+                "filters": {
+                    "tag:default": "true",
+                    "tag:type": "public"
+                },
+                "random": true
+            },
+            "spot_price": "auto",
+            "spot_instance_types": [
+                "t3.nano",
+                "t3.micro",
+                "t3.small",
+                "t3.medium"
+            ],
+            "spot_tags": {
+                "Name": "selfhosted",
+                "build_date": "{{ timestamp }}",
+                "os": "ubuntu",
+                "packer": "true",
+                "packer_version": "{{ packer_version }}",
+                "source_ami_id": "{{ .SourceAMI }}",
+                "source_ami_name": "{{ .SourceAMIName }}"
+            },
+            "ssh_username": "ubuntu",
+            "ssh_interface": "public_ip",
+            "shutdown_behavior": "terminate",
+            "run_tags": {
+                "Name": "selfhosted",
+                "build_date": "{{ timestamp }}",
+                "os": "ubuntu",
+                "packer": "true",
+                "packer_version": "{{ packer_version }}",
+                "source_ami_id": "{{ .SourceAMI }}",
+                "source_ami_name": "{{ .SourceAMIName }}"
+            },
+            "run_volume_tags": {
+                "Name": "selfhosted",
+                "build_date": "{{ timestamp }}",
+                "os": "ubuntu",
+                "packer": "true",
+                "packer_version": "{{ packer_version }}",
+                "source_ami_id": "{{ .SourceAMI }}",
+                "source_ami_name": "{{ .SourceAMIName }}"
+            },
+            "ami_name": "selfhosted-{{ timestamp }}",
+            "ami_description": "a general AMI for my selfhosted infrastructure",
+            "ami_regions": [
+                "us-east-1"
+            ],
+            "tags": {
+                "Name": "selfhosted",
+                "build_date": "{{ timestamp }}",
+                "os": "ubuntu",
+                "packer": "true",
+                "packer_version": "{{ packer_version }}",
+                "source_ami_id": "{{ .SourceAMI }}",
+                "source_ami_name": "{{ .SourceAMIName }}"
+            }
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "apt-get update",
+                "apt-get install -y sudo systemd python3 software-properties-common"
+            ],
+            "only": [
+                "docker-selfhosted"
+            ]
+        },
+        {
+            "type": "ansible",
+            "playbook_file": "../ansible/selfhosted.yml",
+            "user": "ubuntu",
+            "only": [
+                "docker-selfhosted",
+                "ec2-selfhosted"
+            ]
+        }
+    ]
+}
