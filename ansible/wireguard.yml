@@ -1,6 +1,9 @@
+# This playbook is run by packer
 - name: Setup wireguard
-  hosts: all
-  become: yes
+  hosts: wireguard
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
   roles:
     - { role: base, tags: ["base"] }
     - { role: wireguard, tags: ["wireguard"] }

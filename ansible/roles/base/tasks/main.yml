@@ -24,7 +24,7 @@
 - name: Install base packages
   apt:
     state: latest
-    update_cache: yes
+    update_cache: true
     name:
       - curl
       - git

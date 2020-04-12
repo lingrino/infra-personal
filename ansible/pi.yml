@@ -1,6 +1,8 @@
 - name: Setup Raspberry Pi
   hosts: pis
-  become: yes
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
   roles:
     - { role: base, tags: ["base"] }
     - { role: interactive, tags: ["interactive"] }

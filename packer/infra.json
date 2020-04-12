@@ -175,6 +175,9 @@
         },
         {
             "type": "ansible",
+            "groups": [
+                "selfhosted"
+            ],
             "playbook_file": "../ansible/selfhosted.yml",
             "user": "ubuntu",
             "only": [
@@ -184,6 +187,9 @@
         },
         {
             "type": "ansible",
+            "groups": [
+                "wireguard"
+            ],
             "playbook_file": "../ansible/wireguard.yml",
             "user": "ubuntu",
             "only": [

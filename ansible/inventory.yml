@@ -4,4 +4,7 @@ all:
       hosts:
         pi:
           ansible_user: ubuntu
-          ansible_host: 192.168.2.3
+          ansible_host: pi.lingrino.dev
+    interactive:
+      children:
+        pis:

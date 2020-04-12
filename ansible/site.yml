@@ -1,0 +1,3 @@
+# Entire Infrastructure
+- import_playbook: pi.yml
+- import_playbook: wireguard.yml

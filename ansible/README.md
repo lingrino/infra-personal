@@ -1,13 +1,11 @@
 # Ansible
 
-This folder contains the ansible to configure all of my pre-built images. These are only ever used with packer so that running infrastructure never differs from the packer artifact.
+This folder contains the Ansible that configures all of my static infrastructure and cloud images built with Packer.
 
-There is also ansible here to configure my raspberry pi server and (in the future) other static infrastructure.
+## Running
 
-## Running Packer
+Configure the entire static infrastructure. Does not build packer images (see [../packer/README.md][] for building those).
 
-The Ansible that configures packer images is not meant to be run directly. See the packer folder for examples of how it is called.
-
-## Running Raspberry
-
-TODO
+```shell
+ansible-playbook -i inventory.yml site.yml
+```

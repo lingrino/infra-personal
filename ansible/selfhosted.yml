@@ -1,8 +1,0 @@
-- name: Setup selfhosted AMI
-  hosts: all
-  become: yes
-  roles:
-    - { role: base, tags: ["base"] }
-    - { role: interactive, tags: ["interactive"] }
-    - { role: selfhosted, tags: ["selfhosted"] }
-    - { role: cleanup, tags: ["cleanup"] }
