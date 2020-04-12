@@ -10,7 +10,7 @@
 - name: Install necessary packages
   apt:
     state: latest
-    update_cache: yes
+    update_cache: true
     name:
       - net-tools
       - qrencode
@@ -24,7 +24,7 @@
   sysctl:
     name: "{{ item }}"
     value: "1"
-    sysctl_set: yes
+    sysctl_set: true
   loop:
     - net.ipv4.ip_forward
     - net.ipv4.conf.all.forwarding

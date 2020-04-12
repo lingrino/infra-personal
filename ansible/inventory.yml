@@ -1,0 +1,7 @@
+all:
+  children:
+    pis:
+      hosts:
+        pi:
+          ansible_user: ubuntu
+          ansible_host: pi.lingrino.dev

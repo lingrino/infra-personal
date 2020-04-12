@@ -1,74 +1,45 @@
-- name: Add the eternal terminal ppa
+- name: Set the hostname
+  include_role:
+    name: hostname
+
+- name: Setup ssh
+  include_role:
+    name: ssh
+
+- name: Add the tailscale key
+  apt_key:
+    url: https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }}/{{ ansible_distribution_release }}.gpg
+    state: present
+
+- name: Add the tailscale repo
   apt_repository:
-    repo: ppa:jgmath2000/et
-  register: R_apt_et
-  retries: 3
-  delay: 10
-  until: R_apt_et is not failed
+    repo: deb https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main
+    state: present
+
+- name: Add the git ppa
+  apt_repository:
+    repo: ppa:git-core/ppa
 
 - name: Update all packages
   package:
     name: "*"
     state: latest
-  register: R_apt_update
+  register: R_update
   retries: 3
   delay: 10
-  until: R_apt_update is not failed
+  until: R_update is not failed
 
 - name: Install base packages
   apt:
     state: latest
-    update_cache: yes
-    name:
-      - curl
-      - et
-      - git
-      - htop
-      - snapd
-      - tar
-      - unzip
-      - wget
-  register: R_apt_install
+    update_cache: true
+    name: "{{ base_packages }}"
+  register: R_install
   retries: 3
   delay: 10
-  until: R_apt_install is not failed
+  until: R_install is not failed
 
-# jq 1.5 has a bug that won't allow it to work in bash commands such as a=$(echo "{}" | jq -r)
-# you can remove this when jq 1.6+ is installed by apt
-- name: Install jq 1.6
-  get_url:
-    url: "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"
-    dest: "/usr/local/bin/jq"
-    owner: root
-    group: root
-    mode: 0755
-
-# AWS CLI v2 must be installed directly
 - name: Install AWS CLI
-  block:
-    - name: Download AWS CLI Zip
-      get_url:
-        url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
-        dest: /usr/local/src/awscli.zip
-        owner: root
-        group: root
-        mode: 0744
-
-    - name: Unarchive AWS CLI Zip
-      unarchive:
-        src: /usr/local/src/awscli.zip
-        dest: /usr/local/src
-        remote_src: True
-
-    - name: Run Install
-      command: /usr/local/src/aws/install
-
-    - name: Cleanup AWS CLI Zip
-      file:
-        path: "/usr/local/src/awscli.zip"
-        state: absent
-
-    - name: Cleanup AWS CLI Folder
-      file:
-        path: "/usr/local/src/aws"
-        state: absent
+  include_role:
+    name: awscli
+  when: ansible_architecture == "x86_64"

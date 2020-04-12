@@ -1,7 +1,11 @@
 # Ansible
 
-This folder contains the ansible to configure all of my pre-built images. Ansible is never run against a running server, this is only ever used with packer so that running infrastructure never differs from the packer artifact.
+This folder contains the Ansible that configures all of my static infrastructure and cloud images built with Packer.
 
 ## Running
 
-The Ansible is not meant to be run locally. See the packer folder for examples of how it is called.
+Configure the entire static infrastructure. Does not build packer images (see [../packer/README.md][] for building those).
+
+```shell
+ansible-playbook -i inventory.yml site.yml
+```

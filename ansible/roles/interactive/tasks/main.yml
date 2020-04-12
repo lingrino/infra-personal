@@ -1,0 +1,53 @@
+- name: Update packages
+  package:
+    name: "*"
+    state: latest
+  register: R_update
+  retries: 3
+  delay: 10
+  until: R_update is not failed
+
+- name: Install packages
+  apt:
+    state: latest
+    update_cache: true
+    name: "{{ interactive_packages }}"
+  register: R_install
+  retries: 3
+  delay: 10
+  until: R_install is not failed
+
+- name: Configure interactive user
+  block:
+    - name: Create interactive user group
+      group:
+        name: "{{ interactive_username }}"
+        system: false
+
+    - name: Create interactive user
+      user:
+        name: "{{ interactive_username }}"
+        group: "{{ interactive_username }}"
+        system: false
+        createhome: true
+        home: /home/{{ interactive_username }}
+        shell: /usr/bin/zsh
+        comment: interactive user
+        groups:
+          - sudo
+
+    - name: Create interactive user ssh directory
+      file:
+        state: directory
+        path: /home/{{ interactive_username }}/.ssh
+        mode: 0700
+        owner: "{{ interactive_username }}"
+        group: "{{ interactive_username }}"
+
+    - name: Add interactive user authorized keys
+      template:
+        src: authorized_keys.j2
+        dest: /home/{{ interactive_username }}/.ssh/authorized_keys
+        mode: 0600
+        owner: "{{ interactive_username }}"
+        group: "{{ interactive_username }}"

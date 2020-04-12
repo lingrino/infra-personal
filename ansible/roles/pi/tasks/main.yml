@@ -1,0 +1,307 @@
+- name: Configure resolved
+  block:
+    - name: Copy resolved conf
+      copy:
+        src: resolved.conf
+        dest: /etc/systemd/resolved.conf
+        mode: 0644
+        owner: root
+        group: root
+      register: R_resolved_conf
+
+    - name: Restart resolved
+      service:
+        name: systemd-resolved
+        state: restarted
+      when: R_resolved_conf.changed
+
+    - name: Symlink new resolv.conf
+      file:
+        state: link
+        force: true
+        src: /run/systemd/resolve/resolv.conf
+        dest: /etc/resolv.conf
+        mode: 0644
+        owner: systemd-resolve
+        group: systemd-resolve
+      register: R_link_resolv_conf
+
+    - name: Restart resolved
+      service:
+        name: systemd-resolved
+        state: restarted
+      when: R_link_resolv_conf.changed
+
+    - name: Enable and start resolved
+      service:
+        name: systemd-resolved
+        enabled: true
+        state: started
+
+- name: Install traefik
+  block:
+    - name: Create the traefik Group
+      group:
+        name: "{{ traefik_name }}"
+        system: true
+
+    - name: Create the traefik User
+      user:
+        name: "{{ traefik_name }}"
+        group: "{{ traefik_name }}"
+        system: true
+        createhome: false
+        home: "{{ traefik_data_dir }}"
+        shell: /sbin/nologin
+        comment: service account to run {{ traefik_name }}
+
+    # Keep the download on the system for idempotency
+    - name: Download traefik
+      get_url:
+        url: https://github.com/containous/traefik/releases/download/v{{ traefik_version }}/traefik_v{{ traefik_version }}_linux_arm64.tar.gz
+        dest: "{{ install_dir }}/traefik.tar.gz"
+        mode: 0744
+        owner: root
+        group: root
+      register: R_traefik_download
+
+    - name: Extract traefik
+      unarchive:
+        remote_src: true
+        src: "{{ install_dir }}/traefik.tar.gz"
+        dest: "{{ install_dir }}"
+      when: R_traefik_download.changed
+
+    - name: Copy traefik binary
+      copy:
+        remote_src: true
+        src: "{{ install_dir }}/traefik"
+        dest: "{{ traefik_bin_path }}"
+        mode: 0755
+        owner: root
+        group: root
+      when: R_traefik_download.changed
+
+    - name: Cleanup traefik
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ install_dir }}/traefik"
+
+- name: Configure traefik
+  block:
+    - name: Create traefik data directory
+      file:
+        state: directory
+        path: "{{ traefik_data_dir }}"
+        mode: 0775
+        owner: root
+        group: "{{ traefik_name }}"
+
+    - name: Create traefik dynamic directory
+      file:
+        state: directory
+        path: "{{ traefik_dynamic_dir }}"
+        mode: 0775
+        owner: root
+        group: "{{ traefik_name }}"
+
+    - name: Copy traefik config file
+      template:
+        src: traefik.yml.j2
+        dest: "{{ traefik_config_path }}"
+        mode: 0644
+        owner: root
+        group: "{{ traefik_name }}"
+      register: R_traefik_config
+
+    - name: Copy traefik dynamic file
+      template:
+        src: traefik_dynamic.yml.j2
+        dest: "{{ traefik_dynamic_dir }}/dynamic.yml"
+        mode: 0644
+        owner: root
+        group: "{{ traefik_name }}"
+
+    - name: Create traefik acme file
+      file:
+        state: touch
+        path: "{{ traefik_acme_path }}"
+        mode: 0600
+        owner: "{{ traefik_name }}"
+        group: "{{ traefik_name }}"
+        access_time: preserve
+        modification_time: preserve
+
+    - name: Create traefik log files
+      file:
+        state: touch
+        path: "{{ item }}"
+        mode: 0664
+        owner: root
+        group: "{{ traefik_name }}"
+        access_time: preserve
+        modification_time: preserve
+      loop:
+        - "{{ traefik_log_path }}"
+        - "{{ traefik_access_log_path }}"
+
+    - name: Copy traefik environment file
+      template:
+        src: traefik_env.j2
+        dest: /etc/default/{{ traefik_name }}
+        mode: 0400
+        owner: "{{ traefik_name }}"
+        group: "{{ traefik_name }}"
+
+    - name: Copy traefik service file
+      template:
+        src: traefik.service.j2
+        dest: /etc/systemd/system/{{ traefik_name }}.service
+        mode: 0644
+        owner: root
+        group: root
+      register: R_traefik_service
+
+    - name: Reload systemd
+      systemd:
+        daemon_reload: true
+      when: R_traefik_service.changed
+
+    - name: Enable traefik
+      service:
+        name: "{{ traefik_name }}"
+        enabled: true
+
+    - name: Restart traefik
+      service:
+        name: "{{ traefik_name }}"
+        state: restarted
+      when: R_traefik_config.changed
+
+    - name: Start traefik
+      service:
+        name: "{{ traefik_name }}"
+        state: started
+
+- name: Install adguard
+  block:
+    - name: Create the adguard Group
+      group:
+        name: "{{ adguard_name }}"
+        system: true
+
+    - name: Create the adguard User
+      user:
+        name: "{{ adguard_name }}"
+        group: "{{ adguard_name }}"
+        system: true
+        createhome: false
+        home: "{{ adguard_data_dir }}"
+        shell: /sbin/nologin
+        comment: service account to run {{ adguard_name }}
+
+    - name: Download adguard
+      get_url:
+        url: https://static.adguard.com/adguardhome/release/AdGuardHome_linux_arm.tar.gz
+        dest: "{{ install_dir }}/adguard.tar.gz"
+        mode: 0744
+        owner: root
+        group: root
+      register: R_adguard_download
+
+    - name: Extract adguard
+      unarchive:
+        remote_src: true
+        src: "{{ install_dir }}/adguard.tar.gz"
+        dest: "{{ install_dir }}"
+      when: R_adguard_download.changed
+
+    - name: Copy adguard binary
+      copy:
+        remote_src: true
+        src: "{{ install_dir }}/AdGuardHome/AdGuardHome"
+        dest: "{{ adguard_bin_path }}"
+        mode: 0755
+        owner: root
+        group: root
+      when: R_adguard_download.changed
+
+    - name: Cleanup adguard
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ install_dir }}/AdGuardHome"
+
+- name: Configure adguard
+  block:
+    - name: Create adguard data directory
+      file:
+        state: directory
+        path: "{{ adguard_data_dir }}"
+        mode: 0775
+        owner: root
+        group: "{{ adguard_name }}"
+
+    - name: Create adguard log files
+      file:
+        state: touch
+        path: "{{ item }}"
+        mode: 0664
+        owner: root
+        group: "{{ adguard_name }}"
+        access_time: preserve
+        modification_time: preserve
+      loop:
+        - "{{ adguard_log_path }}"
+
+    - name: Copy adguard service file
+      template:
+        src: adguard.service.j2
+        dest: /etc/systemd/system/{{ adguard_name }}.service
+        mode: 0644
+        owner: root
+        group: root
+      register: R_adguard_service
+
+    - name: Reload systemd
+      systemd:
+        daemon_reload: true
+      when: R_adguard_service.changed
+
+    - name: Enable adguard
+      service:
+        name: "{{ adguard_name }}"
+        enabled: true
+
+    # Copy the config to a unused path. If file changes stop
+    # adguard, copy it to the real path, start adguard.
+    - name: Copy adguard config file to tmp
+      template:
+        src: adguard_config.yaml.j2
+        dest: "{{ adguard_config_path }}.idempotent"
+        mode: 0600
+        owner: root
+        group: root
+      register: R_adguard_config_tmp
+
+    - name: Stop adguard
+      service:
+        name: "{{ adguard_name }}"
+        state: stopped
+      when: R_adguard_config_tmp.changed
+
+    - name: Copy adguard config file
+      template:
+        src: adguard_config.yaml.j2
+        dest: "{{ adguard_config_path }}"
+        mode: 0644
+        owner: "{{ adguard_name }}"
+        group: "{{ adguard_name }}"
+
+    - name: Start adguard
+      service:
+        name: "{{ adguard_name }}"
+        state: started

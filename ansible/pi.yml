@@ -1,0 +1,30 @@
+- name: Setup Raspberry Pi
+  hosts: pis
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
+  tasks:
+    - name: Setup base requirements
+      include_role:
+        name: base
+        apply:
+          tags:
+            - base
+      tags:
+        - base
+    - name: Setup for interactive
+      include_role:
+        name: interactive
+        apply:
+          tags:
+            - interactive
+      tags:
+        - interactive
+    - name: Setup Raspberry Pi
+      include_role:
+        name: pi
+        apply:
+          tags:
+            - pi
+      tags:
+        - pi

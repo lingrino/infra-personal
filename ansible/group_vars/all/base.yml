@@ -1,0 +1,12 @@
+base_packages:
+  - curl
+  - git
+  - htop
+  - jq
+  - mosh
+  - net-tools
+  - snapd
+  - tailscale
+  - tar
+  - unzip
+  - wget
