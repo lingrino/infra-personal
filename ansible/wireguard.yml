@@ -4,7 +4,16 @@
   become: true
   gather_facts: true
   any_errors_fatal: true
-  roles:
-    - { role: base, tags: ["base"] }
-    - { role: wireguard, tags: ["wireguard"] }
-    - { role: cleanup, tags: ["cleanup"] }
+  tasks:
+    - name: Setup base requirements
+      include_role:
+        name: base
+      tags: base
+    - name: Setup wireguard
+      include_role:
+        name: wireguard
+      tags: wireguard
+    - name: Cleanup
+      include_role:
+        name: cleanup
+      tags: cleanup

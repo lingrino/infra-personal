@@ -7,12 +7,24 @@
     - name: Setup base requirements
       include_role:
         name: base
-      tags: base
+        apply:
+          tags:
+            - base
+      tags:
+        - base
     - name: Setup for interactive
       include_role:
         name: interactive
-      tags: interactive
+        apply:
+          tags:
+            - interactive
+      tags:
+        - interactive
     - name: Setup Raspberry Pi
       include_role:
         name: pi
-      tags: pi
+        apply:
+          tags:
+            - pi
+      tags:
+        - pi

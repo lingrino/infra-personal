@@ -12,11 +12,3 @@ traefik_acme_path: "{{ traefik_data_dir }}/acme.json"
 
 traefik_log_path: /var/log/traefik.log
 traefik_access_log_path: /var/log/traefik-access.log
-
-traefik_letsencrypt_aws_region: us-east-1
-traefik_letsencrypt_aws_hosted_zone: Z2HF08LTT2UPFO
-
-# Records must also be created in terraform/route53 to point here
-traefik_domain_main: traefik.lingrino.dev
-traefik_domain_sans:
-  - lb.lingrino.dev
