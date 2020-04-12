@@ -37,6 +37,14 @@ resource "aws_route53_record" "phone_lingrino_dev" {
   records = ["100.123.188.98"]
 }
 
+resource "aws_route53_record" "ipad_lingrino_dev" {
+  zone_id = data.aws_route53_zone.lingrino_dev.zone_id
+  name    = "ipad.lingrino.dev."
+  type    = "A"
+  ttl     = 300
+  records = ["100.127.107.107"]
+}
+
 resource "aws_route53_record" "work_lingrino_dev" {
   zone_id = data.aws_route53_zone.lingrino_dev.zone_id
   name    = "work.lingrino.dev."
@@ -45,10 +53,10 @@ resource "aws_route53_record" "work_lingrino_dev" {
   records = ["100.92.251.90"]
 }
 
-# resource "aws_route53_record" "mac_lingrino_dev" {
-#   zone_id = data.aws_route53_zone.lingrino_dev.zone_id
-#   name    = "mac.lingrino.dev."
-#   type    = "A"
-#   ttl     = 300
-#   records = [""]
-# }
+resource "aws_route53_record" "mac_lingrino_dev" {
+  zone_id = data.aws_route53_zone.lingrino_dev.zone_id
+  name    = "mac.lingrino.dev."
+  type    = "A"
+  ttl     = 300
+  records = ["100.91.40.80"]
+}
