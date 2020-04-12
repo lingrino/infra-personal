@@ -1,3 +1,2 @@
-# Entire Infrastructure
+# Entire (non-packer) Infrastructure
 - import_playbook: pi.yml
-- import_playbook: wireguard.yml

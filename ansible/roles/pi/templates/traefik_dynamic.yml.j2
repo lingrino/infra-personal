@@ -26,4 +26,16 @@ http:
     adguard:
       loadBalancer:
         servers:
-          - url: "http://127.0.0.1:{{ adguard_port }}/"
+          - url: "http://127.0.0.1:{{ adguard_port_web }}/"
+
+udp:
+  routers:
+    adguard:
+      entryPoints:
+        - "dns"
+      service: "adguard"
+  services:
+    adguard:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:{{ adguard_port_dns }}/"

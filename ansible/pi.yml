@@ -3,7 +3,16 @@
   become: true
   gather_facts: true
   any_errors_fatal: true
-  roles:
-    - { role: base, tags: ["base"] }
-    - { role: interactive, tags: ["interactive"] }
-    - { role: pi, tags: ["pi"] }
+  tasks:
+    - name: Setup base requirements
+      include_role:
+        name: base
+      tags: base
+    - name: Setup for interactive
+      include_role:
+        name: interactive
+      tags: interactive
+    - name: Setup Raspberry Pi
+      include_role:
+        name: pi
+      tags: pi

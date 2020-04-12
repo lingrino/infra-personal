@@ -1,50 +1,6 @@
 - name: Install traefik
-  block:
-    - name: Create the traefik Group
-      group:
-        name: "{{ traefik_name }}"
-        system: true
-
-    - name: Create the traefik User
-      user:
-        name: "{{ traefik_name }}"
-        group: "{{ traefik_name }}"
-        system: true
-        createhome: false
-        home: "{{ traefik_data_dir }}"
-        shell: /sbin/nologin
-        comment: service account to run {{ traefik_name }}
-
-    - name: Download traefik
-      get_url:
-        url: https://github.com/containous/traefik/releases/download/v{{ traefik_version }}/traefik_v{{ traefik_version }}_linux_arm64.tar.gz
-        dest: /usr/local/src/traefik.tar.gz
-        mode: 0744
-        owner: root
-        group: root
-
-    - name: Extract traefik
-      unarchive:
-        remote_src: true
-        src: /usr/local/src/traefik.tar.gz
-        dest: /usr/local/src
-
-    - name: Copy traefik binary
-      copy:
-        remote_src: true
-        src: /usr/local/src/traefik
-        dest: "{{ traefik_bin_path }}"
-        mode: 0755
-        owner: root
-        group: root
-
-    - name: Cleanup traefik
-      file:
-        path: "{{ item }}"
-        state: absent
-      loop:
-        - /usr/local/src/traefik
-        - /usr/local/src/traefik.tar.gz
+  include_role:
+    name: traefik
 
 - name: Configure traefik
   block:
@@ -87,6 +43,8 @@
         mode: 0600
         owner: "{{ traefik_name }}"
         group: "{{ traefik_name }}"
+        access_time: preserve
+        modification_time: preserve
 
     - name: Create traefik log files
       file:
@@ -95,6 +53,8 @@
         mode: 0664
         owner: root
         group: "{{ traefik_name }}"
+        access_time: preserve
+        modification_time: preserve
       loop:
         - "{{ traefik_log_path }}"
         - "{{ traefik_access_log_path }}"
@@ -126,52 +86,8 @@
     #     state: started
 
 - name: Install adguard
-  block:
-    - name: Create the adguard Group
-      group:
-        name: "{{ adguard_name }}"
-        system: true
-
-    - name: Create the adguard User
-      user:
-        name: "{{ adguard_name }}"
-        group: "{{ adguard_name }}"
-        system: true
-        createhome: false
-        home: "{{ adguard_data_dir }}"
-        shell: /sbin/nologin
-        comment: service account to run {{ adguard_name }}
-
-    - name: Download adguard
-      get_url:
-        url: https://static.adguard.com/adguardhome/release/AdGuardHome_linux_arm.tar.gz
-        dest: /usr/local/src/adguard.tar.gz
-        mode: 0744
-        owner: root
-        group: root
-
-    - name: Extract adguard
-      unarchive:
-        remote_src: true
-        src: /usr/local/src/adguard.tar.gz
-        dest: /usr/local/src
-
-    - name: Copy adguard binary
-      copy:
-        remote_src: true
-        src: /usr/local/src/AdGuardHome/AdGuardHome
-        dest: "{{ adguard_bin_path }}"
-        mode: 0755
-        owner: root
-        group: root
-
-    - name: Cleanup adguard
-      file:
-        path: "{{ item }}"
-        state: absent
-      loop:
-        - /usr/local/src/adguard.tar.gz
-        - /usr/local/src/AdGuardHome
+  include_role:
+    name: adguard
 
 - name: Configure adguard
   block:
@@ -190,6 +106,8 @@
         mode: 0664
         owner: root
         group: "{{ adguard_name }}"
+        access_time: preserve
+        modification_time: preserve
       loop:
         - "{{ adguard_log_path }}"
 

@@ -4,7 +4,8 @@ adguard_data_dir: /var/lib/adguard
 adguard_config_path: /var/lib/adguard/config.yaml
 adguard_log_path: /var/log/adguard.log
 
-adguard_port: 3001
+adguard_port_web: 3001
+adguard_port_dns: 5353
 
 # Records must also be created in terraform/route53 to point here
 adguard_domain_main: adguard.lingrino.dev

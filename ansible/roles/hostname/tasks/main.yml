@@ -1,0 +1,8 @@
+- name: Require hostname variable to be set
+  fail:
+    msg: "variable `hostname` must be set"
+  when: (hostname == "") or (hostname == "FAIL")
+
+- name: Set Hostname
+  hostname:
+    name: "{{ hostname }}"

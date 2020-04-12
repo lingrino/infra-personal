@@ -1,7 +1,7 @@
 # https://github.com/AdguardTeam/AdGuardHome/wiki/Configuration#configuration-file
 
 bind_host: "127.0.0.1"
-bind_port: {{ adguard_port }}
+bind_port: {{ adguard_port_web }}
 users:
   - name: "{{ adguard_web_username }}"
     password: "{{ adguard_web_passhash }}"
@@ -9,8 +9,8 @@ language: ""
 rlimit_nofile: 0
 web_session_ttl: 720
 dns:
-  bind_host: 0.0.0.0
-  port: 53
+  bind_host: "127.0.0.1"
+  port: {{ adguard_port_dns }}
   statistics_interval: 90
   querylog_enabled: true
   querylog_interval: 90
