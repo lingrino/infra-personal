@@ -1,3 +1,7 @@
+- name: Set the hostname
+  include_role:
+    name: hostname
+
 - name: Add the tailscale key
   apt_key:
     url: https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }}/{{ ansible_distribution_release }}.gpg
@@ -30,10 +34,6 @@
   retries: 3
   delay: 10
   until: R_install is not failed
-
-- name: Set the hostname
-  include_role:
-    name: hostname
 
 - name: Install AWS CLI
   include_role:
