@@ -2,6 +2,10 @@
   include_role:
     name: hostname
 
+- name: Setup ssh
+  include_role:
+    name: ssh
+
 - name: Add the tailscale key
   apt_key:
     url: https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }}/{{ ansible_distribution_release }}.gpg
