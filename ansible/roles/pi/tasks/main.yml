@@ -1,3 +1,43 @@
+- name: Configure resolved
+  block:
+    - name: Copy resolved conf
+      copy:
+        src: resolved.conf
+        dest: /etc/systemd/resolved.conf
+        mode: 0644
+        owner: root
+        group: root
+      register: R_resolved_conf
+
+    - name: Restart resolved
+      service:
+        name: systemd-resolved
+        state: restarted
+      when: R_resolved_conf.changed
+
+    - name: Symlink new resolv.conf
+      file:
+        state: link
+        force: true
+        src: /run/systemd/resolve/resolv.conf
+        dest: /etc/resolv.conf
+        mode: 0644
+        owner: systemd-resolve
+        group: systemd-resolve
+      register: R_link_resolv_conf
+
+    - name: Restart resolved
+      service:
+        name: systemd-resolved
+        state: restarted
+      when: R_link_resolv_conf.changed
+
+    - name: Enable and start resolved
+      service:
+        name: systemd-resolved
+        enabled: true
+        state: started
+
 - name: Install traefik
   block:
     - name: Create the traefik Group
