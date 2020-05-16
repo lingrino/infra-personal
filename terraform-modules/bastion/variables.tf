@@ -10,12 +10,12 @@ variable "tags" {
 
 variable "vpc_id" {
   type        = string
-  description = "The VPC to create resources ins"
+  description = "The VPC to create resources in"
 }
 
-variable "subnets" {
-  type        = set(string)
-  description = "A list of subnets to launch the instance in"
+variable "subnet_id" {
+  type        = string
+  description = "The subnet to launch the instance in"
 }
 
 variable "ami_owner_id" {
@@ -33,8 +33,14 @@ variable "key_name" {
   description = "The name of the ssh key to use for the EC2 instance"
 }
 
-variable "inbound_cidrs" {
-  type        = set(string)
-  description = "A set of cidrs to allow into the bastion. Should be the tailscale cidr."
+variable "bastion_cidrs" {
+  type        = list(string)
+  description = "A set of cidrs to allow through the bastion. Should be the tailscale cidr."
+  default     = []
+}
+
+variable "route_table_associations" {
+  type        = list(string)
+  description = "A set of route tables to associate with the bastion instance (cidr->bastion)"
   default     = []
 }

@@ -66,5 +66,5 @@ resource "aws_route53_record" "bastion_lingrino_dev" {
   name    = "bastion.lingrino.dev."
   type    = "A"
   ttl     = 300
-  records = ["100.122.77.69"]
+  records = ["100.95.29.28"]
 }
