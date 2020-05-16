@@ -16,6 +16,7 @@
     - auditd
     - rsyslog
     - systemd-journald
+  ignore_errors: true # not all services exist on all systems
 
 - name: Find cloudwatch agent state files
   find:
