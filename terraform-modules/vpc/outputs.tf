@@ -10,6 +10,30 @@ output "vpc_cidr_ipv6" {
   value = aws_vpc.vpc.ipv6_cidr_block
 }
 
+output "subnet_ids" {
+  value = concat(
+    [for sn in aws_subnet.public : sn.id],
+    [for sn in aws_subnet.private : sn.id],
+    [for sn in aws_subnet.intra : sn.id],
+  )
+}
+
+output "subnet_cidrs" {
+  value = concat(
+    [for sn in aws_subnet.public : sn.cidr_block],
+    [for sn in aws_subnet.private : sn.cidr_block],
+    [for sn in aws_subnet.intra : sn.cidr_block],
+  )
+}
+
+output "subnet_cidrs_ipv6" {
+  value = concat(
+    [for sn in aws_subnet.public : sn.ipv6_cidr_block],
+    [for sn in aws_subnet.private : sn.ipv6_cidr_block],
+    [for sn in aws_subnet.intra : sn.ipv6_cidr_block],
+  )
+}
+
 output "subnets_public_ids" {
   value = [for sn in aws_subnet.public : sn.id]
 }
@@ -40,4 +64,24 @@ output "subnets_intra_ids" {
 
 output "subnets_intra_cidrs" {
   value = [for sn in aws_subnet.intra : sn.cidr_block]
+}
+
+output "route_table_ids" {
+  value = concat(
+    [aws_route_table.public.id],
+    [for rt in aws_route_table.private : rt.id],
+    [for rt in aws_route_table.intra : rt.id],
+  )
+}
+
+output "route_tables_public_ids" {
+  value = [aws_route_table.public.id]
+}
+
+output "route_tables_private_ids" {
+  value = [for rt in aws_route_table.private : rt.id]
+}
+
+output "route_tables_intra_ids" {
+  value = [for rt in aws_route_table.intra : rt.id]
 }
