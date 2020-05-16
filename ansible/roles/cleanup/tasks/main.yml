@@ -1,6 +1,47 @@
+# https://github.com/afpacket/ansible-role-image-cleanup
 # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/building-shared-amis.html
 # https://aws.amazon.com/articles/how-to-share-and-use-public-amis-in-a-secure-manner/
 # https://aws.amazon.com/articles/public-ami-publishing-hardening-and-clean-up-requirements/
+
+- name: Gather package facts
+  package_facts:
+    manager: auto
+
+- name: Stop services
+  service:
+    name: "{{ item }}"
+    state: stopped
+  loop:
+    - amazon-cloudwatch-agent
+    - auditd
+    - rsyslog
+    - systemd-journald
+  ignore_errors: true # not all services exist on all systems
+
+- name: Find cloudwatch agent state files
+  find:
+    paths:
+      - /opt/aws/amazon-cloudwatch-agent/logs/state
+    recurse: no
+    file_type: file
+  register: R_cwa_state_files
+
+- name: Delete cloudwatch agent state files
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ R_cwa_state_files.files }}"
+  when:
+    - R_cwa_state_files.files != []
+
+- name: Delete cloudwatch agent config and log files
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.toml
+    - /opt/aws/amazon-cloudwatch-agent/etc/log-config.json
+    - /opt/aws/amazon-cloudwatch-agent/logs/amazon-cloudwatch-agent.log
 
 - name: Cleanup apt cache
   apt:
@@ -33,6 +74,14 @@
     - /root/.ssh/authorized_keys
     - /home/ubuntu/.ssh/authorized_keys
 
+- name: Clean cloud-init
+  command: cloud-init clean
+  when: "'cloud-init' in ansible_facts.packages"
+
+- name: Clear journalctl
+  command: journalctl --vacuum-size=0M
+  when: ansible_service_mgr == "systemd"
+
 - name: Find all log files
   find:
     paths:
@@ -46,6 +95,9 @@
   loop: "{{ R_cleanup_log_files.files }}"
   when:
     - R_cleanup_log_files.files != []
+
+- name: Truncate machine id
+  command: truncate -s0 /etc/machine-id
 
 - name: Find all history files
   find:

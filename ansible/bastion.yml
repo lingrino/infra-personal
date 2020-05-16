@@ -1,6 +1,6 @@
 # This playbook is run by packer
-- name: Setup wireguard
-  hosts: wireguard
+- name: Setup Tailscale Bastion AMI
+  hosts: bastions
   become: true
   gather_facts: true
   any_errors_fatal: true
@@ -9,10 +9,10 @@
       include_role:
         name: base
       tags: base
-    - name: Setup wireguard
+    - name: Setup bastion
       include_role:
-        name: wireguard
-      tags: wireguard
+        name: bastion
+      tags: bastion
     - name: Cleanup
       include_role:
         name: cleanup

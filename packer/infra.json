@@ -1,17 +1,17 @@
 {
     "builders": [
         {
-            "name": "docker-selfhosted",
+            "name": "docker-bastion",
             "type": "docker",
             "image": "ubuntu:eoan",
             "discard": true
         },
         {
-            "name": "ec2-selfhosted",
+            "name": "ec2-bastion",
             "type": "amazon-ebs",
             "source_ami_filter": {
                 "filters": {
-                    "name": "ubuntu/images/hvm-ssd/ubuntu-eoan-19.10-amd64-server-*",
+                    "name": "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*",
                     "root-device-type": "ebs",
                     "virtualization-type": "hvm"
                 },
@@ -36,7 +36,7 @@
                 "t3.medium"
             ],
             "spot_tags": {
-                "Name": "selfhosted",
+                "Name": "bastion",
                 "build_date": "{{ timestamp }}",
                 "os": "ubuntu",
                 "packer": "true",
@@ -48,7 +48,7 @@
             "ssh_interface": "public_ip",
             "shutdown_behavior": "terminate",
             "run_tags": {
-                "Name": "selfhosted",
+                "Name": "bastion",
                 "build_date": "{{ timestamp }}",
                 "os": "ubuntu",
                 "packer": "true",
@@ -57,7 +57,7 @@
                 "source_ami_name": "{{ .SourceAMIName }}"
             },
             "run_volume_tags": {
-                "Name": "selfhosted",
+                "Name": "bastion",
                 "build_date": "{{ timestamp }}",
                 "os": "ubuntu",
                 "packer": "true",
@@ -65,13 +65,13 @@
                 "source_ami_id": "{{ .SourceAMI }}",
                 "source_ami_name": "{{ .SourceAMIName }}"
             },
-            "ami_name": "selfhosted-{{ timestamp }}",
-            "ami_description": "a general AMI for my selfhosted infrastructure",
+            "ami_name": "bastion-{{ timestamp }}",
+            "ami_description": "a general AMI for my bastion infrastructure",
             "ami_regions": [
                 "us-east-1"
             ],
             "tags": {
-                "Name": "selfhosted",
+                "Name": "bastion",
                 "build_date": "{{ timestamp }}",
                 "os": "ubuntu",
                 "packer": "true",
@@ -89,16 +89,21 @@
                 "apt-get install -y sudo systemd python3 software-properties-common"
             ],
             "only": [
-                "docker-selfhosted"
+                "docker-bastion"
             ]
         },
         {
             "type": "ansible",
-            "playbook_file": "../ansible/selfhosted.yml",
+            "playbook_file": "../ansible/bastion.yml",
             "user": "ubuntu",
+            "inventory_directory": "../ansible",
+            "host_alias": "bastion",
+            "groups": [
+                "bastions"
+            ],
             "only": [
-                "docker-selfhosted",
-                "ec2-selfhosted"
+                "docker-bastion",
+                "ec2-bastion"
             ]
         }
     ]

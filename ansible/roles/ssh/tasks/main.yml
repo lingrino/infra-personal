@@ -3,25 +3,26 @@
     dest: /etc/ssh/sshd_config
     regexp: "^#?PermitEmptyPasswords"
     line: "PermitEmptyPasswords no"
-  notify: restart sshd
 
 - name: Disable remote root login
   lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: "^#?PermitRootLogin"
     line: "PermitRootLogin no"
-  notify: restart sshd
 
 - name: Disable password login
   lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: "^#?PasswordAuthentication"
     line: "PasswordAuthentication no"
-  notify: restart sshd
 
 - name: Enable PAM
   lineinfile:
     dest: /etc/ssh/sshd_config
     regexp: "^#?UsePAM"
     line: "UsePAM yes"
-  notify: restart sshd
+
+- name: restart sshd
+  service:
+    name: sshd
+    state: restarted
