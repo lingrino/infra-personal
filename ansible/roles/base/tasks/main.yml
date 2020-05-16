@@ -1,6 +1,7 @@
 - name: Set the hostname
   include_role:
     name: hostname
+  when: hostname is defined
 
 - name: Setup ssh
   include_role:

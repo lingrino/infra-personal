@@ -94,9 +94,10 @@
         },
         {
             "type": "ansible",
-            "inventory_directory": "../ansible",
             "playbook_file": "../ansible/bastion.yml",
             "user": "ubuntu",
+            "inventory_directory": "../ansible",
+            "host_alias": "bastion",
             "groups": [
                 "bastions"
             ],
