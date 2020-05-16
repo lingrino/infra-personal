@@ -60,3 +60,11 @@ resource "aws_route53_record" "mac_lingrino_dev" {
   ttl     = 300
   records = ["100.91.40.80"]
 }
+
+resource "aws_route53_record" "bastion_lingrino_dev" {
+  zone_id = data.aws_route53_zone.lingrino_dev.zone_id
+  name    = "bastion.lingrino.dev."
+  type    = "A"
+  ttl     = 300
+  records = ["100.91.40.80"] # TODO
+}

@@ -76,7 +76,7 @@
 
 - name: Clean cloud-init
   command: cloud-init clean
-  when: cloud-init in ansible_facts.packages
+  when: "'cloud-init' in ansible_facts.packages"
 
 - name: Clear journalctl
   command: journalctl --vacuum-size=0M
