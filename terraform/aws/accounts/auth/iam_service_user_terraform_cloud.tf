@@ -30,10 +30,10 @@ locals {
   terraform_cloud_sak  = try(aws_iam_access_key.terraform_cloud_even[0].secret, aws_iam_access_key.terraform_cloud_odd[0].secret)
 
   # The set of workspaces that should have the terraform cloud variables and secrets
-  # All of the workspaces that start with org/aws-*
+  # All of the workspaces that start with aws-*
   user_tf_cloud_workspaces = toset([
-    for ws, eid in data.terraform_remote_state.terraform.outputs.workspace_ids_to_external_ids :
-    eid if length(regexall("^*/aws-*", ws)) > 0
+    for name, id in data.terraform_remote_state.terraform.outputs.workspace_names_to_ids :
+    id if length(regexall("^aws-*", name)) > 0
   ])
 }
 
