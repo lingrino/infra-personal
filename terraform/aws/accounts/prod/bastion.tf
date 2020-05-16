@@ -10,7 +10,7 @@ module "bastion" {
   instance_type = "t3.micro"
   key_name      = var.keypair_main_name
 
-  bastion_cidrs            = ["100.64.0.0/10"]
+  bastion_cidrs            = ["100.64.0.0/10"] # Tailscale cidr
   route_table_associations = module.vpc.route_table_ids
 
   tags = merge(
