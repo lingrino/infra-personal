@@ -1,0 +1,8 @@
+vault_version: 1.4.1
+vault_version_checksum: d8266ae2a9a97dcdd3edaf5e05331f7d73dcd1c02470da9e1304c7823d30734a
+
+vault_name: vault
+vault_bin_path: /usr/local/bin/{{ vault_name }}
+vault_config_dir: /var/lib/{{ vault_name }}
+vault_log_file: /var/log/vault.log
+vault_audit_log_file: /var/log/vault-audit.log

@@ -1,0 +1,38 @@
+[Unit]
+Description=Vault Server
+Documentation=https://www.vaultproject.io/docs
+After=syslog.target network-online.target
+AssertFileIsExecutable={{ vault_bin_path }}
+AssertPathExists={{ vault_config_dir }}
+
+[Service]
+Type=simple
+User={{ vault_name }}
+Group={{ vault_name }}
+
+ExecStart={{ vault_bin_path }} server -config={{ vault_config_dir }}
+
+WorkingDirectory={{ vault_config_dir }}
+ReadWritePaths={{ vault_log_file }} {{ vault_audit_log_file }} {{ vault_config_dir }}
+
+KillSignal=SIGINT
+TimeoutStopSec=30
+Restart=always
+RestartSec=10
+WatchdogSec=0
+
+LimitMEMLOCK=infinity
+Capabilities=CAP_IPC_LOCK+ep
+CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
+
+NoNewPrivileges=true
+SecureBits=keep-caps
+ProtectSystem=strict
+PrivateTmp=true
+ProtectHome=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+
+[Install]
+WantedBy=multi-user.target

@@ -6,3 +6,4 @@ all:
           ansible_user: ubuntu
           ansible_host: pi.lingrino.dev
     bastions:
+    vaults:
