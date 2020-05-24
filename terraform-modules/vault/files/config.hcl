@@ -1,7 +1,7 @@
 cluster_name = "${ name_prefix }"
 ui           = "true"
 
-api_addr     = "${ domain_name }"
+api_addr     = "https://${ domain_name }"
 cluster_addr = "https://MY_IP_SET_IN_USERDATA:8201"
 
 log_level  = "Error"
@@ -19,6 +19,10 @@ seal "awskms" {
 listener "tcp" {
   address     = "127.0.0.1:9200"
   tls_disable = "true"
+
+  telemetry {
+    unauthenticated_metrics_access = true
+  }
 }
 
 listener "tcp" {
@@ -39,5 +43,15 @@ storage "dynamodb" {
     table  = "${ dynamo_name }"
     region = "${ region }"
 
-    max_parallel = 512
+    max_parallel = "512"
+}
+
+telemetry {
+  disable_hostname      = true
+  enable_hostname_label = true
+  dogstatsd_addr        = "127.0.0.1:8125"
+
+  dogstatsd_tags = [
+    "service:${ name_prefix }"
+  ]
 }

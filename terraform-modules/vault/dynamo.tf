@@ -18,10 +18,6 @@ resource "aws_dynamodb_table" "vault" {
   }
 
   replica {
-    region_name = data.aws_region.current.name
-  }
-
-  replica {
     region_name = var.dr_region
   }
 

@@ -13,6 +13,10 @@
       include_role:
         name: vault
       tags: vault
+    - name: Setup Datadog Agent
+      include_role:
+        name: datadog.datadog
+      tags: datadog
     - name: Cleanup
       include_role:
         name: cleanup

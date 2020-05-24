@@ -52,7 +52,7 @@ data "aws_iam_policy_document" "s3_logs" {
     }
 
     resources = [
-      "${aws_s3_bucket.config.arn}/alb-access-logs/*",
+      "${aws_s3_bucket.logs.arn}/alb-access-logs/*",
     ]
   }
 }
