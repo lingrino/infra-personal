@@ -49,6 +49,14 @@
     group: vault
     mode: 0750
 
+- name: create vault audit log file
+  file:
+    path: "{{ vault_audit_log_path }}"
+    state: touch
+    owner: vault
+    group: vault
+    mode: 0200
+
 - name: add the vault service file
   template:
     src: vault.service.j2
