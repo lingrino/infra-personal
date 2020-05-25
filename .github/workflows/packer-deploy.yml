@@ -50,5 +50,5 @@ jobs:
       - name: Packer Build
         run: |
           eval "$(cat ${HOME}/assume.sh)"
-          packer build -only=ec2-bastion infra.json
+          packer build -only=ec2-bastion,ec2-vault infra.json
         working-directory: ./packer
