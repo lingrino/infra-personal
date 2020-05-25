@@ -28,16 +28,6 @@ resource "aws_launch_template" "vault" {
     name = aws_iam_instance_profile.ec2.name
   }
 
-  block_device_mappings {
-    device_name = "/dev/xvda"
-
-    ebs {
-      encrypted   = true
-      volume_size = "20"
-      volume_type = "gp2"
-    }
-  }
-
   network_interfaces {
     device_index = 0
     # associate_public_ip_address = false

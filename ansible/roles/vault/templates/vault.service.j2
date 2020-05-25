@@ -18,7 +18,7 @@ StartLimitBurst=3
 User={{ vault_name }}
 Group={{ vault_name }}
 
-ExecStart={{ vault_bin_path }} server -config={{ vault_config_dir }}
+ExecStart={{ vault_bin_path }} server -config={{ vault_config_dir }} > {{ vault_server_log_path }}
 ExecReload=/bin/kill --signal HUP $MAINPID
 KillMode=process
 KillSignal=SIGINT
