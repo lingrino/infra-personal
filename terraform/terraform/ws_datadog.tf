@@ -1,12 +1,12 @@
-resource "tfe_workspace" "github" {
+resource "tfe_workspace" "datadog" {
   organization = tfe_organization.org.id
-  name         = "github"
+  name         = "datadog"
 
   terraform_version = "latest"
-  working_directory = "terraform/github"
+  working_directory = "terraform/datadog"
 
-  operations            = false
-  auto_apply            = false
+  operations            = true
+  auto_apply            = true
   queue_all_runs        = false
   file_triggers_enabled = true
 

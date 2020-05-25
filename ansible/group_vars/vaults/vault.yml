@@ -1,0 +1,9 @@
+vault_version: 1.4.2
+vault_version_checksum: f2bca89cbffb8710265eb03bc9452cc316b03338c411ba8453ffe7419390b8f1
+
+vault_name: vault
+vault_bin_path: /usr/local/bin/{{ vault_name }}
+vault_config_dir: /var/lib/{{ vault_name }}
+vault_audit_log_path: /var/log/vault-audit.log
+
+datadog_api_key: TODO

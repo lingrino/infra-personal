@@ -1,0 +1,23 @@
+# This playbook is run by packer
+- name: Setup Vault
+  hosts: vaults
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
+  tasks:
+    - name: Setup base requirements
+      include_role:
+        name: base
+      tags: base
+    - name: Setup Vault
+      include_role:
+        name: vault
+      tags: vault
+    - name: Setup Datadog Agent
+      include_role:
+        name: datadog.datadog
+      tags: datadog
+    - name: Cleanup
+      include_role:
+        name: cleanup
+      tags: cleanup

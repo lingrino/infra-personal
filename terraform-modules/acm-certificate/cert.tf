@@ -2,6 +2,11 @@
 locals {
   sans = keys(var.sans_domain_names_to_zone_names)
 
+  domain_names_to_zone_names = merge(
+    map(var.domain_name, var.zone_name),
+    var.sans_domain_names_to_zone_names
+  )
+
   # example.com and *.example.com will have the same validation records
   # here we make a list removing the *. domains if there's also a base domain
   # This list lets us know the count of validation records before we apply
@@ -53,7 +58,7 @@ data "aws_route53_zone" "zone" {
   for_each = {
     for i in range(length(local.distinct_domain_names)) :
     i => {
-      domain_name = local.validation_domains[i]["domain_name"]
+      domain_name = local.domain_names_to_zone_names[local.validation_domains[i]["domain_name"]]
     }
   }
 
