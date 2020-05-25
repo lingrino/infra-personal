@@ -12,9 +12,11 @@ locals {
     tfe_workspace.aws_accounts_root,
     tfe_workspace.aws_common_dns,
     tfe_workspace.aws_common_organization,
+    tfe_workspace.datadog,
     tfe_workspace.github,
     tfe_workspace.terraform,
     tfe_workspace.tls,
+    tfe_workspace.vault,
   ]
 }
 

@@ -19,14 +19,3 @@ resource "tfe_workspace" "aws_accounts_auth" {
     "terraform-modules"
   ]
 }
-
-# This variable should be read from a secret place and added here
-# resource "tfe_variable" "auth_tfe_token" {
-#   workspace_id = tfe_workspace.auth.id
-#   category     = "env"
-
-#   description = "token used with the terraform provider"
-#   key       = "TFE_TOKEN"
-#   value     = ""
-#   sensitive = true
-# }
