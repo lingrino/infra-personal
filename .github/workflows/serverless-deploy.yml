@@ -3,7 +3,7 @@ name: Serverless - Deploy
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - serverless/**
   schedule:
@@ -15,7 +15,7 @@ jobs:
     container: lingrino/ci:latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: Go Format
@@ -33,7 +33,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout Code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: AWS Assume Role
@@ -61,7 +61,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout Code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: AWS Assume Role

@@ -1,6 +1,6 @@
 ###################################################################################
 # Go                                                                            ###
-# https://github.com/github/gitignore/blob/master/Go.gitignore                  ###
+# https://github.com/github/gitignore/blobHEADGo.gitignore                  ###
 ###################################################################################
 # Binaries for programs and plugins
 *.exe
@@ -20,7 +20,7 @@ serverless/**/bin/*
 
 ###################################################################################
 # Terraform                                                                     ###
-# https://github.com/github/gitignore/blob/master/Terraform.gitignore           ###
+# https://github.com/github/gitignore/blobHEADTerraform.gitignore           ###
 ###################################################################################
 # Local .terraform directories
 **/.terraform/*

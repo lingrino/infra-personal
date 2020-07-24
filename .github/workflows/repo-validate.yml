@@ -9,7 +9,7 @@ jobs:
     container: lingrino/ci:latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: License Exists

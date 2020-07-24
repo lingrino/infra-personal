@@ -4,7 +4,7 @@ This folder contains the packer for the images that I run. Packer is switching t
 
 ## Building
 
-Images are built in CI on changes in master and every Monday morning. I don't share images across accounts because I use [cami](https://github.com/lingrino/cami) which removes images that are not used in the account.
+Images are built in CI on changes in main and every Monday morning. I don't share images across accounts because I use [cami](https://github.com/lingrino/cami) which removes images that are not used in the account.
 
 Build images with the following commands
 

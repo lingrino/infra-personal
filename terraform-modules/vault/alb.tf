@@ -60,7 +60,7 @@ resource "aws_lb_target_group" "vault" {
   # instance, but a failure will cause a new instance to
   # be healthy automatically. This healthceck path prevents
   # unnecessary redirect loops by not sending traffic to
-  # followers, which always just route traffic to the master
+  # followers, which always just route traffic to the leader
   health_check {
     path                = "/v1/sys/health"
     port                = "8200"
