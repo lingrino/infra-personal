@@ -1,6 +1,7 @@
 name: Serverless - Validate
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - serverless/**

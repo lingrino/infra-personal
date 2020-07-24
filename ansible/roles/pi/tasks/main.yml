@@ -123,6 +123,7 @@
         mode: 0644
         owner: root
         group: "{{ traefik_name }}"
+      register: R_traefik_dynamic
 
     - name: Create traefik acme file
       file:
@@ -178,7 +179,7 @@
       service:
         name: "{{ traefik_name }}"
         state: restarted
-      when: R_traefik_config.changed
+      when: (R_traefik_config.changed) or (R_traefik_dynamic.changed)
 
     - name: Start traefik
       service:
@@ -305,3 +306,56 @@
       service:
         name: "{{ adguard_name }}"
         state: started
+
+- name: Install and configure cockpit
+  block:
+    - name: Create the cockpit end user group
+      group:
+        name: cockpit-login-admin
+
+    # Password/Salt is in 1Password
+    # ansible all -i localhost, -m debug -a "msg={{ 'PASSWORD' | password_hash('sha512', 'SALT') }}"
+    # https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-generate-encrypted-passwords-for-the-user-module
+    - name: Create the cockpit end user
+      user:
+        name: cockpit-login-admin
+        group: cockpit-login-admin
+        groups: sudo
+        password: "$6$P4YMeF9x4617t89V$NphhCmOMG03BoalKAfqaqgE5jOaFnR6PWHFqgvstXn3fpK23.Pbra/YDIZzvJc2RPkHe3Iuf38hv624HwdBwk/"
+        comment: Account used to login to cockpit web
+
+    - name: Install cockpit
+      apt:
+        state: latest
+        update_cache: true
+        name: cockpit
+      register: R_install
+      retries: 3
+      delay: 10
+      until: R_install is not failed
+
+    - name: Enable cockpit
+      service:
+        name: cockpit.socket
+        enabled: true
+
+    - name: Copy cockpit configuration file
+      template:
+        src: cockpit.conf.j2
+        dest: /etc/cockpit/cockpit.conf
+        mode: 0644
+        owner: root
+        group: cockpit-ws
+      register: R_cockpit_config
+
+    - name: Restart cockpit socket
+      service:
+        name: cockpit.socket
+        state: restarted
+      when: R_cockpit_config.changed
+
+    - name: Restart cockpit service
+      service:
+        name: cockpit.service
+        state: restarted
+      when: R_cockpit_config.changed

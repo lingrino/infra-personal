@@ -12,6 +12,10 @@ locals {
     "lb.lingrino.dev",
     "traefik.lingrino.dev",
   ]
+  hostnames_cockpit = [
+    "cp.lingrino.dev",
+    "cockpit.lingrino.dev",
+  ]
 }
 
 data "aws_route53_zone" "lingrino_dev" {
@@ -20,7 +24,7 @@ data "aws_route53_zone" "lingrino_dev" {
 
 # Hostnames for tailscale devices
 resource "aws_route53_record" "pi_lingrino_dev" {
-  for_each = toset(concat(local.hostnames_pi, local.hostnames_adguard, local.hostnames_traefik))
+  for_each = toset(concat(local.hostnames_pi, local.hostnames_adguard, local.hostnames_traefik, local.hostnames_cockpit))
 
   zone_id = data.aws_route53_zone.lingrino_dev.zone_id
   name    = each.key

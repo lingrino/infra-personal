@@ -1,6 +1,7 @@
 name: Packer - Validate
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - packer/**
