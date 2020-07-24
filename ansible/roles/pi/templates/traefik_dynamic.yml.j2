@@ -22,11 +22,27 @@ http:
 {% for san in adguard_domain_sans %}
               - "{{ san }}"
 {% endfor %}
+    cockpit:
+      rule: "Host(`{{ cockpit_domain_main }}`, {% for san in cockpit_domain_sans %}`{{san}}`{% if not loop.last %}, {% endif %}{% endfor %})"
+      service: "cockpit"
+      tls:
+        certResolver: "letsencrypt"
+        domains:
+          - main: "{{ cockpit_domain_main }}"
+            sans:
+{% for san in cockpit_domain_sans %}
+              - "{{ san }}"
+{% endfor %}
+
   services:
     adguard:
       loadBalancer:
         servers:
           - url: "http://127.0.0.1:{{ adguard_port_web }}/"
+    cockpit:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:{{ cockpit_port_web }}/"
 
 udp:
   routers:

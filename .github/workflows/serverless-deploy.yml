@@ -1,9 +1,10 @@
 name: Serverless - Deploy
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - master
+      - main
     paths:
       - serverless/**
   schedule:
@@ -15,7 +16,7 @@ jobs:
     container: lingrino/ci:latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: Go Format
@@ -33,22 +34,19 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout Code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: AWS Assume Role
-        run: |
-          role=$(aws sts assume-role --role-arn "arn:aws:iam::${{ matrix.account-id }}:role/ServiceAdmin" --role-session-name "GitHubActions")
-          echo "export AWS_ACCESS_KEY_ID=$(jq -r .Credentials.AccessKeyId <<<$role)" > ${HOME}/assume.sh
-          echo "export AWS_SECRET_ACCESS_KEY=$(jq -r .Credentials.SecretAccessKey <<<$role)" >> ${HOME}/assume.sh
-          echo "export AWS_SESSION_TOKEN=$(jq -r .Credentials.SessionToken <<<$role)" >> ${HOME}/assume.sh
-        shell: bash
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_USER }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_USER }}
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_USER }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_USER }}
+          role-to-assume: arn:aws:iam::${{ matrix.account-id }}:role/ServiceAdmin
+          role-session-name: GitHubActions
       - name: Deploy SNS Notifier
         run: |
-          eval "$(cat ${HOME}/assume.sh)"
+          eval "$(cat "${HOME}"/assume.sh)"
           make deploy
         working-directory: ./serverless/sns-notifier
   deploy-amicleaner:
@@ -61,21 +59,18 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout Code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: AWS Assume Role
-        run: |
-          role=$(aws sts assume-role --role-arn "arn:aws:iam::${{ matrix.account-id }}:role/ServiceAdmin" --role-session-name "GitHubActions")
-          echo "export AWS_ACCESS_KEY_ID=$(jq -r .Credentials.AccessKeyId <<<$role)" > ${HOME}/assume.sh
-          echo "export AWS_SECRET_ACCESS_KEY=$(jq -r .Credentials.SecretAccessKey <<<$role)" >> ${HOME}/assume.sh
-          echo "export AWS_SESSION_TOKEN=$(jq -r .Credentials.SessionToken <<<$role)" >> ${HOME}/assume.sh
-        shell: bash
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_USER }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_USER }}
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_USER }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_USER }}
+          role-to-assume: arn:aws:iam::${{ matrix.account-id }}:role/ServiceAdmin
+          role-session-name: GitHubActions
       - name: Deploy AMI Cleaner
         run: |
-          eval "$(cat ${HOME}/assume.sh)"
+          eval "$(cat "${HOME}"/assume.sh)"
           make deploy
         working-directory: ./serverless/ami-cleaner

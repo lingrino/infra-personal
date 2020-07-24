@@ -1,6 +1,7 @@
 name: Serverless - Validate
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - serverless/**
@@ -11,7 +12,7 @@ jobs:
     container: lingrino/ci:latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: Go Format

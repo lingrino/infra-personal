@@ -24,6 +24,8 @@ resource "aws_launch_template" "vault" {
   key_name      = var.key_name
   user_data     = base64encode(data.template_file.userdata.rendered)
 
+  update_default_version = true
+
   iam_instance_profile {
     name = aws_iam_instance_profile.ec2.name
   }

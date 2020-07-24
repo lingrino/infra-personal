@@ -1,6 +1,7 @@
 name: Terraform - Scheduled Apply
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: 0 17 * * 1 # Every Monday at 5pm UTC
 
