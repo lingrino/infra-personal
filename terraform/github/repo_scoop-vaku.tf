@@ -3,7 +3,7 @@ resource "github_repository" "scoop-vaku" {
   description  = "Scoop bucket for vaku binaries. Powered by @goreleaser"
   homepage_url = "https://vaku.dev/"
 
-  default_branch = "master"
+  default_branch = "main"
   private        = false
 
   has_wiki   = false

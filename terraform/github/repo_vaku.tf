@@ -3,7 +3,7 @@ resource "github_repository" "vaku" {
   description  = "A CLI and Go API to extend the official Vault client"
   homepage_url = "https://vaku.dev/"
 
-  default_branch = "master"
+  default_branch = "main"
   private        = false
 
   has_wiki   = false
@@ -26,7 +26,7 @@ resource "github_repository" "vaku" {
 
 resource "github_branch_protection" "vaku" {
   repository     = github_repository.vaku.name
-  branch         = "master"
+  branch         = "main"
   enforce_admins = true
 
   required_status_checks {

@@ -3,7 +3,7 @@ resource "github_repository" "glen" {
   description  = "A CLI to gather GitLab project and group variables"
   homepage_url = "https://lingrino.com"
 
-  default_branch = "master"
+  default_branch = "main"
   private        = false
 
   has_wiki   = false
@@ -24,7 +24,7 @@ resource "github_repository" "glen" {
 
 resource "github_branch_protection" "glen" {
   repository     = github_repository.glen.name
-  branch         = "master"
+  branch         = "main"
   enforce_admins = true
 
   required_status_checks {

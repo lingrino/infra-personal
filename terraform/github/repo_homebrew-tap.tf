@@ -3,7 +3,7 @@ resource "github_repository" "homebrew-tap" {
   description  = "Homebrew Tap for my personal projects. Powered by @goreleaser"
   homepage_url = "https://lingrino.com/"
 
-  default_branch = "master"
+  default_branch = "main"
   private        = false
 
   has_wiki   = false

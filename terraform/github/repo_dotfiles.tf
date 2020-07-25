@@ -3,7 +3,7 @@ resource "github_repository" "dotfiles" {
   description  = "Maintain your local environment wth Ansible"
   homepage_url = "https://lingrino.com"
 
-  default_branch = "master"
+  default_branch = "main"
   private        = false
 
   has_wiki   = false

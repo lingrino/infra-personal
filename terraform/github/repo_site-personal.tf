@@ -3,7 +3,7 @@ resource "github_repository" "site-personal" {
   description  = "My personal website"
   homepage_url = "https://lingrino.com"
 
-  default_branch = "master"
+  default_branch = "main"
   private        = false
 
   has_wiki   = false

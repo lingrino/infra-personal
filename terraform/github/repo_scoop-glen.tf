@@ -3,7 +3,7 @@ resource "github_repository" "scoop-glen" {
   description  = "Scoop bucket for glen binaries. Powered by @goreleaser"
   homepage_url = "https://lingrino.com/"
 
-  default_branch = "master"
+  default_branch = "main"
   private        = false
 
   has_wiki   = false
