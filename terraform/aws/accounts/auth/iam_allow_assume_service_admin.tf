@@ -28,7 +28,7 @@ data "aws_iam_policy_document" "allow_assume_service_admin" {
   statement {
     sid       = "AllowAssumeServiceAdmin"
     effect    = "Allow"
-    actions   = ["sts:AssumeRole"]
+    actions   = ["sts:AssumeRole", "sts:TagSession"]
     resources = ["arn:aws:iam::*:role/ServiceAdmin"]
   }
 }

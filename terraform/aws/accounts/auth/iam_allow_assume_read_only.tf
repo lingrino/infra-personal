@@ -27,7 +27,7 @@ data "aws_iam_policy_document" "allow_assume_read_only" {
   statement {
     sid       = "AllowAssumeReadOnly"
     effect    = "Allow"
-    actions   = ["sts:AssumeRole"]
+    actions   = ["sts:AssumeRole", "sts:TagSession"]
     resources = ["arn:aws:iam::*:role/ReadOnly"]
   }
 }
