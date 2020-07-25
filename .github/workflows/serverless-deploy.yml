@@ -40,6 +40,7 @@ jobs:
       - name: AWS Assume Role
         uses: aws-actions/configure-aws-credentials@v1
         with:
+          aws-region: us-east-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_USER }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_USER }}
           role-to-assume: arn:aws:iam::${{ matrix.account-id }}:role/ServiceAdmin
@@ -65,6 +66,7 @@ jobs:
       - name: AWS Assume Role
         uses: aws-actions/configure-aws-credentials@v1
         with:
+          aws-region: us-east-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_USER }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_USER }}
           role-to-assume: arn:aws:iam::${{ matrix.account-id }}:role/ServiceAdmin

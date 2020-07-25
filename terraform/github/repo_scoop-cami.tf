@@ -3,7 +3,7 @@ resource "github_repository" "scoop-cami" {
   description  = "Scoop bucket for cami binaries. Powered by @goreleaser"
   homepage_url = "https://lingrino.com/"
 
-  default_branch = "master"
+  default_branch = "main"
   private        = false
 
   has_wiki   = false

@@ -3,7 +3,7 @@ resource "github_repository" "docker" {
   description  = "My docker images"
   homepage_url = "https://lingrino.com"
 
-  default_branch = "master"
+  default_branch = "main"
   private        = false
 
   has_wiki   = false
@@ -22,7 +22,7 @@ resource "github_repository" "docker" {
 
 resource "github_branch_protection" "docker" {
   repository     = github_repository.docker.name
-  branch         = "master"
+  branch         = "main"
   enforce_admins = true
 
   required_status_checks {

@@ -3,7 +3,7 @@ resource "github_repository" "cami" {
   description  = "A CLI and API for cleaning up unused AWS AMIs"
   homepage_url = "https://lingrino.com"
 
-  default_branch = "master"
+  default_branch = "main"
   private        = false
 
   has_wiki   = false

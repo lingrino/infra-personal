@@ -3,7 +3,7 @@ resource "github_repository" "snippets" {
   description  = "Useful code snippets not ready for OSS"
   homepage_url = "https://lingrino.com"
 
-  default_branch = "master"
+  default_branch = "main"
   private        = true
 
   has_wiki   = false
