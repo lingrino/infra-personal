@@ -45,6 +45,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_USER }}
           role-to-assume: arn:aws:iam::${{ matrix.account-id }}:role/ServiceAdmin
           role-session-name: GitHubActions
+          role-duration-seconds: 1800
       - name: Deploy SNS Notifier
         run: |
           eval "$(cat "${HOME}"/assume.sh)"
@@ -71,6 +72,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_USER }}
           role-to-assume: arn:aws:iam::${{ matrix.account-id }}:role/ServiceAdmin
           role-session-name: GitHubActions
+          role-duration-seconds: 1800
       - name: Deploy AMI Cleaner
         run: |
           eval "$(cat "${HOME}"/assume.sh)"
