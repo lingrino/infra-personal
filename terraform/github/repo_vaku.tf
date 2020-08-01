@@ -24,6 +24,11 @@ resource "github_repository" "vaku" {
   ]
 }
 
+module "vaku-labels" {
+  source = "../../terraform-modules/github-repo-labels//"
+  repo   = github_repository.vaku.name
+}
+
 resource "github_branch_protection" "vaku" {
   repository     = github_repository.vaku.name
   branch         = "main"
