@@ -14,7 +14,6 @@ resource "aws_s3_bucket_policy" "config" {
 
 resource "aws_s3_bucket" "config" {
   bucket_prefix = "${var.name_prefix}-config-"
-  region        = data.aws_region.current.name
   force_destroy = true
 
   acl = "private"
@@ -62,7 +61,6 @@ resource "aws_s3_bucket_policy" "logs" {
 
 resource "aws_s3_bucket" "logs" {
   bucket_prefix = "${var.name_prefix}-logs-"
-  region        = data.aws_region.current.name
   force_destroy = true
 
   acl = "log-delivery-write"

@@ -1,6 +1,5 @@
 resource "aws_s3_bucket" "s3" {
   bucket_prefix = "${var.name_prefix}-"
-  region        = "us-east-1"
   acl           = "private"
   force_destroy = true
 
