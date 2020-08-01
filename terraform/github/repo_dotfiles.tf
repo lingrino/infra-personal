@@ -21,3 +21,8 @@ resource "github_repository" "dotfiles" {
     "mac",
   ]
 }
+
+module "dotfiles-labels" {
+  source = "../../terraform-modules/github-repo-labels//"
+  repo   = github_repository.dotfiles.name
+}

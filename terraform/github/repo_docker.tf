@@ -20,6 +20,11 @@ resource "github_repository" "docker" {
   ]
 }
 
+module "docker-labels" {
+  source = "../../terraform-modules/github-repo-labels//"
+  repo   = github_repository.docker.name
+}
+
 resource "github_branch_protection" "docker" {
   repository     = github_repository.docker.name
   branch         = "main"

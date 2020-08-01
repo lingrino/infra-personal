@@ -22,6 +22,11 @@ resource "github_repository" "glen" {
   ]
 }
 
+module "glen-labels" {
+  source = "../../terraform-modules/github-repo-labels//"
+  repo   = github_repository.glen.name
+}
+
 resource "github_branch_protection" "glen" {
   repository     = github_repository.glen.name
   branch         = "main"

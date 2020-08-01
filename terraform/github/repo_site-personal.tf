@@ -19,3 +19,8 @@ resource "github_repository" "site-personal" {
     "website",
   ]
 }
+
+module "site-personal-labels" {
+  source = "../../terraform-modules/github-repo-labels//"
+  repo   = github_repository.site-personal.name
+}

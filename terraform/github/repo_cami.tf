@@ -22,3 +22,8 @@ resource "github_repository" "cami" {
     "golang",
   ]
 }
+
+module "cami-labels" {
+  source = "../../terraform-modules/github-repo-labels//"
+  repo   = github_repository.cami.name
+}

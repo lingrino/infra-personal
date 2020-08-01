@@ -44,3 +44,8 @@ resource "github_branch_protection" "infra-personal" {
     ]
   }
 }
+
+module "infra-personal-labels" {
+  source = "../../terraform-modules/github-repo-labels//"
+  repo   = github_repository.infra-personal.name
+}
