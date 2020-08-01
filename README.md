@@ -10,7 +10,7 @@ I take security very seriously. When done properly, this project should not pres
 
 ## Organization
 
-The terraform in this repo is organized in a function-specific way. This means that the terraform is separated primarily by the AWS account the the infra lives in, but also can be separated by specific functions to be managed. For example, there is terraform at `terraform/aws/accounts/prod`, but also at `terraform/aws/common/dns`. The first manages generic infrastructure in the account whereas the second manages a specific thing (DNS) in a non-specific account (prod).
+The terraform in this repo is organized in a function-specific way. This means that the terraform is separated primarily by the AWS account the infra lives in, but also can be separated by specific functions to be managed. For example, there is terraform at `terraform/aws/accounts/prod`, but also at `terraform/aws/common/dns`. The first manages generic infrastructure in the account whereas the second manages a specific thing (DNS) in a non-specific account (prod).
 
 As infrastructure grows I've found this to be the most scalable solution. One major problem that large terraform infrastructures encounter is the threading of outputs across many different workspaces. This organization mitigates output and remote state usage because we can manage stacks of infrastructure (such as dns or static sites) in separate self-contained workspaces.
 
