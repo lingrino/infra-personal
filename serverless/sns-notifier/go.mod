@@ -4,7 +4,7 @@ go 1.14
 
 require (
 	github.com/aws/aws-lambda-go v1.19.0
-	github.com/aws/aws-sdk-go v1.33.19
+	github.com/aws/aws-sdk-go v1.33.20
 	github.com/kr/text v0.2.0 // indirect
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	golang.org/x/net v0.0.0-20200707034311-ab3426394381 // indirect
