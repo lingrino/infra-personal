@@ -16,10 +16,18 @@
   apt_repository:
     repo: deb https://pkgs.tailscale.com/stable/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main
     state: present
+  register: R_tailscale_repo
+  retries: 3
+  delay: 10
+  until: R_tailscale_repo is not failed
 
 - name: Add the git ppa
   apt_repository:
     repo: ppa:git-core/ppa
+  register: R_git_repo
+  retries: 3
+  delay: 10
+  until: R_git_repo is not failed
 
 - name: Update all packages
   package:
