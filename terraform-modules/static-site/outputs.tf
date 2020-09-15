@@ -21,4 +21,5 @@ output "deployer_access_key_id" {
 output "deployer_secret_access_key" {
   description = "The AWS secrety access key that can deploy to the site"
   value       = aws_iam_access_key.deployer.secret
+  sensitive   = true
 }

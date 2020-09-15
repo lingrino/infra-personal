@@ -12,6 +12,7 @@ resource "tfe_workspace" "aws_common_dns" {
 
   vcs_repo {
     identifier     = "lingrino/infra-personal"
+    branch         = "main"
     oauth_token_id = var.oauth_token_id
   }
 

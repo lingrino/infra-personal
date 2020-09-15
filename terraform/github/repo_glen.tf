@@ -4,10 +4,11 @@ resource "github_repository" "glen" {
   homepage_url = "https://lingrino.com"
 
   default_branch = "main"
-  private        = false
+  visibility     = "public"
 
-  has_wiki   = false
-  has_issues = true
+  has_wiki     = false
+  has_issues   = true
+  has_projects = false
 
   allow_merge_commit     = true
   allow_squash_merge     = true
@@ -27,15 +28,15 @@ module "glen-labels" {
   repo   = github_repository.glen.name
 }
 
-resource "github_branch_protection" "glen" {
-  repository     = github_repository.glen.name
-  branch         = "main"
-  enforce_admins = true
+# resource "github_branch_protection" "glen" {
+#   repository     = github_repository.glen.name
+#   branch         = "main"
+#   enforce_admins = true
 
-  required_status_checks {
-    strict = true
-    contexts = [
-      "validate"
-    ]
-  }
-}
+#   required_status_checks {
+#     strict = true
+#     contexts = [
+#       "validate"
+#     ]
+#   }
+# }

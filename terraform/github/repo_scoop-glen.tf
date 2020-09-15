@@ -4,10 +4,11 @@ resource "github_repository" "scoop-glen" {
   homepage_url = "https://lingrino.com/"
 
   default_branch = "main"
-  private        = false
+  visibility     = "public"
 
-  has_wiki   = false
-  has_issues = false
+  has_wiki     = false
+  has_issues   = false
+  has_projects = false
 
   allow_merge_commit     = true
   allow_squash_merge     = true
