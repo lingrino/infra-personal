@@ -1,3 +1,3 @@
 provider "github" {
-  # individual = true
+  owner = "lingrino"
 }

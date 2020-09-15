@@ -4,10 +4,11 @@ resource "github_repository" "docker" {
   homepage_url = "https://lingrino.com"
 
   default_branch = "main"
-  private        = false
+  visibility     = "public"
 
-  has_wiki   = false
-  has_issues = true
+  has_wiki     = false
+  has_issues   = true
+  has_projects = false
 
   allow_merge_commit     = true
   allow_squash_merge     = true
@@ -25,16 +26,16 @@ module "docker-labels" {
   repo   = github_repository.docker.name
 }
 
-resource "github_branch_protection" "docker" {
-  repository     = github_repository.docker.name
-  branch         = "main"
-  enforce_admins = true
+# resource "github_branch_protection" "docker" {
+#   repository     = github_repository.docker.name
+#   branch         = "main"
+#   enforce_admins = true
 
-  required_status_checks {
-    strict = true
-    contexts = [
-      "build-and-push",
-      "lint"
-    ]
-  }
-}
+#   required_status_checks {
+#     strict = true
+#     contexts = [
+#       "build-and-push",
+#       "lint"
+#     ]
+#   }
+# }

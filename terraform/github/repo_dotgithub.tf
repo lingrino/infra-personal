@@ -1,7 +1,6 @@
-resource "github_repository" "cami" {
-  name         = "cami"
-  description  = "A CLI and API for cleaning up unused AWS AMIs"
-  homepage_url = "https://lingrino.com"
+resource "github_repository" "dotgithub" {
+  name        = ".github"
+  description = "My Default Community Health Files"
 
   default_branch = "main"
   visibility     = "public"
@@ -14,17 +13,9 @@ resource "github_repository" "cami" {
   allow_squash_merge     = true
   allow_rebase_merge     = true
   delete_branch_on_merge = true
-
-  topics = [
-    "aws",
-    "ami",
-    "cli",
-    "go",
-    "golang",
-  ]
 }
 
-module "cami-labels" {
+module "dotgithub-labels" {
   source = "../../terraform-modules/github-repo-labels//"
-  repo   = github_repository.cami.name
+  repo   = github_repository.dotgithub.name
 }

@@ -34,5 +34,6 @@ output "site_vaku_deployer_access_key_id" {
 }
 
 output "site_vaku_deployer_secret_access_key" {
-  value = module.vaku.deployer_secret_access_key
+  value     = module.vaku.deployer_secret_access_key
+  sensitive = true
 }

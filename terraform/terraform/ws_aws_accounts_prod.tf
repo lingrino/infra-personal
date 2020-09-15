@@ -12,6 +12,7 @@ resource "tfe_workspace" "aws_accounts_prod" {
 
   vcs_repo {
     identifier     = "lingrino/infra-personal"
+    branch         = "main"
     oauth_token_id = var.oauth_token_id
   }
 

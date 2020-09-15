@@ -38,5 +38,6 @@ output "site_personal_deployer_access_key_id" {
 }
 
 output "site_personal_deployer_secret_access_key" {
-  value = module.site_personal.deployer_secret_access_key
+  value     = module.site_personal.deployer_secret_access_key
+  sensitive = true
 }
