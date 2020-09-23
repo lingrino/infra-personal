@@ -1,5 +1,5 @@
 vault_version: 1.5.3
-vault_version_checksum: 322393aee141c4711fc5f9e1df9f461af3a861e59b8d4d0a85e82477cdbc73a0
+vault_version_checksum: 1ec61ff4d0b7ed774ba6f71829596afd8c8bf1d72c97305f4692001cef8910b2
 
 vault_name: vault
 vault_bin_path: /usr/local/bin/{{ vault_name }}
