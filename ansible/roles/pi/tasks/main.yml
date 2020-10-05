@@ -179,7 +179,7 @@
       service:
         name: "{{ traefik_name }}"
         state: restarted
-      when: (R_traefik_config.changed) or (R_traefik_dynamic.changed)
+      when: (R_traefik_download.changed) or (R_traefik_config.changed) or (R_traefik_dynamic.changed)
 
     - name: Start traefik
       service:
