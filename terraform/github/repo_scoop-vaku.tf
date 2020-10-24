@@ -1,7 +1,7 @@
 resource "github_repository" "scoop-vaku" {
   name         = "scoop-vaku"
   description  = "Scoop bucket for vaku binaries. Powered by @goreleaser"
-  homepage_url = "https://vaku.dev/"
+  homepage_url = "https://vaku.dev"
 
   default_branch = "main"
   visibility     = "public"

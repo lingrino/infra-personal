@@ -1,7 +1,7 @@
 resource "github_repository" "homebrew-tap" {
   name         = "homebrew-tap"
   description  = "Homebrew Tap for my personal projects. Powered by @goreleaser"
-  homepage_url = "https://lingrino.com/"
+  homepage_url = "https://lingrino.com"
 
   default_branch = "main"
   visibility     = "public"

@@ -1,7 +1,7 @@
 resource "github_repository" "scoop-glen" {
   name         = "scoop-glen"
   description  = "Scoop bucket for glen binaries. Powered by @goreleaser"
-  homepage_url = "https://lingrino.com/"
+  homepage_url = "https://lingrino.com"
 
   default_branch = "main"
   visibility     = "public"
