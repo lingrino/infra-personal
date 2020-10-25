@@ -16,9 +16,12 @@
     src: "{{ install_dir }}/awscli.zip"
     dest: "{{ install_dir }}"
     remote_src: true
+    mode: 0744
+  register: R_unarchive
 
 - name: Install
   command: "{{ install_dir }}/aws/install --update"
+  when: R_unarchive.changed
 
 - name: Cleanup
   file:

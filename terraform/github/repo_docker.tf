@@ -5,6 +5,7 @@ resource "github_repository" "docker" {
 
   default_branch = "main"
   visibility     = "public"
+  archived       = true
 
   has_wiki     = false
   has_issues   = true

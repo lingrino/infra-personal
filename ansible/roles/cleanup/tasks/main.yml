@@ -96,8 +96,14 @@
   when:
     - R_cleanup_log_files.files != []
 
+- name: Check Machine ID
+  stat:
+    path: /etc/machine-id
+  register: R_stat_machine_id
+
 - name: Truncate machine id
   command: truncate -s0 /etc/machine-id
+  when: R_stat_machine_id.exists
 
 - name: Find all history files
   find:
