@@ -61,7 +61,7 @@ resource "github_actions_secret" "vaku_s3_region" {
 }
 
 resource "github_branch_protection" "vaku" {
-  repository     = github_repository.vaku.node_id
+  repository_id  = github_repository.vaku.node_id
   pattern        = "main"
   enforce_admins = true
 

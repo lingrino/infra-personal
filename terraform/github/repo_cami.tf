@@ -30,7 +30,7 @@ module "cami-labels" {
 }
 
 resource "github_branch_protection" "cami" {
-  repository     = github_repository.cami.node_id
+  repository_id  = github_repository.cami.node_id
   pattern        = "main"
   enforce_admins = true
 

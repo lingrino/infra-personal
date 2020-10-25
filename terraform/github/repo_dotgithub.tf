@@ -21,7 +21,7 @@ module "dotgithub-labels" {
 }
 
 resource "github_branch_protection" "dotgithub" {
-  repository     = github_repository.dotgithub.node_id
+  repository_id  = github_repository.dotgithub.node_id
   pattern        = "main"
   enforce_admins = true
 
