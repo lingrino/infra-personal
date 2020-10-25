@@ -29,8 +29,8 @@ module "glen-labels" {
 }
 
 resource "github_branch_protection" "glen" {
-  repository     = github_repository.glen.name
-  branch         = "main"
+  repository     = github_repository.glen.node_id
+  pattern        = "main"
   enforce_admins = true
 
   required_status_checks {

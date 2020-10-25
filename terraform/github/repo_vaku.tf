@@ -61,8 +61,8 @@ resource "github_actions_secret" "vaku_s3_region" {
 }
 
 resource "github_branch_protection" "vaku" {
-  repository     = github_repository.vaku.name
-  branch         = "main"
+  repository     = github_repository.vaku.node_id
+  pattern        = "main"
   enforce_admins = true
 
   required_status_checks {

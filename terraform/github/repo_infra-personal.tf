@@ -42,8 +42,8 @@ resource "github_actions_secret" "infra_personal_aws_secret_access_key_user" {
 }
 
 resource "github_branch_protection" "infra-personal" {
-  repository     = github_repository.infra-personal.name
-  branch         = "main"
+  repository     = github_repository.infra-personal.node_id
+  pattern        = "main"
   enforce_admins = true
 
   required_status_checks {
