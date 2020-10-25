@@ -10,8 +10,9 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    container: lingrino/ci:latest
     steps:
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
       - name: Checkout Code
         uses: actions/checkout@v2
         with:

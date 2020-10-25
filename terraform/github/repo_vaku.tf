@@ -60,15 +60,20 @@ resource "github_actions_secret" "vaku_s3_region" {
   plaintext_value = "us-east-1"
 }
 
-# resource "github_branch_protection" "vaku" {
-#   repository     = github_repository.vaku.name
-#   branch         = "main"
-#   enforce_admins = true
+resource "github_branch_protection" "vaku" {
+  repository_id  = github_repository.vaku.node_id
+  pattern        = "main"
+  enforce_admins = true
 
-#   required_status_checks {
-#     strict = true
-#     contexts = [
-#       "validate"
-#     ]
-#   }
-# }
+  required_status_checks {
+    strict = true
+    contexts = [
+      "docs",
+      "golangci",
+      "gomod",
+      "goreleaser",
+      "test",
+      "validate",
+    ]
+  }
+}

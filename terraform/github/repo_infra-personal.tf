@@ -41,24 +41,26 @@ resource "github_actions_secret" "infra_personal_aws_secret_access_key_user" {
   plaintext_value = data.terraform_remote_state.account_auth.outputs.iam_user_github_actions_sak
 }
 
-# resource "github_branch_protection" "infra-personal" {
-#   repository     = github_repository.infra-personal.name
-#   branch         = "main"
-#   enforce_admins = true
+resource "github_branch_protection" "infra-personal" {
+  repository_id  = github_repository.infra-personal.node_id
+  pattern        = "main"
+  enforce_admins = true
 
-#   required_status_checks {
-#     strict = true
-#     contexts = [
-#       "atlas/lingrino/aws-accounts-audit",
-#       "atlas/lingrino/aws-accounts-auth",
-#       "atlas/lingrino/aws-accounts-dev",
-#       "atlas/lingrino/aws-accounts-prod",
-#       "atlas/lingrino/aws-accounts-root",
-#       "atlas/lingrino/aws-common-dns",
-#       "atlas/lingrino/aws-common-organization",
-#       "atlas/lingrino/github",
-#       "atlas/lingrino/tls",
-#       "validate"
-#     ]
-#   }
-# }
+  required_status_checks {
+    strict = true
+    contexts = [
+      "Terraform Cloud/lingrino/aws-accounts-audit",
+      "Terraform Cloud/lingrino/aws-accounts-auth",
+      "Terraform Cloud/lingrino/aws-accounts-dev",
+      "Terraform Cloud/lingrino/aws-accounts-prod",
+      "Terraform Cloud/lingrino/aws-accounts-root",
+      "Terraform Cloud/lingrino/aws-common-dns",
+      "Terraform Cloud/lingrino/aws-common-organization",
+      "Terraform Cloud/lingrino/github",
+      "Terraform Cloud/lingrino/github-lingrino-org",
+      "Terraform Cloud/lingrino/terraform",
+      "Terraform Cloud/lingrino/tls",
+      "validate"
+    ]
+  }
+}

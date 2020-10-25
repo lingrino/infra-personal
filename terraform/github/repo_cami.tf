@@ -28,3 +28,20 @@ module "cami-labels" {
   source = "../../terraform-modules/github-repo-labels//"
   repo   = github_repository.cami.name
 }
+
+resource "github_branch_protection" "cami" {
+  repository_id  = github_repository.cami.node_id
+  pattern        = "main"
+  enforce_admins = true
+
+  required_status_checks {
+    strict = true
+    contexts = [
+      "golangci",
+      "gomod",
+      "goreleaser",
+      "test",
+      "validate",
+    ]
+  }
+}
