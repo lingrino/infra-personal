@@ -27,6 +27,7 @@
     src: /usr/local/src/vault_{{ vault_version }}_linux_amd64.zip
     dest: /usr/local/bin
     remote_src: true
+    mode: 0744
 
 - name: set permissions on vault binary
   file:
@@ -55,7 +56,7 @@
     state: touch
     owner: vault
     group: vault
-    mode: 0200
+    mode: "0200"
 
 - name: add the vault service file
   template:

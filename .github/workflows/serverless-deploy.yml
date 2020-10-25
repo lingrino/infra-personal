@@ -51,7 +51,7 @@ jobs:
         with:
           go-version: 1.15 # https://golang.org/dl/
       - name: Install Serverless
-        run: npm install -g serverless
+        run: npm install serverless
       - name: AWS Assume Role
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -81,7 +81,7 @@ jobs:
         with:
           go-version: 1.15 # https://golang.org/dl/
       - name: Install Serverless
-        run: npm install -g serverless
+        run: npm install serverless
       - name: AWS Assume Role
         uses: aws-actions/configure-aws-credentials@v1
         with:
