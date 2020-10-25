@@ -9,14 +9,24 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    container: lingrino/ci:latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.15 # https://golang.org/dl/
       - name: Go Format
-        run: test -z $(gofmt -l -w -s ./...)
-      - name: GolangCI Lint
-        run: for d in ./*/ ; do (cd "$d" && golangci-lint run); done
-        working-directory: ./serverless
+        run: test -z $(gofmt -l -w -s .)
+      - name: Lint AMI Cleaner
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: v1.31 # https://github.com/golangci/golangci-lint/releases
+          working-directory: ./serverless/ami-cleaner
+      - name: Lint SNS Notifier
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: v1.31 # https://github.com/golangci/golangci-lint/releases
+          working-directory: ./serverless/ami-cleaner

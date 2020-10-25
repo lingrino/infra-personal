@@ -19,3 +19,16 @@ module "dotgithub-labels" {
   source = "../../terraform-modules/github-repo-labels//"
   repo   = github_repository.dotgithub.name
 }
+
+resource "github_branch_protection" "dotgithub" {
+  repository     = github_repository.dotgithub.name
+  branch         = "main"
+  enforce_admins = true
+
+  required_status_checks {
+    strict = true
+    contexts = [
+      "validate",
+    ]
+  }
+}
