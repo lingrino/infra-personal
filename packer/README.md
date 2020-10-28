@@ -10,10 +10,10 @@ Build images with the following commands
 
 ```shell
 # Build all images, must be authenticated already
-> packer build infra.json
+> packer build infra.pkr.hcl
 
 # Build only the AWS Images
-> packer build -except=docker-selfhosted infra.json
+> packer build -only 'amazon-ebs.*' infra.pkr.hcl
 ```
 
 ## Docker Based Images

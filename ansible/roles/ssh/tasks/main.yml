@@ -22,7 +22,7 @@
     regexp: "^#?UsePAM"
     line: "UsePAM yes"
 
-- name: restart sshd
+- name: restart ssh
   service:
-    name: sshd
+    name: ssh
     state: restarted

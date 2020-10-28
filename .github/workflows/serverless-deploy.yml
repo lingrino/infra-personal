@@ -27,13 +27,13 @@ jobs:
       - name: Lint AMI Cleaner
         uses: golangci/golangci-lint-action@v2
         with:
-          version: v1.31 # https://github.com/golangci/golangci-lint/releases
+          version: v1.32 # https://github.com/golangci/golangci-lint/releases
           working-directory: ./serverless/ami-cleaner
       - name: Lint SNS Notifier
         uses: golangci/golangci-lint-action@v2
         with:
-          version: v1.31 # https://github.com/golangci/golangci-lint/releases
-          working-directory: ./serverless/ami-cleaner
+          version: v1.32 # https://github.com/golangci/golangci-lint/releases
+          working-directory: ./serverless/sns-notifier
   deploy-snsnotifier:
     needs: validate
     runs-on: ubuntu-latest
@@ -51,7 +51,9 @@ jobs:
         with:
           go-version: 1.15 # https://golang.org/dl/
       - name: Install Serverless
-        run: npm install serverless
+        run: |
+          npm install serverless
+          echo "$GITHUB_WORKSPACE/node_modules/.bin" >> $GITHUB_PATH
       - name: AWS Assume Role
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -81,7 +83,9 @@ jobs:
         with:
           go-version: 1.15 # https://golang.org/dl/
       - name: Install Serverless
-        run: npm install serverless
+        run: |
+          npm install serverless
+          echo "$GITHUB_WORKSPACE/node_modules/.bin" >> $GITHUB_PATH
       - name: AWS Assume Role
         uses: aws-actions/configure-aws-credentials@v1
         with:

@@ -103,7 +103,7 @@
 
 - name: Truncate machine id
   command: truncate -s0 /etc/machine-id
-  when: R_stat_machine_id.exists
+  when: R_stat_machine_id.stat.exists
 
 - name: Find all history files
   find:
