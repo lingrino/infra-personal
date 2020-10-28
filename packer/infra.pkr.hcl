@@ -54,15 +54,12 @@ source "amazon-ebs" "bastion" {
   ]
 
   spot_tags = {
-    Name = "bastion"
-  }
-  dynamic "spot_tag" {
-    for_each = local.aws_tags
-
-    content {
-      key   = spot_tag.key
-      value = spot_tag.value
-    }
+    Name            = "bastion"
+    build_date      = "{{ timestamp }}"
+    os              = "${local.os_name}:${local.os_version}"
+    packer          = "true"
+    source_ami_id   = "{{ .SourceAMI }}"
+    source_ami_name = "{{ .SourceAMIName }}"
   }
 
   ssh_username      = "ubuntu"
@@ -70,27 +67,21 @@ source "amazon-ebs" "bastion" {
   shutdown_behavior = "terminate"
 
   run_tags = {
-    Name = "bastion"
-  }
-  dynamic "run_tag" {
-    for_each = local.aws_tags
-
-    content {
-      key   = run_tag.key
-      value = run_tag.value
-    }
+    Name            = "bastion"
+    build_date      = "{{ timestamp }}"
+    os              = "${local.os_name}:${local.os_version}"
+    packer          = "true"
+    source_ami_id   = "{{ .SourceAMI }}"
+    source_ami_name = "{{ .SourceAMIName }}"
   }
 
   run_volume_tags = {
-    Name = "bastion"
-  }
-  dynamic "run_volume_tag" {
-    for_each = local.aws_tags
-
-    content {
-      name  = run_volume_tag.key
-      value = run_volume_tag.value
-    }
+    Name            = "bastion"
+    build_date      = "{{ timestamp }}"
+    os              = "${local.os_name}:${local.os_version}"
+    packer          = "true"
+    source_ami_id   = "{{ .SourceAMI }}"
+    source_ami_name = "{{ .SourceAMIName }}"
   }
 
   ami_name        = "bastion-{{ timestamp }}"
@@ -101,15 +92,12 @@ source "amazon-ebs" "bastion" {
   ]
 
   tags = {
-    Name = "bastion"
-  }
-  dynamic "tag" {
-    for_each = local.aws_tags
-
-    content {
-      key   = tag.key
-      value = tag.value
-    }
+    Name            = "bastion"
+    build_date      = "{{ timestamp }}"
+    os              = "${local.os_name}:${local.os_version}"
+    packer          = "true"
+    source_ami_id   = "{{ .SourceAMI }}"
+    source_ami_name = "{{ .SourceAMIName }}"
   }
 }
 
@@ -143,15 +131,12 @@ source "amazon-ebs" "vault" {
   ]
 
   spot_tags = {
-    Name = "vault"
-  }
-  dynamic "spot_tag" {
-    for_each = local.aws_tags
-
-    content {
-      key   = spot_tag.key
-      value = spot_tag.value
-    }
+    Name            = "vault"
+    build_date      = "{{ timestamp }}"
+    os              = "${local.os_name}:${local.os_version}"
+    packer          = "true"
+    source_ami_id   = "{{ .SourceAMI }}"
+    source_ami_name = "{{ .SourceAMIName }}"
   }
 
   ssh_username      = "ubuntu"
@@ -159,27 +144,21 @@ source "amazon-ebs" "vault" {
   shutdown_behavior = "terminate"
 
   run_tags = {
-    Name = "vault"
-  }
-  dynamic "run_tag" {
-    for_each = local.aws_tags
-
-    content {
-      key   = run_tag.key
-      value = run_tag.value
-    }
+    Name            = "vault"
+    build_date      = "{{ timestamp }}"
+    os              = "${local.os_name}:${local.os_version}"
+    packer          = "true"
+    source_ami_id   = "{{ .SourceAMI }}"
+    source_ami_name = "{{ .SourceAMIName }}"
   }
 
   run_volume_tags = {
-    Name = "vault"
-  }
-  dynamic "run_volume_tag" {
-    for_each = local.aws_tags
-
-    content {
-      name  = run_volume_tag.key
-      value = run_volume_tag.value
-    }
+    Name            = "vault"
+    build_date      = "{{ timestamp }}"
+    os              = "${local.os_name}:${local.os_version}"
+    packer          = "true"
+    source_ami_id   = "{{ .SourceAMI }}"
+    source_ami_name = "{{ .SourceAMIName }}"
   }
 
   ami_name        = "vault-{{ timestamp }}"
@@ -190,15 +169,12 @@ source "amazon-ebs" "vault" {
   ]
 
   tags = {
-    Name = "vault"
-  }
-  dynamic "tag" {
-    for_each = local.aws_tags
-
-    content {
-      key   = tag.key
-      value = tag.value
-    }
+    Name            = "vault"
+    build_date      = "{{ timestamp }}"
+    os              = "${local.os_name}:${local.os_version}"
+    packer          = "true"
+    source_ami_id   = "{{ .SourceAMI }}"
+    source_ami_name = "{{ .SourceAMIName }}"
   }
 }
 

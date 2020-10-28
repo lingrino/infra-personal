@@ -29,5 +29,5 @@ jobs:
         with:
           targets: ansible/**/*.yml
       - name: Packer Validate
-        run: packer validate infra.json
+        run: packer validate infra.pkr.hcl
         working-directory: ./packer
