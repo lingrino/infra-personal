@@ -51,7 +51,9 @@ jobs:
         with:
           go-version: 1.15 # https://golang.org/dl/
       - name: Install Serverless
-        run: npm install serverless
+        run: |
+          npm install serverless
+          echo "$GITHUB_WORKSPACE/node_modules/.bin" >> $GITHUB_PATH
       - name: AWS Assume Role
         uses: aws-actions/configure-aws-credentials@v1
         with:
