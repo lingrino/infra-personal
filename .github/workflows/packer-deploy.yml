@@ -66,6 +66,5 @@ jobs:
           role-session-name: GitHubActions
           role-duration-seconds: 1800
       - name: Packer Build
-        run: |
-          packer build -only=ec2-bastion,ec2-vault infra.json
+        run: packer build -only 'amazon-ebs.*' infra.pkr.hcl
         working-directory: ./packer
