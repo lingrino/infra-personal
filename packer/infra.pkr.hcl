@@ -87,9 +87,7 @@ source "amazon-ebs" "bastion" {
   ami_name        = "bastion-{{ timestamp }}"
   ami_description = "AMI for bastion infrastructure"
 
-  ami_regions = [
-    "us-east-1",
-  ]
+  ami_regions = [local.aws_region]
 
   tags = {
     Name            = "bastion"
@@ -164,9 +162,7 @@ source "amazon-ebs" "vault" {
   ami_name        = "vault-{{ timestamp }}"
   ami_description = "AMI for vault infrastructure"
 
-  ami_regions = [
-    "us-east-1",
-  ]
+  ami_regions = [local.aws_region]
 
   tags = {
     Name            = "vault"
