@@ -7,7 +7,7 @@ module "vault" {
   vpc_id        = module.vpc.vpc_id
   alb_subnets   = module.vpc.subnets_public_ids
   ec2_subnets   = module.vpc.subnets_public_ids
-  ingress_cidrs = ["100.64.0.0/10"] # Tailscale cidr
+  ingress_cidrs = [module.vpc.vpc_cidr, "100.64.0.0/10"] # Tailscale cidr
 
   domain_name     = "vault.lingrino.dev"
   certificate_arn = module.cert_vault.certificate_arn
