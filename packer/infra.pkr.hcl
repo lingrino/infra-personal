@@ -9,6 +9,7 @@ locals {
     build_date      = "{{ timestamp }}"
     os              = "${local.os_name}:${local.os_version}"
     packer          = "true"
+    packer_version  = "${ packer.version }"
     source_ami_id   = "{{ .SourceAMI }}"
     source_ami_name = "{{ .SourceAMIName }}"
   }
@@ -58,6 +59,7 @@ source "amazon-ebs" "bastion" {
     build_date      = "{{ timestamp }}"
     os              = "${local.os_name}:${local.os_version}"
     packer          = "true"
+    packer_version  = "${ packer.version }"
     source_ami_id   = "{{ .SourceAMI }}"
     source_ami_name = "{{ .SourceAMIName }}"
   }
@@ -71,6 +73,7 @@ source "amazon-ebs" "bastion" {
     build_date      = "{{ timestamp }}"
     os              = "${local.os_name}:${local.os_version}"
     packer          = "true"
+    packer_version  = "${ packer.version }"
     source_ami_id   = "{{ .SourceAMI }}"
     source_ami_name = "{{ .SourceAMIName }}"
   }
@@ -80,6 +83,7 @@ source "amazon-ebs" "bastion" {
     build_date      = "{{ timestamp }}"
     os              = "${local.os_name}:${local.os_version}"
     packer          = "true"
+    packer_version  = "${ packer.version }"
     source_ami_id   = "{{ .SourceAMI }}"
     source_ami_name = "{{ .SourceAMIName }}"
   }
@@ -94,6 +98,7 @@ source "amazon-ebs" "bastion" {
     build_date      = "{{ timestamp }}"
     os              = "${local.os_name}:${local.os_version}"
     packer          = "true"
+    packer_version  = "${ packer.version }"
     source_ami_id   = "{{ .SourceAMI }}"
     source_ami_name = "{{ .SourceAMIName }}"
   }
@@ -133,6 +138,7 @@ source "amazon-ebs" "vault" {
     build_date      = "{{ timestamp }}"
     os              = "${local.os_name}:${local.os_version}"
     packer          = "true"
+    packer_version  = "${ packer.version }"
     source_ami_id   = "{{ .SourceAMI }}"
     source_ami_name = "{{ .SourceAMIName }}"
   }
@@ -146,6 +152,7 @@ source "amazon-ebs" "vault" {
     build_date      = "{{ timestamp }}"
     os              = "${local.os_name}:${local.os_version}"
     packer          = "true"
+    packer_version  = "${ packer.version }"
     source_ami_id   = "{{ .SourceAMI }}"
     source_ami_name = "{{ .SourceAMIName }}"
   }
@@ -155,6 +162,7 @@ source "amazon-ebs" "vault" {
     build_date      = "{{ timestamp }}"
     os              = "${local.os_name}:${local.os_version}"
     packer          = "true"
+    packer_version  = "${ packer.version }"
     source_ami_id   = "{{ .SourceAMI }}"
     source_ami_name = "{{ .SourceAMIName }}"
   }
@@ -169,6 +177,7 @@ source "amazon-ebs" "vault" {
     build_date      = "{{ timestamp }}"
     os              = "${local.os_name}:${local.os_version}"
     packer          = "true"
+    packer_version  = "${ packer.version }"
     source_ami_id   = "{{ .SourceAMI }}"
     source_ami_name = "{{ .SourceAMIName }}"
   }

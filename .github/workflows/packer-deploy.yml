@@ -23,7 +23,7 @@ jobs:
           sudo chmod 755 /usr/local/bin/packer
           rm -f /tmp/packer.zip
         env:
-          PACKER_VERSION: 1.6.4 # https://www.packer.io/downloads.html
+          PACKER_VERSION: 1.6.5 # https://www.packer.io/downloads.html
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
@@ -51,7 +51,7 @@ jobs:
           sudo chmod 755 /usr/local/bin/packer
           rm -f /tmp/packer.zip
         env:
-          PACKER_VERSION: 1.6.4 # https://www.packer.io/downloads.html
+          PACKER_VERSION: 1.6.5 # https://www.packer.io/downloads.html
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
