@@ -5,7 +5,7 @@ go 1.15
 require (
 	github.com/aws/aws-lambda-go v1.20.0
 	github.com/kr/text v0.2.0 // indirect
-	github.com/lingrino/cami v1.0.3
+	github.com/lingrino/cami v1.0.4
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	golang.org/x/net v0.0.0-20201031054903-ff519b6c9102 // indirect
 	golang.org/x/text v0.3.4 // indirect
