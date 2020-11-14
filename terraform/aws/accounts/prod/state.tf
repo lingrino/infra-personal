@@ -7,6 +7,15 @@ terraform {
       name = "aws-accounts-prod"
     }
   }
+
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+    tls = {
+      source = "hashicorp/tls"
+    }
+  }
 }
 
 data "terraform_remote_state" "organization" {

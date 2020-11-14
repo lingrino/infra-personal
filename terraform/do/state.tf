@@ -4,13 +4,16 @@ terraform {
     organization = "lingrino"
 
     workspaces {
-      name = "github-lingrino-org"
+      name = "do"
     }
   }
 
   required_providers {
-    github = {
-      source = "hashicorp/github"
+    digitalocean = {
+      source = "digitalocean/digitalocean"
+    }
+    kubernetes = {
+      source = "kubernetes"
     }
   }
 }

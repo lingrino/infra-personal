@@ -7,6 +7,12 @@ terraform {
       name = "aws-common-dns"
     }
   }
+
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
 }
 
 data "terraform_remote_state" "account_audit" {

@@ -7,6 +7,12 @@ terraform {
       name = "aws-accounts-dev"
     }
   }
+
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
 }
 
 data "terraform_remote_state" "account_audit" {

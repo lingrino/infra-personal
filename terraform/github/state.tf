@@ -7,6 +7,12 @@ terraform {
       name = "github"
     }
   }
+
+  required_providers {
+    github = {
+      source = "hashicorp/github"
+    }
+  }
 }
 
 data "terraform_remote_state" "account_auth" {

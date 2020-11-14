@@ -7,6 +7,15 @@ terraform {
       name = "vault"
     }
   }
+
+  required_providers {
+    tfe = {
+      source = "hashicorp/tfe"
+    }
+    vault = {
+      source = "hashicorp/vault"
+    }
+  }
 }
 
 data "terraform_remote_state" "terraform" {

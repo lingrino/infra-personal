@@ -7,4 +7,10 @@ terraform {
       name = "tls"
     }
   }
+
+  required_providers {
+    tls = {
+      source = "hashicorp/tls"
+    }
+  }
 }
