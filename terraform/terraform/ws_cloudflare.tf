@@ -1,9 +1,9 @@
-resource "tfe_workspace" "github" {
+resource "tfe_workspace" "cloudflare" {
   organization = tfe_organization.org.id
-  name         = "github"
+  name         = "cloudflare"
 
   terraform_version = "latest"
-  working_directory = "terraform/github"
+  working_directory = "terraform/cloudflare"
 
   operations            = false
   auto_apply            = true

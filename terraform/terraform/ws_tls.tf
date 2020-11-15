@@ -5,7 +5,7 @@ resource "tfe_workspace" "tls" {
   terraform_version = "latest"
   working_directory = "terraform/tls"
 
-  operations            = true
+  operations            = false
   auto_apply            = true
   queue_all_runs        = false
   file_triggers_enabled = true

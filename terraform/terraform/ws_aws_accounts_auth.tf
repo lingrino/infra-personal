@@ -5,7 +5,7 @@ resource "tfe_workspace" "aws_accounts_auth" {
   terraform_version = "latest"
   working_directory = "terraform/aws/accounts/auth"
 
-  operations            = true
+  operations            = false
   auto_apply            = true
   queue_all_runs        = false
   file_triggers_enabled = true

@@ -5,7 +5,7 @@ resource "tfe_workspace" "aws_common_organization" {
   terraform_version = "latest"
   working_directory = "terraform/aws/common/organization"
 
-  operations            = true
+  operations            = false
   auto_apply            = true
   queue_all_runs        = false
   file_triggers_enabled = true
