@@ -20,3 +20,17 @@ resource "tfe_workspace" "github" {
     "terraform-modules"
   ]
 }
+
+resource "tfe_notification_configuration" "github" {
+  name         = "github"
+  enabled      = true
+  workspace_id = tfe_workspace.github.id
+
+  destination_type = "email"
+  email_user_ids   = [tfe_organization_membership.lingrino.user_id]
+
+  triggers = [
+    "run:errored",
+    "run:needs_attention",
+  ]
+}

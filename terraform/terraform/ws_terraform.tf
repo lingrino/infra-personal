@@ -16,3 +16,17 @@ resource "tfe_workspace" "terraform" {
     oauth_token_id = var.oauth_token_id
   }
 }
+
+resource "tfe_notification_configuration" "terraform" {
+  name         = "terraform"
+  enabled      = true
+  workspace_id = tfe_workspace.terraform.id
+
+  destination_type = "email"
+  email_user_ids   = [tfe_organization_membership.lingrino.user_id]
+
+  triggers = [
+    "run:errored",
+    "run:needs_attention",
+  ]
+}

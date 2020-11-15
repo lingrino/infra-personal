@@ -20,3 +20,17 @@ resource "tfe_workspace" "aws_common_organization" {
     "terraform-modules"
   ]
 }
+
+resource "tfe_notification_configuration" "aws_common_organization" {
+  name         = "aws_common_organization"
+  enabled      = true
+  workspace_id = tfe_workspace.aws_common_organization.id
+
+  destination_type = "email"
+  email_user_ids   = [tfe_organization_membership.lingrino.user_id]
+
+  triggers = [
+    "run:errored",
+    "run:needs_attention",
+  ]
+}

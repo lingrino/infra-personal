@@ -16,3 +16,17 @@ resource "tfe_workspace" "do" {
     oauth_token_id = var.oauth_token_id
   }
 }
+
+resource "tfe_notification_configuration" "do" {
+  name         = "do"
+  enabled      = true
+  workspace_id = tfe_workspace.do.id
+
+  destination_type = "email"
+  email_user_ids   = [tfe_organization_membership.lingrino.user_id]
+
+  triggers = [
+    "run:errored",
+    "run:needs_attention",
+  ]
+}

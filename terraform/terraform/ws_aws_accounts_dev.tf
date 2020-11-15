@@ -20,3 +20,17 @@ resource "tfe_workspace" "aws_accounts_dev" {
     "terraform-modules"
   ]
 }
+
+resource "tfe_notification_configuration" "aws_accounts_dev" {
+  name         = "aws_accounts_dev"
+  enabled      = true
+  workspace_id = tfe_workspace.aws_accounts_dev.id
+
+  destination_type = "email"
+  email_user_ids   = [tfe_organization_membership.lingrino.user_id]
+
+  triggers = [
+    "run:errored",
+    "run:needs_attention",
+  ]
+}

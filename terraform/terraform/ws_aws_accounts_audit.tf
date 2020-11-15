@@ -20,3 +20,17 @@ resource "tfe_workspace" "aws_accounts_audit" {
     "terraform-modules"
   ]
 }
+
+resource "tfe_notification_configuration" "aws_accounts_audit" {
+  name         = "aws_accounts_audit"
+  enabled      = true
+  workspace_id = tfe_workspace.aws_accounts_audit.id
+
+  destination_type = "email"
+  email_user_ids   = [tfe_organization_membership.lingrino.user_id]
+
+  triggers = [
+    "run:errored",
+    "run:needs_attention",
+  ]
+}

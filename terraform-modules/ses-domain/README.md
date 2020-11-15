@@ -1,4 +1,3 @@
-
 # Module - SES Domain
 
 This module creates an SES sending domain and validates it with route53 DNS. The module will work even when the account that owns the DNS zone and the account that needs the delegation are different because the module takes explicitly passed providers.

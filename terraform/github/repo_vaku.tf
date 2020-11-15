@@ -30,36 +30,6 @@ module "vaku-labels" {
   repo   = github_repository.vaku.name
 }
 
-resource "github_actions_secret" "vaku_aws_access_key_id" {
-  repository      = github_repository.vaku.name
-  secret_name     = "AWS_ACCESS_KEY_ID"
-  plaintext_value = data.terraform_remote_state.account_prod.outputs.site_vaku_deployer_access_key_id
-}
-
-resource "github_actions_secret" "vaku_aws_secret_access_key_id" {
-  repository      = github_repository.vaku.name
-  secret_name     = "AWS_SECRET_ACCESS_KEY"
-  plaintext_value = data.terraform_remote_state.account_prod.outputs.site_vaku_deployer_secret_access_key
-}
-
-resource "github_actions_secret" "vaku_cf_distribution_id" {
-  repository      = github_repository.vaku.name
-  secret_name     = "CF_DISTRIBUTION_ID"
-  plaintext_value = data.terraform_remote_state.account_prod.outputs.site_vaku_distribution_id
-}
-
-resource "github_actions_secret" "vaku_s3_bucket_name" {
-  repository      = github_repository.vaku.name
-  secret_name     = "S3_BUCKET_NAME"
-  plaintext_value = data.terraform_remote_state.account_prod.outputs.site_vaku_bucket_name
-}
-
-resource "github_actions_secret" "vaku_s3_region" {
-  repository      = github_repository.vaku.name
-  secret_name     = "S3_REGION"
-  plaintext_value = "us-east-1"
-}
-
 resource "github_branch_protection" "vaku" {
   repository_id  = github_repository.vaku.node_id
   pattern        = "main"

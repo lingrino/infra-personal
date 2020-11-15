@@ -20,3 +20,17 @@ resource "tfe_workspace" "cloudflare" {
     "terraform-modules"
   ]
 }
+
+resource "tfe_notification_configuration" "cloudflare" {
+  name         = "cloudflare"
+  enabled      = true
+  workspace_id = tfe_workspace.cloudflare.id
+
+  destination_type = "email"
+  email_user_ids   = [tfe_organization_membership.lingrino.user_id]
+
+  triggers = [
+    "run:errored",
+    "run:needs_attention",
+  ]
+}

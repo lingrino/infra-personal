@@ -1,3 +1,14 @@
+#################################
+### Providers                 ###
+#################################
+provider "tfe" {}
+provider "vault" {
+  address = "https://vault.lingrino.dev"
+}
+
+#################################
+### Terraform                 ###
+#################################
 terraform {
   backend "remote" {
     hostname     = "app.terraform.io"
@@ -18,6 +29,9 @@ terraform {
   }
 }
 
+#################################
+### Remote State              ###
+#################################
 data "terraform_remote_state" "terraform" {
   backend = "remote"
 

@@ -1,3 +1,13 @@
+#################################
+### Providers                 ###
+#################################
+provider "github" {
+  owner = "lingrino"
+}
+
+#################################
+### Terraform                 ###
+#################################
 terraform {
   backend "remote" {
     hostname     = "app.terraform.io"
@@ -15,6 +25,9 @@ terraform {
   }
 }
 
+#################################
+### Remote State              ###
+#################################
 data "terraform_remote_state" "account_auth" {
   backend = "remote"
 
