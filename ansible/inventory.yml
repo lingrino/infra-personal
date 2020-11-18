@@ -4,6 +4,6 @@ all:
       hosts:
         pi:
           ansible_user: ubuntu
-          ansible_host: pi.lingrino.dev
+          ansible_host: 100.106.105.28
     bastions:
     vaults:

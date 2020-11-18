@@ -28,28 +28,8 @@ resource "cloudflare_record" "pi_lingrino_dev" {
   ))
 
   zone_id = module.zone_lingrino_dev.zone_id
+  proxied = true
   name    = each.key
-  type    = "A"
-  value   = "100.106.105.28"
-}
-
-resource "cloudflare_record" "phone_lingrino_dev" {
-  zone_id = module.zone_lingrino_dev.zone_id
-  name    = "phone.lingrino.dev."
-  type    = "A"
-  value   = "100.100.225.57"
-}
-
-resource "cloudflare_record" "ipad_lingrino_dev" {
-  zone_id = module.zone_lingrino_dev.zone_id
-  name    = "ipad.lingrino.dev."
-  type    = "A"
-  value   = "100.127.107.107"
-}
-
-resource "cloudflare_record" "work_lingrino_dev" {
-  zone_id = module.zone_lingrino_dev.zone_id
-  name    = "work.lingrino.dev."
-  type    = "A"
-  value   = "100.92.251.90"
+  type    = "CNAME"
+  value   = "ba6449e1-9ff4-4046-898c-07d6373404f6.cfargotunnel.com"
 }

@@ -1,0 +1,10 @@
+tunnel: {{ cloudflared_tunnel_uuid }}
+origincert: {{ cloudflared_cert_path }}
+credentials-file: {{ cloudflared_data_dir }}/{{ cloudflared_tunnel_uuid }}.json
+
+logfile: {{ cloudflared_log_path }}
+no-autoupdate: true
+no-tls-verify: {{ cloudflared_tunnel_no_tls_verify }}
+
+ingress:
+  - service: {{ cloudflared_tunnel_ingress }}

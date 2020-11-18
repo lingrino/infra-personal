@@ -3,6 +3,18 @@ variable "domain" {
   description = "The domain to create the zone for"
 }
 
+variable "enable_argo" {
+  type        = bool
+  description = "Whether or not to enable argo (requries initial confirmation in UI)"
+  default     = false
+}
+
+variable "enable_caching" {
+  type        = bool
+  description = "Whether or not to enable cloudflare caching features for the zone (first update content policies)."
+  default     = true
+}
+
 variable "enable_gsuite" {
   type        = bool
   description = "Whether or not to enable gsuite domain verification"
