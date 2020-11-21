@@ -13,6 +13,3 @@ adguard_web_passhash: "$2a$10$McM8A.r8YelurAYqZ1AireBakMXBx6XZVBkUR83ofNBGdVGB2q
 
 # Records must also be created in terraform/cloudflare to point here
 adguard_domain_main: adguard.lingrino.dev
-adguard_domain_sans:
-  - ad.lingrino.dev
-  - adg.lingrino.dev

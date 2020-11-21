@@ -89,5 +89,5 @@
   service:
     name: "{{ cloudflared_name }}"
     state: started
-# TODO resart when other things change?
+# TODO restart when other things change?
 # TODO set file permissions in ansible?

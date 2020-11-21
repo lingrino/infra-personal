@@ -4,7 +4,3 @@ cockpit_config_path: /etc/cockpit
 
 # Records must also be created in terraform/cloudflare to point here
 cockpit_domain_main: cockpit.lingrino.dev
-cockpit_domain_sans:
-  - cp.lingrino.dev
-  - pi.lingrino.dev
-  - home.lingrino.dev

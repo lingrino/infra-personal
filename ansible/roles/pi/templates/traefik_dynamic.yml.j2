@@ -1,38 +1,44 @@
 http:
   routers:
     traefik:
-      rule: "Host(`{{ traefik_domain_main }}`, {% for san in traefik_domain_sans %}`{{san}}`{% if not loop.last %}, {% endif %}{% endfor %})"
+      rule: "Host(`{{ traefik_domain_main }}`, {% if traefik_domain_sans is defined %}{% for san in traefik_domain_sans %}`{{san}}`{% if not loop.last %}, {% endif %}{% endfor %}{% endif %})"
       service: "api@internal"
       tls:
         certResolver: "letsencrypt"
         domains:
           - main: "{{ traefik_domain_main }}"
+{% if traefik_domain_sans is defined %}
             sans:
 {% for san in traefik_domain_sans %}
               - "{{ san }}"
 {% endfor %}
+{% endif %}
     adguard:
-      rule: "Host(`{{ adguard_domain_main }}`, {% for san in adguard_domain_sans %}`{{san}}`{% if not loop.last %}, {% endif %}{% endfor %})"
+      rule: "Host(`{{ adguard_domain_main }}`, {% if adguard_domain_sans is defined %}{% for san in adguard_domain_sans %}`{{san}}`{% if not loop.last %}, {% endif %}{% endfor %}{% endif %})"
       service: "adguard"
       tls:
         certResolver: "letsencrypt"
         domains:
           - main: "{{ adguard_domain_main }}"
+{% if adguard_domain_sans is defined %}
             sans:
 {% for san in adguard_domain_sans %}
               - "{{ san }}"
 {% endfor %}
+{% endif %}
     cockpit:
-      rule: "Host(`{{ cockpit_domain_main }}`, {% for san in cockpit_domain_sans %}`{{san}}`{% if not loop.last %}, {% endif %}{% endfor %})"
+      rule: "Host(`{{ cockpit_domain_main }}`, {% if cockpit_domain_sans is defined %}{% for san in cockpit_domain_sans %}`{{san}}`{% if not loop.last %}, {% endif %}{% endfor %}{% endif %})"
       service: "cockpit"
       tls:
         certResolver: "letsencrypt"
         domains:
           - main: "{{ cockpit_domain_main }}"
+{% if cockpit_domain_sans is defined %}
             sans:
 {% for san in cockpit_domain_sans %}
               - "{{ san }}"
 {% endfor %}
+{% endif %}
 
   services:
     adguard:
