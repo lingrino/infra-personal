@@ -47,6 +47,35 @@
     owner: root
     group: "{{ cloudflared_name }}"
 
+- name: Find tunnel json files
+  find:
+    paths:
+      - "{{ cloudflared_data_dir }}"
+    patterns:
+      - "*.json"
+  register: R_cloudflared_tunnels
+
+- name: Set cloudflared tunnel file permissions
+  file:
+    state: file
+    path: "{{ item.path }}"
+    mode: 0640
+    owner: root
+    group: "{{ cloudflared_name }}"
+    access_time: preserve
+    modification_time: preserve
+  loop: "{{ R_cloudflared_tunnels.files }}"
+
+- name: Set cloudflared cert file permissions
+  file:
+    state: file
+    path: "{{ cloudflared_data_dir }}/cert.pem"
+    mode: 0640
+    owner: root
+    group: "{{ cloudflared_name }}"
+    access_time: preserve
+    modification_time: preserve
+
 - name: Add the cloudflared log file
   file:
     state: touch
@@ -89,5 +118,9 @@
   service:
     name: "{{ cloudflared_name }}"
     state: started
-# TODO restart when other things change?
-# TODO set file permissions in ansible?
+
+- name: Restart cloudflared
+  service:
+    name: "{{ cloudflared_name }}"
+    state: restarted
+  when: (R_cloudflared_download.changed) or (R_cloudflared_config.changed)

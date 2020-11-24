@@ -5,5 +5,3 @@ all:
         pi:
           ansible_user: ubuntu
           ansible_host: 192.168.1.162
-    bastions:
-    vaults:

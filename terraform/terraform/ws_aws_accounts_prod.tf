@@ -5,9 +5,10 @@ resource "tfe_workspace" "aws_accounts_prod" {
   terraform_version = "latest"
   working_directory = "terraform/aws/accounts/prod"
 
-  operations            = false
+  execution_mode        = "local"
   auto_apply            = true
   queue_all_runs        = false
+  allow_destroy_plan    = false
   file_triggers_enabled = true
 
   vcs_repo {

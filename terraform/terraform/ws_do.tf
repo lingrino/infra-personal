@@ -5,9 +5,10 @@ resource "tfe_workspace" "do" {
   terraform_version = "latest"
   working_directory = "terraform/do"
 
-  operations            = false
+  execution_mode        = "local"
   auto_apply            = true
   queue_all_runs        = false
+  allow_destroy_plan    = false
   file_triggers_enabled = true
 
   vcs_repo {
