@@ -8,7 +8,7 @@ locals {
 }
 
 resource "cloudflare_access_application" "home" {
-  for_each = toset(local.hostnames_home)
+  for_each   = toset(local.hostnames_home)
   account_id = var.cloudflare_account_id
 
   name             = each.key
@@ -19,12 +19,12 @@ resource "cloudflare_access_application" "home" {
 resource "cloudflare_access_policy" "home" {
   for_each = cloudflare_access_application.home
 
-  account_id = var.cloudflare_account_id
+  account_id     = var.cloudflare_account_id
   application_id = each.value.id
 
-  name           = each.value.name
-  precedence     = "1"
-  decision       = "allow"
+  name       = each.value.name
+  precedence = 1
+  decision   = "allow"
 
   include {
     group = [cloudflare_access_group.admin.id]

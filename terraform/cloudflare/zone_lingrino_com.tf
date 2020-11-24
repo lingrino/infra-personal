@@ -27,3 +27,15 @@ resource "cloudflare_record" "lingrino_com_discard" {
   type    = "AAAA"
   value   = "100::"
 }
+
+module "ses_audit_lingrino_com" {
+  source = "../../terraform-modules/ses-domain//"
+
+  domain      = "audit.lingrino.com"
+  zone_id     = module.zone_lingrino_com.zone_id
+  ses_sns_arn = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
+
+  providers = {
+    aws = aws.audit
+  }
+}
