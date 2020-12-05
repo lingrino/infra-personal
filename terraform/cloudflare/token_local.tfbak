@@ -56,7 +56,6 @@ resource "cloudflare_api_token" "local" {
 
   policy {
     permission_groups = [
-      data.cloudflare_api_token_permission_groups.all.permissions["API Tokens Write"],
       data.cloudflare_api_token_permission_groups.all.permissions["Memberships Write"],
       data.cloudflare_api_token_permission_groups.all.permissions["User Details Write"],
     ]
