@@ -48,5 +48,6 @@ output "cert_router_chain" {
 }
 
 output "cert_router_priv" {
-  value = tls_private_key.cert_router.private_key_pem
+  value     = tls_private_key.cert_router.private_key_pem
+  sensitive = true
 }

@@ -56,3 +56,9 @@ variable "keybase_record_value" {
   description = "An optional keybase verification string, starts with keybase-site-verification="
   default     = ""
 }
+
+variable "github_record_value" {
+  type        = string
+  description = "An optional github verification string"
+  default     = ""
+}

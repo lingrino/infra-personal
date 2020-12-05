@@ -27,7 +27,7 @@ output "workspace_names" {
 }
 
 output "workspace_ids" {
-  description = "a list of all workspace ids (org-name/ws-name)"
+  description = "a list of all workspace ids"
   value       = local.workspaces[*].id
 }
 

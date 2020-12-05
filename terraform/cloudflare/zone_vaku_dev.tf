@@ -4,6 +4,7 @@ module "zone_vaku_dev" {
   domain = "vaku.dev"
 
   ses_sns_arn          = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
+  github_record_value  = "7438b66689"
   keybase_record_value = "keybase-site-verification=rErM6Ph75uLJbtGJuj6D9NsruOHOGWFRHh-5zFNc668"
 
   enable_gsuite     = true

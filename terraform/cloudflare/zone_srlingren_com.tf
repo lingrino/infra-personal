@@ -4,6 +4,7 @@ module "zone_srlingren_com" {
   domain = "srlingren.com"
 
   ses_sns_arn          = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
+  github_record_value  = "b155ad3c04"
   keybase_record_value = "keybase-site-verification=bGi1F-LK1JuddMPjZlB84NL6kvSmQ1uK2Us0r1SMt1c"
 
   enable_gsuite             = true

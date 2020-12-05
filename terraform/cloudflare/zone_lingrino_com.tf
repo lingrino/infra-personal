@@ -4,6 +4,7 @@ module "zone_lingrino_com" {
   domain = "lingrino.com"
 
   ses_sns_arn          = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
+  github_record_value  = "f57d22fc6a"
   keybase_record_value = "keybase-site-verification=OSEFJcKRkkit1mlWF_9zDpsE0q3ocWV8AfDWtbDU6lo"
 
   enable_gsuite     = true
