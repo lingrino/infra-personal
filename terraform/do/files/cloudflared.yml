@@ -1,6 +1,6 @@
-tunnel: 4f6493bb-48d1-479a-895a-5869ee2cb09b
+tunnel: ${cloudflared_tunnel_uuid}
 origincert: /etc/cloudflared/cert.pem
-credentials-file: /etc/cloudflared/4f6493bb-48d1-479a-895a-5869ee2cb09b.json
+credentials-file: /etc/cloudflared/${cloudflared_tunnel_uuid}.json
 no-autoupdate: true
 
 ingress:

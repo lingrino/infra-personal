@@ -16,8 +16,8 @@ logs:
 # Deploy the cloudflared sidecar container
 deployment:
   additionalContainers:
-    - name: cloudflare
-      image: docker.io/cloudflare/cloudflared:2020.11.11
+    - name: cloudflared
+      image: docker.io/cloudflare/cloudflared:${cloudflared_version}
       imagePullPolicy: IfNotPresent
       command: ["cloudflared", "tunnel", "run"]
       resources:
@@ -38,4 +38,4 @@ deployment:
           - secret:
               name: cloudflared
           - configMap:
-              name: cloudflared
+              name: ${cloudflared_configmap_name}
