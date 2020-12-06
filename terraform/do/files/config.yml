@@ -1,0 +1,9 @@
+tunnel: 4f6493bb-48d1-479a-895a-5869ee2cb09b
+origincert: /etc/cloudflared/cert.pem
+credentials-file: /etc/cloudflared/4f6493bb-48d1-479a-895a-5869ee2cb09b.json
+no-autoupdate: true
+
+ingress:
+  - hostname: "*.lingrino.dev"
+    service: http://localhost:8000
+  - service: http_status:404

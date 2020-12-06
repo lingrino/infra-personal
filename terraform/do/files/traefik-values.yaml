@@ -1,0 +1,41 @@
+# https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
+
+# Check for new versiosn
+globalArguments:
+  - "--global.checknewversion"
+
+# Don't enable service because cloudflared sidecar handles routing
+service:
+  enabled: false
+
+# Enable access logs
+logs:
+  access:
+    enabled: true
+
+# Deploy the cloudflared sidecar container
+deployment:
+  additionalContainers:
+    - name: cloudflare
+      image: docker.io/cloudflare/cloudflared:2020.11.11
+      imagePullPolicy: IfNotPresent
+      command: ["cloudflared", "tunnel", "run"]
+      resources:
+        limits:
+          cpu: 10m
+          memory: 20Mi
+        requests:
+          cpu: 10m
+          memory: 20Mi
+      volumeMounts:
+        - name: cloudflared
+          mountPath: /etc/cloudflared
+          readOnly: true
+  additionalVolumes:
+    - name: cloudflared
+      projected:
+        sources:
+          - secret:
+              name: cloudflared
+          - configMap:
+              name: cloudflared
