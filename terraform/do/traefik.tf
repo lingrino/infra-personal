@@ -1,5 +1,5 @@
 locals {
-  cloudflared_version     = "2020.11.11"
+  cloudflared_version     = "2020.11.11" # https://github.com/cloudflare/cloudflared/releases
   cloudflared_tunnel_uuid = "4f6493bb-48d1-479a-895a-5869ee2cb09b"
 }
 

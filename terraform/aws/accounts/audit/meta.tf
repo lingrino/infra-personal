@@ -23,6 +23,7 @@ terraform {
       name = "aws-accounts-audit"
     }
   }
+
   required_providers {
     aws = {
       source = "hashicorp/aws"
