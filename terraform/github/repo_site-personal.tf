@@ -3,8 +3,7 @@ resource "github_repository" "site-personal" {
   description  = "My personal website"
   homepage_url = "https://lingrino.com"
 
-  default_branch = "main"
-  visibility     = "public"
+  visibility = "public"
 
   has_wiki     = false
   has_issues   = false
@@ -24,4 +23,14 @@ resource "github_repository" "site-personal" {
 module "site-personal-labels" {
   source = "../../terraform-modules/github-repo-labels//"
   repo   = github_repository.site-personal.name
+}
+
+resource "github_branch" "site-personal" {
+  repository = github_repository.site-personal.name
+  branch     = "main"
+}
+
+resource "github_branch_default" "site-personal" {
+  repository = github_repository.site-personal.name
+  branch     = github_branch.site-personal.branch
 }

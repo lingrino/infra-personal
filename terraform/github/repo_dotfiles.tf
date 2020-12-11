@@ -3,8 +3,7 @@ resource "github_repository" "dotfiles" {
   description  = "Maintain your local environment wth Ansible"
   homepage_url = "https://lingrino.com"
 
-  default_branch = "main"
-  visibility     = "public"
+  visibility = "public"
 
   has_wiki     = false
   has_issues   = true
@@ -26,4 +25,14 @@ resource "github_repository" "dotfiles" {
 module "dotfiles-labels" {
   source = "../../terraform-modules/github-repo-labels//"
   repo   = github_repository.dotfiles.name
+}
+
+resource "github_branch" "dotfiles" {
+  repository = github_repository.dotfiles.name
+  branch     = "main"
+}
+
+resource "github_branch_default" "dotfiles" {
+  repository = github_repository.dotfiles.name
+  branch     = github_branch.dotfiles.branch
 }

@@ -3,8 +3,7 @@ resource "github_repository" "homebrew-tap" {
   description  = "Homebrew Tap for my personal projects. Powered by @goreleaser"
   homepage_url = "https://lingrino.com"
 
-  default_branch = "main"
-  visibility     = "public"
+  visibility = "public"
 
   has_wiki     = false
   has_issues   = false
@@ -19,4 +18,14 @@ resource "github_repository" "homebrew-tap" {
     "brew",
     "homebrew",
   ]
+}
+
+resource "github_branch" "homebrew-tap" {
+  repository = github_repository.homebrew-tap.name
+  branch     = "main"
+}
+
+resource "github_branch_default" "homebrew-tap" {
+  repository = github_repository.homebrew-tap.name
+  branch     = github_branch.homebrew-tap.branch
 }

@@ -2,8 +2,7 @@ resource "github_repository" "dotgithub" {
   name        = ".github"
   description = "My Default Community Health Files"
 
-  default_branch = "main"
-  visibility     = "public"
+  visibility = "public"
 
   has_wiki     = false
   has_issues   = true
@@ -20,9 +19,19 @@ module "dotgithub-labels" {
   repo   = github_repository.dotgithub.name
 }
 
+resource "github_branch" "dotgithub" {
+  repository = github_repository.dotgithub.name
+  branch     = "main"
+}
+
+resource "github_branch_default" "dotgithub" {
+  repository = github_repository.dotgithub.name
+  branch     = github_branch.dotgithub.branch
+}
+
 resource "github_branch_protection" "dotgithub" {
   repository_id  = github_repository.dotgithub.node_id
-  pattern        = "main"
+  pattern        = github_branch.dotgithub.branch
   enforce_admins = true
 
   required_status_checks {

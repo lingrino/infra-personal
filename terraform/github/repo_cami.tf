@@ -3,8 +3,7 @@ resource "github_repository" "cami" {
   description  = "A CLI and API for cleaning up unused AWS AMIs"
   homepage_url = "https://lingrino.com"
 
-  default_branch = "main"
-  visibility     = "public"
+  visibility = "public"
 
   has_wiki     = false
   has_issues   = true
@@ -29,9 +28,19 @@ module "cami-labels" {
   repo   = github_repository.cami.name
 }
 
+resource "github_branch" "cami" {
+  repository = github_repository.cami.name
+  branch     = "main"
+}
+
+resource "github_branch_default" "cami" {
+  repository = github_repository.cami.name
+  branch     = github_branch.cami.branch
+}
+
 resource "github_branch_protection" "cami" {
   repository_id  = github_repository.cami.node_id
-  pattern        = "main"
+  pattern        = github_branch.cami.branch
   enforce_admins = true
 
   required_status_checks {

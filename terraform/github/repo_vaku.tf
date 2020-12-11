@@ -3,8 +3,7 @@ resource "github_repository" "vaku" {
   description  = "Vaku extends the Vault API & CLI"
   homepage_url = "https://vaku.dev"
 
-  default_branch = "main"
-  visibility     = "public"
+  visibility = "public"
 
   has_wiki     = false
   has_issues   = true
@@ -30,9 +29,19 @@ module "vaku-labels" {
   repo   = github_repository.vaku.name
 }
 
+resource "github_branch" "vaku" {
+  repository = github_repository.vaku.name
+  branch     = "main"
+}
+
+resource "github_branch_default" "vaku" {
+  repository = github_repository.vaku.name
+  branch     = github_branch.vaku.branch
+}
+
 resource "github_branch_protection" "vaku" {
   repository_id  = github_repository.vaku.node_id
-  pattern        = "main"
+  pattern        = github_branch.vaku.branch
   enforce_admins = true
 
   required_status_checks {

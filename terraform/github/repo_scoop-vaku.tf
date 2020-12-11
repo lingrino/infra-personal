@@ -3,8 +3,7 @@ resource "github_repository" "scoop-vaku" {
   description  = "Scoop bucket for vaku binaries. Powered by @goreleaser"
   homepage_url = "https://vaku.dev"
 
-  default_branch = "main"
-  visibility     = "public"
+  visibility = "public"
 
   has_wiki     = false
   has_issues   = false
@@ -19,4 +18,14 @@ resource "github_repository" "scoop-vaku" {
     "scoop",
     "vaku",
   ]
+}
+
+resource "github_branch" "scoop-vaku" {
+  repository = github_repository.scoop-vaku.name
+  branch     = "main"
+}
+
+resource "github_branch_default" "scoop-vaku" {
+  repository = github_repository.scoop-vaku.name
+  branch     = github_branch.scoop-vaku.branch
 }
