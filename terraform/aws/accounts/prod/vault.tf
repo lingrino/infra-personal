@@ -1,50 +1,141 @@
-# module "vault" {
-#   source = "../../../../terraform-modules/vault//"
+resource "aws_dynamodb_table" "vault" {
+  name         = "vault"
+  billing_mode = "PAY_PER_REQUEST"
 
-#   name_prefix = "vault"
-#   dr_region   = "us-west-2"
+  stream_enabled   = true
+  stream_view_type = "NEW_AND_OLD_IMAGES"
 
-#   vpc_id        = module.vpc.vpc_id
-#   alb_subnets   = module.vpc.subnets_public_ids
-#   ec2_subnets   = module.vpc.subnets_public_ids
-#   ingress_cidrs = [module.vpc.vpc_cidr, "100.64.0.0/10"] # Tailscale cidr
+  hash_key  = "Path"
+  range_key = "Key"
 
-#   domain_name     = "vault.lingrino.dev"
-#   certificate_arn = module.cert_vault.certificate_arn
+  attribute {
+    name = "Path"
+    type = "S"
+  }
+  attribute {
+    name = "Key"
+    type = "S"
+  }
 
-#   ami_owner_id  = var.account_id_prod
-#   instance_type = "t3.small"
-#   key_name      = var.keypair_main_name
+  replica {
+    region_name = "us-west-2"
+  }
 
-#   min_size         = 1
-#   max_size         = 2
-#   desired_capacity = 1
+  server_side_encryption {
+    enabled = true
+  }
 
-#   tags = var.tags
-# }
+  point_in_time_recovery {
+    enabled = true
+  }
 
-# module "cert_vault" {
-#   source = "../../../../terraform-modules/acm-certificate//"
+  tags = merge(
+    { "Name" = "vault" },
+    var.tags,
+  )
+}
 
-#   zone_name   = "lingrino.dev."
-#   domain_name = "vault.lingrino.dev"
+resource "aws_kms_alias" "vault" {
+  name          = "alias/vault/unseal"
+  target_key_id = aws_kms_key.vault.key_id
+}
 
-#   tags = var.tags
+resource "aws_kms_key" "vault" {
+  enable_key_rotation = true
 
-#   providers = {
-#     aws.cert = aws.cert
-#     aws.dns  = aws.dns
-#   }
-# }
+  tags = merge(
+    { "Name" = "vault/unseal" },
+    { "description" = "KMS key used for vault auto unseal" },
+    var.tags,
+  )
+}
 
-# resource "aws_route53_record" "vault" {
-#   zone_id = data.aws_route53_zone.lingrino_dev.zone_id
-#   name    = "vault.lingrino.dev"
-#   type    = "A"
+resource "aws_iam_user" "vault" {
+  name          = "vault"
+  force_destroy = true
 
-#   alias {
-#     name                   = module.vault.alb_dns_name
-#     zone_id                = module.vault.alb_zone_id
-#     evaluate_target_health = false
-#   }
-# }
+  tags = merge(
+    { "Name" = "vault" },
+    var.tags,
+  )
+}
+
+resource "aws_iam_user_policy" "vault" {
+  name_prefix = "vault-"
+  user        = aws_iam_user.vault.id
+  policy      = data.aws_iam_policy_document.vault.json
+}
+
+data "aws_iam_policy_document" "vault" {
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "dynamodb:BatchGetItem",
+      "dynamodb:BatchWriteItem",
+      "dynamodb:DeleteItem",
+      "dynamodb:DescribeLimits",
+      "dynamodb:DescribeReservedCapacity",
+      "dynamodb:DescribeReservedCapacityOfferings",
+      "dynamodb:DescribeTable",
+      "dynamodb:DescribeTimeToLive",
+      "dynamodb:GetItem",
+      "dynamodb:GetRecords",
+      "dynamodb:ListTables",
+      "dynamodb:ListTagsOfResource",
+      "dynamodb:PutItem",
+      "dynamodb:Query",
+      "dynamodb:Scan",
+      "dynamodb:UpdateItem",
+    ]
+
+    resources = [
+      aws_dynamodb_table.vault.arn,
+      "${aws_dynamodb_table.vault.arn}/*",
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "kms:Encrypt",
+      "kms:Decrypt",
+      "kms:DescribeKey",
+    ]
+
+    resources = [
+      aws_kms_key.vault.arn,
+    ]
+  }
+}
+
+resource "aws_iam_access_key" "vault" {
+  user = aws_iam_user.vault.name
+}
+
+output "vault_region" {
+  description = "The AWS region that vault is deployed to"
+  value       = "us-east-1"
+}
+
+output "vault_dynamo_name" {
+  description = "The name of the vault dynamo table"
+  value       = aws_dynamodb_table.vault.name
+}
+
+output "vault_kms_id" {
+  description = "The ID of the KMS key used for vault auto unseal"
+  value       = aws_kms_key.vault.key_id
+}
+
+output "vault_user_akid" {
+  description = "The AWS Access Key ID of the vault user"
+  value       = aws_iam_access_key.vault.id
+}
+
+output "vault_user_sak" {
+  description = "The AWS Secret Access Key of the vault user"
+  value       = aws_iam_access_key.vault.secret
+  sensitive   = true
+}

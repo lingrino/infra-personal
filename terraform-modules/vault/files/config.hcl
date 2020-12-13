@@ -38,12 +38,12 @@ listener "tcp" {
 }
 
 storage "dynamodb" {
-    ha_enabled = "true"
+  ha_enabled = "true"
 
-    table  = "${ dynamo_name }"
-    region = "${ region }"
+  table  = "${ dynamo_name }"
+  region = "${ region }"
 
-    max_parallel = "512"
+  max_parallel = "512"
 }
 
 telemetry {

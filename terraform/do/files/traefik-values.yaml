@@ -8,6 +8,16 @@ globalArguments:
 service:
   enabled: false
 
+# Create separate ingress for the dashboard later
+ingressRoute:
+  dashboard:
+    enabled: false
+
+# Only use the new crd, this is the old ingress method
+providers:
+  kubernetesIngress:
+    enabled: false
+
 # Enable access logs
 logs:
   access:

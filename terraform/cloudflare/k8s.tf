@@ -1,14 +1,13 @@
 locals {
-  tunnel_uuid_home = "46ca3688-fb9f-48c0-9886-170661852b3e.cfargotunnel.com"
-  hostnames_home = [
-    "home",
-    "adguard",
-    "cockpit",
+  tunnel_uuid_k8s = "4f6493bb-48d1-479a-895a-5869ee2cb09b.cfargotunnel.com"
+  hostnames_k8s = [
+    "k8s",
+    "vault"
   ]
 }
 
-resource "cloudflare_access_application" "home" {
-  for_each   = toset(local.hostnames_home)
+resource "cloudflare_access_application" "k8s" {
+  for_each   = toset(local.hostnames_k8s)
   account_id = var.cloudflare_account_id
 
   name             = each.key
@@ -16,8 +15,8 @@ resource "cloudflare_access_application" "home" {
   session_duration = "168h" # 1 week
 }
 
-resource "cloudflare_access_policy" "home" {
-  for_each = cloudflare_access_application.home
+resource "cloudflare_access_policy" "k8s" {
+  for_each = cloudflare_access_application.k8s
 
   account_id     = var.cloudflare_account_id
   application_id = each.value.id
@@ -31,12 +30,12 @@ resource "cloudflare_access_policy" "home" {
   }
 }
 
-resource "cloudflare_record" "home" {
-  for_each = cloudflare_access_application.home
+resource "cloudflare_record" "k8s" {
+  for_each = cloudflare_access_application.k8s
 
   zone_id = module.zone_lingrino_dev.zone_id
   proxied = true
   name    = each.value.domain
   type    = "CNAME"
-  value   = local.tunnel_uuid_home
+  value   = local.tunnel_uuid_k8s
 }

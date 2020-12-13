@@ -16,7 +16,7 @@ resource "kubernetes_config_map" "cloudflared" {
   }
 
   data = {
-    "config.yml" = templatefile("files/cloudflared.yml", {
+    "config.yml" = templatefile("files/cloudflared.yaml", {
       cloudflared_tunnel_uuid = local.cloudflared_tunnel_uuid
     })
   }
@@ -35,6 +35,6 @@ resource "helm_release" "traefik" {
 
   values = [templatefile("files/traefik-values.yaml", {
     cloudflared_version        = local.cloudflared_version
-    cloudflared_configmap_name = kubernetes_config_map.cloudflared.id
+    cloudflared_configmap_name = kubernetes_config_map.cloudflared.metadata.0.name
   })]
 }

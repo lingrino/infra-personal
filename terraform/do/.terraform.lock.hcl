@@ -1,6 +1,13 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
+provider "registry.terraform.io/cloudflare/cloudflare" {
+  version = "2.14.0"
+  hashes = [
+    "h1:cUJO7MT2DtUMjK2FtXwEcjqg6kv1TIqEs1gNXqdP4LE=",
+  ]
+}
+
 provider "registry.terraform.io/digitalocean/digitalocean" {
   version = "2.3.0"
   hashes = [
@@ -42,5 +49,12 @@ provider "registry.terraform.io/hashicorp/kubernetes" {
   version = "1.13.3"
   hashes = [
     "h1:iV0RArGM0KJ3n0ctwpNzcTkTAnx5G4wV3V3kYkRpJXU=",
+  ]
+}
+
+provider "registry.terraform.io/hashicorp/tls" {
+  version = "3.0.0"
+  hashes = [
+    "h1:AcQGOAD5xa4KE9gYw5g7R6UU8a77Yn/afPvch4N86lQ=",
   ]
 }
