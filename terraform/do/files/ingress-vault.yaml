@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: vault
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`vault.lingrino.dev`)
+      services:
+        - kind: Service
+          name: vault-ui
+          namespace: vault-bjwgv
+          port: 8200

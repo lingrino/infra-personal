@@ -20,8 +20,21 @@ providers:
 
 # Enable access logs
 logs:
+  general:
+    format: json
   access:
+    format: json
     enabled: true
+
+# Do not expose, argo handles exposure through external tunnel
+ports:
+  web:
+    expose: true
+    redirectTo: websecure
+  websecure:
+    expose: true
+    tls:
+      enabled: true
 
 # Deploy the cloudflared sidecar container
 deployment:

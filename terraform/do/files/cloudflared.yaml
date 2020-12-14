@@ -5,5 +5,7 @@ no-autoupdate: true
 
 ingress:
   - hostname: "*.lingrino.dev"
-    service: http://localhost:8000
+    service: https://localhost:8443
+    originRequest:
+      noTLSVerify: true # cannot make certs for localhost
   - service: http_status:404

@@ -1,5 +1,5 @@
 global:
-  tlsDisable: false
+  tlsDisable: true
   psp:
     enable: true
 
@@ -18,6 +18,9 @@ server:
     enabled: true
     path: "/v1/sys/health?standbyok=true"
     initialDelaySeconds: 60
+
+  extraEnvironmentVars:
+    VAULT_ADDR: "http://127.0.0.1:9200"
 
   extraSecretEnvironmentVars:
     - envName: AWS_REGION
@@ -66,10 +69,15 @@ server:
       }
 
       listener "tcp" {
+        address     = "127.0.0.1:9200"
+        tls_disable = "true"
+      }
+
+      listener "tcp" {
         address         = "[::]:8200"
         cluster_address = "[::]:8201"
 
-        tls_disable     = "false"
+        tls_disable     = "true"
         tls_min_version = "tls13"
         tls_cert_file   = "/vault/userconfig/${ secret_certs_name }/crt.pem"
         tls_key_file    = "/vault/userconfig/${ secret_certs_name }/key.pem"
@@ -90,15 +98,4 @@ server:
       }
 
 ui:
-  # True if you want to create a Service entry for the Vault UI.
-  #
-  # serviceType can be used to control the type of service created. For
-  # example, setting this to "LoadBalancer" will create an external load
-  # balancer (for supported K8S installations) to access the UI.
-  enabled: false
-  publishNotReadyAddresses: true
-  # The service should only contain selectors for active Vault pod
-  activeVaultPodOnly: false
-  serviceType: "ClusterIP"
-  serviceNodePort: null
-  externalPort: 8200
+  enabled: true
