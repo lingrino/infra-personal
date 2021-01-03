@@ -3,8 +3,7 @@ resource "github_repository" "infra-personal" {
   description  = "Terraform for setting up my personal infrastructure"
   homepage_url = "https://lingrino.com"
 
-  default_branch = "main"
-  visibility     = "public"
+  visibility = "public"
 
   has_wiki     = false
   has_issues   = true
@@ -29,6 +28,16 @@ module "infra-personal-labels" {
   repo   = github_repository.infra-personal.name
 }
 
+resource "github_branch" "infra-personal" {
+  repository = github_repository.infra-personal.name
+  branch     = "main"
+}
+
+resource "github_branch_default" "infra-personal" {
+  repository = github_repository.infra-personal.name
+  branch     = github_branch.infra-personal.branch
+}
+
 resource "github_actions_secret" "infra_personal_aws_access_key_id_user" {
   repository      = github_repository.infra-personal.name
   secret_name     = "AWS_ACCESS_KEY_ID_USER"
@@ -43,7 +52,7 @@ resource "github_actions_secret" "infra_personal_aws_secret_access_key_user" {
 
 resource "github_branch_protection" "infra-personal" {
   repository_id  = github_repository.infra-personal.node_id
-  pattern        = "main"
+  pattern        = github_branch.infra-personal.branch
   enforce_admins = true
 
   required_status_checks {
@@ -54,8 +63,9 @@ resource "github_branch_protection" "infra-personal" {
       "Terraform Cloud/lingrino/aws-accounts-dev",
       "Terraform Cloud/lingrino/aws-accounts-prod",
       "Terraform Cloud/lingrino/aws-accounts-root",
-      "Terraform Cloud/lingrino/aws-common-dns",
       "Terraform Cloud/lingrino/aws-common-organization",
+      "Terraform Cloud/lingrino/cloudflare",
+      "Terraform Cloud/lingrino/do",
       "Terraform Cloud/lingrino/github",
       "Terraform Cloud/lingrino/github-lingrino-org",
       "Terraform Cloud/lingrino/terraform",

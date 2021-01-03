@@ -1,0 +1,244 @@
+locals {
+  ksm_name    = "kube-state-metrics"
+  ksm_version = "1.9.7"
+  ksm_shared_labels = {
+    "app.kubernetes.io/name"    = local.ksm_name
+    "app.kubernetes.io/version" = local.ksm_version
+  }
+}
+
+resource "kubernetes_cluster_role" "kube_state_metrics" {
+  metadata {
+    name   = local.ksm_name
+    labels = local.ksm_shared_labels
+  }
+
+  rule {
+    api_groups = [""]
+    verbs      = ["list", "watch"]
+    resources = [
+      "configmaps",
+      "secrets",
+      "nodes",
+      "pods",
+      "services",
+      "resourcequotas",
+      "replicationcontrollers",
+      "limitranges",
+      "persistentvolumeclaims",
+      "persistentvolumes",
+      "namespaces",
+      "endpoints",
+    ]
+  }
+  rule {
+    api_groups = ["extensions"]
+    verbs      = ["list", "watch"]
+    resources = [
+      "daemonsets",
+      "deployments",
+      "replicasets",
+    ]
+  }
+  rule {
+    api_groups = ["apps"]
+    verbs      = ["list", "watch"]
+    resources = [
+      "statefulsets",
+      "daemonsets",
+      "deployments",
+      "replicasets",
+    ]
+  }
+  rule {
+    api_groups = ["batch"]
+    verbs      = ["list", "watch"]
+    resources = [
+      "cronjobs",
+      "jobs",
+    ]
+  }
+  rule {
+    api_groups = ["autoscaling"]
+    verbs      = ["list", "watch"]
+    resources = [
+      "horizontalpodautoscalers",
+    ]
+  }
+  rule {
+    api_groups = ["authentication.k8s.io"]
+    verbs      = ["create"]
+    resources = [
+      "tokenreviews",
+    ]
+  }
+  rule {
+    api_groups = ["authorization.k8s.io"]
+    verbs      = ["create"]
+    resources = [
+      "subjectaccessreviews",
+    ]
+  }
+  rule {
+    api_groups = ["policy"]
+    verbs      = ["list", "watch"]
+    resources = [
+      "poddisruptionbudgets",
+    ]
+  }
+  rule {
+    api_groups = ["certificates.k8s.io"]
+    verbs      = ["list", "watch"]
+    resources = [
+      "certificatesigningrequests",
+    ]
+  }
+  rule {
+    api_groups = ["storage.k8s.io"]
+    verbs      = ["list", "watch"]
+    resources = [
+      "storageclasses",
+      "volumeattachments",
+    ]
+  }
+  rule {
+    api_groups = ["admissionregistration.k8s.io"]
+    verbs      = ["list", "watch"]
+    resources = [
+      "mutatingwebhookconfigurations",
+      "validatingwebhookconfigurations",
+    ]
+  }
+  rule {
+    api_groups = ["networking.k8s.io"]
+    verbs      = ["list", "watch"]
+    resources = [
+      "networkpolicies",
+      "ingresses",
+    ]
+  }
+  rule {
+    api_groups = ["coordination.k8s.io"]
+    verbs      = ["list", "watch"]
+    resources = [
+      "leases",
+    ]
+  }
+}
+
+resource "kubernetes_cluster_role_binding" "kube_state_metrics" {
+  metadata {
+    name   = local.ksm_name
+    labels = local.ksm_shared_labels
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = local.ksm_name
+  }
+  subject {
+    kind      = "ServiceAccount"
+    name      = local.ksm_name
+    namespace = "kube-system"
+  }
+}
+
+resource "kubernetes_service_account" "kube_state_metrics" {
+  metadata {
+    name      = local.ksm_name
+    namespace = "kube-system"
+    labels    = local.ksm_shared_labels
+  }
+}
+
+resource "kubernetes_service" "kube_state_metrics" {
+  metadata {
+    name      = local.ksm_name
+    namespace = "kube-system"
+    labels    = local.ksm_shared_labels
+  }
+  spec {
+    cluster_ip = "None"
+    selector = {
+      "app.kubernetes.io/name" = local.ksm_name
+    }
+    port {
+      name        = "http-metrics"
+      port        = 8080
+      target_port = "http-metrics"
+    }
+    port {
+      name        = "telemetry"
+      port        = 8081
+      target_port = "telemetry"
+    }
+  }
+}
+
+resource "kubernetes_deployment" "kube_state_metrics" {
+  metadata {
+    name      = local.ksm_name
+    namespace = "kube-system"
+    labels    = local.ksm_shared_labels
+  }
+
+  spec {
+    replicas = 1
+
+    selector {
+      match_labels = {
+        "app.kubernetes.io/name" = local.ksm_name
+      }
+    }
+
+    template {
+      metadata {
+        labels = local.ksm_shared_labels
+      }
+
+      spec {
+        service_account_name = local.ksm_name
+        node_selector = {
+          "kubernetes.io/os" = "linux"
+        }
+
+        container {
+          name  = local.ksm_name
+          image = "quay.io/coreos/${local.ksm_name}:v${local.ksm_version}"
+
+
+          security_context {
+            run_as_user = 65534
+          }
+
+
+          port {
+            name           = "http-metrics"
+            container_port = 8080
+          }
+          port {
+            name           = "telemetry"
+            container_port = 8081
+          }
+
+          liveness_probe {
+            http_get {
+              path = "/healthz"
+              port = 8080
+            }
+            initial_delay_seconds = 5
+            timeout_seconds       = 5
+          }
+          readiness_probe {
+            http_get {
+              path = "/"
+              port = 8081
+            }
+            initial_delay_seconds = 5
+            timeout_seconds       = 5
+          }
+        }
+      }
+    }
+  }
+}

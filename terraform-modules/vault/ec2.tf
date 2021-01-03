@@ -103,7 +103,7 @@ resource "aws_autoscaling_schedule" "up" {
   recurrence = "0 9 * * *"
 }
 
-resource "aws_autoscaling_schedule" down {
+resource "aws_autoscaling_schedule" "down" {
   scheduled_action_name  = "${var.name_prefix}-down"
   autoscaling_group_name = aws_autoscaling_group.vault.name
 

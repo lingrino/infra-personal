@@ -1,0 +1,15 @@
+# https://github.com/cloudflare/cloudflared/releases
+cloudflared_version: "2020.11.9"
+
+cloudflared_name: cloudflared
+
+cloudflared_log_path: /var/log/{{ cloudflared_name }}.log
+cloudflared_bin_path: /usr/local/bin/{{ cloudflared_name }}
+cloudflared_data_dir: /var/lib/{{ cloudflared_name }}
+cloudflared_cert_path: "{{ cloudflared_data_dir }}/cert.pem"
+cloudflared_config_path: "{{ cloudflared_data_dir }}/config.yml"
+
+cloudflared_tunnel_uuid: 46ca3688-fb9f-48c0-9886-170661852b3e
+cloudflared_tunnel_hostname: "*.lingrino.dev"
+cloudflared_tunnel_ingress: https://localhost:443
+cloudflared_tunnel_no_tls_verify: true # cannot make certs for localhost

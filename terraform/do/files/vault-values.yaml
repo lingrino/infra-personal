@@ -1,0 +1,101 @@
+global:
+  tlsDisable: true
+  psp:
+    enable: true
+
+injector:
+  enabled: false
+
+server:
+  image:
+    tag: "${ version }"
+  updateStrategyType: RollingUpdate
+
+  readinessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
+  livenessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true"
+    initialDelaySeconds: 60
+
+  extraEnvironmentVars:
+    VAULT_ADDR: "http://127.0.0.1:9200"
+
+  extraSecretEnvironmentVars:
+    - envName: AWS_REGION
+      secretName: vault
+      secretKey: AWS_REGION
+    - envName: AWS_ACCESS_KEY_ID
+      secretName: vault
+      secretKey: AWS_ACCESS_KEY_ID
+    - envName: AWS_SECRET_ACCESS_KEY
+      secretName: vault
+      secretKey: AWS_SECRET_ACCESS_KEY
+  extraVolumes:
+    - type: secret
+      name: ${ secret_certs_name }
+
+  networkPolicy:
+    enabled: true
+
+  dataStorage:
+    enabled: false
+
+  standalone:
+    enabled: false
+
+  ha:
+    enabled: true
+    replicas: 3
+
+    apiAddr: "https://${ domain_name }"
+
+    config: |
+      ui = "true"
+
+      log_level  = "Error"
+      log_format = "json"
+
+      max_lease_ttl                = "192h" # One week
+      default_lease_ttl            = "192h" # One week
+      default_max_request_duration = "10s"
+
+      service_registration "kubernetes" {}
+
+      seal "awskms" {
+        region     = "${ aws_region }"
+        kms_key_id = "${ kms_key_id }"
+      }
+
+      listener "tcp" {
+        address     = "127.0.0.1:9200"
+        tls_disable = "true"
+      }
+
+      listener "tcp" {
+        address         = "[::]:8200"
+        cluster_address = "[::]:8201"
+
+        tls_disable     = "true"
+        tls_min_version = "tls13"
+        tls_cert_file   = "/vault/userconfig/${ secret_certs_name }/crt.pem"
+        tls_key_file    = "/vault/userconfig/${ secret_certs_name }/key.pem"
+
+        tls_prefer_server_cipher_suites = "true"
+      }
+
+      storage "dynamodb" {
+        ha_enabled = "true"
+
+        region = "${ aws_region }"
+        table  = "${ dynamo_name }"
+      }
+
+      telemetry {
+        disable_hostname      = true
+        enable_hostname_label = true
+      }
+
+ui:
+  enabled: true

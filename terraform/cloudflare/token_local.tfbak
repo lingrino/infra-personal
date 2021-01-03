@@ -1,0 +1,66 @@
+resource "cloudflare_api_token" "local" {
+  name = "local"
+
+  policy {
+    permission_groups = [
+      data.cloudflare_api_token_permission_groups.all.permissions["Access: Apps and Policies Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Access: Organizations, Identity Providers, and Groups Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Account Firewall Access Rules Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Account Settings Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Analytics Read"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Apps Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Billing Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Cache Purge"],
+      data.cloudflare_api_token_permission_groups.all.permissions["DNS Firewall Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["DNS Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Firewall Services Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["IP Prefixes: BGP On Demand Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Load Balancers Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Load Balancing: Monitors and Pools Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Logs Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Page Rules Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["SSL and Certificates Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Stream Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Teams Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Workers KV Storage Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Workers Routes Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Workers Scripts Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Zone Settings Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Zone Write"],
+    ]
+    resources = {
+      "com.cloudflare.api.account.*" = "*"
+    }
+  }
+
+  policy {
+    permission_groups = [
+      data.cloudflare_api_token_permission_groups.all.permissions["Access: Apps and Policies Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Analytics Read"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Apps Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Cache Purge"],
+      data.cloudflare_api_token_permission_groups.all.permissions["DNS Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Firewall Services Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Load Balancers Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Logs Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Page Rules Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["SSL and Certificates Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Workers Routes Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Zone Settings Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Zone Write"],
+    ]
+    resources = {
+      "com.cloudflare.api.account.zone.*" = "*"
+    }
+  }
+
+  policy {
+    permission_groups = [
+      data.cloudflare_api_token_permission_groups.all.permissions["Memberships Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["User Details Write"],
+    ]
+    resources = {
+      "com.cloudflare.api.user.be934df9911ccfc980a10cdb65c7462d" = "*"
+    }
+  }
+}

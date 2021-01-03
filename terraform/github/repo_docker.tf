@@ -3,9 +3,8 @@ resource "github_repository" "docker" {
   description  = "My docker images"
   homepage_url = "https://lingrino.com"
 
-  default_branch = "main"
-  visibility     = "public"
-  archived       = true
+  visibility = "public"
+  archived   = true
 
   has_wiki     = false
   has_issues   = true
@@ -25,4 +24,14 @@ resource "github_repository" "docker" {
 module "docker-labels" {
   source = "../../terraform-modules/github-repo-labels//"
   repo   = github_repository.docker.name
+}
+
+resource "github_branch" "docker" {
+  repository = github_repository.docker.name
+  branch     = "main"
+}
+
+resource "github_branch_default" "docker" {
+  repository = github_repository.docker.name
+  branch     = github_branch.docker.branch
 }

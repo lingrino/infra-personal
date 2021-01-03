@@ -3,8 +3,7 @@ resource "github_repository" "scoop-glen" {
   description  = "Scoop bucket for glen binaries. Powered by @goreleaser"
   homepage_url = "https://lingrino.com"
 
-  default_branch = "main"
-  visibility     = "public"
+  visibility = "public"
 
   has_wiki     = false
   has_issues   = false
@@ -19,4 +18,14 @@ resource "github_repository" "scoop-glen" {
     "scoop",
     "glen",
   ]
+}
+
+resource "github_branch" "scoop-glen" {
+  repository = github_repository.scoop-glen.name
+  branch     = "main"
+}
+
+resource "github_branch_default" "scoop-glen" {
+  repository = github_repository.scoop-glen.name
+  branch     = github_branch.scoop-glen.branch
 }

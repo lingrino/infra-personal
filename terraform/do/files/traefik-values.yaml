@@ -1,0 +1,64 @@
+# https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
+
+# Check for new versiosn
+globalArguments:
+  - "--global.checknewversion"
+
+# Don't enable service because cloudflared sidecar handles routing
+service:
+  enabled: false
+
+# Create separate ingress for the dashboard later
+ingressRoute:
+  dashboard:
+    enabled: false
+
+# Only use the new crd, this is the old ingress method
+providers:
+  kubernetesIngress:
+    enabled: false
+
+# Enable access logs
+logs:
+  general:
+    format: json
+  access:
+    format: json
+    enabled: true
+
+# Do not expose, argo handles exposure through external tunnel
+ports:
+  web:
+    expose: true
+    redirectTo: websecure
+  websecure:
+    expose: true
+    tls:
+      enabled: true
+
+# Deploy the cloudflared sidecar container
+deployment:
+  additionalContainers:
+    - name: cloudflared
+      image: docker.io/cloudflare/cloudflared:${cloudflared_version}
+      imagePullPolicy: IfNotPresent
+      command: ["cloudflared", "tunnel", "run"]
+      resources:
+        limits:
+          cpu: 10m
+          memory: 20Mi
+        requests:
+          cpu: 10m
+          memory: 20Mi
+      volumeMounts:
+        - name: cloudflared
+          mountPath: /etc/cloudflared
+          readOnly: true
+  additionalVolumes:
+    - name: cloudflared
+      projected:
+        sources:
+          - secret:
+              name: cloudflared
+          - configMap:
+              name: ${cloudflared_configmap_name}

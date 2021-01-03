@@ -1,0 +1,13 @@
+tunnel: {{ cloudflared_tunnel_uuid }}
+origincert: {{ cloudflared_cert_path }}
+credentials-file: {{ cloudflared_data_dir }}/{{ cloudflared_tunnel_uuid }}.json
+
+no-autoupdate: true
+logfile: {{ cloudflared_log_path }}
+
+ingress:
+  - hostname: "{{ cloudflared_tunnel_hostname }}"
+    service: {{ cloudflared_tunnel_ingress }}
+    originRequest:
+      noTLSVerify: {{ cloudflared_tunnel_no_tls_verify }}
+  - service: http_status:404

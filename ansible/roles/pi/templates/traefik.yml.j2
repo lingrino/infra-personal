@@ -30,9 +30,11 @@ certificatesResolvers:
       email: "sean@lingrino.com"
       storage: "{{ traefik_acme_path }}"
       dnsChallenge:
-        provider: "route53"
+        provider: "cloudflare"
 
 log:
+  format: json
   filePath: "{{ traefik_log_path }}"
 accessLog:
+  format: json
   filePath: "{{ traefik_access_log_path }}"

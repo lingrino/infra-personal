@@ -1,3 +1,7 @@
+- name: Setup Cloudflare
+  include_role:
+    name: cloudflare
+
 - name: Configure resolved
   block:
     - name: Copy resolved conf

@@ -3,8 +3,7 @@ resource "github_repository" "glen" {
   description  = "A CLI to gather GitLab project and group variables"
   homepage_url = "https://lingrino.com"
 
-  default_branch = "main"
-  visibility     = "public"
+  visibility = "public"
 
   has_wiki     = false
   has_issues   = true
@@ -28,9 +27,19 @@ module "glen-labels" {
   repo   = github_repository.glen.name
 }
 
+resource "github_branch" "glen" {
+  repository = github_repository.glen.name
+  branch     = "main"
+}
+
+resource "github_branch_default" "glen" {
+  repository = github_repository.glen.name
+  branch     = github_branch.glen.branch
+}
+
 resource "github_branch_protection" "glen" {
   repository_id  = github_repository.glen.node_id
-  pattern        = "main"
+  pattern        = github_branch.glen.branch
   enforce_admins = true
 
   required_status_checks {

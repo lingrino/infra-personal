@@ -1,0 +1,34 @@
+data "cloudflare_api_token_permission_groups" "all" {}
+
+resource "cloudflare_api_token" "wrangler_local" {
+  name = "wrangler-local"
+
+  policy {
+    permission_groups = [
+      data.cloudflare_api_token_permission_groups.all.permissions["Account Settings Read"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Workers Scripts Write"],
+      data.cloudflare_api_token_permission_groups.all.permissions["Workers KV Storage Write"],
+    ]
+    resources = {
+      "com.cloudflare.api.account.*" = "*"
+    }
+  }
+
+  policy {
+    permission_groups = [
+      data.cloudflare_api_token_permission_groups.all.permissions["Workers Routes Write"],
+    ]
+    resources = {
+      "com.cloudflare.api.account.zone.*" = "*"
+    }
+  }
+
+  policy {
+    permission_groups = [
+      data.cloudflare_api_token_permission_groups.all.permissions["User Details Read"],
+    ]
+    resources = {
+      "com.cloudflare.api.user.${cloudflare_account_member.lingrino.id}" = "*"
+    }
+  }
+}

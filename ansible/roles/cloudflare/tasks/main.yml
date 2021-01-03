@@ -1,0 +1,126 @@
+# For first time setup a config must be generated manually by the CLI. This could also be done
+# manually in the UI but would be even more cumbersome. Here's an example of commands that can be
+# run initially. Run on a raspberry pi.
+#
+# $ cloudflared tunnel login # follow instructions
+# $ cloudflared tunnel create <tunnel name>
+# $ mkdir {{ cloudflared_data_dir }}
+# $ mv ~/.cloudflared/<new tunnel uuid>.json /var/lib/cloudflared/
+# $ mv ~/.cloudflared/cert.pem /var/lib/cloudflared/
+# $ cd /var/lib/cloudflared
+# $ chmod 0640 <new tunnel uuid>.json cert.pem config.yml
+# $ chown root:cloudflared <new tunnel uuid>.json cert.pem config.yml
+# $ rm -rf ~/.cloudflared
+#
+# Now add the new tunnel uuid to tunnel: in config.yml
+# Run ansible as normal
+
+- name: Create the cloudflared group
+  group:
+    name: "{{ cloudflared_name }}"
+    system: true
+
+- name: Create the cloudflared user
+  user:
+    name: "{{ cloudflared_name }}"
+    group: "{{ cloudflared_name }}"
+    system: true
+    createhome: false
+    home: "{{ cloudflared_data_dir }}"
+    shell: /sbin/nologin
+    comment: service account to run {{ cloudflared_name }}
+
+- name: Install cloudflared
+  get_url:
+    url: https://github.com/cloudflare/cloudflared/releases/download/{{ cloudflared_version }}/cloudflared-linux-arm64
+    dest: /usr/local/bin/cloudflared
+    mode: 0755
+    owner: root
+    group: root
+  register: R_cloudflared_download
+
+- name: Add the cloudflared data directory
+  file:
+    state: directory
+    path: "{{ cloudflared_data_dir }}"
+    mode: 0770
+    owner: root
+    group: "{{ cloudflared_name }}"
+
+- name: Find tunnel json files
+  find:
+    paths:
+      - "{{ cloudflared_data_dir }}"
+    patterns:
+      - "*.json"
+  register: R_cloudflared_tunnels
+
+- name: Set cloudflared tunnel file permissions
+  file:
+    state: file
+    path: "{{ item.path }}"
+    mode: 0640
+    owner: root
+    group: "{{ cloudflared_name }}"
+    access_time: preserve
+    modification_time: preserve
+  loop: "{{ R_cloudflared_tunnels.files }}"
+
+- name: Set cloudflared cert file permissions
+  file:
+    state: file
+    path: "{{ cloudflared_data_dir }}/cert.pem"
+    mode: 0640
+    owner: root
+    group: "{{ cloudflared_name }}"
+    access_time: preserve
+    modification_time: preserve
+
+- name: Add the cloudflared log file
+  file:
+    state: touch
+    path: "{{ cloudflared_log_path }}"
+    mode: 0660
+    owner: root
+    group: "{{ cloudflared_name }}"
+    access_time: preserve
+    modification_time: preserve
+
+- name: Add the cloudflared config file
+  template:
+    src: cloudflared.yml.j2
+    dest: "{{ cloudflared_config_path }}"
+    mode: 0640
+    owner: root
+    group: "{{ cloudflared_name }}"
+  register: R_cloudflared_config
+
+- name: Add the cloudflared service file
+  template:
+    src: cloudflared.service.j2
+    dest: /etc/systemd/system/{{ cloudflared_name }}.service
+    mode: 0644
+    owner: root
+    group: root
+  register: R_cloudflared_service
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: true
+  when: R_cloudflared_service.changed
+
+- name: Enable cloudflared
+  service:
+    name: "{{ cloudflared_name }}"
+    enabled: true
+
+- name: Start cloudflared
+  service:
+    name: "{{ cloudflared_name }}"
+    state: started
+
+- name: Restart cloudflared
+  service:
+    name: "{{ cloudflared_name }}"
+    state: restarted
+  when: (R_cloudflared_download.changed) or (R_cloudflared_config.changed)
