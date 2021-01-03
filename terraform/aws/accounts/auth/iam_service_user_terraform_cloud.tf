@@ -33,7 +33,7 @@ locals {
   # All of the workspaces that start with aws-*
   user_tf_cloud_workspaces = toset([
     for name, id in data.terraform_remote_state.terraform.outputs.workspace_names_to_ids :
-    id if length(regexall("^aws-*", name)) > 0
+    id if length(regexall("^aws-*", name)) > 0 || name == "cloudflare"
   ])
 }
 
