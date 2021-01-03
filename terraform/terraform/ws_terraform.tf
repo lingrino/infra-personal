@@ -5,7 +5,7 @@ resource "tfe_workspace" "terraform" {
   terraform_version = "latest"
   working_directory = "terraform/terraform"
 
-  execution_mode        = "local"
+  execution_mode        = "remote"
   auto_apply            = true
   queue_all_runs        = false
   allow_destroy_plan    = false

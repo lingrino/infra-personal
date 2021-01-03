@@ -5,7 +5,7 @@ resource "tfe_workspace" "github" {
   terraform_version = "latest"
   working_directory = "terraform/github"
 
-  execution_mode        = "local"
+  execution_mode        = "remote"
   auto_apply            = true
   queue_all_runs        = false
   allow_destroy_plan    = false

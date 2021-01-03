@@ -5,7 +5,7 @@ resource "tfe_workspace" "github_lingrino_org" {
   terraform_version = "latest"
   working_directory = "terraform/github-lingrino-org"
 
-  execution_mode        = "local"
+  execution_mode        = "remote"
   auto_apply            = true
   queue_all_runs        = false
   allow_destroy_plan    = false

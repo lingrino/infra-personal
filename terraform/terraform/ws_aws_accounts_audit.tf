@@ -5,7 +5,7 @@ resource "tfe_workspace" "aws_accounts_audit" {
   terraform_version = "latest"
   working_directory = "terraform/aws/accounts/audit"
 
-  execution_mode        = "local"
+  execution_mode        = "remote"
   auto_apply            = true
   queue_all_runs        = false
   allow_destroy_plan    = false
