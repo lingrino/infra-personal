@@ -2,9 +2,6 @@ resource "aws_dynamodb_table" "vault" {
   name         = "vault"
   billing_mode = "PAY_PER_REQUEST"
 
-  stream_enabled   = true
-  stream_view_type = "NEW_AND_OLD_IMAGES"
-
   hash_key  = "Path"
   range_key = "Key"
 
@@ -15,10 +12,6 @@ resource "aws_dynamodb_table" "vault" {
   attribute {
     name = "Key"
     type = "S"
-  }
-
-  replica {
-    region_name = "us-west-2"
   }
 
   server_side_encryption {
