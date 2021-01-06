@@ -4,7 +4,7 @@ go 1.15
 
 require (
 	github.com/aws/aws-lambda-go v1.22.0
-	github.com/aws/aws-sdk-go v1.36.20
+	github.com/aws/aws-sdk-go v1.36.21
 	github.com/kr/text v0.2.0 // indirect
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	golang.org/x/text v0.3.4 // indirect
