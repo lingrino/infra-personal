@@ -16,13 +16,6 @@ resource "cloudflare_access_group" "admin" {
   }
 }
 
-resource "cloudflare_access_identity_provider" "pin" {
-  account_id = var.cloudflare_account_id
-
-  name = "pin"
-  type = "onetimepin"
-}
-
 resource "cloudflare_access_identity_provider" "github" {
   account_id = var.cloudflare_account_id
 
