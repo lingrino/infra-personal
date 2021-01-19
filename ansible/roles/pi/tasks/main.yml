@@ -283,36 +283,6 @@
         name: "{{ adguard_name }}"
         enabled: true
 
-    # Copy the config to a unused path. If file changes stop
-    # adguard, copy it to the real path, start adguard.
-    - name: Copy adguard config file to tmp
-      template:
-        src: adguard_config.yaml.j2
-        dest: "{{ adguard_config_path }}.idempotent"
-        mode: 0600
-        owner: root
-        group: root
-      register: R_adguard_config_tmp
-
-    - name: Stop adguard
-      service:
-        name: "{{ adguard_name }}"
-        state: stopped
-      when: R_adguard_config_tmp.changed
-
-    - name: Copy adguard config file
-      template:
-        src: adguard_config.yaml.j2
-        dest: "{{ adguard_config_path }}"
-        mode: 0644
-        owner: "{{ adguard_name }}"
-        group: "{{ adguard_name }}"
-
-    - name: Start adguard
-      service:
-        name: "{{ adguard_name }}"
-        state: started
-
 - name: Install and configure cockpit
   block:
     - name: Create the cockpit end user group

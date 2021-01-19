@@ -1,5 +1,5 @@
 # https://github.com/cloudflare/cloudflared/releases
-cloudflared_version: "2020.11.9"
+cloudflared_version: "2021.1.5"
 
 cloudflared_name: cloudflared
 

@@ -1,8 +1,0 @@
-vault_version: 1.6.0 # https://www.vaultproject.io/downloads
-vault_version_checksum: fff13c7f753ebee9ebea88e81f5d8dfa3d62f15ea0efae4287f09a4e422c0a05
-
-vault_name: vault
-vault_bin_path: /usr/local/bin/{{ vault_name }}
-vault_config_dir: /var/lib/{{ vault_name }}
-vault_server_log_path: /var/log/vault-server.log
-vault_audit_log_path: /var/log/vault-audit.log
