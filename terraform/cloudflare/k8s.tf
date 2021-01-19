@@ -1,9 +1,6 @@
 locals {
   tunnel_uuid_k8s = "4f6493bb-48d1-479a-895a-5869ee2cb09b.cfargotunnel.com"
-  hostnames_k8s = [
-    "k8s",
-    "vault"
-  ]
+  hostnames_k8s   = ["k8s"]
 }
 
 resource "cloudflare_access_application" "k8s" {
