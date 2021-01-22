@@ -210,8 +210,9 @@
 
     - name: Download adguard
       get_url:
-        url: https://static.adguard.com/adguardhome/release/AdGuardHome_linux_arm.tar.gz
+        url: https://static.adguard.com/adguardhome/release/AdGuardHome_linux_arm64.tar.gz
         dest: "{{ install_dir }}/adguard.tar.gz"
+        force: yes
         mode: 0744
         owner: root
         group: root
@@ -282,6 +283,17 @@
       service:
         name: "{{ adguard_name }}"
         enabled: true
+
+    - name: Restart adguard
+      service:
+        name: "{{ adguard_name }}"
+        state: restarted
+      when: R_adguard_download.changed
+
+    - name: Start adguard
+      service:
+        name: "{{ adguard_name }}"
+        state: started
 
 - name: Install and configure cockpit
   block:
