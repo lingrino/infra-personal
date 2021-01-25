@@ -1,8 +1,8 @@
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/aws/aws-lambda-go v1.22.0 h1:X7BKqIdfoJcbsEIi+Lrt5YjX1HnZexIbNWOQgkYKgfE=
 github.com/aws/aws-lambda-go v1.22.0/go.mod h1:jJmlefzPfGnckuHdXX7/80O3BvUUi12XOkbv4w9SGLU=
-github.com/aws/aws-sdk-go v1.36.30 h1:hAwyfe7eZa7sM+S5mIJZFiNFwJMia9Whz6CYblioLoU=
-github.com/aws/aws-sdk-go v1.36.30/go.mod h1:hcU610XS61/+aQV88ixoOzUoG7v3b31pl2zKMmprdro=
+github.com/aws/aws-sdk-go v1.36.31 h1:BMVngapDGAfLBVEVzaSIw3fmJdWx7jOvhLCXgRXbXQI=
+github.com/aws/aws-sdk-go v1.36.31/go.mod h1:hcU610XS61/+aQV88ixoOzUoG7v3b31pl2zKMmprdro=
 github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d/go.mod h1:maD7wRr/U5Z6m/iR4s+kqSMx2CaBsrgA7czyZG/E6dU=
 github.com/cpuguy83/go-md2man/v2 v2.0.0/go.mod h1:maD7wRr/U5Z6m/iR4s+kqSMx2CaBsrgA7czyZG/E6dU=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
