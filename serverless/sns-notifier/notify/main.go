@@ -6,10 +6,10 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/awserr"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/ses"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/service/ses"
+	"github.com/aws/aws-sdk-go-v2/service/ses/types"
 )
 
 const (
@@ -18,7 +18,7 @@ const (
 
 	subjectF = "SNS Notifier: Alert On %s"
 
-	// This could be way better if the JSON was formatted and highlighted
+	// This could be way better if the JSON was formatted and highlighted.
 	htmlBodyF = "<h2>SNS Notifier</h2>" +
 		"Source: %s" +
 		"<pre><code>" +
@@ -32,16 +32,15 @@ func main() {
 	lambda.Start(Handler)
 }
 
-// Handler handles our SNS events
+// Handler handles our SNS events.
 func Handler(ctx context.Context, snsEvent events.SNSEvent) {
 	// Create an SES session
-	awsC, err := session.NewSession(&aws.Config{
-		Region: aws.String("us-east-1")},
-	)
+	cfg, err := config.LoadDefaultConfig(context.TODO(), config.WithRegion("us-east-1"))
+
 	if err != nil {
 		fmt.Println(err)
 	}
-	sesC := ses.New(awsC)
+	sesC := ses.NewFromConfig(cfg)
 
 	// Send an email for each SNS event
 	for _, record := range snsEvent.Records {
@@ -57,22 +56,9 @@ func Handler(ctx context.Context, snsEvent events.SNSEvent) {
 		emailInput := buildEmailInput(to, from, subject, htmlBody, textBody)
 
 		// Send the Email
-		result, err := sesC.SendEmail(emailInput)
+		result, err := sesC.SendEmail(context.TODO(), emailInput)
 		if err != nil {
-			if aerr, ok := err.(awserr.Error); ok {
-				switch aerr.Code() {
-				case ses.ErrCodeMessageRejected:
-					fmt.Println(ses.ErrCodeMessageRejected, aerr.Error())
-				case ses.ErrCodeMailFromDomainNotVerifiedException:
-					fmt.Println(ses.ErrCodeMailFromDomainNotVerifiedException, aerr.Error())
-				case ses.ErrCodeConfigurationSetDoesNotExistException:
-					fmt.Println(ses.ErrCodeConfigurationSetDoesNotExistException, aerr.Error())
-				default:
-					fmt.Println(aerr.Error())
-				}
-			} else {
-				fmt.Println(err.Error())
-			}
+			fmt.Println(err.Error())
 			return
 		}
 
@@ -82,27 +68,25 @@ func Handler(ctx context.Context, snsEvent events.SNSEvent) {
 	}
 }
 
-// buildEmailInput returns our emailInput struct
+// buildEmailInput returns our emailInput struct.
 func buildEmailInput(to, from, subject, htmlBody, textBody string) *ses.SendEmailInput {
 	return &ses.SendEmailInput{
 		Source: aws.String(from),
-		Destination: &ses.Destination{
-			CcAddresses: []*string{},
-			ToAddresses: []*string{
-				aws.String(to),
-			},
+		Destination: &types.Destination{
+			CcAddresses: []string{},
+			ToAddresses: []string{to},
 		},
-		Message: &ses.Message{
-			Subject: &ses.Content{
+		Message: &types.Message{
+			Subject: &types.Content{
 				Charset: aws.String("UTF-8"),
 				Data:    aws.String(subject),
 			},
-			Body: &ses.Body{
-				Html: &ses.Content{
+			Body: &types.Body{
+				Html: &types.Content{
 					Charset: aws.String("UTF-8"),
 					Data:    aws.String(htmlBody),
 				},
-				Text: &ses.Content{
+				Text: &types.Content{
 					Charset: aws.String("UTF-8"),
 					Data:    aws.String(textBody),
 				},
