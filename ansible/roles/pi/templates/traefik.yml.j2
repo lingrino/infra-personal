@@ -10,6 +10,12 @@ entryPoints:
     address: ":53/udp"
   web:
     address: ":80"
+    proxyProtocol:
+      trustedIPs:
+        - "127.0.0.1"
+    forwardedHeaders:
+      trustedIPs:
+        - "127.0.0.1"
     http:
       redirections:
         entryPoint:
@@ -18,6 +24,12 @@ entryPoints:
           permanent: true
   webs:
     address: ":443"
+    proxyProtocol:
+      trustedIPs:
+        - "127.0.0.1"
+    forwardedHeaders:
+      trustedIPs:
+        - "127.0.0.1"
 
 providers:
   file:

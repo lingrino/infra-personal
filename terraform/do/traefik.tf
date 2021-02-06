@@ -1,5 +1,5 @@
 locals {
-  cloudflared_version     = "2021.1.5" # https://github.com/cloudflare/cloudflared/releases
+  cloudflared_version     = "2021.2.1" # https://github.com/cloudflare/cloudflared/releases
   cloudflared_tunnel_uuid = "4f6493bb-48d1-479a-895a-5869ee2cb09b"
 }
 
@@ -34,6 +34,7 @@ resource "helm_release" "traefik" {
   dependency_update = true
 
   values = [templatefile("files/traefik-values.yaml", {
+    vpc_cidr                   = digitalocean_vpc.main_sfo3.ip_range
     cloudflared_version        = local.cloudflared_version
     cloudflared_configmap_name = kubernetes_config_map.cloudflared.metadata.0.name
   })]
