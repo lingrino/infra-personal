@@ -36,6 +36,12 @@ ports:
     tls:
       enabled: true
 
+additionalArguments:
+  - "--entryPoints.web.proxyProtocol.trustedIPs=${vpc_cidr}"
+  - "--entryPoints.web.forwardedHeaders.trustedIPs=${vpc_cidr}"
+  - "--entryPoints.websecure.proxyProtocol.trustedIPs=${vpc_cidr}"
+  - "--entryPoints.websecure.forwardedHeaders.trustedIPs=${vpc_cidr}"
+
 # Deploy the cloudflared sidecar container
 deployment:
   additionalContainers:
