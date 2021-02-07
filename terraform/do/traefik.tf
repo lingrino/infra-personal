@@ -25,6 +25,7 @@ resource "kubernetes_config_map" "cloudflared" {
 resource "helm_release" "traefik" {
   repository = "https://helm.traefik.io/traefik"
   chart      = "traefik"
+  version    = "9.14.2" # https://github.com/traefik/traefik-helm-chart/releases
 
   name        = "traefik"
   description = "traefik"
