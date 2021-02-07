@@ -12,9 +12,11 @@ entryPoints:
     address: ":80"
     proxyProtocol:
       trustedIPs:
+        - "::1"
         - "127.0.0.1"
     forwardedHeaders:
       trustedIPs:
+        - "::1"
         - "127.0.0.1"
     http:
       redirections:
@@ -26,9 +28,11 @@ entryPoints:
     address: ":443"
     proxyProtocol:
       trustedIPs:
+        - "::1"
         - "127.0.0.1"
     forwardedHeaders:
       trustedIPs:
+        - "::1"
         - "127.0.0.1"
 
 providers:
