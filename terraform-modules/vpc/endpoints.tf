@@ -4,7 +4,8 @@
 data "aws_vpc_endpoint_service" "interfaces" {
   for_each = var.enabled_endpoint_interfaces
 
-  service = each.value
+  service_type = "Interface"
+  service      = each.value
 }
 
 resource "aws_vpc_endpoint" "interfaces" {
@@ -31,7 +32,8 @@ resource "aws_vpc_endpoint" "interfaces" {
 data "aws_vpc_endpoint_service" "gateways" {
   for_each = var.enabled_endpoint_gateways
 
-  service = each.value
+  service_type = "Gateway"
+  service      = each.value
 }
 
 resource "aws_vpc_endpoint" "gateways" {
