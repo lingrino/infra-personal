@@ -25,12 +25,12 @@ jobs:
       - name: Go Format
         run: test -z $(gofmt -l -w -s .)
       - name: Lint AMI Cleaner
-        uses: golangci/golangci-lint-action@v2.4.0
+        uses: golangci/golangci-lint-action@v2.4.1
         with:
           version: v1.36 # https://github.com/golangci/golangci-lint/releases
           working-directory: ./serverless/ami-cleaner
       - name: Lint SNS Notifier
-        uses: golangci/golangci-lint-action@v2.4.0
+        uses: golangci/golangci-lint-action@v2.4.1
         with:
           version: v1.36 # https://github.com/golangci/golangci-lint/releases
           working-directory: ./serverless/sns-notifier
