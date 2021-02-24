@@ -4,7 +4,7 @@ This folder contains the Ansible that configures all of my static infrastructure
 
 ## Running
 
-Configure the entire static infrastructure. Does not build packer images (see [../packer/README.md][] for building those).
+Configure the entire static infrastructure.
 
 ```shell
 ansible-playbook -i inventory.yml site.yml

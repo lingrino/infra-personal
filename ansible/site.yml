@@ -1,2 +1,2 @@
-# Entire (non-packer) Infrastructure
+# Entire Infrastructure
 - import_playbook: pi.yml
