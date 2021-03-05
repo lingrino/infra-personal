@@ -5,9 +5,10 @@ resource "github_repository" "cami" {
 
   visibility = "public"
 
-  has_wiki     = false
-  has_issues   = true
-  has_projects = false
+  has_wiki             = false
+  has_issues           = true
+  has_projects         = false
+  vulnerability_alerts = true
 
   allow_merge_commit     = true
   allow_squash_merge     = true
