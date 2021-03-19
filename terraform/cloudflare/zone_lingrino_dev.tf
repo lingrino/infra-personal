@@ -39,7 +39,7 @@ locals {
 }
 
 resource "cloudflare_record" "tailscale_records" {
-  for_each = tailscale_records
+  for_each = local.tailscale_records
 
   zone_id = module.zone_lingrino_dev.zone_id
   name    = each.key
