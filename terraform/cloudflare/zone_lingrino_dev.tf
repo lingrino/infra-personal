@@ -3,8 +3,6 @@ module "zone_lingrino_dev" {
 
   domain = "lingrino.dev"
 
-  enable_argo          = true
-  enable_caching       = false
   ses_sns_arn          = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
   github_record_value  = "19bf167331"
   keybase_record_value = "keybase-site-verification=PdlLnMY9_7NaKjiMSMJ--QQXQaSHTFwb4sVmVBVT0bc"
