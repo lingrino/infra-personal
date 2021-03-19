@@ -31,6 +31,7 @@ resource "cloudflare_record" "lingrino_dev_discard" {
 
 locals {
   tailscale_records = {
+    pi      = "100.106.105.28"
     home    = "100.106.105.28"
     cockpit = "100.106.105.28"
     mac     = "100.91.164.43"
