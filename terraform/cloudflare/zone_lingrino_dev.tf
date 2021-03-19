@@ -28,3 +28,21 @@ resource "cloudflare_record" "lingrino_dev_discard" {
   type    = "AAAA"
   value   = "100::"
 }
+
+locals {
+  tailscale_records = {
+    home    = "100.106.105.28"
+    cockpit = "100.106.105.28"
+    mac     = "100.91.164.43"
+    ipad    = "100.127.107.107"
+  }
+}
+
+resource "cloudflare_record" "tailscale_records" {
+  for_each = tailscale_records
+
+  zone_id = module.zone_lingrino_dev.zone_id
+  name    = each.key
+  type    = "A"
+  value   = each.value
+}
