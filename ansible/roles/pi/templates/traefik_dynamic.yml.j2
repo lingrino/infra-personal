@@ -13,19 +13,6 @@ http:
               - "{{ san }}"
 {% endfor %}
 {% endif %}
-    adguard:
-      rule: "Host(`{{ adguard_domain_main }}`, {% if adguard_domain_sans is defined %}{% for san in adguard_domain_sans %}`{{san}}`{% if not loop.last %}, {% endif %}{% endfor %}{% endif %})"
-      service: "adguard"
-      tls:
-        certResolver: "letsencrypt"
-        domains:
-          - main: "{{ adguard_domain_main }}"
-{% if adguard_domain_sans is defined %}
-            sans:
-{% for san in adguard_domain_sans %}
-              - "{{ san }}"
-{% endfor %}
-{% endif %}
     cockpit:
       rule: "Host(`{{ cockpit_domain_main }}`, {% if cockpit_domain_sans is defined %}{% for san in cockpit_domain_sans %}`{{san}}`{% if not loop.last %}, {% endif %}{% endfor %}{% endif %})"
       service: "cockpit"
@@ -39,25 +26,8 @@ http:
               - "{{ san }}"
 {% endfor %}
 {% endif %}
-
   services:
-    adguard:
-      loadBalancer:
-        servers:
-          - url: "http://127.0.0.1:{{ adguard_port_web }}/"
     cockpit:
       loadBalancer:
         servers:
           - url: "http://127.0.0.1:{{ cockpit_port_web }}/"
-
-udp:
-  routers:
-    adguard:
-      entryPoints:
-        - "dns"
-      service: "adguard"
-  services:
-    adguard:
-      loadBalancer:
-        servers:
-          - address: "127.0.0.1:{{ adguard_port_dns }}"

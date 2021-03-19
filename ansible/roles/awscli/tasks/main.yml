@@ -1,11 +1,6 @@
-- name: Require x86_64 architecture
-  fail:
-    msg: "awscli v2 only supports x86_64 architecture"
-  when: ansible_architecture != "x86_64"
-
 - name: Download
   get_url:
-    url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    url: https://awscli.amazonaws.com/awscli-exe-linux-{{ ansible_architecture }}.zip
     dest: "{{ install_dir }}/awscli.zip"
     owner: root
     group: root

@@ -1,5 +1,5 @@
 # https://github.com/containous/traefik/releases
-traefik_version: 2.4.2
+traefik_version: 2.4.7
 
 traefik_name: "traefik"
 traefik_bin_path: "/usr/local/bin/{{ traefik_name }}"

@@ -3,8 +3,6 @@ module "zone_lingrino_dev" {
 
   domain = "lingrino.dev"
 
-  enable_argo          = true
-  enable_caching       = false
   ses_sns_arn          = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
   github_record_value  = "19bf167331"
   keybase_record_value = "keybase-site-verification=PdlLnMY9_7NaKjiMSMJ--QQXQaSHTFwb4sVmVBVT0bc"
@@ -29,4 +27,22 @@ resource "cloudflare_record" "lingrino_dev_discard" {
   name    = each.key
   type    = "AAAA"
   value   = "100::"
+}
+
+locals {
+  tailscale_records = {
+    home    = "100.106.105.28"
+    cockpit = "100.106.105.28"
+    mac     = "100.91.164.43"
+    ipad    = "100.127.107.107"
+  }
+}
+
+resource "cloudflare_record" "tailscale_records" {
+  for_each = local.tailscale_records
+
+  zone_id = module.zone_lingrino_dev.zone_id
+  name    = each.key
+  type    = "A"
+  value   = each.value
 }
