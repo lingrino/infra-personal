@@ -32,3 +32,5 @@ traefik_letsencrypt_cf_zone_api_token: !vault |
 
 # Records must also be created in terraform/cloudflare to point here
 traefik_domain_main: home.lingrino.dev
+traefik_domain_sans:
+  - pi.lingrino.dev
