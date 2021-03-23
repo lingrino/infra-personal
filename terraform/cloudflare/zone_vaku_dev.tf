@@ -16,7 +16,7 @@ module "zone_vaku_dev" {
 }
 
 resource "cloudflare_record" "vaku_dev" {
-  for_each = toset(["@", "www"])
+  for_each = toset(["vaku.dev", "www"])
 
   zone_id = module.zone_vaku_dev.zone_id
   proxied = true

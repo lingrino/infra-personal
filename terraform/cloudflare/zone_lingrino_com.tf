@@ -16,7 +16,7 @@ module "zone_lingrino_com" {
 }
 
 resource "cloudflare_record" "lingrino_com" {
-  for_each = toset(["@", "www"])
+  for_each = toset(["lingrino.com", "www"])
 
   zone_id = module.zone_lingrino_com.zone_id
   proxied = true
