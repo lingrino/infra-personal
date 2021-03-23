@@ -15,18 +15,14 @@ module "zone_lingrino_dev" {
   ]
 }
 
-# https://developers.cloudflare.com/workers/platform/routes#subdomains-must-have-a-dns-record
-# (sub)domains must have a record associated with them for cloudflare workers to respond even if the
-# worker is the only thing that should respond (static site). 100:: is the reserved discard prefix
-# which forces cloudflare to create records that the worker runs against.
-resource "cloudflare_record" "lingrino_dev_discard" {
+resource "cloudflare_record" "lingrino_dev" {
   for_each = toset(["@", "www"])
 
   zone_id = module.zone_lingrino_dev.zone_id
   proxied = true
   name    = each.key
-  type    = "AAAA"
-  value   = "100::"
+  type    = "CNAME"
+  value   = "site-personal.pages.dev"
 }
 
 locals {
