@@ -50,6 +50,7 @@ resource "github_branch_protection" "uptime" {
     contexts = [
       "lint",
       "test",
+      "format",
     ]
   }
 }
