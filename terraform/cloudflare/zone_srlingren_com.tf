@@ -12,16 +12,12 @@ module "zone_srlingren_com" {
   google_site_verifications = ["google-site-verification=y9QbGPES67hmtkoOIs1B9Fgfk-w4uceEemqtIL-jfYM"]
 }
 
-# https://developers.cloudflare.com/workers/platform/routes#subdomains-must-have-a-dns-record
-# (sub)domains must have a record associated with them for cloudflare workers to respond even if the
-# worker is the only thing that should respond (static site). 100:: is the reserved discard prefix
-# which forces cloudflare to create records that the worker runs against.
-resource "cloudflare_record" "srlingren_com_discard" {
-  for_each = toset(["@", "www"])
+resource "cloudflare_record" "srlingren_com" {
+  for_each = toset(["srlingren.com", "www"])
 
   zone_id = module.zone_srlingren_com.zone_id
   proxied = true
   name    = each.key
-  type    = "AAAA"
-  value   = "100::"
+  type    = "CNAME"
+  value   = "site-personal.pages.dev"
 }

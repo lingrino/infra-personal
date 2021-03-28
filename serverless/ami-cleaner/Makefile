@@ -1,7 +1,6 @@
-.PHONY: build clean deploy gomod
+.PHONY: build clean deploy
 
-build: gomod
-	export GO111MODULE=on
+build:
 	env GOOS=linux go build -ldflags="-s -w" -o bin/ami-cleaner ami-cleaner/main.go
 
 clean:
@@ -9,7 +8,3 @@ clean:
 
 deploy: clean build
 	sls deploy --verbose
-
-gomod:
-	go get -u all
-	go mod tidy
