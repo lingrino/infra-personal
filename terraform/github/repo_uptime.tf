@@ -51,6 +51,7 @@ resource "github_branch_protection" "uptime" {
       "lint",
       "test",
       "format",
+      "Cloudflare Pages",
     ]
   }
 }
