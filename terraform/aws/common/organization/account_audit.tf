@@ -25,6 +25,9 @@ module "account_audit_base" {
   account_id_auth   = module.account_auth.id
   bucket_config_arn = data.terraform_remote_state.account_audit.outputs.bucket_config_arn
 
+  vantage_id           = var.vantage_id
+  vantage_handshake_id = var.vantage_handshake_id
+
   tags = var.tags
 
   providers = {
