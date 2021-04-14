@@ -13,6 +13,18 @@ variable "assume_role_session_name" {
   description = "What to name the session when assuming the role"
 }
 
+variable "vantage_id" {
+  type        = string
+  sensitive   = true
+  description = "The vantage account id"
+}
+
+variable "vantage_handshake_id" {
+  type        = string
+  sensitive   = true
+  description = "The vantage handshake id"
+}
+
 variable "tags" {
   type        = map(string)
   description = "A map of tags to apply to all resources"
