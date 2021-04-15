@@ -21,6 +21,12 @@ resource "aws_iam_policy" "allow_assume_admin" {
   name        = "allow-assume-admin"
   description = "Allow the entity to assume the Admin role"
   policy      = data.aws_iam_policy_document.allow_assume_admin.json
+
+  tags = merge(
+    { "Name" = "allow-assume-admin" },
+    { "description" = "Allow the entity to assume the Admin role" },
+    var.tags
+  )
 }
 
 data "aws_iam_policy_document" "allow_assume_admin" {

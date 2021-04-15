@@ -7,7 +7,9 @@ resource "cloudflare_access_group" "admin" {
       "sean@lingrino.com",
       "srlingren@gmail.com",
     ]
+  }
 
+  include {
     github {
       name                 = "lingrino-org"
       teams                = ["cloudflare-access-admin"]
