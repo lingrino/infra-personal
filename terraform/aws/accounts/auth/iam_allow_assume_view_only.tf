@@ -21,6 +21,12 @@ resource "aws_iam_policy" "allow_assume_view_only" {
   name        = "allow-assume-view-only"
   description = "Allow the entity to assume the ViewOnly role"
   policy      = data.aws_iam_policy_document.allow_assume_view_only.json
+
+  tags = merge(
+    { "Name" = "allow-assume-view-only" },
+    { "description" = "Allow the entity to assume the ViewOnly role" },
+    var.tags
+  )
 }
 
 data "aws_iam_policy_document" "allow_assume_view_only" {
