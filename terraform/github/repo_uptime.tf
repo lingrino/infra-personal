@@ -1,7 +1,7 @@
 resource "github_repository" "uptime" {
   name         = "uptime"
   description  = "Uptime Calculator"
-  homepage_url = "https://lingrino.com"
+  homepage_url = "https://uptime.how"
 
   visibility = "public"
 
