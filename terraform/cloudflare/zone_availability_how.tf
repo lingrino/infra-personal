@@ -1,8 +1,9 @@
 module "zone_availability_how" {
   source = "../../terraform-modules/zone//"
 
-  domain     = "availability.how"
-  verify_ses = false
+  domain         = "availability.how"
+  verify_ses     = false
+  enable_caching = false
 }
 
 resource "cloudflare_record" "availability_how" {
