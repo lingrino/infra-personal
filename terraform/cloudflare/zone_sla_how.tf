@@ -1,8 +1,9 @@
 module "zone_sla_how" {
   source = "../../terraform-modules/zone//"
 
-  domain     = "sla.how"
-  verify_ses = false
+  domain         = "sla.how"
+  verify_ses     = false
+  enable_caching = false
 }
 
 resource "cloudflare_record" "sla_how" {

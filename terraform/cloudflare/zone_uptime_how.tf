@@ -1,8 +1,9 @@
 module "zone_uptime_how" {
   source = "../../terraform-modules/zone//"
 
-  domain     = "uptime.how"
-  verify_ses = false
+  domain         = "uptime.how"
+  verify_ses     = false
+  enable_caching = false
 }
 
 resource "cloudflare_record" "uptime_how" {
