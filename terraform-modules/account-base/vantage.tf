@@ -6,7 +6,7 @@ resource "aws_cloudformation_stack" "vantage" {
   parameters = {
     VantageID          = var.vantage_id
     VantageDomain      = "https://console.vantage.sh"
-    VantageIamRole     = "AROAZFRV7IUIZ5O6WR7DY"
+    VantageIamRole     = "AROAZFRV7IUI4DENO75IR"
     VantageHandshakeID = var.vantage_handshake_id
     VantagePingbackArn = "arn:aws:sns:us-east-1:630399649041:cross-account-cloudformation-connector"
   }
