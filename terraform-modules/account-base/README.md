@@ -1,6 +1,6 @@
 # Module - Account Base
 
-This module configures all of the *base* resources in an account. These are resources that *every* account in the organization should have, without exceptions. For example, here we create predefined roles that can be assumed, password policies, and the account alias.
+This module configures all of the *base* resources in an account. These are resources that *every* account in the organization should have, without exception. For example, here we create predefined roles that can be assumed, password policies, and the account alias.
 
 ## Usage
 
