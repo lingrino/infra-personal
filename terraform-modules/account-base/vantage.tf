@@ -10,4 +10,10 @@ resource "aws_cloudformation_stack" "vantage" {
     VantageHandshakeID = var.vantage_handshake_id
     VantagePingbackArn = "arn:aws:sns:us-east-1:630399649041:cross-account-cloudformation-connector"
   }
+
+  tags = merge(
+    { "Name" = "vantage" },
+    { "description" = "grants vantage.sh access to the account" },
+    var.tags
+  )
 }
