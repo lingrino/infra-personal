@@ -13,7 +13,9 @@ provider "aws" {
   }
 
   default_tags {
-    terraform = "true"
+    tags = {
+      terraform = "true"
+    }
   }
 }
 
@@ -29,7 +31,9 @@ provider "aws" {
   }
 
   default_tags {
-    terraform = "true"
+    tags = {
+      terraform = "true"
+    }
   }
 }
 
@@ -45,7 +49,9 @@ provider "aws" {
   }
 
   default_tags {
-    terraform = "true"
+    tags = {
+      terraform = "true"
+    }
   }
 }
 
