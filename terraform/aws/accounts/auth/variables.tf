@@ -22,8 +22,3 @@ variable "rotate_iam_keys" {
   type        = number
   description = "Increase this number by 1 to automatically rotate keys for supported IAM users"
 }
-
-variable "tags" {
-  type        = map(string)
-  description = "A map of tags to apply to all resources"
-}

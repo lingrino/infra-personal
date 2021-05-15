@@ -20,8 +20,7 @@ module "vpc" {
     "us-east-1d",
   ]
 
-  tags = merge(
-    { "default" = "true" },
-    var.tags
-  )
+  tags = {
+    default = "true"
+  }
 }

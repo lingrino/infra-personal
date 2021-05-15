@@ -14,6 +14,10 @@ provider "aws" {
   assume_role {
     role_arn = "arn:aws:iam::${ module.account_prod.id }:role/OrganizationAccountAccessRole"
   }
+
+  default_tags {
+    terraform = true
+  }
 }
 
 module "account_prod" {

@@ -29,12 +29,11 @@ resource "aws_s3_bucket" "logs_cloudfront" {
     }
   }
 
-  tags = merge(
-    { "Name" = "logs-cloudfront" },
-    { "description" = "Stores all of our cloudfront access logs" },
-    { "service" = "logs-cloudfront" },
-    var.tags
-  )
+  tags = {
+    Name        = "logs-cloudfront"
+    description = "Stores all of our cloudfront access logs"
+    service     = "logs-cloudfront"
+  }
 }
 
 resource "aws_s3_bucket_policy" "logs_cloudfront" {

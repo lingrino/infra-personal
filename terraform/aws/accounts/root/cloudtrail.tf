@@ -11,10 +11,9 @@ resource "aws_cloudtrail" "organization" {
   enable_log_file_validation    = true
   include_global_service_events = true
 
-  tags = merge(
-    { "Name" = "lingrino" },
-    { "description" = "The cloudtrail for the entire lingrino organization" },
-    { "service" = "cloudtrail" },
-    var.tags
-  )
+  tags = {
+    Name        = "lingrino"
+    description = "The cloudtrail for the entire lingrino organization"
+    service     = "cloudtrail"
+  }
 }

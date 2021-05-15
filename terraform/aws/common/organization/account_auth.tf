@@ -5,6 +5,10 @@ provider "aws" {
   assume_role {
     role_arn = "arn:aws:iam::${module.account_auth.id}:role/${var.assume_role_name}"
   }
+
+  default_tags {
+    terraform = true
+  }
 }
 
 module "account_auth" {
@@ -12,7 +16,6 @@ module "account_auth" {
 
   name  = "auth"
   email = "sean+aws-auth@lingrino.com"
-  tags  = var.tags
 }
 
 module "account_auth_base" {
@@ -27,8 +30,6 @@ module "account_auth_base" {
 
   vantage_id           = var.vantage_id
   vantage_handshake_id = var.vantage_handshake_id
-
-  tags = var.tags
 
   providers = {
     aws = aws.auth

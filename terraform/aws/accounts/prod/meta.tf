@@ -11,6 +11,10 @@ provider "aws" {
     role_arn     = "arn:aws:iam::${var.account_id_prod}:role/${var.assume_role_name}"
     session_name = var.assume_role_session_name
   }
+
+  default_tags {
+    terraform = true
+  }
 }
 
 provider "aws" {
@@ -23,6 +27,10 @@ provider "aws" {
     role_arn     = "arn:aws:iam::${var.account_id_prod}:role/${var.assume_role_name}"
     session_name = var.assume_role_session_name
   }
+
+  default_tags {
+    terraform = true
+  }
 }
 
 provider "aws" {
@@ -34,6 +42,10 @@ provider "aws" {
   assume_role {
     role_arn     = "arn:aws:iam::${var.account_id_prod}:role/${var.assume_role_name}"
     session_name = var.assume_role_session_name
+  }
+
+  default_tags {
+    terraform = true
   }
 }
 

@@ -6,9 +6,8 @@ resource "aws_config_configuration_aggregator" "lingrino" {
     all_regions = true
   }
 
-  tags = merge(
-    { "Name" = "lingrino" },
-    { "service" = "config" },
-    var.tags
-  )
+  tags = {
+    Name    = "lingrino"
+    service = "config"
+  }
 }

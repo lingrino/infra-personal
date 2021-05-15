@@ -17,8 +17,3 @@ variable "keypair_main_name" {
   type        = string
   description = "The name of the default ssh keypair to use"
 }
-
-variable "tags" {
-  type        = map(string)
-  description = "A map of tags to apply to all resources"
-}
