@@ -21,6 +21,6 @@ module "vpc" {
   ]
 
   tags = {
-    default = true
+    default = "true"
   }
 }

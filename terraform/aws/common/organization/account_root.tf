@@ -7,7 +7,7 @@ provider "aws" {
   }
 
   default_tags {
-    terraform = true
+    terraform = "true"
   }
 }
 
