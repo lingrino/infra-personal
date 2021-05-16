@@ -44,7 +44,7 @@ resource "aws_vpc_endpoint" "gateways" {
   service_name = each.value.service_name
 
   tags = merge(
-    { "Name" = "${var.name_prefix}_${each.value.service_name}_gateway" },
+    { "Name" = "${var.name_prefix}_${each.value.service}_gateway" },
     var.tags
   )
 }
