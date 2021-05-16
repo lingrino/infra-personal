@@ -4,10 +4,9 @@ resource "aws_iam_user" "sean_lingrino_com" {
 
   force_destroy = true
 
-  tags = merge(
-    { "Name" = "sean@lingrino.com" },
-    var.tags
-  )
+  tags = {
+    Name = "sean@lingrino.com"
+  }
 }
 
 resource "aws_iam_user_login_profile" "sean_lingrino_com" {

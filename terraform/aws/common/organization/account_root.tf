@@ -5,6 +5,12 @@ provider "aws" {
   assume_role {
     role_arn = "arn:aws:iam::${module.account_root.id}:role/${var.assume_role_name}"
   }
+
+  default_tags {
+    tags = {
+      terraform = "true"
+    }
+  }
 }
 
 module "account_root" {
@@ -12,7 +18,6 @@ module "account_root" {
 
   name  = "root"
   email = "sean+aws-root@lingrino.com"
-  tags  = var.tags
 }
 
 module "account_root_base" {
@@ -27,8 +32,6 @@ module "account_root_base" {
 
   vantage_id           = var.vantage_id
   vantage_handshake_id = var.vantage_handshake_id
-
-  tags = var.tags
 
   providers = {
     aws = aws.root

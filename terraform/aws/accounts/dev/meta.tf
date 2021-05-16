@@ -9,6 +9,12 @@ provider "aws" {
     role_arn     = "arn:aws:iam::${var.account_id_dev}:role/${var.assume_role_name}"
     session_name = var.assume_role_session_name
   }
+
+  default_tags {
+    tags = {
+      terraform = "true"
+    }
+  }
 }
 
 #################################

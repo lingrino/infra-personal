@@ -42,6 +42,11 @@ resource "aws_vpc_endpoint" "gateways" {
   vpc_id       = aws_vpc.vpc.id
   auto_accept  = true
   service_name = each.value.service_name
+
+  tags = merge(
+    { "Name" = "${var.name_prefix}_${each.value.service}_gateway" },
+    var.tags
+  )
 }
 
 locals {

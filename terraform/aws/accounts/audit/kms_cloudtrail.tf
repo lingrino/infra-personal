@@ -12,12 +12,11 @@ resource "aws_kms_key" "cloudtrail" {
   enable_key_rotation     = true
   deletion_window_in_days = 30
 
-  tags = merge(
-    { "Name" = "cloudtrail" },
-    { "description" = "A key to encrypt all cloudtrail data" },
-    { "service" = "kms" },
-    var.tags
-  )
+  tags = {
+    Name        = "cloudtrail"
+    description = "A key to encrypt all cloudtrail data"
+    service     = "kms"
+  }
 }
 
 data "aws_iam_policy_document" "kms_policy_cloudtrail" {

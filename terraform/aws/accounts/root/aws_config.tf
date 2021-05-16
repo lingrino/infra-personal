@@ -6,11 +6,10 @@ resource "aws_config_configuration_aggregator" "lingrino" {
     role_arn    = aws_iam_role.config_lingrino_aggregator.arn
   }
 
-  tags = merge(
-    { "Name" = "lingrino" },
-    { "service" = "config" },
-    var.tags
-  )
+  tags = {
+    Name    = "lingrino"
+    service = "config"
+  }
 
   depends_on = [aws_iam_role_policy_attachment.config_lingrino_aggregator_service]
 }
@@ -21,11 +20,10 @@ resource "aws_iam_role" "config_lingrino_aggregator" {
 
   assume_role_policy = data.aws_iam_policy_document.arp_config_lingrino_aggregator.json
 
-  tags = merge(
-    { "Name" = "config-lingrino-aggregator" },
-    { "description" = "Allow AWS Config to get information about the AWS Organization" },
-    var.tags
-  )
+  tags = {
+    Name        = "config-lingrino-aggregator"
+    description = "Allow AWS Config to get information about the AWS Organization"
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "config_lingrino_aggregator_service" {

@@ -39,12 +39,11 @@ resource "aws_s3_bucket" "config" {
     }
   }
 
-  tags = merge(
-    { "Name" = "config" },
-    { "description" = "Stores all AWS Config history and snapshots" },
-    { "service" = "config" },
-    var.tags
-  )
+  tags = {
+    Name        = "config"
+    description = "Stores all AWS Config history and snapshots"
+    service     = "config"
+  }
 }
 
 resource "aws_s3_bucket_policy" "config" {

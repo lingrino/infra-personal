@@ -39,12 +39,11 @@ resource "aws_s3_bucket" "logs_s3" {
     }
   }
 
-  tags = merge(
-    { "Name" = "logs-s3" },
-    { "description" = "Stores all of our s3 access logs" },
-    { "service" = "logs-s3" },
-    var.tags
-  )
+  tags = {
+    Name        = "logs-s3"
+    description = "Stores all of our s3 access logs"
+    service     = "logs-s3"
+  }
 }
 
 resource "aws_s3_bucket_policy" "logs_s3" {

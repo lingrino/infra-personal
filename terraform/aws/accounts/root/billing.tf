@@ -63,12 +63,11 @@ resource "aws_s3_bucket" "billing" {
     }
   }
 
-  tags = merge(
-    { "Name" = "billing" },
-    { "description" = "Stores all of our AWS billing reports" },
-    { "service" = "billing" },
-    var.tags
-  )
+  tags = {
+    Name        = "billing"
+    description = "Stores all of our AWS billing reports"
+    service     = "billing"
+  }
 }
 
 resource "aws_s3_bucket_policy" "billing" {

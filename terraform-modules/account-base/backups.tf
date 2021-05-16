@@ -17,10 +17,15 @@ resource "aws_backup_plan" "tag_backup_true" {
   name = "tag-backup-true"
 
   rule {
-    rule_name           = "tag-backup-true"
-    target_vault_name   = aws_backup_vault.tag_backup_true.name
-    schedule            = "cron(0 16 * * ? *)"
-    recovery_point_tags = var.tags
+    rule_name         = "tag-backup-true"
+    target_vault_name = aws_backup_vault.tag_backup_true.name
+    schedule          = "cron(0 16 * * ? *)"
+
+    recovery_point_tags = merge(
+      { "terraform" = "true" },
+      { "description" = "this resource was backed because it was tagged backup: true" },
+      var.tags
+    )
 
     lifecycle {
       cold_storage_after = 30

@@ -22,11 +22,10 @@ resource "aws_iam_policy" "allow_assume_read_only" {
   description = "Allow the entity to assume the ReadOnly role"
   policy      = data.aws_iam_policy_document.allow_assume_read_only.json
 
-  tags = merge(
-    { "Name" = "allow-assume-read-only" },
-    { "description" = "Allow the entity to assume the ReadOnly role" },
-    var.tags
-  )
+  tags = {
+    Name        = "allow-assume-read-only"
+    description = "Allow the entity to assume the ReadOnly role"
+  }
 }
 
 data "aws_iam_policy_document" "allow_assume_read_only" {

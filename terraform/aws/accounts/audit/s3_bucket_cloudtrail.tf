@@ -29,12 +29,11 @@ resource "aws_s3_bucket" "cloudtrail" {
     }
   }
 
-  tags = merge(
-    { "Name" = "cloudtrail" },
-    { "description" = "Stores all AWS cloudtrail logs" },
-    { "service" = "cloudtrail" },
-    var.tags
-  )
+  tags = {
+    Name        = "cloudtrail"
+    description = "Stores all AWS cloudtrail logs"
+    service     = "cloudtrail"
+  }
 }
 
 resource "aws_s3_bucket_policy" "cloudtrail" {

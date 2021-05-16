@@ -4,11 +4,10 @@ resource "aws_iam_user" "github_actions" {
 
   force_destroy = true
 
-  tags = merge(
-    { "Name" = "github-actions" },
-    { "description" = "This user should be used by github actions to run CI" },
-    var.tags
-  )
+  tags = {
+    Name        = "github-actions"
+    description = "This user should be used by github actions to run CI"
+  }
 }
 
 resource "aws_iam_access_key" "github_actions" {

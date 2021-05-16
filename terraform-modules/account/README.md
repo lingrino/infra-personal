@@ -52,6 +52,11 @@ provider "aws" {
   assume_role {
     role_arn = "arn:aws:iam::ACCOUNTID:role/OrganizationAccountAccessRole"
   }
+
+  default_tags {
+    tags = {
+    terraform = true
+  }
 }
 
 [...]

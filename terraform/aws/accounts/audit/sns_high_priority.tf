@@ -2,12 +2,11 @@ resource "aws_sns_topic" "alarm_high_priority" {
   name         = "alarm_high_priority"
   display_name = "alarm_high_priority"
 
-  tags = merge(
-    { "Name" = "alarm_high_priority" },
-    { "description" = "Messages to this topic will send the appropriate people a high priority alert" },
-    { "service" = "sns" },
-    var.tags
-  )
+  tags = {
+    Name        = "alarm_high_priority"
+    description = "Messages to this topic will send the appropriate people a high priority alert"
+    service     = "sns"
+  }
 }
 
 resource "aws_sns_topic_policy" "alarm_high_priority" {
