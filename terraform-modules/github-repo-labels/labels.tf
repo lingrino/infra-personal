@@ -3,7 +3,7 @@ resource "github_issue_label" "actions" {
 
   name        = "actions"
   color       = "102F5F"
-  description = "pull requests that update actions"
+  description = "Pull requests that update actions"
 }
 
 resource "github_issue_label" "dependencies" {
@@ -11,7 +11,7 @@ resource "github_issue_label" "dependencies" {
 
   name        = "dependencies"
   color       = "0366D6"
-  description = "pull requests that update dependencies"
+  description = "Pull requests that update dependencies"
 }
 
 resource "github_issue_label" "docker" {
@@ -19,7 +19,7 @@ resource "github_issue_label" "docker" {
 
   name        = "docker"
   color       = "3E92DC"
-  description = "pull requests that update docker"
+  description = "Pull requests that update docker"
 }
 
 resource "github_issue_label" "go" {
@@ -27,7 +27,7 @@ resource "github_issue_label" "go" {
 
   name        = "go"
   color       = "4CABD3"
-  description = "pull requests that update go code"
+  description = "Pull requests that update go code"
 }
 
 resource "github_issue_label" "javascript" {
@@ -35,7 +35,7 @@ resource "github_issue_label" "javascript" {
 
   name        = "javascript"
   color       = "FCDC00"
-  description = "pull requests that update javascript code"
+  description = "Pull requests that update javascript code"
 }
 
 resource "github_issue_label" "terraform" {
@@ -43,5 +43,5 @@ resource "github_issue_label" "terraform" {
 
   name        = "terraform"
   color       = "5C44DB"
-  description = "pull requests that update terraform"
+  description = "Pull requests that update terraform"
 }
