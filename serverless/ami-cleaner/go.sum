@@ -19,8 +19,8 @@ github.com/alecthomas/units v0.0.0-20151022065526-2efee857e7cf/go.mod h1:ybxpYRF
 github.com/armon/circbuf v0.0.0-20150827004946-bbbad097214e/go.mod h1:3U/XgcO3hCbHZ8TKRvWD2dDTCfh9M9ya+I9JpbB7O8o=
 github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da/go.mod h1:Q73ZrmVTwzkszR9V5SSuryQ31EELlFMUz1kKyl939pY=
 github.com/armon/go-radix v0.0.0-20180808171621-7fddfc383310/go.mod h1:ufUuZ+zHj4x4TnLV4JWEpy2hxWSpsRywHrMgIH9cCH8=
-github.com/aws/aws-lambda-go v1.23.0 h1:Vjwow5COkFJp7GePkk9kjAo/DyX36b7wVPKwseQZbRo=
-github.com/aws/aws-lambda-go v1.23.0/go.mod h1:jJmlefzPfGnckuHdXX7/80O3BvUUi12XOkbv4w9SGLU=
+github.com/aws/aws-lambda-go v1.24.0 h1:bOMerM175hLqHLdF1Nonfv1NA20nTIatuC0HK8eMoYg=
+github.com/aws/aws-lambda-go v1.24.0/go.mod h1:jJmlefzPfGnckuHdXX7/80O3BvUUi12XOkbv4w9SGLU=
 github.com/aws/aws-sdk-go-v2 v1.2.0 h1:BS+UYpbsElC82gB+2E2jiCBg36i8HlubTB/dO/moQ9c=
 github.com/aws/aws-sdk-go-v2 v1.2.0/go.mod h1:zEQs02YRBw1DjK0PoJv3ygDYOFTre1ejlJWl8FwAuQo=
 github.com/aws/aws-sdk-go-v2/config v1.1.1 h1:ZAoq32boMzcaTW9bcUacBswAmHTbvlvDJICgHFZuECo=
