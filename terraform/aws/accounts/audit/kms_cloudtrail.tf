@@ -14,7 +14,7 @@ resource "aws_kms_key" "cloudtrail" {
 
   tags = {
     Name        = "cloudtrail"
-    description = "A key to encrypt all cloudtrail data"
+    description = "a key to encrypt all cloudtrail data"
     service     = "kms"
   }
 }

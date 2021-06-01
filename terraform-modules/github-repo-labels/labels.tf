@@ -6,6 +6,14 @@ resource "github_issue_label" "actions" {
   description = "Pull requests that update actions"
 }
 
+resource "github_issue_label" "ansible" {
+  repository = var.repo
+
+  name        = "ansible"
+  color       = "000000"
+  description = "Pull requests that update ansible"
+}
+
 resource "github_issue_label" "dependencies" {
   repository = var.repo
 
