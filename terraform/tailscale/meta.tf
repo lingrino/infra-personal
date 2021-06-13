@@ -2,7 +2,7 @@
 ### Providers                 ###
 #################################
 provider "tailscale" {
-  domain = "lingrino.com"
+  domain = "lingrino.github"
 }
 
 #################################
