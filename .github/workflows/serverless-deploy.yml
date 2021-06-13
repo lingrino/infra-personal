@@ -27,12 +27,12 @@ jobs:
       - name: Lint AMI Cleaner
         uses: golangci/golangci-lint-action@v2.5.2
         with:
-          version: v1.36 # https://github.com/golangci/golangci-lint/releases
+          version: v1.40 # https://github.com/golangci/golangci-lint/releases
           working-directory: ./serverless/ami-cleaner
       - name: Lint SNS Notifier
         uses: golangci/golangci-lint-action@v2.5.2
         with:
-          version: v1.36 # https://github.com/golangci/golangci-lint/releases
+          version: v1.40 # https://github.com/golangci/golangci-lint/releases
           working-directory: ./serverless/sns-notifier
   deploy-snsnotifier:
     needs: validate
