@@ -27,11 +27,13 @@ resource "cloudflare_record" "lingrino_dev" {
 
 locals {
   tailscale_records = {
-    pi      = "100.106.105.28"
-    home    = "100.106.105.28"
-    cockpit = "100.106.105.28"
-    mac     = "100.91.164.43"
-    ipad    = "100.127.107.107"
+    pi      = "100.105.134.53"
+    home    = "100.105.134.53"
+    cockpit = "100.105.134.53"
+    mac     = "100.70.4.79"
+    ipad    = "100.85.226.33"
+    phone   = "100.123.179.105"
+    work    = "100.74.67.97"
   }
 }
 
