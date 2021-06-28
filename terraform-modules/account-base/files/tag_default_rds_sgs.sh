@@ -5,7 +5,7 @@
 
 # Assume a role that can remove the SGs
 # This script assumes your main provider can assume `OrganizationAccountAccessRole` in all accounts
-CREDS=$(aws sts assume-role --role-arn "arn:aws:iam::${ACCOUNT_ID}:role/OrganizationAccountAccessRole" --role-session-name vpc-remover | jq -r '.Credentials')
+CREDS=$(aws sts assume-role --role-arn "arn:aws:iam::${ACCOUNT_ID}:role/OrganizationAccountAccessRole" --role-session-name rds-sg-tagger | jq -r '.Credentials')
 akid=$(echo "$CREDS" | jq -r '.AccessKeyId')
 sak=$(echo "$CREDS" | jq -r '.SecretAccessKey')
 st=$(echo "$CREDS" | jq -r '.SessionToken')
