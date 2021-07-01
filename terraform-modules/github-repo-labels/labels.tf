@@ -46,6 +46,14 @@ resource "github_issue_label" "javascript" {
   description = "Pull requests that update javascript code"
 }
 
+resource "github_issue_label" "rust" {
+  repository = var.repo
+
+  name        = "rust"
+  color       = "E55940"
+  description = "Pull requests that update rust code"
+}
+
 resource "github_issue_label" "terraform" {
   repository = var.repo
 
