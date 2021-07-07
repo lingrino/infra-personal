@@ -47,3 +47,19 @@ updates:
     labels:
       - dependencies
       - go
+
+  - package-ecosystem: terraform
+    open-pull-requests-limit: 100
+    directory: /
+    schedule:
+      time: "16:00"
+      interval: daily
+    allow:
+      - dependency-type: all
+    assignees:
+      - lingrino
+    reviewers:
+      - lingrino
+    labels:
+      - dependencies
+      - terraform
