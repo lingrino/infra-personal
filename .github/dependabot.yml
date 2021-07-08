@@ -50,7 +50,215 @@ updates:
 
   - package-ecosystem: terraform
     open-pull-requests-limit: 100
-    directory: /
+    directory: terraform/aws/accounts/audit
+    schedule:
+      time: "16:00"
+      interval: daily
+    allow:
+      - dependency-type: all
+    assignees:
+      - lingrino
+    reviewers:
+      - lingrino
+    labels:
+      - dependencies
+      - terraform
+
+  - package-ecosystem: terraform
+    open-pull-requests-limit: 100
+    directory: terraform/aws/accounts/auth
+    schedule:
+      time: "16:00"
+      interval: daily
+    allow:
+      - dependency-type: all
+    assignees:
+      - lingrino
+    reviewers:
+      - lingrino
+    labels:
+      - dependencies
+      - terraform
+
+  - package-ecosystem: terraform
+    open-pull-requests-limit: 100
+    directory: terraform/aws/accounts/dev
+    schedule:
+      time: "16:00"
+      interval: daily
+    allow:
+      - dependency-type: all
+    assignees:
+      - lingrino
+    reviewers:
+      - lingrino
+    labels:
+      - dependencies
+      - terraform
+
+  - package-ecosystem: terraform
+    open-pull-requests-limit: 100
+    directory: terraform/aws/accounts/prod
+    schedule:
+      time: "16:00"
+      interval: daily
+    allow:
+      - dependency-type: all
+    assignees:
+      - lingrino
+    reviewers:
+      - lingrino
+    labels:
+      - dependencies
+      - terraform
+
+  - package-ecosystem: terraform
+    open-pull-requests-limit: 100
+    directory: terraform/aws/accounts/root
+    schedule:
+      time: "16:00"
+      interval: daily
+    allow:
+      - dependency-type: all
+    assignees:
+      - lingrino
+    reviewers:
+      - lingrino
+    labels:
+      - dependencies
+      - terraform
+
+  - package-ecosystem: terraform
+    open-pull-requests-limit: 100
+    directory: terraform/aws/common/organization
+    schedule:
+      time: "16:00"
+      interval: daily
+    allow:
+      - dependency-type: all
+    assignees:
+      - lingrino
+    reviewers:
+      - lingrino
+    labels:
+      - dependencies
+      - terraform
+
+  - package-ecosystem: terraform
+    open-pull-requests-limit: 100
+    directory: terraform/cloudflare
+    schedule:
+      time: "16:00"
+      interval: daily
+    allow:
+      - dependency-type: all
+    assignees:
+      - lingrino
+    reviewers:
+      - lingrino
+    labels:
+      - dependencies
+      - terraform
+
+  - package-ecosystem: terraform
+    open-pull-requests-limit: 100
+    directory: terraform/do
+    schedule:
+      time: "16:00"
+      interval: daily
+    allow:
+      - dependency-type: all
+    assignees:
+      - lingrino
+    reviewers:
+      - lingrino
+    labels:
+      - dependencies
+      - terraform
+
+  - package-ecosystem: terraform
+    open-pull-requests-limit: 100
+    directory: terraform/github
+    schedule:
+      time: "16:00"
+      interval: daily
+    allow:
+      - dependency-type: all
+    assignees:
+      - lingrino
+    reviewers:
+      - lingrino
+    labels:
+      - dependencies
+      - terraform
+
+  - package-ecosystem: terraform
+    open-pull-requests-limit: 100
+    directory: terraform/github-lingrino-org
+    schedule:
+      time: "16:00"
+      interval: daily
+    allow:
+      - dependency-type: all
+    assignees:
+      - lingrino
+    reviewers:
+      - lingrino
+    labels:
+      - dependencies
+      - terraform
+
+  - package-ecosystem: terraform
+    open-pull-requests-limit: 100
+    directory: terraform/pagerduty
+    schedule:
+      time: "16:00"
+      interval: daily
+    allow:
+      - dependency-type: all
+    assignees:
+      - lingrino
+    reviewers:
+      - lingrino
+    labels:
+      - dependencies
+      - terraform
+
+  - package-ecosystem: terraform
+    open-pull-requests-limit: 100
+    directory: terraform/tailscale
+    schedule:
+      time: "16:00"
+      interval: daily
+    allow:
+      - dependency-type: all
+    assignees:
+      - lingrino
+    reviewers:
+      - lingrino
+    labels:
+      - dependencies
+      - terraform
+
+  - package-ecosystem: terraform
+    open-pull-requests-limit: 100
+    directory: terraform/terraform
+    schedule:
+      time: "16:00"
+      interval: daily
+    allow:
+      - dependency-type: all
+    assignees:
+      - lingrino
+    reviewers:
+      - lingrino
+    labels:
+      - dependencies
+      - terraform
+
+  - package-ecosystem: terraform
+    open-pull-requests-limit: 100
+    directory: terraform/tls
     schedule:
       time: "16:00"
       interval: daily
