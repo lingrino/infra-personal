@@ -255,19 +255,3 @@ updates:
     labels:
       - dependencies
       - terraform
-
-  - package-ecosystem: terraform
-    open-pull-requests-limit: 100
-    directory: terraform/tls
-    schedule:
-      time: "16:00"
-      interval: daily
-    allow:
-      - dependency-type: all
-    assignees:
-      - lingrino
-    reviewers:
-      - lingrino
-    labels:
-      - dependencies
-      - terraform

@@ -71,7 +71,6 @@ resource "github_branch_protection" "infra-personal" {
       "Terraform Cloud/lingrino/github-lingrino-org",
       "Terraform Cloud/lingrino/tailscale",
       "Terraform Cloud/lingrino/terraform",
-      "Terraform Cloud/lingrino/tls",
       "validate"
     ]
   }
