@@ -17,7 +17,6 @@ locals {
     tfe_workspace.github_lingrino_org,
     tfe_workspace.pagerduty,
     tfe_workspace.terraform,
-    tfe_workspace.tls,
   ]
 }
 
