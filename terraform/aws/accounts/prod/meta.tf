@@ -1,8 +1,6 @@
 #################################
 ### Providers                 ###
 #################################
-provider "tls" {}
-
 provider "aws" {
   region              = "us-east-1"
   allowed_account_ids = [var.account_id_prod]
@@ -71,9 +69,6 @@ terraform {
   required_providers {
     aws = {
       source = "hashicorp/aws"
-    }
-    tls = {
-      source = "hashicorp/tls"
     }
   }
 }
