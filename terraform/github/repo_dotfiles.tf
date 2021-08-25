@@ -1,6 +1,6 @@
 resource "github_repository" "dotfiles" {
   name         = "dotfiles"
-  description  = "Maintain your local environment wth Ansible"
+  description  = "my dotfiles"
   homepage_url = "https://lingrino.com"
 
   visibility = "public"
@@ -16,7 +16,6 @@ resource "github_repository" "dotfiles" {
   delete_branch_on_merge = true
 
   topics = [
-    "ansible",
     "automation",
     "dotfiles",
     "mac",
