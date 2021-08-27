@@ -33,8 +33,8 @@ github.com/jmespath/go-jmespath v0.4.0 h1:BEgLn5cpjn8UN1mAw4NjwDrS35OdebyEtFe+9Y
 github.com/jmespath/go-jmespath v0.4.0/go.mod h1:T8mJZnbsbmF+m6zOOFylbeCJqk5+pHWvzYPziyZiYoo=
 github.com/jmespath/go-jmespath/internal/testify v1.5.1 h1:shLQSRRSCCPj3f2gpwzGwWFoC7ycTf1rcQZHOlsJ6N8=
 github.com/jmespath/go-jmespath/internal/testify v1.5.1/go.mod h1:L3OGu8Wl2/fWfCI6z80xFu9LTZmf1ZRjMHUOPmWr69U=
-github.com/lingrino/cami v1.3.0 h1:79bbZ5yofcA0LDcbIOJJl7s/hjMpQjK5lwa6Nu/hD+Q=
-github.com/lingrino/cami v1.3.0/go.mod h1:sY+XK0KSdk9uT2mL5KjFZ8Qjw6s7IT1UqEtFy40hqOA=
+github.com/lingrino/cami v1.3.1 h1:l9+2hvRIM9gHJLZtN8voH3IU5PpY5QIcCAo24n4sAus=
+github.com/lingrino/cami v1.3.1/go.mod h1:kvEtX1H6Ka6GdETjvuXR/SNUVdH4QDeqFog8dxKwUC0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/russross/blackfriday/v2 v2.0.1/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
