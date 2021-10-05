@@ -1,19 +1,3 @@
-locals {
-  route_tables = concat(
-    [aws_route_table.public],
-    [for _, rt in aws_route_table.private : rt],
-    [for _, rt in aws_route_table.intra : rt],
-  )
-
-  # repeats the public route table equal to the number of subnets
-  # so that the length matches local.subnets
-  route_tables_matching_subnets = concat(
-    [for _ in range(length(aws_subnet.public)) : aws_route_table.public],
-    [for _, rt in aws_route_table.private : rt],
-    [for _, rt in aws_route_table.intra : rt],
-  )
-}
-
 ##########################
 ### Public             ###
 ##########################
@@ -21,7 +5,7 @@ resource "aws_route_table" "public" {
   vpc_id = aws_vpc.vpc.id
 
   tags = merge(
-    { "Name" = "${var.name_prefix}_route_table_public" },
+    { "Name" = "${var.name_prefix}_public" },
     { "type" = "public" },
     var.tags
   )
@@ -43,45 +27,30 @@ resource "aws_route" "ipv6_public_igw" {
 ### Private            ###
 ##########################
 resource "aws_route_table" "private" {
-  for_each = {
-    for i in range(length(aws_subnet.private)) :
-    i => {
-      az = local.azs_list[i]
-    }
-  }
+  for_each = var.azs
 
   vpc_id = aws_vpc.vpc.id
 
   tags = merge(
-    { "Name" = "${var.name_prefix}_route_table_private_${replace(each.value.az, "-", "_")}" },
+    { "Name" = "${var.name_prefix}_private_${replace(each.key, "-", "_")}" },
     { "type" = "private" },
+    { "az" = each.key },
     var.tags
   )
 }
 
 resource "aws_route" "nat" {
-  for_each = var.create_nat_gateways ? {
-    for i in range(length(aws_route_table.private)) :
-    i => {
-      nat = aws_nat_gateway.nat[i]
-      rt  = aws_route_table.private[i]
-    }
-  } : {}
+  for_each = var.enable_nat ? var.azs : {}
 
-  route_table_id         = each.value.rt.id
+  route_table_id         = aws_route_table.private[each.key].id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = each.value.nat.id
+  nat_gateway_id         = aws_nat_gateway.nat[each.key].id
 }
 
 resource "aws_route" "private_eoigw" {
-  for_each = {
-    for i in range(length(aws_route_table.private)) :
-    i => {
-      rt = aws_route_table.private[i]
-    }
-  }
+  for_each = var.azs
 
-  route_table_id              = each.value.rt.id
+  route_table_id              = aws_route_table.private[each.key].id
   destination_ipv6_cidr_block = "::/0"
   egress_only_gateway_id      = aws_egress_only_internet_gateway.igw.id
 }
@@ -90,18 +59,14 @@ resource "aws_route" "private_eoigw" {
 ### Intra              ###
 ##########################
 resource "aws_route_table" "intra" {
-  for_each = {
-    for i in range(length(aws_subnet.intra)) :
-    i => {
-      az = local.azs_list[i]
-    }
-  }
+  for_each = var.azs
 
   vpc_id = aws_vpc.vpc.id
 
   tags = merge(
-    { "Name" = "${var.name_prefix}_route_table_intra_${replace(each.value.az, "-", "_")}" },
+    { "Name" = "${var.name_prefix}_intra_${replace(each.key, "-", "_")}" },
     { "type" = "intra" },
+    { "az" = each.key },
     var.tags
   )
 }

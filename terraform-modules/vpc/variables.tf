@@ -1,39 +1,37 @@
 variable "name_prefix" {
   type        = string
-  description = "A prefix to prepend to the name of all resources"
+  description = "a prefix to prepend to the name of all resources"
 }
 
-variable "vpc_cidr_block" {
+variable "cidr_block" {
   type        = string
-  description = "The cidr block to use for the VPC"
+  description = "the cidr block to use for the VPC"
 }
 
 variable "azs" {
-  type        = set(string)
-  description = "A list of azs to launch subnets in"
+  type = map(object({
+    public  = string
+    private = string
+    intra   = string
+  }))
+  description = "a map of azs to types of subnets and their assigned ipv4 cidrs"
 }
 
 variable "tags" {
   type        = map(string)
-  description = "A map of tags to add to all resources"
+  description = "a map of tags to add to all resources"
   default     = {}
 }
 
-variable "create_vpn_gateway" {
+variable "enable_nat" {
   type        = bool
-  description = "Whether or not to create a VPN gateway. True or False."
-  default     = true
-}
-
-variable "create_nat_gateways" {
-  type        = bool
-  description = "Whether or not to create NAT gateways. These can be expensive. True or False."
+  description = "whether or not to create NAT gateways"
   default     = true
 }
 
 variable "enabled_endpoint_gateways" {
   type        = set(string)
-  description = "A list of vpc endpoint gateways to enable (do not include com.amazonaws.region)"
+  description = "a set of vpc endpoint gateways to enable (do not include com.amazonaws.region)"
 
   default = [
     "dynamodb",
@@ -43,27 +41,7 @@ variable "enabled_endpoint_gateways" {
 
 variable "enabled_endpoint_interfaces" {
   type        = set(string)
-  description = "A list of vpc endpoint interfaces to enable (do not include com.amazonaws.region)"
+  description = "a set of vpc endpoint interfaces to enable (do not include com.amazonaws.region)"
 
-  default = [
-    "cloudtrail",
-    "config",
-    "ec2",
-    "ec2messages",
-    "ecr.api",
-    "ecr.dkr",
-    "ecs",
-    "ecs-agent",
-    "ecs-telemetry",
-    "elasticloadbalancing",
-    "events",
-    "kms",
-    "logs",
-    "monitoring",
-    "secretsmanager",
-    "sns",
-    "sqs",
-    "ssm",
-    "ssmmessages",
-  ]
+  default = []
 }

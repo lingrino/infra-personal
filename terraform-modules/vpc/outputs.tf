@@ -1,3 +1,7 @@
+output "azs" {
+  value = keys(var.azs)
+}
+
 output "vpc_id" {
   value = aws_vpc.vpc.id
 }
@@ -8,6 +12,10 @@ output "vpc_cidr" {
 
 output "vpc_cidr_ipv6" {
   value = aws_vpc.vpc.ipv6_cidr_block
+}
+
+output "nat_ids" {
+  value = [for nat in aws_nat_gateway.nat : nat.id]
 }
 
 output "subnet_ids" {

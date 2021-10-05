@@ -32,8 +32,8 @@ resource "aws_security_group" "endpoints" {
   vpc_id = aws_vpc.vpc.id
 
   tags = merge(
-    { "Name" = "${var.name_prefix}-aws-vpc-endpoints" },
-    { "description" = "Allow all traffic from the VPC into the AWS VPC endpoints" },
+    { "Name" = "${var.name_prefix}-vpc-endpoints" },
+    { "description" = "allow all traffic from the VPC into the AWS VPC endpoints" },
     var.tags
   )
 }
