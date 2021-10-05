@@ -1,13 +1,10 @@
 resource "aws_vpc_dhcp_options" "dhcp" {
   domain_name = data.aws_region.current.name == "us-east-1" ? "ec2.internal" : "${data.aws_region.current.name}.compute.internal"
 
-  domain_name_servers = [
-    cidrhost(aws_vpc.vpc.cidr_block, 2),
-    "1.1.1.1",
-  ]
+  domain_name_servers = [cidrhost(aws_vpc.vpc.cidr_block, 2)]
 
   tags = merge(
-    { "Name" = "${var.name_prefix}_dhcp_options" },
+    { "Name" = "${var.name_prefix}" },
     var.tags
   )
 }

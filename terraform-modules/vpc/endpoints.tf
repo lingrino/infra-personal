@@ -5,25 +5,24 @@ data "aws_vpc_endpoint_service" "interfaces" {
   for_each = var.enabled_endpoint_interfaces
 
   service_type = "Interface"
-  service      = each.value
+  service      = each.key
 }
 
 resource "aws_vpc_endpoint" "interfaces" {
-  for_each = {
-    for i in range(length(data.aws_vpc_endpoint_service.interfaces)) :
-    i => {
-      interface = data.aws_vpc_endpoint_service.interfaces[i]
-      subnets   = aws_subnet.private
-    }
-  }
+  for_each = data.aws_vpc_endpoint_service.interfaces
 
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.vpc.id
-  service_name      = each.value.interface.service_name
+  service_name      = each.value.service_name
 
   private_dns_enabled = true
-  subnet_ids          = [for sn in each.value.subnets : sn.id]
+  subnet_ids          = [for sn in aws_subnet.private : sn.id]
   security_group_ids  = [aws_security_group.endpoints.id]
+
+  tags = merge(
+    { "Name" = "${var.name_prefix}_${each.value.service}" },
+    var.tags
+  )
 }
 
 ##########################
@@ -33,7 +32,7 @@ data "aws_vpc_endpoint_service" "gateways" {
   for_each = var.enabled_endpoint_gateways
 
   service_type = "Gateway"
-  service      = each.value
+  service      = each.key
 }
 
 resource "aws_vpc_endpoint" "gateways" {
@@ -44,7 +43,7 @@ resource "aws_vpc_endpoint" "gateways" {
   service_name = each.value.service_name
 
   tags = merge(
-    { "Name" = "${var.name_prefix}_${each.value.service}_gateway" },
+    { "Name" = "${var.name_prefix}_${each.value.service}" },
     var.tags
   )
 }

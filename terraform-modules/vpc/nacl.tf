@@ -40,7 +40,7 @@ resource "aws_network_acl" "main" {
   }
 
   tags = merge(
-    { "Name" = "${var.name_prefix}_nacl" },
+    { "Name" = "${var.name_prefix}" },
     var.tags
   )
 }
