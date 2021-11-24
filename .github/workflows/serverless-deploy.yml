@@ -55,7 +55,7 @@ jobs:
           npm install serverless
           echo "$GITHUB_WORKSPACE/node_modules/.bin" >> $GITHUB_PATH
       - name: AWS Assume Role
-        uses: aws-actions/configure-aws-credentials@v1.5.11
+        uses: aws-actions/configure-aws-credentials@v1.6.0
         with:
           aws-region: us-east-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_USER }}
@@ -87,7 +87,7 @@ jobs:
           npm install serverless
           echo "$GITHUB_WORKSPACE/node_modules/.bin" >> $GITHUB_PATH
       - name: AWS Assume Role
-        uses: aws-actions/configure-aws-credentials@v1.5.11
+        uses: aws-actions/configure-aws-credentials@v1.6.0
         with:
           aws-region: us-east-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_USER }}
