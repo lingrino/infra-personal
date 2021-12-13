@@ -4,7 +4,7 @@
 provider "registry.terraform.io/davidsbond/tailscale" {
   version = "0.5.1"
   hashes = [
-    "h1:ljrDLZ9R0a7HZ6NTcr1dMdtZ22aaGY8r+INuf7tEydk=",
+    "h1:GnxzpYLEHzYEZDhdmNxSoZt0YhHporgddY6D02x9oEU=",
     "zh:041584d224dd9b1b2474c3acf80ad39483afd624cc9c3f19356ab25b8e88ac47",
     "zh:0c55f628ff8b154d9ed97895775781e7d463f765b8faf6caf77ee2003ea144e6",
     "zh:3ef424afbdf9440823a76f299eb2d50dce782f835be087e9fc99706244bde182",
