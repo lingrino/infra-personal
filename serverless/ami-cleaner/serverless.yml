@@ -4,7 +4,9 @@ provider:
   name: aws
   runtime: go1.x
   versionFunctions: true
-  stackTags: ${self:tags}
+  stackTags:
+    service: serverless
+    serverless: "true"
 
   stage: ${opt:stage, "prod"}
   region: ${opt:region, "us-east-1"}
@@ -16,7 +18,9 @@ provider:
   deploymentBucket:
     name: ${ssm:/s3/serverless-deployment/name}
     serverSideEncryption: AES256
-    tags: ${self:tags}
+    tags:
+      service: serverless
+      serverless: "true"
 
   iamRoleStatements:
     - Effect: Allow
@@ -29,7 +33,7 @@ provider:
 
   tags:
     service: serverless
-    serverless: true
+    serverless: "true"
 
 package:
   exclude:
