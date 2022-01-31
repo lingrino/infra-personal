@@ -7,8 +7,7 @@ provider "pagerduty" {}
 ### Terraform                 ###
 #################################
 terraform {
-  backend "remote" {
-    hostname     = "app.terraform.io"
+  backend "cloud" {
     organization = "lingrino"
 
     workspaces {
