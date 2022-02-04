@@ -7,7 +7,7 @@ provider "tfe" {}
 ### Terraform                 ###
 #################################
 terraform {
-  backend "cloud" {
+  cloud {
     organization = "lingrino"
 
     workspaces {

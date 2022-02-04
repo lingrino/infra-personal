@@ -62,3 +62,9 @@ variable "github_record_value" {
   description = "An optional github verification string"
   default     = ""
 }
+
+variable "skip_ns" {
+  type        = bool
+  description = "set true to skip creating ns records in the zone"
+  default     = false
+}
