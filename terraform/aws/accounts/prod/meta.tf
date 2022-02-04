@@ -57,7 +57,7 @@ provider "aws" {
 ### Terraform                 ###
 #################################
 terraform {
-  backend "cloud" {
+  cloud {
     organization = "lingrino"
 
     workspaces {

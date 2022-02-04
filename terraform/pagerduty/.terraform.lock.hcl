@@ -4,6 +4,7 @@
 provider "registry.terraform.io/pagerduty/pagerduty" {
   version = "2.2.1"
   hashes = [
+    "h1:/NOmfITclc4rTqxZ4ViSaobvLbqXOpvWWHnZK8MbO0A=",
     "h1:iWUOoMD1K559Pa6Iklupv6xBWwJdf2fY1FFhGJZBEw4=",
     "zh:1047f05a7bd16407ce58f9be5dc059722034fa17b17b67d6189063b33e01d3b1",
     "zh:2ac5d8636ac2513a18b615ef67540c6c4fe820bcd1bdcf00acd31c2f18e502e7",
