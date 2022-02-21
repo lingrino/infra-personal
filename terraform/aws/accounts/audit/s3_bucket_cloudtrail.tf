@@ -1,38 +1,55 @@
 resource "aws_s3_bucket" "cloudtrail" {
   bucket_prefix = "cloudtrail-"
-  acl           = "log-delivery-write"
   force_destroy = false
-
-  versioning {
-    enabled = true
-  }
-
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
-  }
-
-  lifecycle_rule {
-    id                                     = "all-cloudtrail-lifecycle"
-    enabled                                = true
-    abort_incomplete_multipart_upload_days = 1
-
-    expiration {
-      days = "365"
-    }
-
-    noncurrent_version_expiration {
-      days = "365"
-    }
-  }
 
   tags = {
     Name        = "cloudtrail"
     description = "Stores all AWS cloudtrail logs"
     service     = "cloudtrail"
+  }
+}
+
+resource "aws_s3_bucket_acl" "cloudtrail" {
+  bucket = aws_s3_bucket.cloudtrail.id
+  acl    = "log-delivery-write"
+}
+
+resource "aws_s3_bucket_versioning" "cloudtrail" {
+  bucket = aws_s3_bucket.cloudtrail.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "cloudtrail" {
+  bucket = aws_s3_bucket.cloudtrail.bucket
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "cloudtrail" {
+  bucket = aws_s3_bucket.cloudtrail.bucket
+
+  rule {
+    id     = "all-cloudtrail-lifecycle"
+    status = "Enabled"
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 1
+    }
+
+    expiration {
+      days = 365
+    }
+
+    noncurrent_version_expiration {
+      noncurrent_days = 365
+    }
   }
 }
 
