@@ -37,20 +37,7 @@ resource "aws_s3_bucket_public_access_block" "serverless_deployment" {
 
 resource "aws_s3_bucket" "serverless_deployment" {
   bucket_prefix = "serverless-deployment-"
-  acl           = "private"
   force_destroy = true
-
-  versioning {
-    enabled = true
-  }
-
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
-  }
 
   tags = merge(
     { "Name" = "serverless-deployment" },
@@ -58,6 +45,24 @@ resource "aws_s3_bucket" "serverless_deployment" {
     { "service" = "serverless" },
     var.tags
   )
+}
+
+resource "aws_s3_bucket_versioning" "serverless_deployment" {
+  bucket = aws_s3_bucket.serverless_deployment.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "serverless_deployment" {
+  bucket = aws_s3_bucket.serverless_deployment.bucket
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
 }
 
 resource "aws_s3_bucket_policy" "serverless_deployment" {
