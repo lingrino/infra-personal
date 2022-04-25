@@ -9,6 +9,7 @@ resource "github_repository" "lingrino" {
   has_projects         = false
   vulnerability_alerts = true
 
+  allow_auto_merge       = true
   allow_merge_commit     = true
   allow_squash_merge     = true
   allow_rebase_merge     = true
