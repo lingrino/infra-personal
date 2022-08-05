@@ -15,7 +15,7 @@ func main() {
 	lambda.Start(Handler)
 }
 
-// Handler calls cami
+// Handler calls cami.
 func Handler(ctx context.Context) {
 	var err error
 
