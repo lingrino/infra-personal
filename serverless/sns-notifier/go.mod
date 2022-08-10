@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/aws/aws-lambda-go v1.34.1
-	github.com/aws/aws-sdk-go-v2 v1.16.9
+	github.com/aws/aws-sdk-go-v2 v1.16.10
 	github.com/aws/aws-sdk-go-v2/config v1.15.16
 	github.com/aws/aws-sdk-go-v2/service/ses v1.14.11
 )
@@ -18,6 +18,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.10 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.11.14 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.16.11 // indirect
-	github.com/aws/smithy-go v1.12.0 // indirect
+	github.com/aws/smithy-go v1.12.1 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 )
