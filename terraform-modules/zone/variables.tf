@@ -1,3 +1,8 @@
+variable "cloudflare_account_id" {
+  type        = string
+  description = "cloudflare account ID to create the resources in"
+}
+
 variable "domain" {
   type        = string
   description = "The domain to create the zone for"

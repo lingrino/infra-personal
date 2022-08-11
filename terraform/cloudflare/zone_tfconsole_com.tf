@@ -1,7 +1,9 @@
 module "zone_tfconsole_com" {
   source = "../../terraform-modules/zone//"
 
-  domain         = "tfconsole.com"
+  domain                = "tfconsole.com"
+  cloudflare_account_id = var.cloudflare_account_id
+
   skip_ns        = true
   verify_ses     = false
   enable_caching = false

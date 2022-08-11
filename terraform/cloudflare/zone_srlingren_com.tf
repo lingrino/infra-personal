@@ -1,7 +1,8 @@
 module "zone_srlingren_com" {
   source = "../../terraform-modules/zone//"
 
-  domain = "srlingren.com"
+  domain                = "srlingren.com"
+  cloudflare_account_id = var.cloudflare_account_id
 
   ses_sns_arn          = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
   github_record_value  = "b155ad3c04"

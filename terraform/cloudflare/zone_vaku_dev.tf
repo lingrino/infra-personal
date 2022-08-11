@@ -1,7 +1,8 @@
 module "zone_vaku_dev" {
   source = "../../terraform-modules/zone//"
 
-  domain = "vaku.dev"
+  domain                = "vaku.dev"
+  cloudflare_account_id = var.cloudflare_account_id
 
   ses_sns_arn          = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
   github_record_value  = "7438b66689"
