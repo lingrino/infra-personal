@@ -1,9 +1,7 @@
 #################################
 ### Providers                 ###
 #################################
-provider "cloudflare" {
-  account_id = var.cloudflare_account_id
-}
+provider "cloudflare" {}
 
 provider "aws" {
   region = "us-east-1"

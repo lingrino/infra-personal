@@ -1,5 +1,6 @@
 resource "cloudflare_zone" "zone" {
-  zone = var.domain
+  account_id = var.cloudflare_account_id
+  zone       = var.domain
 }
 
 resource "cloudflare_zone_dnssec" "zone" {

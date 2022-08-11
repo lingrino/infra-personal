@@ -1,7 +1,8 @@
 module "zone_lingrino_dev" {
   source = "../../terraform-modules/zone//"
 
-  domain = "lingrino.dev"
+  domain                = "lingrino.dev"
+  cloudflare_account_id = var.cloudflare_account_id
 
   ses_sns_arn          = data.terraform_remote_state.account_audit.outputs.sns_alarm_low_priority_arn
   github_record_value  = "19bf167331"
