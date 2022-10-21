@@ -3,16 +3,9 @@ resource "tailscale_dns_preferences" "prefs" {
 }
 
 resource "tailscale_dns_nameservers" "ns" {
-  nameservers = [
-    "1.1.1.1",
-    "1.0.0.1",
-    "2606:4700:4700::1111",
-    "2606:4700:4700::1001",
-  ]
+  nameservers = ["2a07:a8c0::59:7766"] # my nextdns
 }
 
 resource "tailscale_dns_search_paths" "sp" {
-  search_paths = [
-    "lingrino.dev",
-  ]
+  search_paths = []
 }
