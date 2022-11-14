@@ -1,4 +1,0 @@
-[WebService]
-Origins = https://{{ cockpit_domain_main }} wss://{{ cockpit_domain_main }}{% if cockpit_domain_sans is defined %}{% for san in cockpit_domain_sans %} https://{{san}} wss://{{san}}{% endfor %}{% endif %}
-ProtocolHeader = X-Forwarded-Proto
-AllowUnencrypted=true
