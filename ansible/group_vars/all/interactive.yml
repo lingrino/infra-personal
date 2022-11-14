@@ -1,7 +1,0 @@
-interactive_username: lingrino
-
-interactive_packages:
-  - git-lfs
-  - nmap
-  - unrar
-  - zsh
