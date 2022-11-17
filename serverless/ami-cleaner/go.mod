@@ -3,7 +3,7 @@ module github.com/lingrino/infra-personal/serverless/ami-cleaner
 go 1.19
 
 require (
-	github.com/aws/aws-lambda-go v1.34.1
+	github.com/aws/aws-lambda-go v1.35.0
 	github.com/lingrino/cami v1.3.4
 )
 
