@@ -21,7 +21,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v3
         with:
-          go-version: 1.19 # https://golang.org/dl/
+          go-version: stable # https://golang.org/dl/
       - name: Go Format
         run: test -z $(gofmt -l -w -s .)
       - name: Lint AMI Cleaner
@@ -49,7 +49,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v3
         with:
-          go-version: 1.19 # https://golang.org/dl/
+          go-version: stable # https://golang.org/dl/
       - name: Install Serverless
         run: |
           npm install serverless
@@ -81,7 +81,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v3
         with:
-          go-version: 1.19 # https://golang.org/dl/
+          go-version: stable # https://golang.org/dl/
       - name: Install Serverless
         run: |
           npm install serverless
