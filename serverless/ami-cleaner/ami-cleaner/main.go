@@ -34,7 +34,7 @@ func Handler(ctx context.Context) {
 		fmt.Println("nothing to delete")
 	}
 
-	var eda *cami.ErrDeleteAMIs
+	var eda *cami.DeleteAMIError
 	if err != nil {
 		if errors.As(err, &eda) {
 			fmt.Printf("Failed to delete:\n  %s\n", strings.Join(eda.IDs, "\n  "))
