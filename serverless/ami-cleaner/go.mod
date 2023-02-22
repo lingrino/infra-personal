@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/aws/aws-lambda-go v1.37.0
-	github.com/lingrino/cami v1.3.4
+	github.com/lingrino/cami v1.3.5
 )
 
 require (
