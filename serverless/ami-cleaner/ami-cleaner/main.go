@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/aws/aws-lambda-go/lambda"
@@ -32,6 +33,7 @@ func Handler(ctx context.Context) {
 	deleted, err := aws.DeleteUnusedAMIs()
 	if len(deleted) == 0 && err == nil {
 		fmt.Println("nothing to delete")
+		os.Exit(0)
 	}
 
 	var eda *cami.DeleteAMIError
@@ -43,7 +45,5 @@ func Handler(ctx context.Context) {
 		}
 	}
 
-	if len(deleted) > 0 {
-		fmt.Printf("Successfully deleted:\n  %s\n", strings.Join(deleted, "\n  "))
-	}
+	fmt.Printf("Successfully deleted:\n  %s\n", strings.Join(deleted, "\n  "))
 }
