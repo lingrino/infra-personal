@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Install Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version: stable # https://golang.org/dl/
       - name: Go Format
@@ -47,7 +47,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Install Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version: stable # https://golang.org/dl/
       - name: Install Serverless
@@ -79,7 +79,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Install Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
           go-version: stable # https://golang.org/dl/
       - name: Install Serverless
