@@ -1,7 +1,7 @@
 resource "aws_eip" "eip" {
   for_each = var.enable_nat ? var.azs : {}
 
-  vpc = true
+  domain = "vpc"
 
   tags = merge(
     { "Name" = "${var.name_prefix}_for_nat_${replace(each.key, "-", "_")}" },
