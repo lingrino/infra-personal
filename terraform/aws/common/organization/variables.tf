@@ -12,15 +12,3 @@ variable "assume_role_session_name" {
   type        = string
   description = "What to name the session when assuming the role"
 }
-
-variable "vantage_id" {
-  type        = string
-  sensitive   = true
-  description = "The vantage account id"
-}
-
-variable "vantage_handshake_id" {
-  type        = string
-  sensitive   = true
-  description = "The vantage handshake id"
-}
