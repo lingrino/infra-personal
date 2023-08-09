@@ -17,6 +17,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v4
         with:
+          cache: false
           go-version: stable # https://golang.org/dl/
       - name: Install govulncheck
         run: go install golang.org/x/vuln/cmd/govulncheck@latest
@@ -29,8 +30,10 @@ jobs:
       - name: Lint AMI Cleaner
         uses: golangci/golangci-lint-action@v3
         with:
+          args: --timeout=5m
           working-directory: ./serverless/ami-cleaner
       - name: Lint SNS Notifier
         uses: golangci/golangci-lint-action@v3
         with:
+          args: --timeout=5m
           working-directory: ./serverless/sns-notifier
