@@ -21,18 +21,19 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v4
         with:
+          cache: false
           go-version: stable # https://golang.org/dl/
       - name: Go Format
         run: test -z $(gofmt -l -w -s .)
       - name: Lint AMI Cleaner
         uses: golangci/golangci-lint-action@v3
         with:
-          version: v1.48 # https://github.com/golangci/golangci-lint/releases
+          args: --timeout=5m
           working-directory: ./serverless/ami-cleaner
       - name: Lint SNS Notifier
         uses: golangci/golangci-lint-action@v3
         with:
-          version: v1.48 # https://github.com/golangci/golangci-lint/releases
+          args: --timeout=5m
           working-directory: ./serverless/sns-notifier
   deploy-snsnotifier:
     needs: validate
