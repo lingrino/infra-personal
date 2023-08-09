@@ -29,8 +29,10 @@ jobs:
       - name: Lint AMI Cleaner
         uses: golangci/golangci-lint-action@v3
         with:
+          args: --timeout=5m
           working-directory: ./serverless/ami-cleaner
       - name: Lint SNS Notifier
         uses: golangci/golangci-lint-action@v3
         with:
+          args: --timeout=5m
           working-directory: ./serverless/sns-notifier
