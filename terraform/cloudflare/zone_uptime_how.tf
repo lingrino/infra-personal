@@ -2,9 +2,8 @@ module "zone_uptime_how" {
   source = "../../terraform-modules/zone//"
 
   domain                = "uptime.how"
-  cloudflare_account_id = var.cloudflare_account_id
+  cloudflare_account_id = cloudflare_account.account.id
 
-  verify_ses     = false
   enable_caching = false
 }
 

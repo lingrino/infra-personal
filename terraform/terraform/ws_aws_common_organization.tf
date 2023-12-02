@@ -10,6 +10,7 @@ resource "tfe_workspace" "aws_common_organization" {
   queue_all_runs        = false
   allow_destroy_plan    = false
   file_triggers_enabled = true
+  global_remote_state   = true
 
   vcs_repo {
     identifier     = "lingrino/infra-personal"
