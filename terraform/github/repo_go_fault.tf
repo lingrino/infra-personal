@@ -1,6 +1,6 @@
-resource "github_repository" "glen" {
-  name         = "glen"
-  description  = "cli to export gitlab variables"
+resource "github_repository" "go_fault" {
+  name         = "go-fault"
+  description  = "fault injection library in go using standard http middleware"
   homepage_url = "https://lingrino.com"
 
   visibility = "public"
@@ -28,30 +28,26 @@ resource "github_repository" "glen" {
   }
 }
 
-resource "github_branch" "glen" {
-  repository = github_repository.glen.name
+resource "github_branch" "go_fault" {
+  repository = github_repository.go_fault.name
   branch     = "main"
 }
 
-resource "github_branch_default" "glen" {
-  repository = github_repository.glen.name
-  branch     = github_branch.glen.branch
+resource "github_branch_default" "go_fault" {
+  repository = github_repository.go_fault.name
+  branch     = github_branch.go_fault.branch
 }
 
-resource "github_branch_protection" "glen" {
-  repository_id           = github_repository.glen.node_id
-  pattern                 = github_branch.glen.branch
+resource "github_branch_protection" "go_fault" {
+  repository_id           = github_repository.go_fault.node_id
+  pattern                 = github_branch.go_fault.branch
   enforce_admins          = true
   required_linear_history = true
 
   required_status_checks {
     strict = true
     contexts = [
-      "golangci",
-      "gomod",
-      "goreleaser",
-      "test",
-      "validate",
+      "validate"
     ]
   }
 }

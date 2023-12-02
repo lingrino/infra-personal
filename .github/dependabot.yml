@@ -12,9 +12,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - actions
 
   - package-ecosystem: gomod
     open-pull-requests-limit: 100
@@ -28,9 +25,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - go
 
   - package-ecosystem: gomod
     open-pull-requests-limit: 100
@@ -44,9 +38,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - go
 
   - package-ecosystem: terraform
     open-pull-requests-limit: 100
@@ -60,9 +51,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - terraform
 
   - package-ecosystem: terraform
     open-pull-requests-limit: 100
@@ -76,9 +64,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - terraform
 
   - package-ecosystem: terraform
     open-pull-requests-limit: 100
@@ -92,9 +77,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - terraform
 
   - package-ecosystem: terraform
     open-pull-requests-limit: 100
@@ -108,9 +90,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - terraform
 
   - package-ecosystem: terraform
     open-pull-requests-limit: 100
@@ -124,9 +103,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - terraform
 
   - package-ecosystem: terraform
     open-pull-requests-limit: 100
@@ -140,9 +116,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - terraform
 
   - package-ecosystem: terraform
     open-pull-requests-limit: 100
@@ -156,9 +129,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - terraform
 
   - package-ecosystem: terraform
     open-pull-requests-limit: 100
@@ -172,9 +142,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - terraform
 
   - package-ecosystem: terraform
     open-pull-requests-limit: 100
@@ -188,9 +155,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - terraform
 
   - package-ecosystem: terraform
     open-pull-requests-limit: 100
@@ -204,9 +168,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - terraform
 
   - package-ecosystem: terraform
     open-pull-requests-limit: 100
@@ -220,9 +181,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - terraform
 
   - package-ecosystem: terraform
     open-pull-requests-limit: 100
@@ -236,9 +194,6 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - terraform
 
   - package-ecosystem: terraform
     open-pull-requests-limit: 100
@@ -252,6 +207,3 @@ updates:
       - lingrino
     reviewers:
       - lingrino
-    labels:
-      - dependencies
-      - terraform

@@ -1,6 +1,6 @@
 resource "github_repository" "uptime" {
   name         = "uptime"
-  description  = "Uptime Calculator"
+  description  = "uptime calculator"
   homepage_url = "https://uptime.how"
 
   visibility = "public"
@@ -12,25 +12,20 @@ resource "github_repository" "uptime" {
   vulnerability_alerts = true
 
   allow_auto_merge       = true
-  allow_merge_commit     = true
+  allow_merge_commit     = false
   allow_squash_merge     = true
-  allow_rebase_merge     = true
+  allow_rebase_merge     = false
   allow_update_branch    = true
   delete_branch_on_merge = true
 
-  topics = [
-    "svelte",
-    "tailwind",
-    "snowpack",
-    "sla",
-    "slo",
-    "reliability",
-  ]
-}
-
-module "uptime-labels" {
-  source = "../../terraform-modules/github-repo-labels//"
-  repo   = github_repository.uptime.name
+  security_and_analysis {
+    secret_scanning {
+      status = "enabled"
+    }
+    secret_scanning_push_protection {
+      status = "enabled"
+    }
+  }
 }
 
 resource "github_branch" "uptime" {

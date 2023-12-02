@@ -1,7 +1,7 @@
 resource "github_repository" "vaku" {
   name         = "vaku"
-  description  = "Vaku extends the Vault API & CLI"
-  homepage_url = "https://vaku.dev"
+  description  = "vaku extends the vault api & cli"
+  homepage_url = "https://lingrino.com"
 
   visibility = "public"
 
@@ -12,25 +12,20 @@ resource "github_repository" "vaku" {
   vulnerability_alerts = true
 
   allow_auto_merge       = true
-  allow_merge_commit     = true
+  allow_merge_commit     = false
   allow_squash_merge     = true
-  allow_rebase_merge     = true
+  allow_rebase_merge     = false
   allow_update_branch    = true
   delete_branch_on_merge = true
 
-  topics = [
-    "cli",
-    "go",
-    "golang",
-    "vault",
-    "vault-api",
-    "vault-client",
-  ]
-}
-
-module "vaku-labels" {
-  source = "../../terraform-modules/github-repo-labels//"
-  repo   = github_repository.vaku.name
+  security_and_analysis {
+    secret_scanning {
+      status = "enabled"
+    }
+    secret_scanning_push_protection {
+      status = "enabled"
+    }
+  }
 }
 
 resource "github_branch" "vaku" {
