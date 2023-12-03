@@ -12,10 +12,7 @@ locals {
     tfe_workspace.aws_accounts_root,
     tfe_workspace.aws_common_organization,
     tfe_workspace.cloudflare,
-    tfe_workspace.do,
     tfe_workspace.github,
-    tfe_workspace.github_lingrino_org,
-    tfe_workspace.pagerduty,
     tfe_workspace.terraform,
   ]
 }

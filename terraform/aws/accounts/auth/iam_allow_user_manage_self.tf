@@ -24,8 +24,7 @@ resource "aws_iam_policy" "allow_user_manage_self" {
   policy      = data.aws_iam_policy_document.allow_user_manage_self.json
 
   tags = {
-    Name        = "allow-user-manage-self"
-    description = "This policy allows users to manage their own passwords and MFA devices but nothing else unless they authenticate with MFA"
+    Name = "allow-user-manage-self"
   }
 }
 

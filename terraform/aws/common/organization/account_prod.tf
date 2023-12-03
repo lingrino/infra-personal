@@ -26,9 +26,8 @@ module "account_prod_base" {
   account_id   = module.account_prod.id
   account_name = module.account_prod.name
 
-  account_id_audit  = module.account_audit.id
-  account_id_auth   = module.account_auth.id
-  bucket_config_arn = data.terraform_remote_state.account_audit.outputs.bucket_config_arn
+  account_id_audit = module.account_audit.id
+  account_id_auth  = module.account_auth.id
 
   providers = {
     aws = aws.prod

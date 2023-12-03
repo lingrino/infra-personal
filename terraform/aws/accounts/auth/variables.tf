@@ -13,11 +13,6 @@ variable "assume_role_session_name" {
   description = "What to name the session when assuming the role"
 }
 
-variable "keypair_main_name" {
-  type        = string
-  description = "The name of the default ssh keypair to use"
-}
-
 variable "rotate_iam_keys" {
   type        = number
   description = "Increase this number by 1 to automatically rotate keys for supported IAM users"

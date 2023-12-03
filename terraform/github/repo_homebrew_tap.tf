@@ -1,6 +1,6 @@
-resource "github_repository" "dotfiles" {
-  name         = "dotfiles"
-  description  = "my dotfiles"
+resource "github_repository" "homebrew_tap" {
+  name         = "homebrew-tap"
+  description  = "homebrew tap for my personal projects"
   homepage_url = "https://lingrino.com"
 
   visibility = "public"
@@ -28,12 +28,12 @@ resource "github_repository" "dotfiles" {
   }
 }
 
-resource "github_branch" "dotfiles" {
-  repository = github_repository.dotfiles.name
+resource "github_branch" "homebrew_tap" {
+  repository = github_repository.homebrew_tap.name
   branch     = "main"
 }
 
-resource "github_branch_default" "dotfiles" {
-  repository = github_repository.dotfiles.name
-  branch     = github_branch.dotfiles.branch
+resource "github_branch_default" "homebrew_tap" {
+  repository = github_repository.homebrew_tap.name
+  branch     = github_branch.homebrew_tap.branch
 }

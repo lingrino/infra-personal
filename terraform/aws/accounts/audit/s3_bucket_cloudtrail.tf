@@ -3,9 +3,7 @@ resource "aws_s3_bucket" "cloudtrail" {
   force_destroy = false
 
   tags = {
-    Name        = "cloudtrail"
-    description = "Stores all AWS cloudtrail logs"
-    service     = "cloudtrail"
+    Name = "cloudtrail"
   }
 }
 

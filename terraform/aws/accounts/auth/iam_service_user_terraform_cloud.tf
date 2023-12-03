@@ -5,8 +5,7 @@ resource "aws_iam_user" "terraform_cloud" {
   force_destroy = true
 
   tags = {
-    Name        = "terraform-cloud"
-    description = "This user should be used by terraform cloud to run CI"
+    Name = "terraform-cloud"
   }
 }
 

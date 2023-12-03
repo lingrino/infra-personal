@@ -1,11 +1,3 @@
-resource "cloudflare_argo" "argo" {
-  count = var.enable_argo ? 1 : 0
-
-  zone_id        = cloudflare_zone.zone.id
-  tiered_caching = "on"
-  smart_routing  = "on"
-}
-
 resource "cloudflare_zone_settings_override" "zone" {
   zone_id = cloudflare_zone.zone.id
   settings {

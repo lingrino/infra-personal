@@ -1,6 +1,6 @@
-resource "github_repository" "dotfiles" {
-  name         = "dotfiles"
-  description  = "my dotfiles"
+resource "github_repository" "website" {
+  name         = "website"
+  description  = "my personal website"
   homepage_url = "https://lingrino.com"
 
   visibility = "public"
@@ -28,12 +28,12 @@ resource "github_repository" "dotfiles" {
   }
 }
 
-resource "github_branch" "dotfiles" {
-  repository = github_repository.dotfiles.name
+resource "github_branch" "website" {
+  repository = github_repository.website.name
   branch     = "main"
 }
 
-resource "github_branch_default" "dotfiles" {
-  repository = github_repository.dotfiles.name
-  branch     = github_branch.dotfiles.branch
+resource "github_branch_default" "website" {
+  repository = github_repository.website.name
+  branch     = github_branch.website.branch
 }

@@ -12,18 +12,11 @@ resource "github_repository" "snippets" {
   vulnerability_alerts = true
 
   allow_auto_merge       = true
-  allow_merge_commit     = true
+  allow_merge_commit     = false
   allow_squash_merge     = true
-  allow_rebase_merge     = true
+  allow_rebase_merge     = false
   allow_update_branch    = true
   delete_branch_on_merge = true
-
-  topics = [
-    "ci",
-    "docker",
-    "snippets",
-    "terraform",
-  ]
 }
 
 resource "github_branch" "snippets" {
