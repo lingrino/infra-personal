@@ -1,8 +1,6 @@
 resource "aws_cloudtrail" "organization" {
-  name           = "lingrino"
+  name           = "main"
   enable_logging = true
-
-  kms_key_id = data.terraform_remote_state.account_audit.outputs.kms_key_cloudtrail_arn
 
   s3_bucket_name = data.terraform_remote_state.account_audit.outputs.bucket_cloudtrail_name
 
@@ -12,8 +10,6 @@ resource "aws_cloudtrail" "organization" {
   include_global_service_events = true
 
   tags = {
-    Name        = "lingrino"
-    description = "The cloudtrail for the entire lingrino organization"
-    service     = "cloudtrail"
+    Name = "main"
   }
 }

@@ -1,16 +1,13 @@
 resource "aws_iam_role" "view_only" {
-  name        = "ViewOnly"
-  description = "ViewOnly users can view all AWS resources but not read their content - See policy for full permissions"
+  name = "ViewOnly"
 
   max_session_duration  = 43200
   assume_role_policy    = data.aws_iam_policy_document.arp_user.json
   force_detach_policies = true
 
-  tags = merge(
-    { "Name" = "ViewOnly" },
-    { "description" = "ViewOnly users can view all AWS resources but not read their content - See policy for full permissions" },
-    var.tags
-  )
+  tags = merge(var.tags, {
+    Name = "ViewOnly"
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "view_only_view_only" {

@@ -6,11 +6,10 @@ resource "aws_iam_role" "service_admin" {
   assume_role_policy    = data.aws_iam_policy_document.arp_service.json
   force_detach_policies = true
 
-  tags = merge(
-    { "Name" = "ServiceAdmin" },
-    { "description" = "This role has full admin access to the account and should only be used by services" },
-    var.tags
-  )
+  tags = merge(var.tags, {
+    Name        = "ServiceAdmin"
+    description = "This role has full admin access to the account and should only be used by services"
+  })
 }
 
 resource "aws_iam_role_policy_attachment" "service_admin_administrator" {

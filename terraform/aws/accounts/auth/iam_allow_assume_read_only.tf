@@ -23,8 +23,7 @@ resource "aws_iam_policy" "allow_assume_read_only" {
   policy      = data.aws_iam_policy_document.allow_assume_read_only.json
 
   tags = {
-    Name        = "allow-assume-read-only"
-    description = "Allow the entity to assume the ReadOnly role"
+    Name = "allow-assume-read-only"
   }
 }
 

@@ -23,8 +23,7 @@ resource "aws_iam_policy" "allow_assume_admin" {
   policy      = data.aws_iam_policy_document.allow_assume_admin.json
 
   tags = {
-    Name        = "allow-assume-admin"
-    description = "Allow the entity to assume the Admin role"
+    Name = "allow-assume-admin"
   }
 }
 
