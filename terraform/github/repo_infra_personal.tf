@@ -53,9 +53,7 @@ resource "github_branch_protection" "infra_personal" {
       "Terraform Cloud/lingrino/aws-accounts-root",
       "Terraform Cloud/lingrino/aws-common-organization",
       "Terraform Cloud/lingrino/cloudflare",
-      "Terraform Cloud/lingrino/do",
       "Terraform Cloud/lingrino/github",
-      "Terraform Cloud/lingrino/github-lingrino-org",
       "Terraform Cloud/lingrino/tailscale",
       "Terraform Cloud/lingrino/terraform",
       "validate"
