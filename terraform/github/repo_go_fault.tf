@@ -47,7 +47,7 @@ resource "github_branch_protection" "go_fault" {
   required_status_checks {
     strict = true
     contexts = [
-      "validate"
+      "validate (ubuntu-latest, stable)",
     ]
   }
 }
