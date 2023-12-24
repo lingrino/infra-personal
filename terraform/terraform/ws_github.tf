@@ -5,7 +5,6 @@ resource "tfe_workspace" "github" {
   terraform_version = "latest"
   working_directory = "terraform/github"
 
-  execution_mode        = "remote"
   auto_apply            = true
   queue_all_runs        = false
   allow_destroy_plan    = false
@@ -21,6 +20,11 @@ resource "tfe_workspace" "github" {
   trigger_prefixes = [
     "terraform-modules"
   ]
+}
+
+resource "tfe_workspace_settings" "github" {
+  workspace_id   = tfe_workspace.github.id
+  execution_mode = "remote"
 }
 
 resource "tfe_notification_configuration" "github" {

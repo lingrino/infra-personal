@@ -5,7 +5,6 @@ resource "tfe_workspace" "terraform" {
   terraform_version = "latest"
   working_directory = "terraform/terraform"
 
-  execution_mode        = "remote"
   auto_apply            = true
   queue_all_runs        = false
   allow_destroy_plan    = false
@@ -17,6 +16,11 @@ resource "tfe_workspace" "terraform" {
     branch         = "main"
     oauth_token_id = var.oauth_token_id
   }
+}
+
+resource "tfe_workspace_settings" "terraform" {
+  workspace_id   = tfe_workspace.terraform.id
+  execution_mode = "remote"
 }
 
 resource "tfe_notification_configuration" "terraform" {
