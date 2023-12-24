@@ -5,7 +5,6 @@ resource "tfe_workspace" "cloudflare" {
   terraform_version = "latest"
   working_directory = "terraform/cloudflare"
 
-  execution_mode        = "remote"
   auto_apply            = true
   queue_all_runs        = false
   allow_destroy_plan    = false
@@ -21,6 +20,11 @@ resource "tfe_workspace" "cloudflare" {
   trigger_prefixes = [
     "terraform-modules"
   ]
+}
+
+resource "tfe_workspace_settings" "cloudflare" {
+  workspace_id   = tfe_workspace.cloudflare.id
+  execution_mode = "remote"
 }
 
 resource "tfe_notification_configuration" "cloudflare" {

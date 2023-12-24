@@ -5,7 +5,6 @@ resource "tfe_workspace" "aws_accounts_root" {
   terraform_version = "latest"
   working_directory = "terraform/aws/accounts/root"
 
-  execution_mode        = "remote"
   auto_apply            = true
   queue_all_runs        = false
   allow_destroy_plan    = false
@@ -21,6 +20,11 @@ resource "tfe_workspace" "aws_accounts_root" {
   trigger_prefixes = [
     "terraform-modules"
   ]
+}
+
+resource "tfe_workspace_settings" "aws_accounts_root" {
+  workspace_id   = tfe_workspace.aws_accounts_root.id
+  execution_mode = "remote"
 }
 
 resource "tfe_notification_configuration" "aws_accounts_root" {

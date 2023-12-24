@@ -5,7 +5,6 @@ resource "tfe_workspace" "aws_common_organization" {
   terraform_version = "latest"
   working_directory = "terraform/aws/common/organization"
 
-  execution_mode        = "remote"
   auto_apply            = true
   queue_all_runs        = false
   allow_destroy_plan    = false
@@ -21,6 +20,11 @@ resource "tfe_workspace" "aws_common_organization" {
   trigger_prefixes = [
     "terraform-modules"
   ]
+}
+
+resource "tfe_workspace_settings" "aws_common_organization" {
+  workspace_id   = tfe_workspace.aws_common_organization.id
+  execution_mode = "remote"
 }
 
 resource "tfe_notification_configuration" "aws_common_organization" {
