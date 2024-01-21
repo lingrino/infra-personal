@@ -23,15 +23,6 @@ resource "cloudflare_record" "mx_gsuite_verification" {
   value    = each.value["value"]
 }
 
-resource "cloudflare_record" "cname_gsuite_custom_urls" {
-  for_each = var.enable_gsuite ? toset(["mail", "calendar", "drive"]) : []
-
-  zone_id = cloudflare_zone.zone.id
-  name    = "${each.key}.${var.domain}"
-  type    = "CNAME"
-  value   = "ghs.googlehosted.com"
-}
-
 resource "cloudflare_record" "txt_gsuite_dkim" {
   count = var.gsuite_dkim_value != "" ? 1 : 0
 
