@@ -4,12 +4,15 @@ updates:
     open-pull-requests-limit: 100
     directory: /
     schedule:
-      time: "16:00"
-      interval: daily
+      time: "08:00"
+      timezone: "America/Los_Angeles"
+      interval: weekly
     allow:
       - dependency-type: all
-    assignees:
-      - lingrino
+    groups:
+      all:
+        patterns:
+          - "*"
     reviewers:
       - lingrino
 
@@ -17,12 +20,15 @@ updates:
     open-pull-requests-limit: 100
     directory: terraform/aws/accounts/audit
     schedule:
-      time: "16:00"
-      interval: daily
+      time: "08:00"
+      timezone: "America/Los_Angeles"
+      interval: weekly
     allow:
       - dependency-type: all
-    assignees:
-      - lingrino
+    groups:
+      all:
+        patterns:
+          - "*"
     reviewers:
       - lingrino
 
@@ -30,12 +36,15 @@ updates:
     open-pull-requests-limit: 100
     directory: terraform/aws/accounts/auth
     schedule:
-      time: "16:00"
-      interval: daily
+      time: "08:00"
+      timezone: "America/Los_Angeles"
+      interval: weekly
     allow:
       - dependency-type: all
-    assignees:
-      - lingrino
+    groups:
+      all:
+        patterns:
+          - "*"
     reviewers:
       - lingrino
 
@@ -43,12 +52,15 @@ updates:
     open-pull-requests-limit: 100
     directory: terraform/aws/accounts/dev
     schedule:
-      time: "16:00"
-      interval: daily
+      time: "08:00"
+      timezone: "America/Los_Angeles"
+      interval: weekly
     allow:
       - dependency-type: all
-    assignees:
-      - lingrino
+    groups:
+      all:
+        patterns:
+          - "*"
     reviewers:
       - lingrino
 
@@ -56,12 +68,15 @@ updates:
     open-pull-requests-limit: 100
     directory: terraform/aws/accounts/prod
     schedule:
-      time: "16:00"
-      interval: daily
+      time: "08:00"
+      timezone: "America/Los_Angeles"
+      interval: weekly
     allow:
       - dependency-type: all
-    assignees:
-      - lingrino
+    groups:
+      all:
+        patterns:
+          - "*"
     reviewers:
       - lingrino
 
@@ -69,12 +84,15 @@ updates:
     open-pull-requests-limit: 100
     directory: terraform/aws/accounts/root
     schedule:
-      time: "16:00"
-      interval: daily
+      time: "08:00"
+      timezone: "America/Los_Angeles"
+      interval: weekly
     allow:
       - dependency-type: all
-    assignees:
-      - lingrino
+    groups:
+      all:
+        patterns:
+          - "*"
     reviewers:
       - lingrino
 
@@ -82,12 +100,15 @@ updates:
     open-pull-requests-limit: 100
     directory: terraform/aws/common/organization
     schedule:
-      time: "16:00"
-      interval: daily
+      time: "08:00"
+      timezone: "America/Los_Angeles"
+      interval: weekly
     allow:
       - dependency-type: all
-    assignees:
-      - lingrino
+    groups:
+      all:
+        patterns:
+          - "*"
     reviewers:
       - lingrino
 
@@ -95,12 +116,15 @@ updates:
     open-pull-requests-limit: 100
     directory: terraform/cloudflare
     schedule:
-      time: "16:00"
-      interval: daily
+      time: "08:00"
+      timezone: "America/Los_Angeles"
+      interval: weekly
     allow:
       - dependency-type: all
-    assignees:
-      - lingrino
+    groups:
+      all:
+        patterns:
+          - "*"
     reviewers:
       - lingrino
 
@@ -108,12 +132,15 @@ updates:
     open-pull-requests-limit: 100
     directory: terraform/github
     schedule:
-      time: "16:00"
-      interval: daily
+      time: "08:00"
+      timezone: "America/Los_Angeles"
+      interval: weekly
     allow:
       - dependency-type: all
-    assignees:
-      - lingrino
+    groups:
+      all:
+        patterns:
+          - "*"
     reviewers:
       - lingrino
 
@@ -121,12 +148,15 @@ updates:
     open-pull-requests-limit: 100
     directory: terraform/tailscale
     schedule:
-      time: "16:00"
-      interval: daily
+      time: "08:00"
+      timezone: "America/Los_Angeles"
+      interval: weekly
     allow:
       - dependency-type: all
-    assignees:
-      - lingrino
+    groups:
+      all:
+        patterns:
+          - "*"
     reviewers:
       - lingrino
 
@@ -134,11 +164,14 @@ updates:
     open-pull-requests-limit: 100
     directory: terraform/terraform
     schedule:
-      time: "16:00"
-      interval: daily
+      time: "08:00"
+      timezone: "America/Los_Angeles"
+      interval: weekly
     allow:
       - dependency-type: all
-    assignees:
-      - lingrino
+    groups:
+      all:
+        patterns:
+          - "*"
     reviewers:
       - lingrino
