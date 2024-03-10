@@ -41,16 +41,19 @@ resource "cloudflare_pages_project" "uptime" {
   build_config {
     build_command   = "npm run build"
     destination_dir = ".svelte-kit/cloudflare"
+    build_caching   = true
   }
 
   deployment_configs {
     preview {
       fail_open                            = true
       always_use_latest_compatibility_date = true
+      usage_model                          = "standard"
     }
     production {
       fail_open          = true
       compatibility_date = "2023-12-01" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
+      usage_model        = "standard"
     }
   }
 }
