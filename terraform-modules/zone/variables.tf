@@ -7,11 +7,6 @@ variable "domain" {
   type        = string
   description = "The domain to create the zone for"
 }
-variable "enable_caching" {
-  type        = bool
-  description = "Whether or not to enable cloudflare caching features for the zone (first update content policies)."
-  default     = true
-}
 
 variable "enable_gsuite" {
   type        = bool
@@ -26,7 +21,7 @@ variable "gsuite_dkim_value" {
 }
 
 variable "google_site_verifications" {
-  type        = list(string)
+  type        = set(string)
   description = "An optional list of google site verification strings"
   default     = []
 }

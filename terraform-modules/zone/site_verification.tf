@@ -1,5 +1,5 @@
 resource "cloudflare_record" "txt_base" {
-  for_each = toset(var.google_site_verifications)
+  for_each = var.google_site_verifications
 
   zone_id = cloudflare_zone.zone.id
   name    = "@"

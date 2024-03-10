@@ -1,4 +1,4 @@
-output "zone_id" {
+output "id" {
   description = "The ID of the created zone"
   value       = cloudflare_zone.zone.id
 }
