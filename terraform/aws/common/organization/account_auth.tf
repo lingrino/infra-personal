@@ -17,7 +17,7 @@ module "account_auth" {
   source = "../../../../terraform-modules/account//"
 
   name  = "auth"
-  email = "sean+aws-auth@lingrino.com"
+  email = "sean+aws-auth@lingren.com"
 }
 
 module "account_auth_base" {

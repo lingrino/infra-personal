@@ -17,7 +17,7 @@ module "account_prod" {
   source = "../../../../terraform-modules/account//"
 
   name  = "prod"
-  email = "sean+aws-prod@lingrino.com"
+  email = "sean+aws-prod@lingren.com"
 }
 
 module "account_prod_base" {

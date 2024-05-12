@@ -18,11 +18,6 @@ resource "tfe_workspace" "tailscale" {
   }
 }
 
-resource "tfe_workspace_settings" "tailscale" {
-  workspace_id   = tfe_workspace.tailscale.id
-  execution_mode = "remote"
-}
-
 resource "tfe_notification_configuration" "tailscale" {
   name         = "tailscale"
   enabled      = true

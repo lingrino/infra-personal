@@ -22,11 +22,6 @@ resource "tfe_workspace" "github" {
   ]
 }
 
-resource "tfe_workspace_settings" "github" {
-  workspace_id   = tfe_workspace.github.id
-  execution_mode = "remote"
-}
-
 resource "tfe_notification_configuration" "github" {
   name         = "github"
   enabled      = true

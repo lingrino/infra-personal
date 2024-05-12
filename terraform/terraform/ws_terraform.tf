@@ -18,11 +18,6 @@ resource "tfe_workspace" "terraform" {
   }
 }
 
-resource "tfe_workspace_settings" "terraform" {
-  workspace_id   = tfe_workspace.terraform.id
-  execution_mode = "remote"
-}
-
 resource "tfe_notification_configuration" "terraform" {
   name         = "terraform"
   enabled      = true

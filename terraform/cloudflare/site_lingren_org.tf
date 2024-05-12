@@ -1,34 +1,34 @@
-module "zone_lingrino_dev" {
+module "zone_lingren_org" {
   source = "../../terraform-modules/zone//"
 
-  domain                = "lingrino.dev"
+  domain                = "lingren.org"
   cloudflare_account_id = cloudflare_account.account.id
 
   google_site_verifications = [
-    "google-site-verification=vxDuPgFxbbnn0WDnOzSZVz2zzv_rZr6EUegsu2gF6KY", # https://search.google.com/search-console/welcome
+    "google-site-verification=2wlyDNZ9mK6gUXJAYzqixYSIv84J-2bVFWmzNotzshI", # https://search.google.com/search-console/welcome
   ]
 }
 
-resource "cloudflare_record" "star_lingrino_dev" {
-  zone_id = module.zone_lingrino_dev.id
+resource "cloudflare_record" "star_lingren_org" {
+  zone_id = module.zone_lingren_org.id
   proxied = true
-  name    = "*.lingrino.dev"
+  name    = "*.lingren.org"
   type    = "CNAME"
   value   = "lingrino.com" # superseded by below redirect
 }
 
-resource "cloudflare_ruleset" "redirect_lingrino_dev_to_lingrino_com" {
-  zone_id = module.zone_lingrino_dev.id
+resource "cloudflare_ruleset" "redirect_lingren_org_to_lingrino_com" {
+  zone_id = module.zone_lingren_org.id
 
   name        = "redirect"
-  description = "redirect *.lingrino.dev to lingrino.com"
+  description = "redirect *.lingren.org to lingrino.com"
 
   kind  = "zone"
   phase = "http_request_dynamic_redirect"
 
   rules {
     action      = "redirect"
-    description = "redirect *.lingrino.dev to lingrino.com"
+    description = "redirect *.lingren.org to lingrino.com"
     expression  = "true"
 
     action_parameters {
