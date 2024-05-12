@@ -22,11 +22,6 @@ resource "tfe_workspace" "aws_accounts_audit" {
   ]
 }
 
-resource "tfe_workspace_settings" "aws_accounts_audit" {
-  workspace_id   = tfe_workspace.aws_accounts_audit.id
-  execution_mode = "remote"
-}
-
 resource "tfe_notification_configuration" "aws_accounts_audit" {
   name         = "aws_accounts_audit"
   enabled      = true

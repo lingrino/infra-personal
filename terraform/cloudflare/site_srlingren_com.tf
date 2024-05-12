@@ -5,7 +5,7 @@ module "zone_srlingren_com" {
   cloudflare_account_id = cloudflare_account.account.id
 
   google_site_verifications = [
-    "google-site-verification=y9QbGPES67hmtkoOIs1B9Fgfk-w4uceEemqtIL-jfYM" # https://search.google.com/search-console/welcome
+    "google-site-verification=hQbHYjjZ9cakdTTBoYtnm7vwIoQ2O0uEEK9DCQZzez0", # https://search.google.com/search-console/welcome
   ]
 }
 

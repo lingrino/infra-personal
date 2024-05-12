@@ -38,5 +38,5 @@ resource "cloudflare_record" "txt_gsuite_dmarc" {
   zone_id = cloudflare_zone.zone.id
   name    = "_dmarc"
   type    = "TXT"
-  value   = "v=DMARC1; p=reject; sp=reject; adkim=s; aspf=s; pct=100; rua=mailto:sean+dmarc@lingrino.com"
+  value   = "v=DMARC1; p=reject; sp=reject; adkim=s; aspf=s; pct=100; rua=mailto:sean+dmarc@lingren.com"
 }

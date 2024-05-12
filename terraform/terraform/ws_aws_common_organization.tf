@@ -22,11 +22,6 @@ resource "tfe_workspace" "aws_common_organization" {
   ]
 }
 
-resource "tfe_workspace_settings" "aws_common_organization" {
-  workspace_id   = tfe_workspace.aws_common_organization.id
-  execution_mode = "remote"
-}
-
 resource "tfe_notification_configuration" "aws_common_organization" {
   name         = "aws_common_organization"
   enabled      = true

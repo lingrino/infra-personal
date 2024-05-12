@@ -8,6 +8,6 @@ resource "cloudflare_notification_policy" "origin_availability" {
   description = "a cloudflare origin is detected as down"
 
   email_integration {
-    id = "sean@lingrino.com"
+    id = "sean@lingren.com"
   }
 }

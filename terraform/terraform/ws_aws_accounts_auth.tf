@@ -22,11 +22,6 @@ resource "tfe_workspace" "aws_accounts_auth" {
   ]
 }
 
-resource "tfe_workspace_settings" "aws_accounts_auth" {
-  workspace_id   = tfe_workspace.aws_accounts_auth.id
-  execution_mode = "remote"
-}
-
 resource "tfe_notification_configuration" "aws_accounts_auth" {
   name         = "aws_accounts_auth"
   enabled      = true

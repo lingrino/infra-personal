@@ -22,11 +22,6 @@ resource "tfe_workspace" "cloudflare" {
   ]
 }
 
-resource "tfe_workspace_settings" "cloudflare" {
-  workspace_id   = tfe_workspace.cloudflare.id
-  execution_mode = "remote"
-}
-
 resource "tfe_notification_configuration" "cloudflare" {
   name         = "cloudflare"
   enabled      = true

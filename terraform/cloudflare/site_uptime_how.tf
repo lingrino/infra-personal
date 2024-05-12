@@ -5,7 +5,7 @@ module "zone_uptime_how" {
   cloudflare_account_id = cloudflare_account.account.id
 
   google_site_verifications = [
-    "google-site-verification=5RIxGFnjg_F2p4U4JHHdWYvt1JtynJF0xI2Iyzt_nQA" # https://search.google.com/search-console/welcome
+    "google-site-verification=5RIxGFnjg_F2p4U4JHHdWYvt1JtynJF0xI2Iyzt_nQA", # https://search.google.com/search-console/welcome
   ]
 }
 

@@ -17,7 +17,7 @@ module "account_audit" {
   source = "../../../../terraform-modules/account//"
 
   name  = "audit"
-  email = "sean+aws-audit@lingrino.com"
+  email = "sean+aws-audit@lingren.com"
 }
 
 module "account_audit_base" {
