@@ -38,16 +38,38 @@ resource "github_branch_default" "go_fault" {
   branch     = github_branch.go_fault.branch
 }
 
-resource "github_branch_protection" "go_fault" {
-  repository_id           = github_repository.go_fault.node_id
-  pattern                 = github_branch.go_fault.branch
-  enforce_admins          = true
-  required_linear_history = true
+resource "github_repository_ruleset" "go_fault" {
+  name        = "main"
+  repository  = github_repository.go_fault.name
+  target      = "branch"
+  enforcement = "active"
 
-  required_status_checks {
-    strict = true
-    contexts = [
-      "validate (ubuntu-latest, stable)",
-    ]
+  conditions {
+    ref_name {
+      include = ["~DEFAULT_BRANCH"]
+      exclude = []
+    }
+  }
+
+  rules {
+    deletion = true
+
+    required_linear_history = true
+    non_fast_forward        = true
+
+    pull_request {}
+
+    required_status_checks {
+      strict_required_status_checks_policy = true
+
+      dynamic "required_check" {
+        for_each = ["validate (ubuntu-latest, stable)"]
+
+        content {
+          context        = required_check.value
+          integration_id = 0
+        }
+      }
+    }
   }
 }

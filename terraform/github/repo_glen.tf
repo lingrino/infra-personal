@@ -38,20 +38,38 @@ resource "github_branch_default" "glen" {
   branch     = github_branch.glen.branch
 }
 
-resource "github_branch_protection" "glen" {
-  repository_id           = github_repository.glen.node_id
-  pattern                 = github_branch.glen.branch
-  enforce_admins          = true
-  required_linear_history = true
+resource "github_repository_ruleset" "glen" {
+  name        = "main"
+  repository  = github_repository.glen.name
+  target      = "branch"
+  enforcement = "active"
 
-  required_status_checks {
-    strict = true
-    contexts = [
-      "golangci",
-      "gomod",
-      "goreleaser",
-      "test",
-      "validate",
-    ]
+  conditions {
+    ref_name {
+      include = ["~DEFAULT_BRANCH"]
+      exclude = []
+    }
+  }
+
+  rules {
+    deletion = true
+
+    required_linear_history = true
+    non_fast_forward        = true
+
+    pull_request {}
+
+    required_status_checks {
+      strict_required_status_checks_policy = true
+
+      dynamic "required_check" {
+        for_each = ["golangci", "gomod", "goreleaser", "test", "validate"]
+
+        content {
+          context        = required_check.value
+          integration_id = 0
+        }
+      }
+    }
   }
 }

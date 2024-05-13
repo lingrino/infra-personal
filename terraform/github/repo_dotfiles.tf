@@ -37,3 +37,24 @@ resource "github_branch_default" "dotfiles" {
   repository = github_repository.dotfiles.name
   branch     = github_branch.dotfiles.branch
 }
+
+resource "github_repository_ruleset" "dotfiles" {
+  name        = "main"
+  repository  = github_repository.dotfiles.name
+  target      = "branch"
+  enforcement = "active"
+
+  conditions {
+    ref_name {
+      include = ["~DEFAULT_BRANCH"]
+      exclude = []
+    }
+  }
+
+  rules {
+    deletion = true
+
+    required_linear_history = true
+    non_fast_forward        = true
+  }
+}

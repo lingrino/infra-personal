@@ -37,3 +37,24 @@ resource "github_branch_default" "lingrino" {
   repository = github_repository.lingrino.name
   branch     = github_branch.lingrino.branch
 }
+
+resource "github_repository_ruleset" "lingrino" {
+  name        = "main"
+  repository  = github_repository.lingrino.name
+  target      = "branch"
+  enforcement = "active"
+
+  conditions {
+    ref_name {
+      include = ["~DEFAULT_BRANCH"]
+      exclude = []
+    }
+  }
+
+  rules {
+    deletion = true
+
+    required_linear_history = true
+    non_fast_forward        = true
+  }
+}

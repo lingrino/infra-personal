@@ -37,3 +37,24 @@ resource "github_branch_default" "homebrew_tap" {
   repository = github_repository.homebrew_tap.name
   branch     = github_branch.homebrew_tap.branch
 }
+
+resource "github_repository_ruleset" "homebrew_tap" {
+  name        = "main"
+  repository  = github_repository.homebrew_tap.name
+  target      = "branch"
+  enforcement = "active"
+
+  conditions {
+    ref_name {
+      include = ["~DEFAULT_BRANCH"]
+      exclude = []
+    }
+  }
+
+  rules {
+    deletion = true
+
+    required_linear_history = true
+    non_fast_forward        = true
+  }
+}
