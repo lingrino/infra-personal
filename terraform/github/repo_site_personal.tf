@@ -37,3 +37,24 @@ resource "github_branch_default" "website" {
   repository = github_repository.website.name
   branch     = github_branch.website.branch
 }
+
+resource "github_repository_ruleset" "website" {
+  name        = "main"
+  repository  = github_repository.website.name
+  target      = "branch"
+  enforcement = "active"
+
+  conditions {
+    ref_name {
+      include = ["~DEFAULT_BRANCH"]
+      exclude = []
+    }
+  }
+
+  rules {
+    deletion = true
+
+    required_linear_history = true
+    non_fast_forward        = true
+  }
+}

@@ -38,20 +38,38 @@ resource "github_branch_default" "vaku" {
   branch     = github_branch.vaku.branch
 }
 
-resource "github_branch_protection" "vaku" {
-  repository_id  = github_repository.vaku.node_id
-  pattern        = github_branch.vaku.branch
-  enforce_admins = true
+resource "github_repository_ruleset" "vaku" {
+  name        = "main"
+  repository  = github_repository.vaku.name
+  target      = "branch"
+  enforcement = "active"
 
-  required_status_checks {
-    strict = true
-    contexts = [
-      "docs",
-      "golangci",
-      "gomod",
-      "goreleaser",
-      "test",
-      "validate",
-    ]
+  conditions {
+    ref_name {
+      include = ["~DEFAULT_BRANCH"]
+      exclude = []
+    }
+  }
+
+  rules {
+    deletion = true
+
+    required_linear_history = true
+    non_fast_forward        = true
+
+    pull_request {}
+
+    required_status_checks {
+      strict_required_status_checks_policy = true
+
+      dynamic "required_check" {
+        for_each = ["docs", "golangci", "gomod", "goreleaser", "test", "validate"]
+
+        content {
+          context        = required_check.value
+          integration_id = 0
+        }
+      }
+    }
   }
 }
