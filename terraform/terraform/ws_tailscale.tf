@@ -18,9 +18,9 @@ resource "tfe_workspace" "tailscale" {
   }
 }
 
-resource "tfe_workspace_settings" "tailscale" {
-  workspace_id   = tfe_workspace.tailscale.id
-  execution_mode = "remote"
+resource "tfe_workspace_variable_set" "tailscale" {
+  workspace_id    = tfe_workspace.tailscale.id
+  variable_set_id = tfe_variable_set.all.id
 }
 
 resource "tfe_notification_configuration" "tailscale" {

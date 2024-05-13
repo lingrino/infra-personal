@@ -19,7 +19,7 @@ resource "aws_budgets_budget" "high" {
     comparison_operator        = "GREATER_THAN"
     threshold                  = 100
     threshold_type             = "PERCENTAGE"
-    subscriber_email_addresses = ["sean+aws-root@lingrino.com"]
+    subscriber_email_addresses = ["sean+aws-root@lingren.com"]
   }
 }
 
@@ -44,6 +44,6 @@ resource "aws_budgets_budget" "very_high" {
     comparison_operator        = "GREATER_THAN"
     threshold                  = 100
     threshold_type             = "PERCENTAGE"
-    subscriber_email_addresses = ["sean+aws-root@lingrino.com"]
+    subscriber_email_addresses = ["sean+aws-root@lingren.com"]
   }
 }

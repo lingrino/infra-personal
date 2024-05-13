@@ -17,7 +17,7 @@ module "account_root" {
   source = "../../../../terraform-modules/account//"
 
   name  = "root"
-  email = "sean+aws-root@lingrino.com"
+  email = "sean+aws-root@lingren.com"
 }
 
 module "account_root_base" {
