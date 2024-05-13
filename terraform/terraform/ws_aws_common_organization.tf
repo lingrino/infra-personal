@@ -22,6 +22,11 @@ resource "tfe_workspace" "aws_common_organization" {
   ]
 }
 
+resource "tfe_workspace_variable_set" "aws_common_organization" {
+  workspace_id    = tfe_workspace.aws_common_organization.id
+  variable_set_id = tfe_variable_set.all.id
+}
+
 resource "tfe_notification_configuration" "aws_common_organization" {
   name         = "aws_common_organization"
   enabled      = true

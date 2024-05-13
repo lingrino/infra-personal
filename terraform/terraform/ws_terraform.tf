@@ -18,6 +18,11 @@ resource "tfe_workspace" "terraform" {
   }
 }
 
+resource "tfe_workspace_variable_set" "terraform" {
+  workspace_id    = tfe_workspace.terraform.id
+  variable_set_id = tfe_variable_set.all.id
+}
+
 resource "tfe_notification_configuration" "terraform" {
   name         = "terraform"
   enabled      = true

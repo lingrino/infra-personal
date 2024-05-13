@@ -22,6 +22,11 @@ resource "tfe_workspace" "cloudflare" {
   ]
 }
 
+resource "tfe_workspace_variable_set" "cloudflare" {
+  workspace_id    = tfe_workspace.cloudflare.id
+  variable_set_id = tfe_variable_set.all.id
+}
+
 resource "tfe_notification_configuration" "cloudflare" {
   name         = "cloudflare"
   enabled      = true

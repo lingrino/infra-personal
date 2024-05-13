@@ -26,20 +26,11 @@ resource "aws_iam_access_key" "terraform_cloud_odd" {
 locals {
   terraform_cloud_akid = try(aws_iam_access_key.terraform_cloud_even[0].id, aws_iam_access_key.terraform_cloud_odd[0].id)
   terraform_cloud_sak  = try(aws_iam_access_key.terraform_cloud_even[0].secret, aws_iam_access_key.terraform_cloud_odd[0].secret)
-
-  # The set of workspaces that should have the terraform cloud variables and secrets
-  # All of the workspaces that start with aws-*
-  user_tf_cloud_workspaces = toset([
-    for name, id in data.terraform_remote_state.terraform.outputs.workspace_names_to_ids :
-    id if length(regexall("^aws-*", name)) > 0 || name == "cloudflare"
-  ])
 }
 
 resource "tfe_variable" "assume_role_name" {
-  for_each = local.user_tf_cloud_workspaces
-
-  workspace_id = each.key
-  category     = "terraform"
+  variable_set_id = data.tfe_variable_set.all.id
+  category        = "terraform"
 
   description = "name of the aws role that aws provider will assume"
   key         = "assume_role_name"
@@ -47,10 +38,8 @@ resource "tfe_variable" "assume_role_name" {
 }
 
 resource "tfe_variable" "assume_role_session_name" {
-  for_each = local.user_tf_cloud_workspaces
-
-  workspace_id = each.key
-  category     = "terraform"
+  variable_set_id = data.tfe_variable_set.all.id
+  category        = "terraform"
 
   description = "friendly name of the session that aws provider will create"
   key         = "assume_role_session_name"
@@ -58,10 +47,8 @@ resource "tfe_variable" "assume_role_session_name" {
 }
 
 resource "tfe_variable" "terraform_cloud_akid" {
-  for_each = local.user_tf_cloud_workspaces
-
-  workspace_id = each.key
-  category     = "env"
+  variable_set_id = data.tfe_variable_set.all.id
+  category        = "env"
 
   description = "AWS_ACCESS_KEY_ID that will be used to assume the role"
   key         = "AWS_ACCESS_KEY_ID"
@@ -69,10 +56,8 @@ resource "tfe_variable" "terraform_cloud_akid" {
 }
 
 resource "tfe_variable" "terraform_cloud_sak" {
-  for_each = local.user_tf_cloud_workspaces
-
-  workspace_id = each.key
-  category     = "env"
+  variable_set_id = data.tfe_variable_set.all.id
+  category        = "env"
 
   description = "AWS_SECRET_ACCESS_KEY that will be used to assume the role"
   key         = "AWS_SECRET_ACCESS_KEY"

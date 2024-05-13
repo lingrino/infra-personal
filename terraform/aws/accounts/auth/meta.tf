@@ -40,18 +40,3 @@ terraform {
     }
   }
 }
-
-#################################
-### Remote State              ###
-#################################
-data "terraform_remote_state" "terraform" {
-  backend = "remote"
-
-  config = {
-    organization = "lingrino"
-
-    workspaces = {
-      name = "terraform"
-    }
-  }
-}
