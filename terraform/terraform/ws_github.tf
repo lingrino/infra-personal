@@ -22,6 +22,11 @@ resource "tfe_workspace" "github" {
   ]
 }
 
+resource "tfe_workspace_variable_set" "github" {
+  workspace_id    = tfe_workspace.github.id
+  variable_set_id = tfe_variable_set.all.id
+}
+
 resource "tfe_notification_configuration" "github" {
   name         = "github"
   enabled      = true

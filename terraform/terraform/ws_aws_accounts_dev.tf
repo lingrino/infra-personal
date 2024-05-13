@@ -22,6 +22,11 @@ resource "tfe_workspace" "aws_accounts_dev" {
   ]
 }
 
+resource "tfe_workspace_variable_set" "aws_accounts_dev" {
+  workspace_id    = tfe_workspace.aws_accounts_dev.id
+  variable_set_id = tfe_variable_set.all.id
+}
+
 resource "tfe_notification_configuration" "aws_accounts_dev" {
   name         = "aws_accounts_dev"
   enabled      = true
