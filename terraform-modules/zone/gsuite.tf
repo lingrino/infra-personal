@@ -4,7 +4,7 @@ resource "cloudflare_record" "txt_gsuite" {
   zone_id = cloudflare_zone.zone.id
   name    = "@"
   type    = "TXT"
-  value   = "v=spf1 include:_spf.google.com ~all"
+  content = "v=spf1 include:_spf.google.com ~all"
 }
 
 resource "cloudflare_record" "mx_gsuite_verification" {
@@ -20,7 +20,7 @@ resource "cloudflare_record" "mx_gsuite_verification" {
   name     = var.domain
   type     = "MX"
   priority = each.value["priority"]
-  value    = each.value["value"]
+  content  = each.value["value"]
 }
 
 resource "cloudflare_record" "txt_gsuite_dkim" {
@@ -29,7 +29,7 @@ resource "cloudflare_record" "txt_gsuite_dkim" {
   zone_id = cloudflare_zone.zone.id
   name    = "google._domainkey"
   type    = "TXT"
-  value   = var.gsuite_dkim_value
+  content = var.gsuite_dkim_value
 }
 
 resource "cloudflare_record" "txt_gsuite_dmarc" {
@@ -38,5 +38,5 @@ resource "cloudflare_record" "txt_gsuite_dmarc" {
   zone_id = cloudflare_zone.zone.id
   name    = "_dmarc"
   type    = "TXT"
-  value   = "v=DMARC1; p=reject; sp=reject; adkim=s; aspf=s; pct=100; rua=mailto:sean+dmarc@lingren.com"
+  content = "v=DMARC1; p=reject; sp=reject; adkim=s; aspf=s; pct=100; rua=mailto:sean+dmarc@lingren.com"
 }

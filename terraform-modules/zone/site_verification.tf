@@ -4,5 +4,5 @@ resource "cloudflare_record" "txt_base" {
   zone_id = cloudflare_zone.zone.id
   name    = "@"
   type    = "TXT"
-  value   = each.key
+  content = each.key
 }
