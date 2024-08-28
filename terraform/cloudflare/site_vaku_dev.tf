@@ -14,7 +14,7 @@ resource "cloudflare_record" "vaku_dev" {
   proxied = true
   name    = "vaku.dev"
   type    = "CNAME"
-  value   = "vaku.pages.dev"
+  content = "vaku.pages.dev"
 }
 
 resource "cloudflare_pages_domain" "vaku" {

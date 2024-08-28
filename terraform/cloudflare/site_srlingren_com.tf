@@ -14,7 +14,7 @@ resource "cloudflare_record" "star_srlingren_com" {
   proxied = true
   name    = "*.srlingren.com"
   type    = "CNAME"
-  value   = "lingrino.com" # superseded by below redirect
+  content = "lingrino.com" # superseded by below redirect
 }
 
 resource "cloudflare_ruleset" "redirect_srlingren_com_to_lingrino_com" {

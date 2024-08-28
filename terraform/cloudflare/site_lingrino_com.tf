@@ -17,7 +17,7 @@ resource "cloudflare_record" "lingrino_com" {
   proxied = true
   name    = "lingrino.com"
   type    = "CNAME"
-  value   = "site-personal.pages.dev"
+  content = "site-personal.pages.dev"
 }
 
 resource "cloudflare_pages_domain" "website" {

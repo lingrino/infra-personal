@@ -14,7 +14,7 @@ resource "cloudflare_record" "uptime_how" {
   proxied = true
   name    = "uptime.how"
   type    = "CNAME"
-  value   = "uptime-pcd3.pages.dev"
+  content = "uptime-pcd3.pages.dev"
 }
 
 resource "cloudflare_pages_domain" "uptime" {
