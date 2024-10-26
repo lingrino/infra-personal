@@ -42,7 +42,8 @@ resource "cloudflare_pages_project" "website" {
   }
 
   build_config {
-    destination_dir = "www"
+    build_command   = "go run build.go"
+    destination_dir = "public"
     build_caching   = true
   }
 
