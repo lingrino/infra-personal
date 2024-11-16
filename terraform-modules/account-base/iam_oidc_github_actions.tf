@@ -8,18 +8,18 @@ resource "aws_iam_openid_connect_provider" "github_actions" {
   thumbprint_list = [data.tls_certificate.github_actions.certificates[0].sha1_fingerprint]
 
   tags = {
-    Name = "github_actions"
+    Name = "github-actions"
   }
 }
 
 resource "aws_iam_role" "github_actions" {
-  name = "github_actions"
+  name = "github-actions"
   path = "/service/"
 
   assume_role_policy = data.aws_iam_policy_document.arp_github_actions.json
 
   tags = {
-    Name = "github_actions"
+    Name = "github-actions"
   }
 }
 
