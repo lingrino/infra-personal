@@ -13,6 +13,12 @@ variable "tfc_aws_dynamic_credentials" {
       shared_config_file = string
     }))
   })
+  default = {
+    default = {
+      shared_config_file = ""
+    }
+    aliases = {}
+  }
 }
 
 variable "rotate_iam_keys" {
