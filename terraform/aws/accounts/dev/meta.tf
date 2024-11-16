@@ -2,7 +2,6 @@
 ### Providers                 ###
 #################################
 provider "aws" {
-  alias  = "dev"
   region = "us-east-1"
 
   shared_config_files = [var.tfc_aws_dynamic_credentials.aliases["dev"].shared_config_file]
