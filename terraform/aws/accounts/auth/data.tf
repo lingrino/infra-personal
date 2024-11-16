@@ -1,8 +1,11 @@
-data "tfe_organization" "lingrino" {
-  name = "lingrino"
-}
+data "aws_ssoadmin_instances" "lingrino" {}
 
-data "tfe_variable_set" "all" {
-  organization = data.tfe_organization.lingrino.name
-  name         = "all"
+locals {
+  identity_store_id = tolist(data.aws_ssoadmin_instances.lingrino.identity_store_ids)[0]
+  instance_arn      = tolist(data.aws_ssoadmin_instances.lingrino.arns)[0]
+
+  nonmanagement_account_ids = toset([
+    for alias, id in data.terraform_remote_state.common_organization.outputs.account_aliases_to_account_ids
+    : id if alias != "lingrino-root"
+  ])
 }
