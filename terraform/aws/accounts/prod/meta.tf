@@ -4,6 +4,7 @@
 provider "aws" {
   region = "us-east-1"
 
+  profile             = !can(var.tfc_aws_dynamic_credentials.aliases["prod"]) ? "prod" : null
   shared_config_files = try([var.tfc_aws_dynamic_credentials.aliases["prod"].shared_config_file], null)
 
   default_tags {
@@ -14,10 +15,10 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "cert"
-
+  alias  = "cert"
   region = "us-east-1"
 
+  profile             = !can(var.tfc_aws_dynamic_credentials.aliases["prod"]) ? "prod" : null
   shared_config_files = try([var.tfc_aws_dynamic_credentials.aliases["prod"].shared_config_file], null)
 
   default_tags {
@@ -28,10 +29,10 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "dns"
-
+  alias  = "dns"
   region = "us-east-1"
 
+  profile             = !can(var.tfc_aws_dynamic_credentials.aliases["prod"]) ? "prod" : null
   shared_config_files = try([var.tfc_aws_dynamic_credentials.aliases["prod"].shared_config_file], null)
 
   default_tags {
