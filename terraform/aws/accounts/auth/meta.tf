@@ -2,7 +2,7 @@
 ### Providers                 ###
 #################################
 provider "aws" {
-  region = "us-east-1"
+  region = "us-west-2"
 
   profile             = !can(var.tfc_aws_dynamic_credentials.aliases["auth"]) ? "auth" : null
   shared_config_files = try([var.tfc_aws_dynamic_credentials.aliases["auth"].shared_config_file], null)
