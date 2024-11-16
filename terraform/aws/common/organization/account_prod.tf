@@ -2,6 +2,7 @@ provider "aws" {
   alias  = "prod"
   region = "us-east-1"
 
+  profile             = "prod"
   shared_config_files = try([var.tfc_aws_dynamic_credentials.aliases["prod"].shared_config_file], null)
 
   default_tags {
