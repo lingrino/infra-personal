@@ -2,13 +2,9 @@
 ### Providers                 ###
 #################################
 provider "aws" {
-  region              = "us-east-1"
-  allowed_account_ids = [var.account_id_root]
+  region = "us-east-1"
 
-  assume_role {
-    role_arn     = "arn:aws:iam::${var.account_id_root}:role/${var.assume_role_name}"
-    session_name = var.assume_role_session_name
-  }
+  shared_config_files = [var.tfc_aws_dynamic_credentials.aliases["root"].shared_config_file]
 
   default_tags {
     tags = {
