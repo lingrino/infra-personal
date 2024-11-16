@@ -16,13 +16,9 @@ provider "aws" {
 provider "aws" {
   alias = "cert"
 
-  region              = "us-east-1"
-  allowed_account_ids = [var.account_id_prod]
+  region = "us-east-1"
 
-  assume_role {
-    role_arn     = "arn:aws:iam::${var.account_id_prod}:role/${var.assume_role_name}"
-    session_name = var.assume_role_session_name
-  }
+  shared_config_files = [var.tfc_aws_dynamic_credentials.aliases["prod"].shared_config_file]
 
   default_tags {
     tags = {
@@ -34,13 +30,9 @@ provider "aws" {
 provider "aws" {
   alias = "dns"
 
-  region              = "us-east-1"
-  allowed_account_ids = [var.account_id_prod]
+  region = "us-east-1"
 
-  assume_role {
-    role_arn     = "arn:aws:iam::${var.account_id_prod}:role/${var.assume_role_name}"
-    session_name = var.assume_role_session_name
-  }
+  shared_config_files = [var.tfc_aws_dynamic_credentials.aliases["prod"].shared_config_file]
 
   default_tags {
     tags = {
