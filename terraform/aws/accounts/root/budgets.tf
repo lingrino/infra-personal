@@ -1,4 +1,6 @@
 resource "aws_budgets_budget" "high" {
+  provider = aws.us-east-1
+
   name = "high"
 
   budget_type  = "COST"
@@ -24,6 +26,8 @@ resource "aws_budgets_budget" "high" {
 }
 
 resource "aws_budgets_budget" "very_high" {
+  provider = aws.us-east-1
+
   name = "very_high"
 
   budget_type  = "COST"

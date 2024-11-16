@@ -14,8 +14,6 @@ provider "aws" {
   }
 }
 
-provider "tfe" {}
-
 #################################
 ### Terraform                 ###
 #################################
@@ -32,8 +30,20 @@ terraform {
     aws = {
       source = "hashicorp/aws"
     }
-    tfe = {
-      source = "hashicorp/tfe"
+  }
+}
+
+#################################
+### Remote State              ###
+#################################
+data "terraform_remote_state" "common_organization" {
+  backend = "remote"
+
+  config = {
+    organization = "lingrino"
+
+    workspaces = {
+      name = "aws-common-organization"
     }
   }
 }
