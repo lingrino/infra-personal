@@ -8,5 +8,6 @@ resource "aws_organizations_organization" "org" {
     "config.amazonaws.com",
     "config-multiaccountsetup.amazonaws.com",
     "ram.amazonaws.com",
+    "sso.amazonaws.com",
   ]
 }
