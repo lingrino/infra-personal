@@ -2,9 +2,7 @@ provider "aws" {
   alias  = "audit"
   region = "us-east-1"
 
-  assume_role {
-    role_arn = "arn:aws:iam::${module.account_audit.id}:role/${var.assume_role_name}"
-  }
+  shared_config_files = try([var.tfc_aws_dynamic_credentials.aliases["audit"].shared_config_file], null)
 
   default_tags {
     tags = {
