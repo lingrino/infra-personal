@@ -8,5 +8,4 @@ variable "tfc_aws_dynamic_credentials" {
       shared_config_file = string
     }))
   })
-  default = {}
 }

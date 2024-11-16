@@ -58,7 +58,7 @@ resource "tfe_variable" "terraform_cloud_provider_auth" {
   category        = "env"
 
   key   = "TFC_AWS_PROVIDER_AUTH_${var.account_name}"
-  value = aws_iam_role.terraform_cloud.arn
+  value = true
 }
 
 resource "tfe_variable" "terraform_cloud_role_arn" {
