@@ -1,6 +1,4 @@
 resource "aws_cloudtrail" "organization" {
-  provider = aws.us-east-1
-
   name           = "main"
   enable_logging = true
 

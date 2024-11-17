@@ -13,7 +13,7 @@ export AWS_SECRET_ACCESS_KEY="$sak"
 export AWS_SESSION_TOKEN="$st"
 export AWS_SECURITY_TOKEN="$st"
 
-for region in $(aws ec2 describe-regions --region us-east-1 | jq -r '.Regions[].RegionName'); do
+for region in $(aws ec2 describe-regions --region us-west-2 | jq -r '.Regions[].RegionName'); do
     echo "--------- REGION: ${region} ---------"
     aws --region "${region}" ec2 enable-ebs-encryption-by-default
 done

@@ -14,7 +14,7 @@ export AWS_SECRET_ACCESS_KEY="$sak"
 export AWS_SESSION_TOKEN="$st"
 export AWS_SECURITY_TOKEN="$st"
 
-for region in $(aws ec2 describe-regions --region us-east-1 | jq -r '.Regions[].RegionName'); do
+for region in $(aws ec2 describe-regions --region us-west-2 | jq -r '.Regions[].RegionName'); do
     echo "--------- REGION: ${region} ---------"
 
     sg=$(aws --region "${region}" rds describe-db-security-groups --db-security-group-name default | jq -r '.[] | .[0] | .DBSecurityGroupArn')

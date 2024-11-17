@@ -14,7 +14,7 @@ export AWS_SECRET_ACCESS_KEY="$sak"
 export AWS_SESSION_TOKEN="$st"
 export AWS_SECURITY_TOKEN="$st"
 
-for region in $(aws ec2 describe-regions --region us-east-1 | jq -r '.Regions[].RegionName'); do
+for region in $(aws ec2 describe-regions --region us-west-2 | jq -r '.Regions[].RegionName'); do
   echo "--------- REGION: ${region} ---------"
 
   vpc=$(aws ec2 --region "${region}" describe-vpcs --filter Name=isDefault,Values=true | jq -r '.Vpcs[0].VpcId')

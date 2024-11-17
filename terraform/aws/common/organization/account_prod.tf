@@ -1,6 +1,6 @@
 provider "aws" {
   alias  = "prod"
-  region = "us-east-1"
+  region = "us-west-2"
 
   profile             = !can(var.tfc_aws_dynamic_credentials.aliases["prod"]) ? "prod" : null
   shared_config_files = try([var.tfc_aws_dynamic_credentials.aliases["prod"].shared_config_file], null)
@@ -24,9 +24,6 @@ module "account_prod_base" {
 
   account_id   = module.account_prod.id
   account_name = module.account_prod.name
-
-  account_id_audit = module.account_audit.id
-  account_id_auth  = module.account_auth.id
 
   providers = {
     aws = aws.prod
