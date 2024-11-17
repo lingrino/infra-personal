@@ -1,3 +1,32 @@
+#################################
+### Create Tokens             ###
+#################################
+resource "aws_secretsmanager_secret" "cloudflare_keys_create_tokens" {
+  name = "cloudflare/keys/create-tokens"
+
+  tags = {
+    Name = "cloudflare/keys/create-tokens"
+  }
+}
+
+data "aws_secretsmanager_secret_version" "cloudflare_keys_create_tokens" {
+  secret_id = aws_secretsmanager_secret.cloudflare_keys_create_tokens.id
+}
+
+resource "tfe_variable" "cloudflare_create_tokens" {
+  for_each = nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.cloudflare_keys_create_tokens.secret_string))
+
+  workspace_id = data.tfe_workspace.prod.id
+  category     = "env"
+  sensitive    = true
+
+  key   = each.key
+  value = each.value
+}
+
+#################################
+### Terraform Cloud           ###
+#################################
 resource "aws_secretsmanager_secret" "cloudflare_keys_terraform_cloud" {
   name = "cloudflare/keys/terraform-cloud"
 

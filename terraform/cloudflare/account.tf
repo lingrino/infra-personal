@@ -12,7 +12,3 @@ resource "cloudflare_account_member" "lingrino" {
     "33666b9c79b9a5273fc7344ff42f953d",
   ]
 }
-
-output "cloudflare_account_member_sean_id" {
-  value = cloudflare_account_member.lingrino.id
-}
