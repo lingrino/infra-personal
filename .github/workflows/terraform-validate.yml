@@ -13,9 +13,16 @@ jobs:
     steps:
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3.1.2
+      - name: Install TFLint
+        uses: terraform-linters/setup-tflint@v4.1.0
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
       - name: Terraform Format
         run: terraform fmt -check -diff -recursive
+      - name: Terraform Lint
+        run: |
+          tflint --version
+          tflint --init
+          tflint --config="$(pwd)/.tflint.hcl" --format=compact --recursive
