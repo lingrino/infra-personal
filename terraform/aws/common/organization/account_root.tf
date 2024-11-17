@@ -1,6 +1,6 @@
 provider "aws" {
   alias  = "root"
-  region = "us-east-1"
+  region = "us-west-2"
 
   profile             = !can(var.tfc_aws_dynamic_credentials.aliases["root"]) ? "root" : null
   shared_config_files = try([var.tfc_aws_dynamic_credentials.aliases["root"].shared_config_file], null)
@@ -24,9 +24,6 @@ module "account_root_base" {
 
   account_id   = module.account_root.id
   account_name = module.account_root.name
-
-  account_id_audit = module.account_audit.id
-  account_id_auth  = module.account_auth.id
 
   providers = {
     aws = aws.root

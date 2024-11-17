@@ -1,19 +1,14 @@
-resource "aws_s3_bucket" "cloudtrail" {
-  bucket_prefix = "cloudtrail-"
+resource "aws_s3_bucket" "lingrino_cloudtrail" {
+  bucket        = "lingrino-cloudtrail"
   force_destroy = false
 
   tags = {
-    Name = "cloudtrail"
+    Name = "lingrino-cloudtrail"
   }
 }
 
-resource "aws_s3_bucket_acl" "cloudtrail" {
-  bucket = aws_s3_bucket.cloudtrail.id
-  acl    = "log-delivery-write"
-}
-
 resource "aws_s3_bucket_versioning" "cloudtrail" {
-  bucket = aws_s3_bucket.cloudtrail.id
+  bucket = aws_s3_bucket.lingrino_cloudtrail.id
 
   versioning_configuration {
     status = "Enabled"
@@ -21,7 +16,7 @@ resource "aws_s3_bucket_versioning" "cloudtrail" {
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "cloudtrail" {
-  bucket = aws_s3_bucket.cloudtrail.bucket
+  bucket = aws_s3_bucket.lingrino_cloudtrail.bucket
 
   rule {
     apply_server_side_encryption_by_default {
@@ -31,7 +26,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "cloudtrail" {
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "cloudtrail" {
-  bucket = aws_s3_bucket.cloudtrail.bucket
+  bucket = aws_s3_bucket.lingrino_cloudtrail.bucket
 
   rule {
     id     = "all-cloudtrail-lifecycle"
@@ -52,7 +47,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "cloudtrail" {
 }
 
 resource "aws_s3_bucket_policy" "cloudtrail" {
-  bucket = aws_s3_bucket.cloudtrail.id
+  bucket = aws_s3_bucket.lingrino_cloudtrail.id
   policy = data.aws_iam_policy_document.bucket_policy_cloudtrail.json
 }
 
@@ -67,7 +62,7 @@ data "aws_iam_policy_document" "bucket_policy_cloudtrail" {
     }
 
     actions   = ["s3:GetBucketAcl"]
-    resources = [aws_s3_bucket.cloudtrail.arn]
+    resources = [aws_s3_bucket.lingrino_cloudtrail.arn]
   }
 
   statement {
@@ -81,7 +76,7 @@ data "aws_iam_policy_document" "bucket_policy_cloudtrail" {
 
     actions = ["s3:PutObject"]
 
-    resources = ["${aws_s3_bucket.cloudtrail.arn}/*"]
+    resources = ["${aws_s3_bucket.lingrino_cloudtrail.arn}/*"]
 
     condition {
       test     = "StringEquals"
@@ -101,7 +96,7 @@ data "aws_iam_policy_document" "bucket_policy_cloudtrail" {
 
     actions = ["*"]
 
-    resources = ["${aws_s3_bucket.cloudtrail.arn}/*"]
+    resources = ["${aws_s3_bucket.lingrino_cloudtrail.arn}/*"]
 
     condition {
       test     = "Bool"
@@ -113,10 +108,10 @@ data "aws_iam_policy_document" "bucket_policy_cloudtrail" {
 
 output "bucket_cloudtrail_arn" {
   description = "The ARN of the cloudtrail bucket"
-  value       = aws_s3_bucket.cloudtrail.arn
+  value       = aws_s3_bucket.lingrino_cloudtrail.arn
 }
 
 output "bucket_cloudtrail_name" {
   description = "The name of the cloudtrail bucket"
-  value       = aws_s3_bucket.cloudtrail.id
+  value       = aws_s3_bucket.lingrino_cloudtrail.id
 }
