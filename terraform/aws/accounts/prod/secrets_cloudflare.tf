@@ -61,12 +61,10 @@ resource "cloudflare_api_token" "terraform_cloud" {
 }
 
 resource "tfe_variable" "cloudflare" {
-  for_each = nonsensitive(jsondecode(aws_secretsmanager_secret_version.cloudflare_keys_terraform_cloud.secret_string))
-
   variable_set_id = data.tfe_variable_set.all.id
   category        = "env"
   sensitive       = true
 
-  key   = each.key
-  value = each.value
+  key   = "CLOUDFLARE_API_TOKEN"
+  value = cloudflare_api_token.terraform_cloud.value
 }
