@@ -52,18 +52,3 @@ terraform {
     }
   }
 }
-
-#################################
-### Remote State              ###
-#################################
-data "terraform_remote_state" "cloudflare" {
-  backend = "remote"
-
-  config = {
-    organization = "lingrino"
-
-    workspaces = {
-      name = "cloudflare"
-    }
-  }
-}
