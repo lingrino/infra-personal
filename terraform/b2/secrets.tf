@@ -24,6 +24,7 @@ resource "b2_application_key" "arq_mini" {
     "readBucketEncryption",
     "readBucketReplications",
     "readBucketRetentions",
+    "writeBucketRetentions",
     "listFiles",
     "readFiles",
     "shareFiles",
@@ -31,5 +32,6 @@ resource "b2_application_key" "arq_mini" {
     "deleteFiles",
     "readFileRetentions",
     "readFileLegalHolds",
+    "writeFileRetentions",
   ]
 }
