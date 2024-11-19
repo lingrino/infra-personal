@@ -14,7 +14,7 @@ resource "tfe_workspace" "b2" {
   vcs_repo {
     identifier     = "lingrino/infra-personal"
     branch         = "main"
-    oauth_token_id = data.tfe_oauth_client.github.id
+    oauth_token_id = data.tfe_oauth_client.github.oauth_token_id
   }
 }
 
