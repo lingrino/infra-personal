@@ -14,7 +14,7 @@ resource "tfe_workspace" "aws_common_organization" {
   vcs_repo {
     identifier     = "lingrino/infra-personal"
     branch         = "main"
-    oauth_token_id = var.oauth_token_id
+    oauth_token_id = data.tfe_oauth_client.github.id
   }
 
   trigger_prefixes = [
