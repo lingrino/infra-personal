@@ -13,6 +13,14 @@ module "zone_lingren_com" {
   ]
 }
 
+resource "cloudflare_record" "lingren_com" {
+  zone_id = module.zone_lingren_com.id
+  proxied = true
+  name    = "lingren.com"
+  type    = "CNAME"
+  content = "lingrino.com" # superseded by below redirect
+}
+
 resource "cloudflare_record" "star_lingren_com" {
   zone_id = module.zone_lingren_com.id
   proxied = true
@@ -21,18 +29,26 @@ resource "cloudflare_record" "star_lingren_com" {
   content = "lingrino.com" # superseded by below redirect
 }
 
+resource "cloudflare_record" "_atproto_lingren_com" {
+  zone_id = module.zone_lingren_com.id
+  proxied = true
+  name    = "lingren.com"
+  type    = "TXT"
+  content = "did=did:plc:k6ylnfky52hxfl7yoxfnbwot"
+}
+
 resource "cloudflare_ruleset" "redirect_lingren_com_to_lingrino_com" {
   zone_id = module.zone_lingren_com.id
 
   name        = "redirect"
-  description = "redirect *.lingren.com to lingrino.com"
+  description = "redirect [*.]lingren.com to lingrino.com"
 
   kind  = "zone"
   phase = "http_request_dynamic_redirect"
 
   rules {
     action      = "redirect"
-    description = "redirect *.lingren.com to lingrino.com"
+    description = "redirect [*.]lingren.com to lingrino.com"
     expression  = "true"
 
     action_parameters {
