@@ -31,7 +31,7 @@ resource "cloudflare_record" "star_lingren_com" {
 
 resource "cloudflare_record" "atproto_lingren_com" {
   zone_id = module.zone_lingren_com.id
-  name    = "lingren.com"
+  name    = "_atproto.lingren.com"
   type    = "TXT"
   content = "did=did:plc:k6ylnfky52hxfl7yoxfnbwot"
 }
