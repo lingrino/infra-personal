@@ -29,7 +29,7 @@ resource "cloudflare_record" "star_lingren_com" {
   content = "lingrino.com" # superseded by below redirect
 }
 
-resource "cloudflare_record" "_atproto_lingren_com" {
+resource "cloudflare_record" "atproto_lingren_com" {
   zone_id = module.zone_lingren_com.id
   proxied = true
   name    = "lingren.com"
