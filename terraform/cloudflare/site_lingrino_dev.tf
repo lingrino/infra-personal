@@ -9,6 +9,14 @@ module "zone_lingrino_dev" {
   ]
 }
 
+resource "cloudflare_record" "lingrino_dev" {
+  zone_id = module.zone_lingrino_dev.id
+  proxied = true
+  name    = "lingrino.dev"
+  type    = "CNAME"
+  content = "lingrino.com" # superseded by below redirect
+}
+
 resource "cloudflare_record" "star_lingrino_dev" {
   zone_id = module.zone_lingrino_dev.id
   proxied = true
@@ -21,14 +29,14 @@ resource "cloudflare_ruleset" "redirect_lingrino_dev_to_lingrino_com" {
   zone_id = module.zone_lingrino_dev.id
 
   name        = "redirect"
-  description = "redirect *.lingrino.dev to lingrino.com"
+  description = "redirect [*.]lingrino.dev to lingrino.com"
 
   kind  = "zone"
   phase = "http_request_dynamic_redirect"
 
   rules {
     action      = "redirect"
-    description = "redirect *.lingrino.dev to lingrino.com"
+    description = "redirect [*.]lingrino.dev to lingrino.com"
     expression  = "true"
 
     action_parameters {
