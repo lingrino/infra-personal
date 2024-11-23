@@ -17,8 +17,9 @@ resource "tfe_workspace" "aws_common_organization" {
     oauth_token_id = data.tfe_oauth_client.github.oauth_token_id
   }
 
-  trigger_prefixes = [
-    "terraform-modules"
+  trigger_patterns = [
+    "terraform/aws/common/organization",
+    "terraform-modules/**/*",
   ]
 }
 

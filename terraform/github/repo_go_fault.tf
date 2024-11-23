@@ -73,3 +73,13 @@ resource "github_repository_ruleset" "go_fault" {
     }
   }
 }
+
+resource "github_actions_repository_permissions" "go_fault" {
+  repository      = github_repository.go_fault.name
+  allowed_actions = "all"
+}
+
+resource "github_repository_dependabot_security_updates" "go_fault" {
+  repository = github_repository.go_fault.id
+  enabled    = true
+}

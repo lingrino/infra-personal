@@ -73,3 +73,13 @@ resource "github_repository_ruleset" "vaku" {
     }
   }
 }
+
+resource "github_actions_repository_permissions" "vaku" {
+  repository      = github_repository.vaku.name
+  allowed_actions = "all"
+}
+
+resource "github_repository_dependabot_security_updates" "vaku" {
+  repository = github_repository.vaku.id
+  enabled    = true
+}
