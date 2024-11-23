@@ -1,6 +1,6 @@
 resource "github_repository" "dotgithub" {
   name         = ".github"
-  description  = "my default community health files"
+  description  = "my community health files"
   homepage_url = "https://lingrino.com"
 
   visibility = "public"

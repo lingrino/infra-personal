@@ -18,8 +18,8 @@ resource "tfe_workspace" "aws_accounts_audit" {
   }
 
   trigger_patterns = [
-    "terraform/aws/accounts/audit",
-    "terraform-modules/**/*",
+    "terraform/aws/accounts/audit/*.tf",
+    "terraform-modules/**/*.tf",
   ]
 }
 

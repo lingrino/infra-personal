@@ -18,8 +18,8 @@ resource "tfe_workspace" "b2" {
   }
 
   trigger_patterns = [
-    "terraform/b2",
-    "terraform-modules/**/*",
+    "terraform/b2/*.tf",
+    "terraform-modules/**/*.tf",
   ]
 }
 

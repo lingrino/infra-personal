@@ -18,8 +18,8 @@ resource "tfe_workspace" "aws_accounts_prod" {
   }
 
   trigger_patterns = [
-    "terraform/aws/accounts/prod",
-    "terraform-modules/**/*",
+    "terraform/aws/accounts/prod/*.tf",
+    "terraform-modules/**/*.tf",
   ]
 }
 
