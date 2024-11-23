@@ -58,19 +58,6 @@ resource "github_repository_ruleset" "dotgithub" {
     non_fast_forward        = true
 
     pull_request {}
-
-    required_status_checks {
-      strict_required_status_checks_policy = true
-
-      dynamic "required_check" {
-        for_each = ["validate"]
-
-        content {
-          context        = required_check.value
-          integration_id = 0
-        }
-      }
-    }
   }
 }
 
