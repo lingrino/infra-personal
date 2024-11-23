@@ -14,6 +14,14 @@ provider "aws" {
   }
 }
 
+data "aws_secretsmanager_secret_version" "tfe" {
+  secret_id = "terraform-cloud/keys/terraform-cloud"
+}
+
+provider "tfe" {
+  token = jsondecode(data.aws_secretsmanager_secret_version.tfe.secret_string)["TFE_TOKEN"]
+}
+
 #################################
 ### Terraform                 ###
 #################################
