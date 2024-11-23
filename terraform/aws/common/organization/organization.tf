@@ -7,6 +7,7 @@ resource "aws_organizations_organization" "org" {
     "cloudtrail.amazonaws.com",
     "config.amazonaws.com",
     "config-multiaccountsetup.amazonaws.com",
+    "iam.amazonaws.com",
     "ram.amazonaws.com",
     "sso.amazonaws.com",
   ]
