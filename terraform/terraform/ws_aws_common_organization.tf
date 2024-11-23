@@ -18,8 +18,8 @@ resource "tfe_workspace" "aws_common_organization" {
   }
 
   trigger_patterns = [
-    "terraform/aws/common/organization",
-    "terraform-modules/**/*",
+    "terraform/aws/common/organization/*.tf",
+    "terraform-modules/**/*.tf",
   ]
 }
 

@@ -18,8 +18,8 @@ resource "tfe_workspace" "cloudflare" {
   }
 
   trigger_patterns = [
-    "terraform/cloudflare",
-    "terraform-modules/**/*",
+    "terraform/cloudflare/*.tf",
+    "terraform-modules/**/*.tf",
   ]
 }
 
