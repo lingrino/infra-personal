@@ -48,3 +48,39 @@ resource "cloudflare_api_token" "terraform_cloud" {
     permission_groups = values(data.cloudflare_api_token_permission_groups.all.zone)
   }
 }
+
+#################################
+### Local                     ###
+#################################
+resource "aws_secretsmanager_secret" "cloudflare_keys_local" {
+  name = "cloudflare/keys/local"
+
+  tags = {
+    Name = "cloudflare/keys/local"
+  }
+}
+
+resource "aws_secretsmanager_secret_version" "cloudflare_keys_local" {
+  secret_id = aws_secretsmanager_secret.cloudflare_keys_local.id
+  secret_string = jsonencode({
+    CLOUDFLARE_API_TOKEN = cloudflare_api_token.local.value,
+  })
+}
+
+resource "cloudflare_api_token" "local" {
+  name = "local"
+
+  policy {
+    resources = {
+      "com.cloudflare.api.account.*" = "*"
+    }
+    permission_groups = values(data.cloudflare_api_token_permission_groups.all.account)
+  }
+
+  policy {
+    resources = {
+      "com.cloudflare.api.account.zone.*" = "*"
+    }
+    permission_groups = values(data.cloudflare_api_token_permission_groups.all.zone)
+  }
+}
