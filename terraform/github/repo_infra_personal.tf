@@ -1,6 +1,6 @@
 resource "github_repository" "infra_personal" {
   name         = "infra-personal"
-  description  = "Terraform for setting up my personal infrastructure"
+  description  = "code for setting up my personal infrastructure"
   homepage_url = "https://lingrino.com"
 
   visibility = "public"
@@ -85,4 +85,14 @@ resource "github_repository_ruleset" "infra_personal" {
       }
     }
   }
+}
+
+resource "github_actions_repository_permissions" "infra_personal" {
+  repository      = github_repository.infra_personal.name
+  allowed_actions = "all"
+}
+
+resource "github_repository_dependabot_security_updates" "infra_personal" {
+  repository = github_repository.infra_personal.id
+  enabled    = true
 }

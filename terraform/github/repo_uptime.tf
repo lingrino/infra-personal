@@ -73,3 +73,13 @@ resource "github_repository_ruleset" "uptime" {
     }
   }
 }
+
+resource "github_actions_repository_permissions" "uptime" {
+  repository      = github_repository.uptime.name
+  allowed_actions = "all"
+}
+
+resource "github_repository_dependabot_security_updates" "uptime" {
+  repository = github_repository.uptime.id
+  enabled    = true
+}

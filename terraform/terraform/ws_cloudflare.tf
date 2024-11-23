@@ -17,8 +17,8 @@ resource "tfe_workspace" "cloudflare" {
     oauth_token_id = data.tfe_oauth_client.github.oauth_token_id
   }
 
-  trigger_prefixes = [
-    "terraform-modules"
+  trigger_patterns = [
+    "terraform-modules/**/*",
   ]
 }
 

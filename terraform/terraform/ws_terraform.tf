@@ -16,6 +16,10 @@ resource "tfe_workspace" "terraform" {
     branch         = "main"
     oauth_token_id = data.tfe_oauth_client.github.oauth_token_id
   }
+
+  trigger_patterns = [
+    "terraform-modules/**/*",
+  ]
 }
 
 resource "tfe_workspace_variable_set" "terraform" {

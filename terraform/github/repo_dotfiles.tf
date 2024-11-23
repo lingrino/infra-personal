@@ -58,3 +58,13 @@ resource "github_repository_ruleset" "dotfiles" {
     non_fast_forward        = true
   }
 }
+
+resource "github_actions_repository_permissions" "dotfiles" {
+  repository = github_repository.dotfiles.name
+  enabled    = false
+}
+
+resource "github_repository_dependabot_security_updates" "dotfiles" {
+  repository = github_repository.dotfiles.id
+  enabled    = true
+}

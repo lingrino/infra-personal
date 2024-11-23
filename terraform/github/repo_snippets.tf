@@ -1,6 +1,6 @@
 resource "github_repository" "snippets" {
   name         = "snippets"
-  description  = "Useful code snippets not ready for OSS"
+  description  = "useful code snippets not ready for oss"
   homepage_url = "https://lingrino.com"
 
   visibility = "private"
@@ -48,4 +48,14 @@ resource "github_repository_ruleset" "snippets" {
     required_linear_history = true
     non_fast_forward        = true
   }
+}
+
+resource "github_actions_repository_permissions" "snippets" {
+  repository = github_repository.snippets.name
+  enabled    = false
+}
+
+resource "github_repository_dependabot_security_updates" "snippets" {
+  repository = github_repository.snippets.name
+  enabled    = false
 }

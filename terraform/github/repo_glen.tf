@@ -73,3 +73,13 @@ resource "github_repository_ruleset" "glen" {
     }
   }
 }
+
+resource "github_actions_repository_permissions" "glen" {
+  repository      = github_repository.glen.name
+  allowed_actions = "all"
+}
+
+resource "github_repository_dependabot_security_updates" "glen" {
+  repository = github_repository.glen.id
+  enabled    = true
+}

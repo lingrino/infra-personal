@@ -6,6 +6,10 @@ resource "aws_secretsmanager_secret" "backblaze_keys_terraform_cloud" {
   }
 }
 
+data "aws_secretsmanager_secret_version" "backblaze_keys_terraform_cloud" {
+  secret_id = aws_secretsmanager_secret.backblaze_keys_terraform_cloud.id
+}
+
 resource "aws_secretsmanager_secret_version" "backblaze_keys_terraform_cloud" {
   secret_id = aws_secretsmanager_secret.backblaze_keys_terraform_cloud.id
   secret_string = jsonencode({
@@ -42,15 +46,4 @@ resource "b2_application_key" "terraform_cloud" {
     "writeFileRetentions",
     "writeFileLegalHolds",
   ]
-}
-
-resource "tfe_variable" "backblaze" {
-  for_each = nonsensitive(jsondecode(aws_secretsmanager_secret_version.backblaze_keys_terraform_cloud.secret_string))
-
-  variable_set_id = data.tfe_variable_set.all.id
-  category        = "env"
-  sensitive       = true
-
-  key   = each.key
-  value = each.value
 }

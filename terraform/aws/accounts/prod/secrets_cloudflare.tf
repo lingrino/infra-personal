@@ -13,17 +13,6 @@ data "aws_secretsmanager_secret_version" "cloudflare_keys_create_tokens" {
   secret_id = aws_secretsmanager_secret.cloudflare_keys_create_tokens.id
 }
 
-resource "tfe_variable" "cloudflare_create_tokens" {
-  for_each = nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.cloudflare_keys_create_tokens.secret_string))
-
-  workspace_id = data.tfe_workspace.prod.id
-  category     = "env"
-  sensitive    = true
-
-  key   = each.key
-  value = each.value
-}
-
 #################################
 ### Terraform Cloud           ###
 #################################
@@ -58,13 +47,4 @@ resource "cloudflare_api_token" "terraform_cloud" {
     }
     permission_groups = values(data.cloudflare_api_token_permission_groups.all.zone)
   }
-}
-
-resource "tfe_variable" "cloudflare" {
-  variable_set_id = data.tfe_variable_set.all.id
-  category        = "env"
-  sensitive       = true
-
-  key   = "CLOUDFLARE_API_TOKEN"
-  value = cloudflare_api_token.terraform_cloud.value
 }

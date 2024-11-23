@@ -58,3 +58,13 @@ resource "github_repository_ruleset" "website" {
     non_fast_forward        = true
   }
 }
+
+resource "github_actions_repository_permissions" "website" {
+  repository      = github_repository.website.name
+  allowed_actions = "all"
+}
+
+resource "github_repository_dependabot_security_updates" "website" {
+  repository = github_repository.website.id
+  enabled    = true
+}
