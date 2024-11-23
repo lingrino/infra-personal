@@ -15,7 +15,7 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias  = "prod"
+  alias  = "secrets"
   region = "us-west-2"
 
   profile             = !can(var.tfc_aws_dynamic_credentials.aliases["prod"]) ? "prod" : null
@@ -29,7 +29,7 @@ provider "aws" {
 }
 
 data "aws_secretsmanager_secret_version" "tfe" {
-  provider  = aws.prod
+  provider  = aws.secrets
   secret_id = "terraform-cloud/keys/terraform-cloud"
 }
 
