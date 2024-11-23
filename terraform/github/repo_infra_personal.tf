@@ -1,6 +1,6 @@
 resource "github_repository" "infra_personal" {
   name         = "infra-personal"
-  description  = "code for setting up my personal infrastructure"
+  description  = "code for my personal infrastructure"
   homepage_url = "https://lingrino.com"
 
   visibility = "public"
