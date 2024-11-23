@@ -18,6 +18,7 @@ resource "tfe_workspace" "tailscale" {
   }
 
   trigger_patterns = [
+    "terraform/tailscale",
     "terraform-modules/**/*",
   ]
 }

@@ -18,6 +18,7 @@ resource "tfe_workspace" "aws_accounts_root" {
   }
 
   trigger_patterns = [
+    "terraform/aws/accounts/root",
     "terraform-modules/**/*",
   ]
 }

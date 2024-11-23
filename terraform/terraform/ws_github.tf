@@ -18,6 +18,7 @@ resource "tfe_workspace" "github" {
   }
 
   trigger_patterns = [
+    "terraform/github",
     "terraform-modules/**/*",
   ]
 }
