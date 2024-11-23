@@ -89,7 +89,13 @@ resource "github_repository_ruleset" "infra_personal" {
 
 resource "github_actions_repository_permissions" "infra_personal" {
   repository      = github_repository.infra_personal.name
-  allowed_actions = "all"
+  allowed_actions = "selected"
+
+  allowed_actions_config {
+    github_owned_allowed = true
+    verified_allowed     = true
+    patterns_allowed     = ["terraform-linters/setup-tflint@*"]
+  }
 }
 
 resource "github_repository_dependabot_security_updates" "infra_personal" {

@@ -63,7 +63,7 @@ resource "github_repository_ruleset" "glen" {
       strict_required_status_checks_policy = true
 
       dynamic "required_check" {
-        for_each = ["golangci", "gomod", "goreleaser", "test", "validate"]
+        for_each = ["golangci", "gomod", "goreleaser", "test"]
 
         content {
           context        = required_check.value
@@ -76,7 +76,13 @@ resource "github_repository_ruleset" "glen" {
 
 resource "github_actions_repository_permissions" "glen" {
   repository      = github_repository.glen.name
-  allowed_actions = "all"
+  allowed_actions = "selected"
+
+  allowed_actions_config {
+    github_owned_allowed = true
+    verified_allowed     = true
+    patterns_allowed     = ["golangci/golangci-lint-action@*"]
+  }
 }
 
 resource "github_repository_dependabot_security_updates" "glen" {

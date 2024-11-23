@@ -76,7 +76,12 @@ resource "github_repository_ruleset" "uptime" {
 
 resource "github_actions_repository_permissions" "uptime" {
   repository      = github_repository.uptime.name
-  allowed_actions = "all"
+  allowed_actions = "selected"
+
+  allowed_actions_config {
+    github_owned_allowed = true
+    verified_allowed     = true
+  }
 }
 
 resource "github_repository_dependabot_security_updates" "uptime" {
