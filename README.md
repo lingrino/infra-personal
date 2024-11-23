@@ -1,6 +1,6 @@
 # Personal Infrastructure
 
-This repo contains code for configuring all of my personal infrastructure.
+This repo contains code for configuring my personal infrastructure.
 
 ## Security
 
