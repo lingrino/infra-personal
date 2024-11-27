@@ -12,3 +12,10 @@ resource "aws_organizations_organization" "org" {
     "sso.amazonaws.com",
   ]
 }
+
+resource "aws_iam_organizations_features" "org" {
+  enabled_features = [
+    "RootCredentialsManagement",
+    "RootSessions"
+  ]
+}
