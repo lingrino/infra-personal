@@ -1,57 +1,13 @@
-resource "aws_s3_bucket" "lingrino_cloudtrail" {
-  bucket        = "lingrino-cloudtrail"
-  force_destroy = false
+module "s3_lingrino_cloudtrail" {
+  source = "../../../../terraform-modules/s3//"
 
-  tags = {
-    Name = "lingrino-cloudtrail"
-  }
+  name               = "lingrino-audit-usw2-cloudtrail"
+  enable_logging     = false
+  enable_object_lock = true
+  policy             = data.aws_iam_policy_document.s3_lingrino_cloudtrail.json
 }
 
-resource "aws_s3_bucket_versioning" "cloudtrail" {
-  bucket = aws_s3_bucket.lingrino_cloudtrail.id
-
-  versioning_configuration {
-    status = "Enabled"
-  }
-}
-
-resource "aws_s3_bucket_server_side_encryption_configuration" "cloudtrail" {
-  bucket = aws_s3_bucket.lingrino_cloudtrail.bucket
-
-  rule {
-    apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
-    }
-  }
-}
-
-resource "aws_s3_bucket_lifecycle_configuration" "cloudtrail" {
-  bucket = aws_s3_bucket.lingrino_cloudtrail.bucket
-
-  rule {
-    id     = "all-cloudtrail-lifecycle"
-    status = "Enabled"
-
-    abort_incomplete_multipart_upload {
-      days_after_initiation = 1
-    }
-
-    expiration {
-      days = 365
-    }
-
-    noncurrent_version_expiration {
-      noncurrent_days = 365
-    }
-  }
-}
-
-resource "aws_s3_bucket_policy" "cloudtrail" {
-  bucket = aws_s3_bucket.lingrino_cloudtrail.id
-  policy = data.aws_iam_policy_document.bucket_policy_cloudtrail.json
-}
-
-data "aws_iam_policy_document" "bucket_policy_cloudtrail" {
+data "aws_iam_policy_document" "s3_lingrino_cloudtrail" {
   statement {
     sid    = "AWSCloudTrailAclCheck"
     effect = "Allow"
@@ -62,7 +18,7 @@ data "aws_iam_policy_document" "bucket_policy_cloudtrail" {
     }
 
     actions   = ["s3:GetBucketAcl"]
-    resources = [aws_s3_bucket.lingrino_cloudtrail.arn]
+    resources = ["___ARN___"]
   }
 
   statement {
@@ -76,7 +32,7 @@ data "aws_iam_policy_document" "bucket_policy_cloudtrail" {
 
     actions = ["s3:PutObject"]
 
-    resources = ["${aws_s3_bucket.lingrino_cloudtrail.arn}/*"]
+    resources = ["___ARN___/*"]
 
     condition {
       test     = "StringEquals"
@@ -84,34 +40,14 @@ data "aws_iam_policy_document" "bucket_policy_cloudtrail" {
       values   = ["bucket-owner-full-control"]
     }
   }
-
-  statement {
-    sid    = "DenyInsecureUsage"
-    effect = "Deny"
-
-    principals {
-      type        = "AWS"
-      identifiers = ["*"]
-    }
-
-    actions = ["*"]
-
-    resources = ["${aws_s3_bucket.lingrino_cloudtrail.arn}/*"]
-
-    condition {
-      test     = "Bool"
-      variable = "aws:SecureTransport"
-      values   = ["false"]
-    }
-  }
 }
 
 output "bucket_cloudtrail_arn" {
-  description = "The ARN of the cloudtrail bucket"
-  value       = aws_s3_bucket.lingrino_cloudtrail.arn
+  description = "arn of the cloudtrail bucket"
+  value       = module.s3_lingrino_cloudtrail.arn
 }
 
 output "bucket_cloudtrail_name" {
-  description = "The name of the cloudtrail bucket"
-  value       = aws_s3_bucket.lingrino_cloudtrail.id
+  description = "name of the cloudtrail bucket"
+  value       = module.s3_lingrino_cloudtrail.name
 }
