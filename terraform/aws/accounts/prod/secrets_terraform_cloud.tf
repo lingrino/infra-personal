@@ -31,5 +31,5 @@ data "aws_secretsmanager_secret_version" "terraform_cloud_keys_github" {
 resource "github_actions_secret" "terraform_cloud" {
   repository      = "infra-personal"
   secret_name     = "TFE_TOKEN"
-  plaintext_value = jsondecode(ephemeral.aws_secretsmanager_secret_version.terraform_cloud_keys_github.secret_string)["TFE_TOKEN"]
+  plaintext_value = jsondecode(data.aws_secretsmanager_secret_version.terraform_cloud_keys_github.secret_string)["TFE_TOKEN"]
 }
