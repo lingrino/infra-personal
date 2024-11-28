@@ -6,7 +6,7 @@ resource "aws_secretsmanager_secret" "backblaze_keys_terraform_cloud" {
   }
 }
 
-data "aws_secretsmanager_secret_version" "backblaze_keys_terraform_cloud" {
+ephemeral "aws_secretsmanager_secret_version" "backblaze_keys_terraform_cloud" {
   secret_id = aws_secretsmanager_secret.backblaze_keys_terraform_cloud.id
 }
 

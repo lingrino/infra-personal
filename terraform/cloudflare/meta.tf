@@ -14,7 +14,7 @@ provider "aws" {
   }
 }
 
-data "aws_secretsmanager_secret_version" "cloudflare" {
+ephemeral "aws_secretsmanager_secret_version" "cloudflare" {
   secret_id = "cloudflare/keys/terraform-cloud"
 }
 

@@ -14,7 +14,7 @@ provider "aws" {
   }
 }
 
-data "aws_secretsmanager_secret_version" "github" {
+ephemeral "aws_secretsmanager_secret_version" "github" {
   secret_id = "github/keys/terraform-cloud"
 }
 

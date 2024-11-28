@@ -14,7 +14,7 @@ provider "aws" {
   }
 }
 
-data "aws_secretsmanager_secret_version" "tfe" {
+ephemeral "aws_secretsmanager_secret_version" "tfe" {
   provider  = aws.prod
   secret_id = "terraform-cloud/keys/terraform-cloud"
 }

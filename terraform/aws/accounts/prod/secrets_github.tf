@@ -9,7 +9,7 @@ resource "aws_secretsmanager_secret" "github_keys_terraform_cloud" {
   }
 }
 
-data "aws_secretsmanager_secret_version" "github_keys_terraform_cloud" {
+ephemeral "aws_secretsmanager_secret_version" "github_keys_terraform_cloud" {
   secret_id = aws_secretsmanager_secret.github_keys_terraform_cloud.id
 }
 
@@ -24,7 +24,7 @@ resource "aws_secretsmanager_secret" "github_keys_goreleaser" {
   }
 }
 
-data "aws_secretsmanager_secret_version" "github_keys_goreleaser" {
+ephemeral "aws_secretsmanager_secret_version" "github_keys_goreleaser" {
   secret_id = aws_secretsmanager_secret.github_keys_goreleaser.id
 }
 

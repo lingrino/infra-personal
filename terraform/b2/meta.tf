@@ -14,7 +14,7 @@ provider "aws" {
   }
 }
 
-data "aws_secretsmanager_secret_version" "backblaze" {
+ephemeral "aws_secretsmanager_secret_version" "backblaze" {
   secret_id = "backblaze/keys/terraform-cloud"
 }
 
