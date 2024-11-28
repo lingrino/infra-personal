@@ -19,7 +19,7 @@ ephemeral "aws_secretsmanager_secret_version" "tfe" {
 }
 
 provider "tfe" {
-  token = jsondecode(data.aws_secretsmanager_secret_version.tfe.secret_string)["TFE_TOKEN"]
+  token = jsondecode(ephemeral.aws_secretsmanager_secret_version.tfe.secret_string)["TFE_TOKEN"]
 }
 
 #################################

@@ -20,7 +20,7 @@ ephemeral "aws_secretsmanager_secret_version" "github" {
 
 provider "github" {
   owner = "lingrino"
-  token = jsondecode(data.aws_secretsmanager_secret_version.github.secret_string)["GITHUB_TOKEN"]
+  token = jsondecode(ephemeral.aws_secretsmanager_secret_version.github.secret_string)["GITHUB_TOKEN"]
 }
 
 #################################

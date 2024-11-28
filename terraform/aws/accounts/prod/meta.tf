@@ -15,21 +15,21 @@ provider "aws" {
 }
 
 provider "b2" {
-  application_key_id = jsondecode(data.aws_secretsmanager_secret_version.backblaze_keys_terraform_cloud.secret_string)["B2_APPLICATION_KEY_ID"]
-  application_key    = jsondecode(data.aws_secretsmanager_secret_version.backblaze_keys_terraform_cloud.secret_string)["B2_APPLICATION_KEY"]
+  application_key_id = jsondecode(ephemeral.aws_secretsmanager_secret_version.backblaze_keys_terraform_cloud.secret_string)["B2_APPLICATION_KEY_ID"]
+  application_key    = jsondecode(ephemeral.aws_secretsmanager_secret_version.backblaze_keys_terraform_cloud.secret_string)["B2_APPLICATION_KEY"]
 }
 
 provider "cloudflare" {
-  api_token = jsondecode(data.aws_secretsmanager_secret_version.cloudflare_keys_create_tokens.secret_string)["CLOUDFLARE_API_TOKEN"]
+  api_token = jsondecode(ephemeral.aws_secretsmanager_secret_version.cloudflare_keys_create_tokens.secret_string)["CLOUDFLARE_API_TOKEN"]
 }
 
 provider "github" {
   owner = "lingrino"
-  token = jsondecode(data.aws_secretsmanager_secret_version.github_keys_terraform_cloud.secret_string)["GITHUB_TOKEN"]
+  token = jsondecode(ephemeral.aws_secretsmanager_secret_version.github_keys_terraform_cloud.secret_string)["GITHUB_TOKEN"]
 }
 
 provider "tfe" {
-  token = jsondecode(data.aws_secretsmanager_secret_version.terraform_cloud_keys_terraform_cloud.secret_string)["TFE_TOKEN"]
+  token = jsondecode(ephemeral.aws_secretsmanager_secret_version.terraform_cloud_keys_terraform_cloud.secret_string)["TFE_TOKEN"]
 }
 
 #################################

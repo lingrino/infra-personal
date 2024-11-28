@@ -19,7 +19,7 @@ ephemeral "aws_secretsmanager_secret_version" "cloudflare" {
 }
 
 provider "cloudflare" {
-  api_token = jsondecode(data.aws_secretsmanager_secret_version.cloudflare.secret_string)["CLOUDFLARE_API_TOKEN"]
+  api_token = jsondecode(ephemeral.aws_secretsmanager_secret_version.cloudflare.secret_string)["CLOUDFLARE_API_TOKEN"]
 }
 
 #################################

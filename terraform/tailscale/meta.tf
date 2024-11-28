@@ -20,8 +20,8 @@ ephemeral "aws_secretsmanager_secret_version" "tailscale" {
 
 provider "tailscale" {
   tailnet             = "lingrino.github"
-  oauth_client_id     = jsondecode(data.aws_secretsmanager_secret_version.tailscale.secret_string)["TAILSCALE_OAUTH_CLIENT_ID"]
-  oauth_client_secret = jsondecode(data.aws_secretsmanager_secret_version.tailscale.secret_string)["TAILSCALE_OAUTH_CLIENT_SECRET"]
+  oauth_client_id     = jsondecode(ephemeral.aws_secretsmanager_secret_version.tailscale.secret_string)["TAILSCALE_OAUTH_CLIENT_ID"]
+  oauth_client_secret = jsondecode(ephemeral.aws_secretsmanager_secret_version.tailscale.secret_string)["TAILSCALE_OAUTH_CLIENT_SECRET"]
 }
 
 #################################

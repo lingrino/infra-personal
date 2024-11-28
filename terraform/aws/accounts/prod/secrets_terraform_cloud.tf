@@ -29,7 +29,7 @@ ephemeral "aws_secretsmanager_secret_version" "terraform_cloud_keys_github" {
 }
 
 resource "github_actions_secret" "terraform_cloud" {
-  for_each = nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.terraform_cloud_keys_github.secret_string))
+  for_each = nonsensitive(jsondecode(ephemeral.aws_secretsmanager_secret_version.terraform_cloud_keys_github.secret_string))
 
   repository      = "infra-personal"
   secret_name     = each.key

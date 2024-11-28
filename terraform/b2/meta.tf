@@ -19,8 +19,8 @@ ephemeral "aws_secretsmanager_secret_version" "backblaze" {
 }
 
 provider "b2" {
-  application_key_id = jsondecode(data.aws_secretsmanager_secret_version.backblaze.secret_string)["B2_APPLICATION_KEY_ID"]
-  application_key    = jsondecode(data.aws_secretsmanager_secret_version.backblaze.secret_string)["B2_APPLICATION_KEY"]
+  application_key_id = jsondecode(ephemeral.aws_secretsmanager_secret_version.backblaze.secret_string)["B2_APPLICATION_KEY_ID"]
+  application_key    = jsondecode(ephemeral.aws_secretsmanager_secret_version.backblaze.secret_string)["B2_APPLICATION_KEY"]
 }
 
 #################################
