@@ -29,17 +29,13 @@ ephemeral "aws_secretsmanager_secret_version" "github_keys_goreleaser" {
 }
 
 resource "github_actions_secret" "vaku_goreleaser" {
-  for_each = nonsensitive(jsondecode(ephemeral.aws_secretsmanager_secret_version.github_keys_goreleaser.secret_string))
-
   repository      = "vaku"
-  secret_name     = each.key
-  plaintext_value = each.value
+  secret_name     = "GORELEASER_GITHUB_TOKEN"
+  plaintext_value = jsondecode(ephemeral.aws_secretsmanager_secret_version.github_keys_goreleaser.secret_string)["GORELEASER_GITHUB_TOKEN"]
 }
 
 resource "github_actions_secret" "glen_goreleaser" {
-  for_each = nonsensitive(jsondecode(ephemeral.aws_secretsmanager_secret_version.github_keys_goreleaser.secret_string))
-
   repository      = "glen"
-  secret_name     = each.key
-  plaintext_value = each.value
+  secret_name     = "GORELEASER_GITHUB_TOKEN"
+  plaintext_value = jsondecode(ephemeral.aws_secretsmanager_secret_version.github_keys_goreleaser.secret_string)["GORELEASER_GITHUB_TOKEN"]
 }
