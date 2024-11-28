@@ -9,7 +9,7 @@ resource "aws_secretsmanager_secret" "cloudflare_keys_create_tokens" {
   }
 }
 
-data "aws_secretsmanager_secret_version" "cloudflare_keys_create_tokens" {
+ephemeral "aws_secretsmanager_secret_version" "cloudflare_keys_create_tokens" {
   secret_id = aws_secretsmanager_secret.cloudflare_keys_create_tokens.id
 }
 

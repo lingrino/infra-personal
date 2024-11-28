@@ -14,12 +14,12 @@ provider "aws" {
   }
 }
 
-data "aws_secretsmanager_secret_version" "cloudflare" {
+ephemeral "aws_secretsmanager_secret_version" "cloudflare" {
   secret_id = "cloudflare/keys/terraform-cloud"
 }
 
 provider "cloudflare" {
-  api_token = jsondecode(data.aws_secretsmanager_secret_version.cloudflare.secret_string)["CLOUDFLARE_API_TOKEN"]
+  api_token = jsondecode(ephemeral.aws_secretsmanager_secret_version.cloudflare.secret_string)["CLOUDFLARE_API_TOKEN"]
 }
 
 #################################

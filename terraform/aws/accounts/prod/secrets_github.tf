@@ -9,7 +9,7 @@ resource "aws_secretsmanager_secret" "github_keys_terraform_cloud" {
   }
 }
 
-data "aws_secretsmanager_secret_version" "github_keys_terraform_cloud" {
+ephemeral "aws_secretsmanager_secret_version" "github_keys_terraform_cloud" {
   secret_id = aws_secretsmanager_secret.github_keys_terraform_cloud.id
 }
 
@@ -29,17 +29,13 @@ data "aws_secretsmanager_secret_version" "github_keys_goreleaser" {
 }
 
 resource "github_actions_secret" "vaku_goreleaser" {
-  for_each = nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.github_keys_goreleaser.secret_string))
-
   repository      = "vaku"
-  secret_name     = each.key
-  plaintext_value = each.value
+  secret_name     = "GORELEASER_GITHUB_TOKEN"
+  plaintext_value = jsondecode(data.aws_secretsmanager_secret_version.github_keys_goreleaser.secret_string)["GORELEASER_GITHUB_TOKEN"]
 }
 
 resource "github_actions_secret" "glen_goreleaser" {
-  for_each = nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.github_keys_goreleaser.secret_string))
-
   repository      = "glen"
-  secret_name     = each.key
-  plaintext_value = each.value
+  secret_name     = "GORELEASER_GITHUB_TOKEN"
+  plaintext_value = jsondecode(data.aws_secretsmanager_secret_version.github_keys_goreleaser.secret_string)["GORELEASER_GITHUB_TOKEN"]
 }

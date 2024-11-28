@@ -9,7 +9,7 @@ resource "aws_secretsmanager_secret" "terraform_cloud_keys_terraform_cloud" {
   }
 }
 
-data "aws_secretsmanager_secret_version" "terraform_cloud_keys_terraform_cloud" {
+ephemeral "aws_secretsmanager_secret_version" "terraform_cloud_keys_terraform_cloud" {
   secret_id = aws_secretsmanager_secret.terraform_cloud_keys_terraform_cloud.id
 }
 
@@ -29,9 +29,7 @@ data "aws_secretsmanager_secret_version" "terraform_cloud_keys_github" {
 }
 
 resource "github_actions_secret" "terraform_cloud" {
-  for_each = nonsensitive(jsondecode(data.aws_secretsmanager_secret_version.terraform_cloud_keys_github.secret_string))
-
   repository      = "infra-personal"
-  secret_name     = each.key
-  plaintext_value = each.value
+  secret_name     = "TFE_TOKEN"
+  plaintext_value = jsondecode(data.aws_secretsmanager_secret_version.terraform_cloud_keys_github.secret_string)["TFE_TOKEN"]
 }

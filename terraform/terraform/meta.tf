@@ -14,12 +14,12 @@ provider "aws" {
   }
 }
 
-data "aws_secretsmanager_secret_version" "tfe" {
+ephemeral "aws_secretsmanager_secret_version" "tfe" {
   secret_id = "terraform-cloud/keys/terraform-cloud"
 }
 
 provider "tfe" {
-  token = jsondecode(data.aws_secretsmanager_secret_version.tfe.secret_string)["TFE_TOKEN"]
+  token = jsondecode(ephemeral.aws_secretsmanager_secret_version.tfe.secret_string)["TFE_TOKEN"]
 }
 
 #################################

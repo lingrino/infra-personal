@@ -14,13 +14,13 @@ provider "aws" {
   }
 }
 
-data "aws_secretsmanager_secret_version" "github" {
+ephemeral "aws_secretsmanager_secret_version" "github" {
   secret_id = "github/keys/terraform-cloud"
 }
 
 provider "github" {
   owner = "lingrino"
-  token = jsondecode(data.aws_secretsmanager_secret_version.github.secret_string)["GITHUB_TOKEN"]
+  token = jsondecode(ephemeral.aws_secretsmanager_secret_version.github.secret_string)["GITHUB_TOKEN"]
 }
 
 #################################
