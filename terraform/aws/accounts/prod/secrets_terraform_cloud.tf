@@ -24,7 +24,7 @@ resource "aws_secretsmanager_secret" "terraform_cloud_keys_github" {
   }
 }
 
-ephemeral "aws_secretsmanager_secret_version" "terraform_cloud_keys_github" {
+data "aws_secretsmanager_secret_version" "terraform_cloud_keys_github" {
   secret_id = aws_secretsmanager_secret.terraform_cloud_keys_github.id
 }
 
