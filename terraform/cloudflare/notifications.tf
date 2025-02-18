@@ -7,7 +7,9 @@ resource "cloudflare_notification_policy" "origin_availability" {
   name        = "Origin Availability"
   description = "a cloudflare origin is detected as down"
 
-  email_integration {
-    id = "sean@lingren.com"
+  mechanisms = {
+    email = [{
+      id = "sean@lingren.com"
+    }]
   }
 }

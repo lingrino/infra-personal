@@ -12,51 +12,50 @@ module "zone_lingrino_com" {
   ]
 }
 
-resource "cloudflare_record" "lingrino_com" {
+resource "cloudflare_dns_record" "lingrino_com" {
   zone_id = module.zone_lingrino_com.id
   proxied = true
   name    = "lingrino.com"
   type    = "CNAME"
+  ttl     = 1
   content = "site-personal.pages.dev"
 }
 
 resource "cloudflare_pages_domain" "website" {
-  account_id   = cloudflare_account.account.id
-  project_name = cloudflare_pages_project.website.name
-  domain       = "lingrino.com"
+  account_id = cloudflare_account.account.id
+  # project_name = cloudflare_pages_project.website.name
+  project_name = "website"
+  name         = "lingrino.com"
 }
 
-resource "cloudflare_pages_project" "website" {
-  account_id        = cloudflare_account.account.id
-  name              = "website"
-  production_branch = "main"
+# https://github.com/cloudflare/terraform-provider-cloudflare/issues/5146
+# tfim 'cloudflare_pages_project.website' '27a6422e1d64fbe9408ab703847ecdab/website'
+# resource "cloudflare_pages_project" "website" {
+#   account_id        = cloudflare_account.account.id
+#   name              = "website"
+#   production_branch = "main"
 
-  source {
-    type = "github"
+#   build_config = {
+#     build_command       = "go run build.go"
+#     destination_dir     = "public"
+#     build_caching       = true
+#     root_dir            = ""
+#     web_analytics_tag   = ""
+#     web_analytics_token = ""
+#   }
 
-    config {
-      owner             = "lingrino"
-      repo_name         = "website"
-      production_branch = "main"
-    }
-  }
-
-  build_config {
-    build_command   = "go run build.go"
-    destination_dir = "public"
-    build_caching   = true
-  }
-
-  deployment_configs {
-    preview {
-      fail_open                            = true
-      always_use_latest_compatibility_date = true
-      usage_model                          = "standard"
-    }
-    production {
-      fail_open          = true
-      compatibility_date = "2023-12-01" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
-      usage_model        = "standard"
-    }
-  }
-}
+#   deployment_configs = {
+#     preview = {
+#       fail_open           = true
+#       compatibility_date  = "2024-11-11" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
+#       compatibility_flags = []
+#       usage_model         = "standard"
+#     }
+#     production = {
+#       fail_open           = true
+#       compatibility_date  = "2024-11-11" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
+#       compatibility_flags = []
+#       usage_model         = "standard"
+#     }
+#   }
+# }

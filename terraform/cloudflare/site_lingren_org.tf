@@ -9,19 +9,21 @@ module "zone_lingren_org" {
   ]
 }
 
-resource "cloudflare_record" "lingren_org" {
+resource "cloudflare_dns_record" "lingren_org" {
   zone_id = module.zone_lingren_org.id
   proxied = true
   name    = "lingren.org"
   type    = "CNAME"
+  ttl     = 1
   content = "lingrino.com" # superseded by below redirect
 }
 
-resource "cloudflare_record" "star_lingren_org" {
+resource "cloudflare_dns_record" "star_lingren_org" {
   zone_id = module.zone_lingren_org.id
   proxied = true
   name    = "*.lingren.org"
   type    = "CNAME"
+  ttl     = 1
   content = "lingrino.com" # superseded by below redirect
 }
 
@@ -34,18 +36,20 @@ resource "cloudflare_ruleset" "redirect_lingren_org_to_lingrino_com" {
   kind  = "zone"
   phase = "http_request_dynamic_redirect"
 
-  rules {
-    action      = "redirect"
-    description = "redirect [*.]lingren.org to lingrino.com"
-    expression  = "true"
+  rules = [
+    {
+      action      = "redirect"
+      description = "redirect [*.]lingren.org to lingrino.com"
+      expression  = "true"
 
-    action_parameters {
-      from_value {
-        status_code = 301
-        target_url {
-          value = "https://lingrino.com"
+      action_parameters = {
+        from_value = {
+          status_code = 301
+          target_url = {
+            value = "https://lingrino.com"
+          }
         }
       }
     }
-  }
+  ]
 }

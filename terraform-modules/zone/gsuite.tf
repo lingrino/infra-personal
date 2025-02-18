@@ -1,13 +1,14 @@
-resource "cloudflare_record" "txt_gsuite" {
+resource "cloudflare_dns_record" "txt_gsuite" {
   count = var.enable_gsuite ? 1 : 0
 
   zone_id = cloudflare_zone.zone.id
-  name    = "@"
+  name    = var.domain
   type    = "TXT"
+  ttl     = 1
   content = "v=spf1 include:_spf.google.com ~all"
 }
 
-resource "cloudflare_record" "mx_gsuite_verification" {
+resource "cloudflare_dns_record" "mx_gsuite_verification" {
   for_each = var.enable_gsuite ? {
     0 = { priority = 1, value = "aspmx.l.google.com" }
     1 = { priority = 5, value = "alt1.aspmx.l.google.com" }
@@ -19,24 +20,27 @@ resource "cloudflare_record" "mx_gsuite_verification" {
   zone_id  = cloudflare_zone.zone.id
   name     = var.domain
   type     = "MX"
+  ttl      = 1
   priority = each.value["priority"]
   content  = each.value["value"]
 }
 
-resource "cloudflare_record" "txt_gsuite_dkim" {
+resource "cloudflare_dns_record" "txt_gsuite_dkim" {
   count = var.gsuite_dkim_value != "" ? 1 : 0
 
   zone_id = cloudflare_zone.zone.id
-  name    = "google._domainkey"
+  name    = "google._domainkey.${var.domain}"
   type    = "TXT"
+  ttl     = 1
   content = var.gsuite_dkim_value
 }
 
-resource "cloudflare_record" "txt_gsuite_dmarc" {
+resource "cloudflare_dns_record" "txt_gsuite_dmarc" {
   count = var.gsuite_dkim_value != "" ? 1 : 0
 
   zone_id = cloudflare_zone.zone.id
-  name    = "_dmarc"
+  name    = "_dmarc.${var.domain}"
   type    = "TXT"
+  ttl     = 1
   content = "v=DMARC1; p=reject; sp=reject; adkim=s; aspf=s; pct=100; rua=mailto:sean+dmarc@lingren.com"
 }

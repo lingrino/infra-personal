@@ -9,50 +9,50 @@ module "zone_vaku_dev" {
   ]
 }
 
-resource "cloudflare_record" "vaku_dev" {
+resource "cloudflare_dns_record" "vaku_dev" {
   zone_id = module.zone_vaku_dev.id
   proxied = true
   name    = "vaku.dev"
   type    = "CNAME"
+  ttl     = 1
   content = "vaku.pages.dev"
 }
 
 resource "cloudflare_pages_domain" "vaku" {
-  account_id   = cloudflare_account.account.id
-  project_name = cloudflare_pages_project.vaku.name
-  domain       = "vaku.dev"
+  account_id = cloudflare_account.account.id
+  # project_name = cloudflare_pages_project.vaku.name
+  project_name = "vaku"
+  name         = "vaku.dev"
 }
 
-resource "cloudflare_pages_project" "vaku" {
-  account_id        = cloudflare_account.account.id
-  name              = "vaku"
-  production_branch = "main"
+# https://github.com/cloudflare/terraform-provider-cloudflare/issues/5146
+# tfim 'cloudflare_pages_project.vaku' '27a6422e1d64fbe9408ab703847ecdab/vaku'
+# resource "cloudflare_pages_project" "vaku" {
+#   account_id        = cloudflare_account.account.id
+#   name              = "vaku"
+#   production_branch = "main"
 
-  source {
-    type = "github"
+#   build_config = {
+#     destination_dir     = "www"
+#     build_caching       = true
+#     build_command       = ""
+#     root_dir            = ""
+#     web_analytics_tag   = ""
+#     web_analytics_token = ""
+#   }
 
-    config {
-      owner             = "lingrino"
-      repo_name         = "vaku"
-      production_branch = "main"
-    }
-  }
-
-  build_config {
-    destination_dir = "www"
-    build_caching   = true
-  }
-
-  deployment_configs {
-    preview {
-      fail_open                            = true
-      always_use_latest_compatibility_date = true
-      usage_model                          = "standard"
-    }
-    production {
-      fail_open          = true
-      compatibility_date = "2023-12-01" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
-      usage_model        = "standard"
-    }
-  }
-}
+#   deployment_configs = {
+#     preview = {
+#       fail_open           = true
+#       compatibility_date  = "2024-11-11" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
+#       compatibility_flags = []
+#       usage_model         = "standard"
+#     }
+#     production = {
+#       fail_open           = true
+#       compatibility_date  = "2024-11-11" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
+#       compatibility_flags = []
+#       usage_model         = "standard"
+#     }
+#   }
+# }
