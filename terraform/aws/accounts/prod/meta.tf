@@ -20,6 +20,11 @@ provider "b2" {
 }
 
 provider "cloudflare" {
+  api_token = jsondecode(ephemeral.aws_secretsmanager_secret_version.cloudflare_keys_terraform_cloud.secret_string)["CLOUDFLARE_API_TOKEN"]
+}
+
+provider "cloudflare" {
+  alias     = "create-tokens"
   api_token = jsondecode(ephemeral.aws_secretsmanager_secret_version.cloudflare_keys_create_tokens.secret_string)["CLOUDFLARE_API_TOKEN"]
 }
 

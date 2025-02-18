@@ -24,29 +24,42 @@ resource "aws_secretsmanager_secret" "cloudflare_keys_terraform_cloud" {
   }
 }
 
+ephemeral "aws_secretsmanager_secret_version" "cloudflare_keys_terraform_cloud" {
+  secret_id = aws_secretsmanager_secret.cloudflare_keys_terraform_cloud.id
+}
+
 resource "aws_secretsmanager_secret_version" "cloudflare_keys_terraform_cloud" {
   secret_id = aws_secretsmanager_secret.cloudflare_keys_terraform_cloud.id
   secret_string = jsonencode({
     CLOUDFLARE_API_TOKEN = cloudflare_api_token.terraform_cloud.value,
   })
+
+  lifecycle {
+    ignore_changes = [secret_string]
+  }
 }
 
 resource "cloudflare_api_token" "terraform_cloud" {
+  provider = cloudflare.create-tokens
+
   name = "terraform-cloud"
 
-  policy {
-    resources = {
-      "com.cloudflare.api.account.*" = "*"
+  policies = [
+    {
+      effect = "allow"
+      resources = {
+        "com.cloudflare.api.account.*" = "*"
+      }
+      permission_groups = local.account_permission_group_ids
+    },
+    {
+      effect = "allow"
+      resources = {
+        "com.cloudflare.api.account.zone.*" = "*"
+      }
+      permission_groups = local.zone_permission_group_ids
     }
-    permission_groups = values(data.cloudflare_api_token_permission_groups.all.account)
-  }
-
-  policy {
-    resources = {
-      "com.cloudflare.api.account.zone.*" = "*"
-    }
-    permission_groups = values(data.cloudflare_api_token_permission_groups.all.zone)
-  }
+  ]
 }
 
 #################################
@@ -65,22 +78,31 @@ resource "aws_secretsmanager_secret_version" "cloudflare_keys_local" {
   secret_string = jsonencode({
     CLOUDFLARE_API_TOKEN = cloudflare_api_token.local.value,
   })
+
+  lifecycle {
+    ignore_changes = [secret_string]
+  }
 }
 
 resource "cloudflare_api_token" "local" {
+  provider = cloudflare.create-tokens
+
   name = "local"
 
-  policy {
-    resources = {
-      "com.cloudflare.api.account.*" = "*"
+  policies = [
+    {
+      effect = "allow"
+      resources = {
+        "com.cloudflare.api.account.*" = "*"
+      }
+      permission_groups = local.account_permission_group_ids
+    },
+    {
+      effect = "allow"
+      resources = {
+        "com.cloudflare.api.account.zone.*" = "*"
+      }
+      permission_groups = local.zone_permission_group_ids
     }
-    permission_groups = values(data.cloudflare_api_token_permission_groups.all.account)
-  }
-
-  policy {
-    resources = {
-      "com.cloudflare.api.account.zone.*" = "*"
-    }
-    permission_groups = values(data.cloudflare_api_token_permission_groups.all.zone)
-  }
+  ]
 }

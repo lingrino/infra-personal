@@ -9,51 +9,50 @@ module "zone_uptime_how" {
   ]
 }
 
-resource "cloudflare_record" "uptime_how" {
+resource "cloudflare_dns_record" "uptime_how" {
   zone_id = module.zone_uptime_how.id
   proxied = true
   name    = "uptime.how"
   type    = "CNAME"
+  ttl     = 1
   content = "uptime-pcd3.pages.dev"
 }
 
 resource "cloudflare_pages_domain" "uptime" {
-  account_id   = cloudflare_account.account.id
-  project_name = cloudflare_pages_project.uptime.name
-  domain       = "uptime.how"
+  account_id = cloudflare_account.account.id
+  # project_name = cloudflare_pages_project.uptime.name
+  project_name = "uptime"
+  name         = "uptime.how"
 }
 
-resource "cloudflare_pages_project" "uptime" {
-  account_id        = cloudflare_account.account.id
-  name              = "uptime"
-  production_branch = "main"
+# https://github.com/cloudflare/terraform-provider-cloudflare/issues/5146
+# tfim 'cloudflare_pages_project.uptime' '27a6422e1d64fbe9408ab703847ecdab/uptime'
+# resource "cloudflare_pages_project" "uptime" {
+#   account_id        = cloudflare_account.account.id
+#   name              = "uptime"
+#   production_branch = "main"
 
-  source {
-    type = "github"
+#   build_config = {
+#     build_command       = "npm run build"
+#     destination_dir     = ".svelte-kit/cloudflare"
+#     build_caching       = true
+#     root_dir            = ""
+#     web_analytics_tag   = ""
+#     web_analytics_token = ""
+#   }
 
-    config {
-      owner             = "lingrino"
-      repo_name         = "uptime"
-      production_branch = "main"
-    }
-  }
-
-  build_config {
-    build_command   = "npm run build"
-    destination_dir = ".svelte-kit/cloudflare"
-    build_caching   = true
-  }
-
-  deployment_configs {
-    preview {
-      fail_open                            = true
-      always_use_latest_compatibility_date = true
-      usage_model                          = "standard"
-    }
-    production {
-      fail_open          = true
-      compatibility_date = "2023-12-01" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
-      usage_model        = "standard"
-    }
-  }
-}
+#   deployment_configs = {
+#     preview = {
+#       fail_open           = true
+#       compatibility_date  = "2024-11-11" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
+#       compatibility_flags = []
+#       usage_model         = "standard"
+#     }
+#     production = {
+#       fail_open           = true
+#       compatibility_date  = "2024-11-11" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
+#       compatibility_flags = []
+#       usage_model         = "standard"
+#     }
+#   }
+# }
