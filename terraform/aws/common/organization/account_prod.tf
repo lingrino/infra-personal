@@ -8,6 +8,7 @@ provider "aws" {
   default_tags {
     tags = {
       terraform = "true"
+      workspace = "aws-common-organization"
     }
   }
 }

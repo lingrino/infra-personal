@@ -16,7 +16,7 @@ resource "aws_iam_role" "terraform_cloud" {
   name = "terraform-cloud"
   path = "/service/"
 
-  assume_role_policy = data.aws_iam_policy_document.arp_teraform_cloud.json
+  assume_role_policy = data.aws_iam_policy_document.arp_terraform_cloud.json
 
   tags = {
     Name = "terraform-cloud"
@@ -28,7 +28,7 @@ resource "aws_iam_role_policy_attachments_exclusive" "terraform_cloud_administra
   policy_arns = ["arn:aws:iam::aws:policy/AdministratorAccess"]
 }
 
-data "aws_iam_policy_document" "arp_teraform_cloud" {
+data "aws_iam_policy_document" "arp_terraform_cloud" {
   statement {
     sid = "OIDCTerraformCloud"
 

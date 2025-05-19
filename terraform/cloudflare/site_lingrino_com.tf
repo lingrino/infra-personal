@@ -2,7 +2,7 @@ module "zone_lingrino_com" {
   source = "../../terraform-modules/zone//"
 
   domain                = "lingrino.com"
-  cloudflare_account_id = cloudflare_account.account.id
+  cloudflare_account_id = data.cloudflare_account.account.account_id
 
   enable_gsuite     = true
   gsuite_dkim_value = "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiHgGtni6fQyjayMdUE73YSMSFHGr6O5DX9eP1tvVIiY637jT83srK7udP+2Zyp3P0mLz72gmKIHF06FHHk7M3oCcrbrF8VKo47EBOAhRkwx56tyVv3jwRXE56IFhR/oK7g3uIwlbscBQQNS7YZ8Frsw5kiPjwfKE6cwjfFsWfwxNOfgpHCTkyJWAlO1xz85cMKBtqcvjYVjTAPpBlIDzV3rHJQpVRiqu2m9iU092P7M1jobgf3i6Z/CP7NCq9PmIcjGxioUJKLoXwp9n/qkvmKcQCf8x/pf7BttkO0ay0nZXAD3EOB8bovYv4giZZbSBadidpIAjYNmnjAj6H8DJQQIDAQAB"
@@ -22,16 +22,16 @@ resource "cloudflare_dns_record" "lingrino_com" {
 }
 
 resource "cloudflare_pages_domain" "website" {
-  account_id = cloudflare_account.account.id
+  account_id = data.cloudflare_account.account.account_id
   # project_name = cloudflare_pages_project.website.name
   project_name = "website"
   name         = "lingrino.com"
 }
 
-# https://github.com/cloudflare/terraform-provider-cloudflare/issues/5146
+# https://github.com/cloudflare/terraform-provider-cloudflare/issues/5093
 # tfim 'cloudflare_pages_project.website' '27a6422e1d64fbe9408ab703847ecdab/website'
 # resource "cloudflare_pages_project" "website" {
-#   account_id        = cloudflare_account.account.id
+#   account_id        = data.cloudflare_account.account.account_id
 #   name              = "website"
 #   production_branch = "main"
 

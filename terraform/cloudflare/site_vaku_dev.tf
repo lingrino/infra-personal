@@ -2,7 +2,7 @@ module "zone_vaku_dev" {
   source = "../../terraform-modules/zone//"
 
   domain                = "vaku.dev"
-  cloudflare_account_id = cloudflare_account.account.id
+  cloudflare_account_id = data.cloudflare_account.account.account_id
 
   google_site_verifications = [
     "google-site-verification=t2eRiObvW8NcHD8u8Wy7Ak2gG9KSihSXQUgLjFr8FEg", # https://search.google.com/search-console
@@ -19,16 +19,16 @@ resource "cloudflare_dns_record" "vaku_dev" {
 }
 
 resource "cloudflare_pages_domain" "vaku" {
-  account_id = cloudflare_account.account.id
+  account_id = data.cloudflare_account.account.account_id
   # project_name = cloudflare_pages_project.vaku.name
   project_name = "vaku"
   name         = "vaku.dev"
 }
 
-# https://github.com/cloudflare/terraform-provider-cloudflare/issues/5146
+# https://github.com/cloudflare/terraform-provider-cloudflare/issues/5093
 # tfim 'cloudflare_pages_project.vaku' '27a6422e1d64fbe9408ab703847ecdab/vaku'
 # resource "cloudflare_pages_project" "vaku" {
-#   account_id        = cloudflare_account.account.id
+#   account_id        = data.cloudflare_account.account.account_id
 #   name              = "vaku"
 #   production_branch = "main"
 
