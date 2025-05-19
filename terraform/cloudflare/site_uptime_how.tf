@@ -2,7 +2,7 @@ module "zone_uptime_how" {
   source = "../../terraform-modules/zone//"
 
   domain                = "uptime.how"
-  cloudflare_account_id = cloudflare_account.account.id
+  cloudflare_account_id = data.cloudflare_account.account.account_id
 
   google_site_verifications = [
     "google-site-verification=5RIxGFnjg_F2p4U4JHHdWYvt1JtynJF0xI2Iyzt_nQA", # https://search.google.com/search-console/welcome
@@ -19,16 +19,16 @@ resource "cloudflare_dns_record" "uptime_how" {
 }
 
 resource "cloudflare_pages_domain" "uptime" {
-  account_id = cloudflare_account.account.id
+  account_id = data.cloudflare_account.account.account_id
   # project_name = cloudflare_pages_project.uptime.name
   project_name = "uptime"
   name         = "uptime.how"
 }
 
-# https://github.com/cloudflare/terraform-provider-cloudflare/issues/5146
+# https://github.com/cloudflare/terraform-provider-cloudflare/issues/5093
 # tfim 'cloudflare_pages_project.uptime' '27a6422e1d64fbe9408ab703847ecdab/uptime'
 # resource "cloudflare_pages_project" "uptime" {
-#   account_id        = cloudflare_account.account.id
+#   account_id        = data.cloudflare_account.account.account_id
 #   name              = "uptime"
 #   production_branch = "main"
 

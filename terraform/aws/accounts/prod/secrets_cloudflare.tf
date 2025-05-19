@@ -42,7 +42,8 @@ resource "aws_secretsmanager_secret_version" "cloudflare_keys_terraform_cloud" {
 resource "cloudflare_api_token" "terraform_cloud" {
   provider = cloudflare.create-tokens
 
-  name = "terraform-cloud"
+  name   = "terraform-cloud"
+  status = "active"
 
   policies = [
     {
@@ -87,7 +88,8 @@ resource "aws_secretsmanager_secret_version" "cloudflare_keys_local" {
 resource "cloudflare_api_token" "local" {
   provider = cloudflare.create-tokens
 
-  name = "local"
+  name   = "local"
+  status = "active"
 
   policies = [
     {

@@ -10,6 +10,7 @@ provider "aws" {
   default_tags {
     tags = {
       terraform = "true"
+      workspace = "aws-accounts-prod"
     }
   }
 }
@@ -31,6 +32,12 @@ provider "cloudflare" {
 provider "github" {
   owner = "lingrino"
   token = jsondecode(ephemeral.aws_secretsmanager_secret_version.github_keys_terraform_cloud.secret_string)["GITHUB_TOKEN"]
+}
+
+provider "tailscale" {
+  tailnet             = "lingrino.github"
+  oauth_client_id     = jsondecode(ephemeral.aws_secretsmanager_secret_version.tailscale.secret_string)["TAILSCALE_OAUTH_CLIENT_ID"]
+  oauth_client_secret = jsondecode(ephemeral.aws_secretsmanager_secret_version.tailscale.secret_string)["TAILSCALE_OAUTH_CLIENT_SECRET"]
 }
 
 provider "tfe" {
@@ -61,6 +68,9 @@ terraform {
     }
     github = {
       source = "integrations/github"
+    }
+    tailscale = {
+      source = "tailscale/tailscale"
     }
     tfe = {
       source = "hashicorp/tfe"
