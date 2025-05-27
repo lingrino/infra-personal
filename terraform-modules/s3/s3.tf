@@ -104,6 +104,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "s3" {
     id     = "abort-incomplete-uploads"
     status = "Enabled"
 
+    filter {}
+
     abort_incomplete_multipart_upload {
       days_after_initiation = 1
     }
@@ -116,6 +118,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "s3" {
     content {
       id     = "enable-intelligent-tiering"
       status = "Enabled"
+
+      filter {}
 
       transition {
         days          = 0
@@ -135,6 +139,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "s3" {
     content {
       id     = "expire-noncurrent-versions"
       status = "Enabled"
+
+      filter {}
 
       noncurrent_version_expiration {
         noncurrent_days = var.versioning_retention_days
