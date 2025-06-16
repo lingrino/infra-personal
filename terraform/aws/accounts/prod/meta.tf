@@ -15,11 +15,6 @@ provider "aws" {
   }
 }
 
-provider "b2" {
-  application_key_id = jsondecode(ephemeral.aws_secretsmanager_secret_version.backblaze_keys_terraform_cloud.secret_string)["B2_APPLICATION_KEY_ID"]
-  application_key    = jsondecode(ephemeral.aws_secretsmanager_secret_version.backblaze_keys_terraform_cloud.secret_string)["B2_APPLICATION_KEY"]
-}
-
 provider "cloudflare" {
   api_token = jsondecode(ephemeral.aws_secretsmanager_secret_version.cloudflare_keys_terraform_cloud.secret_string)["CLOUDFLARE_API_TOKEN"]
 }
@@ -59,9 +54,6 @@ terraform {
   required_providers {
     aws = {
       source = "hashicorp/aws"
-    }
-    b2 = {
-      source = "Backblaze/b2"
     }
     cloudflare = {
       source = "cloudflare/cloudflare"

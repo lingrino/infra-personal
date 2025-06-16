@@ -70,7 +70,6 @@ resource "github_repository_ruleset" "infra_personal" {
           "Terraform Cloud/lingrino/aws-accounts-prod",
           "Terraform Cloud/lingrino/aws-accounts-root",
           "Terraform Cloud/lingrino/aws-common-organization",
-          "Terraform Cloud/lingrino/b2",
           "Terraform Cloud/lingrino/cloudflare",
           "Terraform Cloud/lingrino/github",
           "Terraform Cloud/lingrino/tailscale",

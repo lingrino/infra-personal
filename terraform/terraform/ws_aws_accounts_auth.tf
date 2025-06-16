@@ -9,7 +9,6 @@ resource "tfe_workspace" "aws_accounts_auth" {
   queue_all_runs        = false
   allow_destroy_plan    = false
   file_triggers_enabled = true
-  global_remote_state   = true
 
   vcs_repo {
     identifier     = "lingrino/infra-personal"
@@ -21,6 +20,11 @@ resource "tfe_workspace" "aws_accounts_auth" {
     "terraform/aws/accounts/auth/*.tf",
     "terraform-modules/**/*.tf",
   ]
+}
+
+resource "tfe_workspace_settings" "aws_accounts_auth" {
+  workspace_id        = tfe_workspace.aws_accounts_auth.id
+  global_remote_state = true
 }
 
 resource "tfe_workspace_variable_set" "aws_accounts_auth" {

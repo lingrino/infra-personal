@@ -9,7 +9,6 @@ resource "tfe_workspace" "github" {
   queue_all_runs        = false
   allow_destroy_plan    = false
   file_triggers_enabled = true
-  global_remote_state   = true
 
   vcs_repo {
     identifier     = "lingrino/infra-personal"
@@ -21,6 +20,11 @@ resource "tfe_workspace" "github" {
     "terraform/github/*.tf",
     "terraform-modules/**/*.tf",
   ]
+}
+
+resource "tfe_workspace_settings" "github" {
+  workspace_id        = tfe_workspace.github.id
+  global_remote_state = true
 }
 
 resource "tfe_workspace_variable_set" "github" {

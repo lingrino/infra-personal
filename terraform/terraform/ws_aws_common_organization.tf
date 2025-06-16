@@ -9,7 +9,6 @@ resource "tfe_workspace" "aws_common_organization" {
   queue_all_runs        = false
   allow_destroy_plan    = false
   file_triggers_enabled = true
-  global_remote_state   = true
 
   vcs_repo {
     identifier     = "lingrino/infra-personal"
@@ -21,6 +20,11 @@ resource "tfe_workspace" "aws_common_organization" {
     "terraform/aws/common/organization/*.tf",
     "terraform-modules/**/*.tf",
   ]
+}
+
+resource "tfe_workspace_settings" "aws_common_organization" {
+  workspace_id        = tfe_workspace.aws_common_organization.id
+  global_remote_state = true
 }
 
 resource "tfe_workspace_variable_set" "aws_common_organization" {
