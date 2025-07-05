@@ -3,7 +3,7 @@ data "cloudflare_account" "account" {
 }
 
 # once fixed, uncomment, import, find/replace data block
-# https://github.com/cloudflare/terraform-provider-cloudflare/issues/5497
+# https://github.com/cloudflare/terraform-provider-cloudflare/issues/5716
 # tfim cloudflare_account.account '27a6422e1d64fbe9408ab703847ecdab'
 # resource "cloudflare_account" "account" {
 #   name = "lingrino"
