@@ -63,8 +63,3 @@ resource "github_actions_repository_permissions" "homebrew_tap" {
   repository = github_repository.homebrew_tap.name
   enabled    = false
 }
-
-resource "github_repository_dependabot_security_updates" "homebrew_tap" {
-  repository = github_repository.homebrew_tap.id
-  enabled    = true
-}

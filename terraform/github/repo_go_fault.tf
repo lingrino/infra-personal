@@ -84,8 +84,3 @@ resource "github_actions_repository_permissions" "go_fault" {
     patterns_allowed     = ["golangci/golangci-lint-action@*"]
   }
 }
-
-resource "github_repository_dependabot_security_updates" "go_fault" {
-  repository = github_repository.go_fault.id
-  enabled    = true
-}
