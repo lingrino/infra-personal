@@ -21,5 +21,11 @@
         "tflint-plugin"
       ]
     }
-  ]
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": [
+      "before 8am on monday"
+    ]
+  }
 }
