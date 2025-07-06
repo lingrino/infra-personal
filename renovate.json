@@ -17,7 +17,8 @@
       "groupName": "all",
       "matchManagers": [
         "github-actions",
-        "terraform"
+        "terraform",
+        "tflint-plugin"
       ]
     }
   ]
