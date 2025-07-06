@@ -2,7 +2,7 @@ resource "tfe_workspace" "aws_accounts_audit" {
   organization = tfe_organization.org.id
   name         = "aws-accounts-audit"
 
-  terraform_version = "latest"
+  terraform_version = "1.12.2"
   working_directory = "terraform/aws/accounts/audit"
 
   auto_apply            = true
