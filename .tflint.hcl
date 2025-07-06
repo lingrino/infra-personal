@@ -1,14 +1,14 @@
 # https://github.com/terraform-linters/tflint-ruleset-aws/releases
 plugin "aws" {
   enabled = true
-  version = "0.35.0"
+  version = "0.40.0"
   source  = "github.com/terraform-linters/tflint-ruleset-aws"
 }
 
 # https://github.com/terraform-linters/tflint-ruleset-terraform/releases
 plugin "terraform" {
   enabled = true
-  version = "0.10.0"
+  version = "0.12.0"
   source  = "github.com/terraform-linters/tflint-ruleset-terraform"
 }
 
