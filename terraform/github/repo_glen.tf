@@ -84,8 +84,3 @@ resource "github_actions_repository_permissions" "glen" {
     patterns_allowed     = ["golangci/golangci-lint-action@*"]
   }
 }
-
-resource "github_repository_dependabot_security_updates" "glen" {
-  repository = github_repository.glen.id
-  enabled    = true
-}

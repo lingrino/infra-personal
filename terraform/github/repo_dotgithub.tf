@@ -65,8 +65,3 @@ resource "github_actions_repository_permissions" "dotgithub" {
   repository = github_repository.dotgithub.name
   enabled    = false
 }
-
-resource "github_repository_dependabot_security_updates" "dotgithub" {
-  repository = github_repository.dotgithub.id
-  enabled    = true
-}

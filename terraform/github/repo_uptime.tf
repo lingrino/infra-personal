@@ -6,7 +6,7 @@ resource "github_repository" "uptime" {
   visibility = "public"
 
   has_wiki             = false
-  has_issues           = false
+  has_issues           = true
   has_projects         = false
   has_discussions      = false
   vulnerability_alerts = true
@@ -82,9 +82,4 @@ resource "github_actions_repository_permissions" "uptime" {
     github_owned_allowed = true
     verified_allowed     = true
   }
-}
-
-resource "github_repository_dependabot_security_updates" "uptime" {
-  repository = github_repository.uptime.id
-  enabled    = true
 }

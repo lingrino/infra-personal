@@ -63,8 +63,3 @@ resource "github_actions_repository_permissions" "lingrino" {
   repository = github_repository.lingrino.name
   enabled    = false
 }
-
-resource "github_repository_dependabot_security_updates" "lingrino" {
-  repository = github_repository.lingrino.id
-  enabled    = true
-}

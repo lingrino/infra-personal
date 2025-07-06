@@ -54,8 +54,3 @@ resource "github_actions_repository_permissions" "snippets" {
   repository = github_repository.snippets.name
   enabled    = false
 }
-
-resource "github_repository_dependabot_security_updates" "snippets" {
-  repository = github_repository.snippets.name
-  enabled    = false
-}

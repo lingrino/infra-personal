@@ -6,7 +6,7 @@ resource "github_repository" "infra_personal" {
   visibility = "public"
 
   has_wiki             = false
-  has_issues           = false
+  has_issues           = true
   has_projects         = false
   has_discussions      = false
   vulnerability_alerts = true
@@ -95,9 +95,4 @@ resource "github_actions_repository_permissions" "infra_personal" {
     verified_allowed     = true
     patterns_allowed     = ["terraform-linters/setup-tflint@*"]
   }
-}
-
-resource "github_repository_dependabot_security_updates" "infra_personal" {
-  repository = github_repository.infra_personal.id
-  enabled    = true
 }

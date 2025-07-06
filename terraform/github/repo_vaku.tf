@@ -84,8 +84,3 @@ resource "github_actions_repository_permissions" "vaku" {
     patterns_allowed     = ["golangci/golangci-lint-action@*"]
   }
 }
-
-resource "github_repository_dependabot_security_updates" "vaku" {
-  repository = github_repository.vaku.id
-  enabled    = true
-}
