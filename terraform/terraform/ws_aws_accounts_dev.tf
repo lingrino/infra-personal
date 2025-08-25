@@ -2,7 +2,7 @@ resource "tfe_workspace" "aws_accounts_dev" {
   organization = tfe_organization.org.id
   name         = "aws-accounts-dev"
 
-  terraform_version = "1.12.2"
+  terraform_version = "1.13.0"
   working_directory = "terraform/aws/accounts/dev"
 
   auto_apply            = true
