@@ -2,7 +2,7 @@ resource "tfe_workspace" "tailscale" {
   organization = tfe_organization.org.id
   name         = "tailscale"
 
-  terraform_version = "1.13.0"
+  terraform_version = "1.13.3"
   working_directory = "terraform/tailscale"
 
   auto_apply            = true
