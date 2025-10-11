@@ -57,5 +57,9 @@ resource "github_actions_repository_permissions" "podvec" {
   allowed_actions_config {
     github_owned_allowed = true
     verified_allowed     = true
+    patterns_allowed = [
+      "extractions/setup-just@*",
+      "federicocarboni/setup-ffmpeg@*",
+    ]
   }
 }
