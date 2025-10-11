@@ -17,15 +17,6 @@ resource "github_repository" "podvec" {
   allow_rebase_merge     = false
   allow_update_branch    = true
   delete_branch_on_merge = true
-
-  security_and_analysis {
-    secret_scanning {
-      status = "enabled"
-    }
-    secret_scanning_push_protection {
-      status = "enabled"
-    }
-  }
 }
 
 resource "github_branch" "podvec" {
