@@ -2,7 +2,7 @@ resource "tfe_workspace" "cloudflare" {
   organization = tfe_organization.org.id
   name         = "cloudflare"
 
-  terraform_version = "1.13.3"
+  terraform_version = "1.13.4"
   working_directory = "terraform/cloudflare"
 
   auto_apply            = true
