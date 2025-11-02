@@ -2,7 +2,7 @@ resource "tfe_workspace" "aws_common_organization" {
   organization = tfe_organization.org.id
   name         = "aws-common-organization"
 
-  terraform_version = "1.13.3"
+  terraform_version = "1.13.4"
   working_directory = "terraform/aws/common/organization"
 
   auto_apply            = true
