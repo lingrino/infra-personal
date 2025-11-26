@@ -19,40 +19,37 @@ resource "cloudflare_dns_record" "uptime_how" {
 }
 
 resource "cloudflare_pages_domain" "uptime" {
-  account_id = data.cloudflare_account.account.account_id
-  # project_name = cloudflare_pages_project.uptime.name
-  project_name = "uptime"
+  account_id   = data.cloudflare_account.account.account_id
+  project_name = cloudflare_pages_project.uptime.name
   name         = "uptime.how"
 }
 
-# https://github.com/cloudflare/terraform-provider-cloudflare/issues/5093
-# tfim 'cloudflare_pages_project.uptime' '27a6422e1d64fbe9408ab703847ecdab/uptime'
-# resource "cloudflare_pages_project" "uptime" {
-#   account_id        = data.cloudflare_account.account.account_id
-#   name              = "uptime"
-#   production_branch = "main"
+resource "cloudflare_pages_project" "uptime" {
+  account_id        = data.cloudflare_account.account.account_id
+  name              = "uptime"
+  production_branch = "main"
 
-#   build_config = {
-#     build_command       = "npm run build"
-#     destination_dir     = ".svelte-kit/cloudflare"
-#     build_caching       = true
-#     root_dir            = ""
-#     web_analytics_tag   = ""
-#     web_analytics_token = ""
-#   }
+  build_config = {
+    build_command       = "npm run build"
+    destination_dir     = ".svelte-kit/cloudflare"
+    build_caching       = true
+    root_dir            = ""
+    web_analytics_tag   = ""
+    web_analytics_token = ""
+  }
 
-#   deployment_configs = {
-#     preview = {
-#       fail_open           = true
-#       compatibility_date  = "2024-11-11" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
-#       compatibility_flags = []
-#       usage_model         = "standard"
-#     }
-#     production = {
-#       fail_open           = true
-#       compatibility_date  = "2024-11-11" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
-#       compatibility_flags = []
-#       usage_model         = "standard"
-#     }
-#   }
-# }
+  deployment_configs = {
+    preview = {
+      fail_open           = true
+      compatibility_date  = "2025-09-15" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
+      compatibility_flags = []
+      usage_model         = "standard"
+    }
+    production = {
+      fail_open           = true
+      compatibility_date  = "2025-09-15" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
+      compatibility_flags = []
+      usage_model         = "standard"
+    }
+  }
+}
