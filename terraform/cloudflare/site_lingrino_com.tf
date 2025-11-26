@@ -22,40 +22,37 @@ resource "cloudflare_dns_record" "lingrino_com" {
 }
 
 resource "cloudflare_pages_domain" "website" {
-  account_id = data.cloudflare_account.account.account_id
-  # project_name = cloudflare_pages_project.website.name
+  account_id   = data.cloudflare_account.account.account_id
   project_name = "website"
   name         = "lingrino.com"
 }
 
-# https://github.com/cloudflare/terraform-provider-cloudflare/issues/5093
-# tfim 'cloudflare_pages_project.website' '27a6422e1d64fbe9408ab703847ecdab/website'
-# resource "cloudflare_pages_project" "website" {
-#   account_id        = data.cloudflare_account.account.account_id
-#   name              = "website"
-#   production_branch = "main"
+resource "cloudflare_pages_project" "website" {
+  account_id        = data.cloudflare_account.account.account_id
+  name              = "website"
+  production_branch = "main"
 
-#   build_config = {
-#     build_command       = "go run build.go"
-#     destination_dir     = "public"
-#     build_caching       = true
-#     root_dir            = ""
-#     web_analytics_tag   = ""
-#     web_analytics_token = ""
-#   }
+  build_config = {
+    build_command       = "go run build.go"
+    destination_dir     = "public"
+    build_caching       = true
+    root_dir            = ""
+    web_analytics_tag   = ""
+    web_analytics_token = ""
+  }
 
-#   deployment_configs = {
-#     preview = {
-#       fail_open           = true
-#       compatibility_date  = "2024-11-11" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
-#       compatibility_flags = []
-#       usage_model         = "standard"
-#     }
-#     production = {
-#       fail_open           = true
-#       compatibility_date  = "2024-11-11" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
-#       compatibility_flags = []
-#       usage_model         = "standard"
-#     }
-#   }
-# }
+  deployment_configs = {
+    preview = {
+      fail_open           = true
+      compatibility_date  = "2025-09-15" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
+      compatibility_flags = []
+      usage_model         = "standard"
+    }
+    production = {
+      fail_open           = true
+      compatibility_date  = "2025-09-15" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
+      compatibility_flags = []
+      usage_model         = "standard"
+    }
+  }
+}

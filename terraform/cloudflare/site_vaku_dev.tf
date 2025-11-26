@@ -19,40 +19,37 @@ resource "cloudflare_dns_record" "vaku_dev" {
 }
 
 resource "cloudflare_pages_domain" "vaku" {
-  account_id = data.cloudflare_account.account.account_id
-  # project_name = cloudflare_pages_project.vaku.name
-  project_name = "vaku"
+  account_id   = data.cloudflare_account.account.account_id
+  project_name = cloudflare_pages_project.vaku.name
   name         = "vaku.dev"
 }
 
-# https://github.com/cloudflare/terraform-provider-cloudflare/issues/5093
-# tfim 'cloudflare_pages_project.vaku' '27a6422e1d64fbe9408ab703847ecdab/vaku'
-# resource "cloudflare_pages_project" "vaku" {
-#   account_id        = data.cloudflare_account.account.account_id
-#   name              = "vaku"
-#   production_branch = "main"
+resource "cloudflare_pages_project" "vaku" {
+  account_id        = data.cloudflare_account.account.account_id
+  name              = "vaku"
+  production_branch = "main"
 
-#   build_config = {
-#     destination_dir     = "www"
-#     build_caching       = true
-#     build_command       = ""
-#     root_dir            = ""
-#     web_analytics_tag   = ""
-#     web_analytics_token = ""
-#   }
+  build_config = {
+    destination_dir     = "www"
+    build_caching       = true
+    build_command       = ""
+    root_dir            = ""
+    web_analytics_tag   = ""
+    web_analytics_token = ""
+  }
 
-#   deployment_configs = {
-#     preview = {
-#       fail_open           = true
-#       compatibility_date  = "2024-11-11" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
-#       compatibility_flags = []
-#       usage_model         = "standard"
-#     }
-#     production = {
-#       fail_open           = true
-#       compatibility_date  = "2024-11-11" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
-#       compatibility_flags = []
-#       usage_model         = "standard"
-#     }
-#   }
-# }
+  deployment_configs = {
+    preview = {
+      fail_open           = true
+      compatibility_date  = "2025-09-15" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
+      compatibility_flags = []
+      usage_model         = "standard"
+    }
+    production = {
+      fail_open           = true
+      compatibility_date  = "2025-09-15" # https://developers.cloudflare.com/workers/configuration/compatibility-dates/#change-history
+      compatibility_flags = []
+      usage_model         = "standard"
+    }
+  }
+}
