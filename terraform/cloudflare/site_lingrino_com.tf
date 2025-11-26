@@ -23,7 +23,7 @@ resource "cloudflare_dns_record" "lingrino_com" {
 
 resource "cloudflare_pages_domain" "website" {
   account_id   = data.cloudflare_account.account.account_id
-  project_name = "website"
+  project_name = cloudflare_pages_project.website.name
   name         = "lingrino.com"
 }
 
